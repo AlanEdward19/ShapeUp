@@ -8,6 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.22.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+        <PackageReference Include="MongoDB.Driver" Version="3.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
@@ -18,12 +21,28 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ActivityFeed\" />
-      <Folder Include="Follow\" />
-      <Folder Include="Friends\" />
-      <Folder Include="Post\" />
-      <Folder Include="Profile\" />
-      <Folder Include="Recommendations\" />
+      <Folder Include="ActivityFeed\GetActivityFeed\" />
+      <Folder Include="ActivityFeed\GetNotifications\" />
+      <Folder Include="ActivityFeed\MarkNotificationAsRead\" />
+      <Folder Include="Follow\FollowUser\" />
+      <Folder Include="Follow\GetFollowers\" />
+      <Folder Include="Follow\GetFollowing\" />
+      <Folder Include="Follow\UnfollowUser\" />
+      <Folder Include="Friends\AddFriend\" />
+      <Folder Include="Friends\CheckFriendStatus\" />
+      <Folder Include="Friends\ListFriends\" />
+      <Folder Include="Friends\ManageFriendRequests\" />
+      <Folder Include="Friends\RemoveFriend\" />
+      <Folder Include="Post\AttachMeals\" />
+      <Folder Include="Post\AttachTraining\" />
+      <Folder Include="Post\CommentsOnPost\" />
+      <Folder Include="Post\CreatePost\" />
+      <Folder Include="Post\DeletePost\" />
+      <Folder Include="Post\EditPost\" />
+      <Folder Include="Post\GetPostComments\" />
+      <Folder Include="Post\LikePost\" />
+      <Folder Include="Recommendations\GetFriendRecommendations\" />
+      <Folder Include="Recommendations\GetRecommendedUsers\" />
     </ItemGroup>
 
 </Project>
