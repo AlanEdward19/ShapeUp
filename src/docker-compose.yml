@@ -1,0 +1,63 @@
+﻿services:
+  socialservice:
+    image: socialservice
+    container_name: SocialService
+    build:
+      context: .
+      dockerfile: SocialService/Dockerfile
+    networks:
+      - internal-network
+    
+    environment:
+      ASPNETCORE_URLS: "https://+:5000"
+    
+    ports:
+      - "5000:5000"
+  
+  database:
+    user: root
+    container_name: SQLServer
+    networks:
+      - internal-network
+    restart: always
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      MSSQL_SA_PASSWORD: "ShapeUp123!@"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - ../volumes/mssql_data:/var/opt/mssql/data
+
+  storage:
+    container_name: 'Storage'
+    image: mcr.microsoft.com/azure-storage/azurite:latest  # Update to the latest version
+    restart: always
+    hostname: azurite
+    command: "azurite --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --skipApiVersionCheck"
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+    volumes:
+      - ../volumes/azure_data:/data
+    networks:
+      - internal-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: MongoDB
+    networks:
+      - internal-network
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../volumes/mongo_data:/data/db
+
+networks:
+  internal-network:
+    driver: bridge
