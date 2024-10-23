@@ -10,17 +10,34 @@ namespace SocialService.Profile.CreateProfile;
 /// <param name="gender"></param>
 /// <param name="birthDate"></param>
 /// <param name="bio"></param>
-/// <param name="createdAt"></param>
 public class CreateProfileCommand(
     string email,
     EGender gender,
     DateTime birthDate,
-    string? bio,
-    DateTime createdAt)
+    string? bio)
 {
+    /// <summary>
+    /// Email do perfil
+    /// </summary>
     public string Email { get; set; } = email;
+
+    /// <summary>
+    /// Gênero do perfil
+    /// </summary>
     public EGender Gender { get; set; } = gender;
+
+    /// <summary>
+    /// Data de nascimento do perfil
+    /// </summary>
     public DateTime BirthDate { get; set; } = birthDate;
+
+    /// <summary>
+    /// Biografia do perfil
+    /// </summary>
     public string? Bio { get; set; } = bio;
-    public DateTime CreatedAt { get; set; } = createdAt;
+
+    /// <summary>
+    /// Data de criação do perfil
+    /// </summary>
+    public DateTime CreatedAt { get; private set; } = DateTime.Now;
 }

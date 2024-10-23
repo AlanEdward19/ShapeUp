@@ -5,18 +5,6 @@ namespace SocialService.Friends;
 
 public class Friendship
 {
-    [BsonElement("friendId")]
-    public string FriendId { get; set; }
-    
-    [BsonElement("status")]
-    public EFriendStatus Status { get; set; }
-    
-    [BsonElement("requestedAt")]
-    public DateTime RequestedAt { get; set; }
-    
-    [BsonElement("acceptedAt")]
-    public DateTime? AcceptedAt { get; set; }
-
     public Friendship(string friendId, EFriendStatus status, DateTime requestedAt, DateTime? acceptedAt)
     {
         FriendId = friendId;
@@ -24,4 +12,12 @@ public class Friendship
         RequestedAt = requestedAt;
         AcceptedAt = acceptedAt;
     }
+
+    [BsonElement("friendId")] public string FriendId { get; set; }
+
+    [BsonElement("status")] public EFriendStatus Status { get; set; }
+
+    [BsonElement("requestedAt")] public DateTime RequestedAt { get; set; }
+
+    [BsonElement("acceptedAt")] public DateTime? AcceptedAt { get; set; }
 }

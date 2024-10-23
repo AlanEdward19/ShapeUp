@@ -17,18 +17,11 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
 
         var blobClient = containerClient.GetBlobClient(blobName);
 
-        try
+        var response = await blobClient.DownloadAsync();
+        using (var streamReader = new MemoryStream())
         {
-            var response = await blobClient.DownloadAsync();
-            using (var streamReader = new MemoryStream())
-            {
-                await response.Value.Content.CopyToAsync(streamReader);
-                return streamReader.ToArray();
-            }
-        }
-        catch
-        {
-            throw;
+            await response.Value.Content.CopyToAsync(streamReader);
+            return streamReader.ToArray();
         }
     }
 

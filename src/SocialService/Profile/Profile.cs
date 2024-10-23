@@ -6,17 +6,8 @@ namespace SocialService.Profile;
 
 public class Profile
 {
-    [Key]
-    public Guid ObjectId { get; private set; }
-    public string Email { get; private set; }
-    public string? ImageUrl { get; private set; }
-    public string? Bio { get; private set; }    
-    public DateTime BirthDate { get; private set; }
-    public EGender Gender { get; private set; }
-    public DateTime CreatedAt { get; private set; }
-    public DateTime UpdatedAt { get; private set; }
-
-    public Profile(Guid objectId, string email, string? imageUrl, DateTime createdAt, DateTime updatedAt, EGender gender, DateTime birthDate, string? bio)
+    public Profile(Guid objectId, string email, string? imageUrl, DateTime createdAt, DateTime updatedAt,
+        EGender gender, DateTime birthDate, string? bio)
     {
         ObjectId = objectId;
         Email = email;
@@ -39,12 +30,23 @@ public class Profile
         UpdatedAt = command.CreatedAt;
     }
 
+    [Key] public Guid ObjectId { get; private set; }
+
+    public string Email { get; private set; }
+    public string? ImageUrl { get; private set; }
+    public string? Bio { get; private set; }
+    public DateTime BirthDate { get; private set; }
+    public EGender Gender { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime UpdatedAt { get; private set; }
+
     public void UpdateBasedOnValueObject(ProfileAggregate profile)
     {
         Gender = profile.Gender;
         BirthDate = profile.BirthDate;
         Bio = profile.Bio;
         Email = profile.Email;
+        ImageUrl = profile.ImageUrl;
         UpdatedAt = DateTime.Now;
     }
 }

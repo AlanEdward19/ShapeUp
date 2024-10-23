@@ -1,25 +1,23 @@
+using System.Globalization;
+using SocialService.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// Add services to the container.
+builder.Services.SolveServiceDependencies(configuration);
+builder.Services.ConfigureAuthentication(configuration);
+builder.Services.ConfigureEndpoints();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var cultureInfo = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.ConfigureSwagger();
+app.MapEndpoints(configuration);
+app.ConfigureMiddleware();
+app.UpdateMigrations();
 
 app.Run();
+app.Logger.LogInformation("Application instance is ready to handle incoming requests");

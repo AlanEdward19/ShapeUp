@@ -1,6 +1,12 @@
 ﻿namespace SocialService.Profile.DeleteProfile;
 
-public class DeleteProfileCommand
+/// <summary>
+/// Comando para deletar um perfil.
+/// </summary>
+public class DeleteProfileCommand(Guid profileId)
 {
-    public Guid ProfileId { get; set; }
+    /// <summary>
+    /// Identificador do perfil.
+    /// </summary>
+    public Guid ProfileId { get; private set; } = profileId;
 }

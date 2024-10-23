@@ -1,6 +1,12 @@
 ﻿namespace SocialService.Profile.ViewProfile;
 
-public class ViewProfileQuery
+/// <summary>
+/// Query para visualização de perfil.
+/// </summary>
+public class ViewProfileQuery(Guid profileId)
 {
-    public Guid ProfileId { get; set; }
+    /// <summary>
+    /// Id do perfil.
+    /// </summary>
+    public Guid ProfileId { get; private set; } = profileId;
 }

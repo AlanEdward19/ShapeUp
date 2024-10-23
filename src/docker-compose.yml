@@ -1,10 +1,25 @@
 ﻿services:
+  
+#  trainingservice:
+#    image: trainingservice
+#    container_name: TrainingService
+#    build:
+#      context: .
+#      dockerfile: TrainingService/Dockerfile
+#    
+#    networks:
+#      - internal-network
+#
+#    environment:
+#      ASPNETCORE_URLS: "https://+:5001"
+      
   socialservice:
     image: socialservice
     container_name: SocialService
     build:
       context: .
       dockerfile: SocialService/Dockerfile
+    
     networks:
       - internal-network
     
@@ -61,3 +76,5 @@
 networks:
   internal-network:
     driver: bridge
+
+  

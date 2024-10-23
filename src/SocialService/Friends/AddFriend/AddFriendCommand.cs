@@ -1,4 +1,4 @@
-﻿namespace DefaultNamespace;
+﻿namespace SocialService.Friends.AddFriend;
 
 public class AddFriendCommand
 {
