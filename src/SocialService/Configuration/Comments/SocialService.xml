@@ -1,0 +1,416 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SocialService</name>
+    </assembly>
+    <members>
+        <member name="T:SocialService.Common.Interfaces.IHandler`2">
+            <summary>
+            Interface para padronizar handlers.
+            </summary>
+            <typeparam name="TResponse"></typeparam>
+            <typeparam name="TItem"></typeparam>
+        </member>
+        <member name="M:SocialService.Common.Interfaces.IHandler`2.HandleAsync(`1,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com operações.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Common.Utils.ClaimsPrincipalUtils">
+            <summary>
+            Classe utilitária para ClaimsPrincipal
+            </summary>
+        </member>
+        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetEmail(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Método para obter o email do usuário
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetObjectId(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Método para obter o id do usuário
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Configuration.Authentication">
+            <summary>
+            Classe responsavel por configurar a autenticacao
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Metodo responsavel por configurar a autenticacao
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Configuration.EndpointsConfiguration">
+            <summary>
+                Configuração dos Endpoints
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.EndpointsConfiguration.MapEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Mapeia os endpoint.
+            </summary>
+            <param name="app">The app.</param>
+            <param name="configuration">The configuration.</param>
+            <returns>An IEndpointRouteBuilder.</returns>
+        </member>
+        <member name="M:SocialService.Configuration.EndpointsConfiguration.ConfigureEndpoints(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Configura os endpoints.
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Configuration.MiddlewareConfiguration">
+            <summary>
+                Classe para configuração de middlewares
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.MiddlewareConfiguration.ConfigureMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar os middlewares
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Configuration.Migrations">
+            <summary>
+                Classe para atualização de migrações
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.Migrations.UpdateMigrations(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para atualizar as migrações
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:SocialService.Configuration.ServiceDependencies">
+            <summary>
+            Classe para resolver as dependências de serviços
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.ServiceDependencies.SolveServiceDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Método para resolver as dependências de serviços
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Configuration.SwaggerConfiguration">
+            <summary>
+                Classe para configuração do Swagger
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.SwaggerConfiguration.ConfigureSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar o Swagger
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Migrations.initial">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialService.Migrations.initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialService.Migrations.initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialService.Migrations.initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommand">
+            <summary>
+            Comando para criar um perfil
+            </summary>
+            <param name="id"></param>
+            <param name="email"></param>
+            <param name="gender"></param>
+            <param name="birthDate"></param>
+            <param name="bio"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.#ctor(System.String,SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
+            <summary>
+            Comando para criar um perfil
+            </summary>
+            <param name="id"></param>
+            <param name="email"></param>
+            <param name="gender"></param>
+            <param name="birthDate"></param>
+            <param name="bio"></param>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Email">
+            <summary>
+            Email do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Gender">
+            <summary>
+            Gênero do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.BirthDate">
+            <summary>
+            Data de nascimento do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Bio">
+            <summary>
+            Biografia do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.CreatedAt">
+            <summary>
+            Data de criação do perfil
+            </summary>
+        </member>
+        <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommandHandler">
+            <summary>
+            Handler para o comando de criação de perfil.
+            </summary>
+            <param name="context"></param>
+            <param name="mongoContext"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Database.Mongo.IMongoContext{SocialService.Friends.Friend})">
+            <summary>
+            Handler para o comando de criação de perfil.
+            </summary>
+            <param name="context"></param>
+            <param name="mongoContext"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.HandleAsync(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com o comando de criação de perfil.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Profile.DeleteProfile.DeleteProfileCommand">
+            <summary>
+            Comando para deletar um perfil.
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommand.#ctor(System.Guid)">
+            <summary>
+            Comando para deletar um perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.DeleteProfile.DeleteProfileCommand.ProfileId">
+            <summary>
+            Identificador do perfil.
+            </summary>
+        </member>
+        <member name="T:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler">
+            <summary>
+            Handler para o comando de deletar um perfil
+            </summary>
+            <param name="context"></param>
+            <param name="storageProvider"></param>
+            <param name="mongoContext"></param>
+        </member>
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Storage.IStorageProvider,SocialService.Database.Mongo.IMongoContext{SocialService.Friends.Friend})">
+            <summary>
+            Handler para o comando de deletar um perfil
+            </summary>
+            <param name="context"></param>
+            <param name="storageProvider"></param>
+            <param name="mongoContext"></param>
+        </member>
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.HandleAsync(SocialService.Profile.DeleteProfile.DeleteProfileCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com o comando de deletar um perfil
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="T:SocialService.Profile.EditProfile.EditProfileCommand">
+            <summary>
+            Comando para editar um perfil
+            </summary>
+            <param name="id"></param>
+            <param name="email"></param>
+            <param name="gender"></param>
+            <param name="birthDate"></param>
+            <param name="bio"></param>
+        </member>
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommand.#ctor(System.String,System.Nullable{SocialService.Profile.Common.Enums.EGender},System.Nullable{System.DateTime},System.String)">
+            <summary>
+            Comando para editar um perfil
+            </summary>
+            <param name="id"></param>
+            <param name="email"></param>
+            <param name="gender"></param>
+            <param name="birthDate"></param>
+            <param name="bio"></param>
+        </member>
+        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Email">
+            <summary>
+            Email do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Gender">
+            <summary>
+            Gênero do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.BirthDate">
+            <summary>
+            Data de nascimento do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Bio">
+            <summary>
+            Biografia do perfil
+            </summary>
+        </member>
+        <member name="T:SocialService.Profile.EditProfile.EditProfileCommandHandler">
+            <summary>
+            Handler para o comando de edição de perfil
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext)">
+            <summary>
+            Handler para o comando de edição de perfil
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.HandleAsync(SocialService.Profile.EditProfile.EditProfileCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com o comando de edição de perfil.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="T:SocialService.Profile.ProfileController">
+            <summary>
+            Controller responsavel por gerenciar o perfil do usuario
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ProfileController.CreateProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileAggregate,SocialService.Profile.CreateProfile.CreateProfileCommand},SocialService.Profile.CreateProfile.CreateProfileCommand,System.Threading.CancellationToken)">
+            <summary>
+            Rota para criar um perfil
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.Guid,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileAggregate,SocialService.Profile.ViewProfile.ViewProfileQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para visualizar um perfil
+            </summary>
+            <param name="profileId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.ProfileController.EditProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileAggregate,SocialService.Profile.EditProfile.EditProfileCommand},SocialService.Profile.EditProfile.EditProfileCommand,System.Threading.CancellationToken)">
+            <summary>
+            Rota para editar um perfil
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.ProfileController.DeleteProfile(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.DeleteProfile.DeleteProfileCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para deletar um perfil
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.ProfileController.UploadProfilePicture(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
+            <summary>
+            Rota para fazer upload de uma foto de perfil
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand">
+            <summary>
+            Comando para upload de foto de perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand.Image">
+            <summary>
+            Imagem a ser enviada.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand.ImageFileName">
+            <summary>
+            Nome do arquivo da imagem.
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand.SetImage(Microsoft.AspNetCore.Http.IFormFile,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para setar a imagem.
+            </summary>
+            <param name="image"></param>
+            <param name="imageFileName"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler">
+            <summary>
+            Handler para o comando de upload de foto de perfil.
+            </summary>
+            <param name="context"></param>
+            <param name="storageProvider"></param>
+        </member>
+        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Storage.IStorageProvider)">
+            <summary>
+            Handler para o comando de upload de foto de perfil.
+            </summary>
+            <param name="context"></param>
+            <param name="storageProvider"></param>
+        </member>
+        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.HandleAsync(SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com o comando de upload de foto de perfil.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="T:SocialService.Profile.ViewProfile.ViewProfileQuery">
+            <summary>
+            Query para visualização de perfil.
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQuery.#ctor(System.Guid)">
+            <summary>
+            Query para visualização de perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ViewProfile.ViewProfileQuery.ProfileId">
+            <summary>
+            Id do perfil.
+            </summary>
+        </member>
+        <member name="T:SocialService.Profile.ViewProfile.ViewProfileQueryHandler">
+            <summary>
+            Handler para a query de visualização de perfil.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Database.Sql.DatabaseContext)">
+            <summary>
+            Handler para a query de visualização de perfil.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.HandleAsync(SocialService.Profile.ViewProfile.ViewProfileQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com a query de visualização de perfil.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
