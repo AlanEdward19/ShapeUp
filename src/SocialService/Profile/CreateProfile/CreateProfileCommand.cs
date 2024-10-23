@@ -12,6 +12,8 @@ namespace SocialService.Profile.CreateProfile;
 /// <param name="bio"></param>
 public class CreateProfileCommand(
     string email,
+    string firstName,
+    string lastName,
     EGender gender,
     DateTime birthDate,
     string? bio)
@@ -20,6 +22,16 @@ public class CreateProfileCommand(
     /// Email do perfil
     /// </summary>
     public string Email { get; set; } = email;
+    
+    /// <summary>
+    /// Primeiro nome do perfil
+    /// </summary>
+    public string FirstName { get; set; } = firstName;
+    
+    /// <summary>
+    /// Sobrenome do perfil
+    /// </summary>
+    public string LastName { get; set; } = lastName;
 
     /// <summary>
     /// Gênero do perfil

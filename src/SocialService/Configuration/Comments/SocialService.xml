@@ -121,6 +121,50 @@
             <param name="app"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Friends.FriendController">
+            <summary>
+            Controller responsavel por gerenciar o perfil do usuario
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.FriendController.CreateProfile(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.AddFriend.AddFriendCommand},SocialService.Friends.AddFriend.AddFriendCommand,System.Threading.CancellationToken)">
+            <summary>
+            Rota para adicionar um amigo
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Friends.FriendController.CheckRequestStatus(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel},SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para verificar o status de uma solicitação de amizade
+            </summary>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Friends.FriendController.ViewProfile(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Friends.ListFriends.FriendViewModel},SocialService.Friends.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para listar os amigos de um perfil
+            </summary>
+            <param name="profileId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Friends.FriendController.ManageFriendRequests(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand},SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand,System.Threading.CancellationToken)">
+            <summary>
+            Rota para gerenciar solicitações de amizade
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Friends.FriendController.RemoveFriend(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.RemoveFriend.RemoveFriendCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para remover um amigo
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Friends.FriendController.RemoveFriendRequest(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para remover uma solicitação de amizade
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Migrations.initial">
             <inheritdoc />
         </member>
@@ -133,6 +177,18 @@
         <member name="M:SocialService.Migrations.initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:SocialService.Migrations.NewFieldsOnProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialService.Migrations.NewFieldsOnProfile.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialService.Migrations.NewFieldsOnProfile.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialService.Migrations.NewFieldsOnProfile.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommand">
             <summary>
             Comando para criar um perfil
@@ -143,7 +199,7 @@
             <param name="birthDate"></param>
             <param name="bio"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.#ctor(System.String,SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.#ctor(System.String,System.String,System.String,SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
             <summary>
             Comando para criar um perfil
             </summary>
@@ -156,6 +212,16 @@
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Email">
             <summary>
             Email do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.FirstName">
+            <summary>
+            Primeiro nome do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.LastName">
+            <summary>
+            Sobrenome do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Gender">
@@ -185,7 +251,7 @@
             <param name="context"></param>
             <param name="mongoContext"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Database.Mongo.IMongoContext{SocialService.Friends.Friend})">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Database.Mongo.IMongoContext)">
             <summary>
             Handler para o comando de criação de perfil.
             </summary>
@@ -223,7 +289,7 @@
             <param name="storageProvider"></param>
             <param name="mongoContext"></param>
         </member>
-        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Storage.IStorageProvider,SocialService.Database.Mongo.IMongoContext{SocialService.Friends.Friend})">
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Storage.IStorageProvider,SocialService.Database.Mongo.IMongoContext)">
             <summary>
             Handler para o comando de deletar um perfil
             </summary>

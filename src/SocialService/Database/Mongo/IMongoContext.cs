@@ -1,12 +1,32 @@
 ﻿using MongoDB.Driver;
+using SocialService.Friends;
 
 namespace SocialService.Database.Mongo;
 
-public interface IMongoContext<T>
+public interface IMongoContext
 {
-    Task AddDocumentAsync(T document);
-    Task<T> GetDocumentAsync(FilterDefinition<T> filter);
-    Task<List<T>> GetDocumentsAsync();
-    Task UpdateDocumentAsync(FilterDefinition<T> filter, UpdateDefinition<T> update);
-    Task DeleteDocumentAsync(FilterDefinition<T> filter);
+    #region Profile
+
+    Task AddProfileDocumentAsync(Friend document);
+    Task<Friend> GetProfileDocumentByIdAsync(Guid profileId);
+    Task DeleteProfileDocumentByIdAsync(Guid objectId);
+    Task<IEnumerable<Friendship>> GetProfileFriendListByIdAsync(Guid objectId);
+
+    #endregion
+
+    #region Friend
+
+    Task AddFriendAsync(Guid userId, Friendship friend);
+    Task RemoveFriendAsync(Guid userId, Guid friendId);
+
+    #endregion
+
+    #region Friend Request
+
+    Task AddFriendshipInviteAsync(Guid userId, FriendshipInvite invite);
+    Task AcceptFriendshipInviteAsync(Guid userId, Guid friendId);
+    Task DeclineFriendshipInviteAsync(Guid userId, Guid friendId);
+    Task RemoveRequestFromProfile(Guid from, Guid to, bool removeFromSent);
+
+    #endregion
 }

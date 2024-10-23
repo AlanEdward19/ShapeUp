@@ -3,6 +3,12 @@ using SocialService.Common.Interfaces;
 using SocialService.Database.Mongo;
 using SocialService.Database.Sql;
 using SocialService.Friends;
+using SocialService.Friends.AddFriend;
+using SocialService.Friends.CheckFriendRequestStatus;
+using SocialService.Friends.ListFriends;
+using SocialService.Friends.ManageFriendRequests;
+using SocialService.Friends.RemoveFriend;
+using SocialService.Friends.RemoveFriendRequest;
 using SocialService.Profile;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
@@ -38,12 +44,12 @@ public static class ServiceDependencies
 
         #region Mongo Db
 
-        services.AddScoped<IMongoContext<Friend>>(provider =>
+        services.AddScoped<IMongoContext>(provider =>
         {
             var connectionString = configuration.GetConnectionString("MongoConnection")!;
 
-            return new MongoContext<Friend>(connectionString, "SocialService", "Friends",
-                provider.GetService<ILogger<MongoContext<Friend>>>()!);
+            return new MongoContext(connectionString, "SocialService", "Friends",
+                provider.GetService<ILogger<MongoContext>>()!);
         });
 
         #endregion
@@ -69,6 +75,19 @@ public static class ServiceDependencies
         services.AddScoped<IHandler<bool, UploadProfilePictureCommand>, UploadProfilePictureCommandHandler>();
         services.AddScoped<IHandler<ProfileAggregate, ViewProfileQuery>, ViewProfileQueryHandler>();
 
+        #endregion
+
+        #region Friend
+
+        services.AddScoped<IHandler<bool, AddFriendCommand>, AddFriendCommandHandler>();
+        services
+            .AddScoped<IHandler<IEnumerable<CheckFriendRequestStatusViewModel>, CheckFriendRequestStatusQuery>,
+                CheckFriendRequestStatusQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<FriendViewModel>, ListFriendsQuery>, ListFriendsQueryHandler>();
+        services.AddScoped<IHandler<bool, ManageFriendRequestsCommand>, ManageFriendRequestsCommandHandler>();
+        services.AddScoped<IHandler<bool, RemoveFriendCommand>, RemoveFriendCommandHandler>();
+        services.AddScoped<IHandler<bool, RemoveFriendRequestCommand>, RemoveFriendRequestCommandHandler>();
+        
         #endregion
 
         #endregion

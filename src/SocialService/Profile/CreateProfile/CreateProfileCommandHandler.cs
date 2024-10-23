@@ -11,7 +11,7 @@ namespace SocialService.Profile.CreateProfile;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="mongoContext"></param>
-public class CreateProfileCommandHandler(DatabaseContext context, IMongoContext<Friend> mongoContext)
+public class CreateProfileCommandHandler(DatabaseContext context, IMongoContext mongoContext)
     : IHandler<ProfileAggregate, CreateProfileCommand>
 {
     /// <summary>
@@ -29,7 +29,7 @@ public class CreateProfileCommandHandler(DatabaseContext context, IMongoContext<
         await context.Profiles.AddAsync(profile, cancellationToken);
 
         Friend friend = new(ProfileContext.ProfileId);
-        await mongoContext.AddDocumentAsync(friend);
+        await mongoContext.AddProfileDocumentAsync(friend);
 
         ProfileAggregate profileAggregate = new(profile);
 

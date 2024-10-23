@@ -2,6 +2,6 @@
 
 public enum EFriendStatus
 {
-    Accepted,
-    Pending
+    Pending,
+    PendingResponse
 }

@@ -1,91 +1,274 @@
 ﻿using MongoDB.Driver;
+using SocialService.Friends;
+using Microsoft.Extensions.Logging;
+using SocialService.Friends.ListFriends;
 
 namespace SocialService.Database.Mongo;
 
-public class MongoContext<T> : IMongoContext<T>
+public class MongoContext : IMongoContext
 {
-    private readonly IMongoCollection<T> _collection;
-    private readonly ILogger<MongoContext<T>> _logger;
+    private readonly IMongoCollection<Friend> _collection;
+    private readonly ILogger<MongoContext> _logger;
 
-    public MongoContext(string connectionString, string databaseName, string collectionName,
-        ILogger<MongoContext<T>> logger)
+    public MongoContext(string connectionString, string databaseName, string collectionName, ILogger<MongoContext> logger)
     {
-        MongoClient client = new(connectionString);
+        var client = new MongoClient(connectionString);
         var database = client.GetDatabase(databaseName);
-        _collection = database.GetCollection<T>(collectionName);
-
+        _collection = database.GetCollection<Friend>(collectionName);
         _logger = logger;
     }
 
-    public async Task AddDocumentAsync(T document)
+    #region Profile
+
+    public async Task AddProfileDocumentAsync(Friend document)
     {
         try
         {
             await _collection.InsertOneAsync(document);
-            Console.WriteLine("Documento adicionado com sucesso!");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao adicionar documento: {ex.Message}");
+            _logger.LogError(ex, "Error adding profile document.");
+            throw;
         }
     }
 
-
-    public async Task<List<T>> GetDocumentsAsync()
+    public async Task<Friend> GetProfileDocumentByIdAsync(Guid profileId)
     {
         try
         {
-            return await _collection.Find(Builders<T>.Filter.Empty).ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Erro ao ler documentos: {ex.Message}");
-            return new List<T>();
-        }
-    }
-
-    public async Task<T> GetDocumentAsync(FilterDefinition<T> filter)
-    {
-        try
-        {
+            var filter = Builders<Friend>.Filter.Eq(x => x.ProfileId, profileId.ToString());
             return await _collection.Find(filter).FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao ler documento: {ex.Message}");
+            _logger.LogError(ex, "Error getting profile document by ID.");
             return default;
         }
     }
 
-    public async Task UpdateDocumentAsync(FilterDefinition<T> filter, UpdateDefinition<T> update)
+    public async Task DeleteProfileDocumentByIdAsync(Guid objectId)
     {
         try
         {
-            var result = await _collection.UpdateOneAsync(filter, update);
-            if (result.ModifiedCount > 0)
-                Console.WriteLine("Documento atualizado com sucesso!");
-            else
-                Console.WriteLine("Nenhum documento foi atualizado.");
+            var filter = Builders<Friend>.Filter.Eq(x => x.ProfileId, objectId.ToString());
+            var result = await _collection.DeleteOneAsync(filter);
+            _logger.LogInformation(result.DeletedCount > 0 ? "Document deleted successfully." : "No document was deleted.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao atualizar documento: {ex.Message}");
+            _logger.LogError(ex, "Error deleting profile document.");
         }
     }
 
-    public async Task DeleteDocumentAsync(FilterDefinition<T> filter)
+    public async Task<IEnumerable<Friendship>> GetProfileFriendListByIdAsync (Guid objectId)
     {
         try
         {
-            var result = await _collection.DeleteOneAsync(filter);
-            if (result.DeletedCount > 0)
-                Console.WriteLine("Documento apagado com sucesso!");
-            else
-                Console.WriteLine("Nenhum documento foi apagado.");
+            var filter = Builders<Friend>.Filter.Eq(x => x.ProfileId, objectId.ToString());
+            var result = await _collection.Find(filter).FirstOrDefaultAsync();
+
+            return result.Friends;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao apagar documento: {ex.Message}");
+            _logger.LogError(ex, "Error getting profile document by ID.");
+            return default;
         }
     }
+    
+    #endregion
+    
+    #region Friend
+
+        public async Task AddFriendAsync(Guid userId, Friendship friend)
+    {
+        var filter = Builders<Friend>.Filter.Eq("profileId", userId.ToString());
+        var userDocument = await _collection.Find(filter).FirstOrDefaultAsync();
+
+        if (userDocument == null)
+        {
+            _logger.LogWarning("User not found.");
+            return;
+        }
+        
+        var insert = Builders<Friend>.Update.Push("friends", friend);
+
+        await _collection.UpdateOneAsync(filter, insert);
+        _logger.LogInformation("Friend added successfully.");
+    }
+
+    public async Task RemoveFriendAsync(Guid userId, Guid friendId)
+    {
+        var parsedFriendId = friendId.ToString();
+        var filter = Builders<Friend>.Filter.Eq("profileId", userId.ToString());
+        var userDocument = await _collection.Find(filter).FirstOrDefaultAsync();
+
+        if (userDocument == null)
+        {
+            _logger.LogWarning("User not found.");
+            return;
+        }
+
+        var friendExists = userDocument.Friends.Any(f => f.FriendId == parsedFriendId);
+        if (friendExists)
+        {
+            // Temos que remover o amigo tanto do perfil do usuário quanto do perfil do amigo
+            
+            var updateFilter = Builders<Friend>.Filter.Eq("profileId", userId.ToString());
+            var update = Builders<Friend>.Update.PullFilter("friends", Builders<Friendship>.Filter.Eq("friendId", parsedFriendId));
+            await _collection.UpdateOneAsync(updateFilter, update);
+            
+            updateFilter = Builders<Friend>.Filter.Eq("profileId", parsedFriendId);
+            update = Builders<Friend>.Update.PullFilter("friends", Builders<Friendship>.Filter.Eq("friendId", userId.ToString()));
+            await _collection.UpdateOneAsync(updateFilter, update);
+            
+            _logger.LogInformation("Friend removed successfully.");
+        }
+        else
+        {
+            _logger.LogWarning("Friend not found.");
+        }
+    }
+
+    #endregion
+    
+    #region Friend Request
+
+    public async Task AddFriendshipInviteAsync(Guid userId, FriendshipInvite invite)
+    {
+        var filter = Builders<Friend>.Filter.Eq("profileId", userId.ToString());
+        var userDocument = await _collection.Find(filter).FirstOrDefaultAsync();
+        
+        if (userDocument == null)
+        {
+            _logger.LogWarning("User not found.");
+            return;
+        }
+        
+        var inviteExists = userDocument.InvitesSent.Any(i => i.FriendId == invite.FriendId);
+        if (inviteExists)
+        {
+            _logger.LogWarning("Invite already exists.");
+            return;
+        }
+        
+        var friendFilter = Builders<Friend>.Filter.Eq("profileId", invite.FriendId);
+        var friendDocument = await _collection.Find(friendFilter).FirstOrDefaultAsync();
+        
+        if (friendDocument == null)
+        {
+            _logger.LogWarning("Friend not found.");
+            return;
+        }
+        
+        var friendInviteExists = friendDocument.InvitesReceived.Any(i => i.FriendId == userId.ToString());
+        if (friendInviteExists)
+        {
+            _logger.LogWarning("Friend invite already exists.");
+            return;
+        }
+        
+        var updateFilter = Builders<Friend>.Filter.Eq("profileId", invite.FriendId);
+        var update = Builders<Friend>.Update.Push("invitesSent", new FriendshipInvite(userId.ToString(), invite.RequestMessage));
+        await _collection.UpdateOneAsync(updateFilter, update);
+
+        updateFilter = Builders<Friend>.Filter.Eq("profileId", userId.ToString());
+        update = Builders<Friend>.Update.Push("invitesReceived", invite);
+        await _collection.UpdateOneAsync(updateFilter, update);
+        
+        _logger.LogInformation("Invite added successfully.");
+    }
+
+    public async Task AcceptFriendshipInviteAsync(Guid userId, Guid friendId)
+    {
+        var parsedFriendId = friendId.ToString();
+        var filter = Builders<Friend>.Filter.Eq("profileId", userId.ToString());
+        var userDocument = await _collection.Find(filter).FirstOrDefaultAsync();
+
+        if (userDocument == null)
+        {
+            _logger.LogWarning("User not found.");
+            return;
+        }
+
+        var inviteExists = userDocument.InvitesReceived.Any(i => i.FriendId == parsedFriendId);
+        if (inviteExists)
+        {
+            DateTime now = DateTime.Now;
+            var friendship = new Friendship(parsedFriendId, now);
+            await AddFriendAsync(userId, friendship);
+            
+            friendship = new Friendship(userId.ToString(), now);
+            await AddFriendAsync(friendId, friendship);
+
+            await RemoveRequestFromProfile(friendId, userId, true);
+            await RemoveRequestFromProfile(userId, friendId, false);
+            
+            _logger.LogInformation("Invite accepted successfully.");
+        }
+        else
+        {
+            _logger.LogWarning("Invite not found.");
+        }
+    }
+
+    public async Task DeclineFriendshipInviteAsync(Guid userId, Guid friendId)
+    {
+        var parsedFriendId = friendId.ToString();
+        var filter = Builders<Friend>.Filter.Eq("profileId", userId.ToString());
+        var userDocument = await _collection.Find(filter).FirstOrDefaultAsync();
+
+        if (userDocument == null)
+        {
+            _logger.LogWarning("User not found.");
+            return;
+        }
+
+        var inviteExists = userDocument.InvitesReceived.Any(i => i.FriendId == parsedFriendId);
+        if (inviteExists)
+        {
+            await RemoveRequestFromProfile(friendId, userId, true);
+            await RemoveRequestFromProfile(userId, friendId, false);
+            _logger.LogInformation("Invite declined successfully.");
+        }
+        else
+        {
+            _logger.LogWarning("Invite not found.");
+        }
+    }
+
+    public async Task RemoveRequestFromProfile(Guid from, Guid to, bool removeFromSent)
+    {
+        var filter = Builders<Friend>.Filter.Eq("profileId", from.ToString());
+        var userDocument = await _collection.Find(filter).FirstOrDefaultAsync();
+        
+        if (userDocument == null)
+        {
+            _logger.LogWarning("User not found.");
+            return;
+        }
+        
+        var inviteExists = removeFromSent
+            ? userDocument.InvitesSent.Any(i => i.FriendId == to.ToString())
+            : userDocument.InvitesReceived.Any(i => i.FriendId == to.ToString());
+
+        if (inviteExists)
+        {
+            var updateFilter = Builders<Friend>.Filter.And(
+                Builders<Friend>.Filter.Eq("profileId", from.ToString()),
+                Builders<Friend>.Filter.Eq(removeFromSent ? "invitesSent.friendId" : "invitesReceived.friendId", to.ToString()));
+            
+            var update = Builders<Friend>.Update.PullFilter(removeFromSent ? "invitesSent" : "invitesReceived", Builders<FriendshipInvite>.Filter.Eq("friendId", to.ToString()));
+            await _collection.UpdateOneAsync(updateFilter, update);
+            _logger.LogInformation("Invite removed successfully.");
+        }
+        else
+        {
+            _logger.LogWarning("Invite not found.");
+        }
+            
+    }
+
+    #endregion
 }

@@ -40,11 +40,6 @@
       <Folder Include="Follow\GetFollowers\" />
       <Folder Include="Follow\GetFollowing\" />
       <Folder Include="Follow\UnfollowUser\" />
-      <Folder Include="Friends\AddFriend\" />
-      <Folder Include="Friends\CheckFriendStatus\" />
-      <Folder Include="Friends\ListFriends\" />
-      <Folder Include="Friends\ManageFriendRequests\" />
-      <Folder Include="Friends\RemoveFriend\" />
       <Folder Include="Post\AttachMeals\" />
       <Folder Include="Post\AttachTraining\" />
       <Folder Include="Post\CommentsOnPost\" />

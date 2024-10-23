@@ -1,0 +1,3 @@
+﻿namespace SocialService.Friends.CheckFriendRequestStatus;
+
+public class CheckFriendRequestStatusQuery;

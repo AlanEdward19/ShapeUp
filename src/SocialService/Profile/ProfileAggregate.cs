@@ -6,6 +6,8 @@ public class ProfileAggregate(Profile profile)
 {
     public Guid ObjectId { get; private set; } = profile.ObjectId;
     public string Email { get; private set; } = profile.Email;
+    public string FirstName { get; private set; } = profile.FirstName;
+    public string LastName { get; private set; } = profile.LastName;
     public string? ImageUrl { get; private set; } = profile.ImageUrl;
     public string? Bio { get; private set; } = profile.Bio;
     public DateTime BirthDate { get; private set; } = profile.BirthDate;

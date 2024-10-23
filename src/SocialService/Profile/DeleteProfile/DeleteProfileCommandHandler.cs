@@ -17,7 +17,7 @@ namespace SocialService.Profile.DeleteProfile;
 public class DeleteProfileCommandHandler(
     DatabaseContext context,
     IStorageProvider storageProvider,
-    IMongoContext<Friend> mongoContext) :  IHandler<bool, DeleteProfileCommand>
+    IMongoContext mongoContext) :  IHandler<bool, DeleteProfileCommand>
 {
     /// <summary>
     /// Método para lidar com o comando de deletar um perfil
@@ -36,8 +36,7 @@ public class DeleteProfileCommandHandler(
         context.Profiles.Remove(profile);
 
         //Precisa definir forma disso ficar dentro da mesma transaction que o banco
-        var filter = Builders<Friend>.Filter.Eq(x => x.ProfileId, profile.ObjectId.ToString());
-        await mongoContext.DeleteDocumentAsync(filter);
+        await mongoContext.DeleteProfileDocumentByIdAsync(profile.ObjectId);
         
         await context.SaveChangesAsync(cancellationToken);
         await context.Database.CommitTransactionAsync(cancellationToken);
