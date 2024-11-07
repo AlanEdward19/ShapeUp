@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using SocialService.Common.Interfaces;
 using SocialService.Database.Mongo;
+using SocialService.Database.Mongo.Contracts;
 using SocialService.Friends;
 using SocialService.Storage;
 using DatabaseContext = SocialService.Database.Sql.DatabaseContext;
@@ -13,11 +14,11 @@ namespace SocialService.Profile.DeleteProfile;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="storageProvider"></param>
-/// <param name="mongoContext"></param>
+/// <param name="friendMongoContext"></param>
 public class DeleteProfileCommandHandler(
     DatabaseContext context,
     IStorageProvider storageProvider,
-    IMongoContext mongoContext) :  IHandler<bool, DeleteProfileCommand>
+    IFriendMongoContext friendMongoContext, IFollowerMongoContext followerMongoContext) :  IHandler<bool, DeleteProfileCommand>
 {
     /// <summary>
     /// Método para lidar com o comando de deletar um perfil
@@ -36,7 +37,9 @@ public class DeleteProfileCommandHandler(
         context.Profiles.Remove(profile);
 
         //Precisa definir forma disso ficar dentro da mesma transaction que o banco
-        await mongoContext.DeleteProfileDocumentByIdAsync(profile.ObjectId);
+        await friendMongoContext.DeleteProfileDocumentByIdAsync(profile.ObjectId);
+        
+        await followerMongoContext.DeleteProfileDocumentByIdAsync(profile.ObjectId);
         
         await context.SaveChangesAsync(cancellationToken);
         await context.Database.CommitTransactionAsync(cancellationToken);

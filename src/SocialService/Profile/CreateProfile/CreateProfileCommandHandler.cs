@@ -1,7 +1,9 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
 using SocialService.Database.Mongo;
+using SocialService.Database.Mongo.Contracts;
 using SocialService.Database.Sql;
+using SocialService.Follow;
 using SocialService.Friends;
 
 namespace SocialService.Profile.CreateProfile;
@@ -10,8 +12,8 @@ namespace SocialService.Profile.CreateProfile;
 /// Handler para o comando de criação de perfil.
 /// </summary>
 /// <param name="context"></param>
-/// <param name="mongoContext"></param>
-public class CreateProfileCommandHandler(DatabaseContext context, IMongoContext mongoContext)
+/// <param name="friendMongoContext"></param>
+public class CreateProfileCommandHandler(DatabaseContext context, IFriendMongoContext friendMongoContext, IFollowerMongoContext followerMongoContext)
     : IHandler<ProfileAggregate, CreateProfileCommand>
 {
     /// <summary>
@@ -28,8 +30,19 @@ public class CreateProfileCommandHandler(DatabaseContext context, IMongoContext 
 
         await context.Profiles.AddAsync(profile, cancellationToken);
 
+        #region Build Friend Document
+
         Friend friend = new(ProfileContext.ProfileId);
-        await mongoContext.AddProfileDocumentAsync(friend);
+        await friendMongoContext.AddProfileDocumentAsync(friend);
+
+        #endregion
+
+        #region Build Follow/Follower Document
+
+        ProfileConnections profileConnections = new(ProfileContext.ProfileId);
+        await followerMongoContext.AddProfileDocumentAsync(profileConnections);
+
+        #endregion
 
         ProfileAggregate profileAggregate = new(profile);
 
