@@ -28,7 +28,6 @@ public class EditProfileCommandHandler(DatabaseContext context) : IHandler<Profi
 
         profileAggregate.UpdateBio(command.Bio);
         profileAggregate.UpdateBirthDate(command.BirthDate);
-        profileAggregate.UpdateEmail(command.Email);
         profileAggregate.UpdateGender(command.Gender);
 
         profile.UpdateBasedOnValueObject(profileAggregate);
