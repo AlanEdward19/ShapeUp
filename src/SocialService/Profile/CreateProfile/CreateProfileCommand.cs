@@ -5,15 +5,10 @@ namespace SocialService.Profile.CreateProfile;
 /// <summary>
 /// Comando para criar um perfil
 /// </summary>
-/// <param name="id"></param>
-/// <param name="email"></param>
 /// <param name="gender"></param>
 /// <param name="birthDate"></param>
 /// <param name="bio"></param>
 public class CreateProfileCommand(
-    string email,
-    string firstName,
-    string lastName,
     EGender gender,
     DateTime birthDate,
     string? bio)
@@ -21,17 +16,17 @@ public class CreateProfileCommand(
     /// <summary>
     /// Email do perfil
     /// </summary>
-    public string Email { get; set; } = email;
+    public string Email { get; private set; } = "";
     
     /// <summary>
     /// Primeiro nome do perfil
     /// </summary>
-    public string FirstName { get; set; } = firstName;
+    public string FirstName { get; private set; } = "";
     
     /// <summary>
     /// Sobrenome do perfil
     /// </summary>
-    public string LastName { get; set; } = lastName;
+    public string LastName { get; private set; } = "";
 
     /// <summary>
     /// Gênero do perfil
@@ -52,4 +47,19 @@ public class CreateProfileCommand(
     /// Data de criação do perfil
     /// </summary>
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
+    
+    public void SetFirstName(string firstName)
+    {
+        FirstName = firstName;
+    }
+    
+    public void SetLastName(string lastName)
+    {
+        LastName = lastName;
+    }
+    
+    public void SetEmail(string email)
+    {
+        Email = email;
+    }
 }
