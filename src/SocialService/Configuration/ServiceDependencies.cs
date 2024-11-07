@@ -1,7 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialService.Common.Interfaces;
+using SocialService.Common.Models;
 using SocialService.Database.Mongo;
+using SocialService.Database.Mongo.Contracts;
 using SocialService.Database.Sql;
+using SocialService.Follow.FollowUser;
+using SocialService.Follow.GetFollowers;
+using SocialService.Follow.GetFollowing;
+using SocialService.Follow.UnfollowUser;
 using SocialService.Friends;
 using SocialService.Friends.AddFriend;
 using SocialService.Friends.CheckFriendRequestStatus;
@@ -44,12 +50,18 @@ public static class ServiceDependencies
 
         #region Mongo Db
 
-        services.AddScoped<IMongoContext>(provider =>
+        string mongoConnectionString = configuration.GetConnectionString("MongoConnection")!;
+        
+        services.AddScoped<IFriendMongoContext>(provider =>
         {
-            var connectionString = configuration.GetConnectionString("MongoConnection")!;
-
-            return new MongoContext(connectionString, "SocialService", "Friends",
-                provider.GetService<ILogger<MongoContext>>()!);
+            return new FriendMongoContext(mongoConnectionString, "SocialService", "Friends",
+                provider.GetService<ILogger<FriendMongoContext>>()!);
+        });
+        
+        services.AddScoped<IFollowerMongoContext>(provider =>
+        {
+            return new FollowerMongoContext(mongoConnectionString, "SocialService", "Followers",
+                provider.GetService<ILogger<FollowerMongoContext>>()!);
         });
 
         #endregion
@@ -83,11 +95,20 @@ public static class ServiceDependencies
         services
             .AddScoped<IHandler<IEnumerable<CheckFriendRequestStatusViewModel>, CheckFriendRequestStatusQuery>,
                 CheckFriendRequestStatusQueryHandler>();
-        services.AddScoped<IHandler<IEnumerable<FriendViewModel>, ListFriendsQuery>, ListFriendsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, ListFriendsQuery>, ListFriendsQueryHandler>();
         services.AddScoped<IHandler<bool, ManageFriendRequestsCommand>, ManageFriendRequestsCommandHandler>();
         services.AddScoped<IHandler<bool, RemoveFriendCommand>, RemoveFriendCommandHandler>();
         services.AddScoped<IHandler<bool, RemoveFriendRequestCommand>, RemoveFriendRequestCommandHandler>();
         
+        #endregion
+
+        #region Follow
+
+        services.AddScoped<IHandler<bool, FollowUserCommand>, FollowUserCommandHandler>();
+        services.AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowersQuery>, GetFollowersQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>, GetFollowingQueryHandler>();
+        services.AddScoped<IHandler<bool, UnfollowUserCommand>, UnfollowUserCommandHandler>();
+
         #endregion
 
         #endregion
