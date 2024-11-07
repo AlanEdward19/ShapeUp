@@ -1,16 +1,17 @@
 ﻿using MongoDB.Driver;
 using SocialService.Friends;
 using Microsoft.Extensions.Logging;
+using SocialService.Database.Mongo.Contracts;
 using SocialService.Friends.ListFriends;
 
 namespace SocialService.Database.Mongo;
 
-public class MongoContext : IMongoContext
+public class FriendMongoContext : IFriendMongoContext
 {
     private readonly IMongoCollection<Friend> _collection;
-    private readonly ILogger<MongoContext> _logger;
+    private readonly ILogger<FriendMongoContext> _logger;
 
-    public MongoContext(string connectionString, string databaseName, string collectionName, ILogger<MongoContext> logger)
+    public FriendMongoContext(string connectionString, string databaseName, string collectionName, ILogger<FriendMongoContext> logger)
     {
         var client = new MongoClient(connectionString);
         var database = client.GetDatabase(databaseName);

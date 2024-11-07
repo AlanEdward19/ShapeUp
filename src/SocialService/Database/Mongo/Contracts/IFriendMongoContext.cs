@@ -1,9 +1,8 @@
-﻿using MongoDB.Driver;
-using SocialService.Friends;
+﻿using SocialService.Friends;
 
-namespace SocialService.Database.Mongo;
+namespace SocialService.Database.Mongo.Contracts;
 
-public interface IMongoContext
+public interface IFriendMongoContext
 {
     #region Profile
 
