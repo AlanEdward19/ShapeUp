@@ -36,10 +36,6 @@
       <Folder Include="ActivityFeed\GetActivityFeed\" />
       <Folder Include="ActivityFeed\GetNotifications\" />
       <Folder Include="ActivityFeed\MarkNotificationAsRead\" />
-      <Folder Include="Follow\FollowUser\" />
-      <Folder Include="Follow\GetFollowers\" />
-      <Folder Include="Follow\GetFollowing\" />
-      <Folder Include="Follow\UnfollowUser\" />
       <Folder Include="Post\AttachMeals\" />
       <Folder Include="Post\AttachTraining\" />
       <Folder Include="Post\CommentsOnPost\" />

@@ -5,11 +5,21 @@ using SocialService.Friends;
 
 namespace SocialService.Database.Mongo;
 
+/// <summary>
+/// Contexto para operações de banco de dados relacionadas a seguidores.
+/// </summary>
 public class FollowerMongoContext : IFollowerMongoContext
 {
     private readonly IMongoCollection<ProfileConnections> _collection;
     private readonly ILogger<FollowerMongoContext> _logger;
 
+    /// <summary>
+    /// Construtor
+    /// </summary>
+    /// <param name="connectionString"></param>
+    /// <param name="databaseName"></param>
+    /// <param name="collectionName"></param>
+    /// <param name="logger"></param>
     public FollowerMongoContext(string connectionString, string databaseName, string collectionName, ILogger<FollowerMongoContext> logger)
     {
         var client = new MongoClient(connectionString);
@@ -20,6 +30,10 @@ public class FollowerMongoContext : IFollowerMongoContext
 
     #region Profile
 
+    /// <summary>
+    /// Método para adicionar um documento de perfil.
+    /// </summary>
+    /// <param name="document"></param>
     public async Task AddProfileDocumentAsync(ProfileConnections document)
     {
         try
@@ -33,6 +47,11 @@ public class FollowerMongoContext : IFollowerMongoContext
         }
     }
 
+    /// <summary>
+    /// Método para obter um documento de perfil por Id.
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <returns></returns>
     public async Task<ProfileConnections> GetProfileDocumentByIdAsync(Guid profileId)
     {
         try
@@ -43,10 +62,14 @@ public class FollowerMongoContext : IFollowerMongoContext
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error getting profile document by ID.");
-            return default;
+            return default!;
         }
     }
 
+    /// <summary>
+    /// Método para deletar um documento de perfil por Id.
+    /// </summary>
+    /// <param name="objectId"></param>
     public async Task DeleteProfileDocumentByIdAsync(Guid objectId)
     {
         try
@@ -65,6 +88,11 @@ public class FollowerMongoContext : IFollowerMongoContext
 
     #region Follower
 
+    /// <summary>
+    /// Método para seguir um perfil.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="followId"></param>
     public async Task FollowProfileAsync(Guid userId, Guid followId)
     {
         try
@@ -84,6 +112,11 @@ public class FollowerMongoContext : IFollowerMongoContext
         }
     }
     
+    /// <summary>
+    /// Método para deixar de seguir um perfil.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="followId"></param>
     public async Task UnfollowProfileAsync(Guid userId, Guid followId)
     {
         try

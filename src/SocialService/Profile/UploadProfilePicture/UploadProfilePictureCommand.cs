@@ -8,12 +8,12 @@ public class UploadProfilePictureCommand
     /// <summary>
     /// Imagem a ser enviada.
     /// </summary>
-    public MemoryStream Image { get; private set; }
-    
+    public MemoryStream Image { get; private set; } = new();
+
     /// <summary>
     /// Nome do arquivo da imagem.
     /// </summary>
-    public string ImageFileName { get; private set; }
+    public string ImageFileName { get; private set; } = "";
 
     /// <summary>
     /// Método para setar a imagem.

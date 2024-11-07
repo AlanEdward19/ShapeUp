@@ -32,6 +32,10 @@ public class ProfileController : ControllerBase
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
         
+        command.SetEmail(User.GetEmail());
+        command.SetFirstName(User.GetFirstName());
+        command.SetLastName(User.GetLastName());
+        
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
@@ -39,6 +43,8 @@ public class ProfileController : ControllerBase
     /// Rota para visualizar um perfil
     /// </summary>
     /// <param name="profileId"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("viewProfile/{profileId:guid}")]
     public async Task<IActionResult> ViewProfile(Guid profileId, [FromServices] IHandler<ProfileAggregate, ViewProfileQuery> handler,

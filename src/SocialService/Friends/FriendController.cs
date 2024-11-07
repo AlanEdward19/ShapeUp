@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialService.Common;
 using SocialService.Common.Interfaces;
+using SocialService.Common.Models;
 using SocialService.Common.Utils;
 using SocialService.Friends.AddFriend;
 using SocialService.Friends.CheckFriendRequestStatus;
@@ -61,9 +62,13 @@ public class FriendController : ControllerBase
     /// Rota para listar os amigos de um perfil
     /// </summary>
     /// <param name="profileId"></param>
+    /// <param name="page"></param>
+    /// <param name="rows"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("listFriends/{profileId:guid}")]
-    public async Task<IActionResult> ViewProfile(Guid profileId, [FromQuery] int page, [FromQuery] int rows, [FromServices] IHandler<IEnumerable<FriendViewModel>, ListFriendsQuery> handler,
+    public async Task<IActionResult> ViewProfile(Guid profileId, [FromQuery] int page, [FromQuery] int rows, [FromServices] IHandler<IEnumerable<ProfileBasicInformationViewModel>, ListFriendsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
