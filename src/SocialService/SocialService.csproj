@@ -38,11 +38,6 @@
       <Folder Include="ActivityFeed\GetActivityFeed\" />
       <Folder Include="ActivityFeed\GetNotifications\" />
       <Folder Include="ActivityFeed\MarkNotificationAsRead\" />
-      <Folder Include="Post\CommentsOnPost\" />
-      <Folder Include="Post\DeletePost\" />
-      <Folder Include="Post\EditPost\" />
-      <Folder Include="Post\GetPostComments\" />
-      <Folder Include="Post\LikePost\" />
       <Folder Include="Recommendations\GetFriendRecommendations\" />
       <Folder Include="Recommendations\GetRecommendedUsers\" />
     </ItemGroup>

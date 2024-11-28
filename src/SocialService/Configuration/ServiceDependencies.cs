@@ -17,8 +17,13 @@ using SocialService.Friends.ListFriends;
 using SocialService.Friends.ManageFriendRequests;
 using SocialService.Friends.RemoveFriend;
 using SocialService.Friends.RemoveFriendRequest;
+using SocialService.Post.CommentsOnPost;
 using SocialService.Post.Common.Repository;
 using SocialService.Post.CreatePost;
+using SocialService.Post.DeletePost;
+using SocialService.Post.EditPost;
+using SocialService.Post.GetPostComments;
+using SocialService.Post.LikePost;
 using SocialService.Post.UploadPostImages;
 using SocialService.Profile;
 using SocialService.Profile.Common.Repository;
@@ -126,7 +131,13 @@ public static class ServiceDependencies
 
         services.AddScoped<IHandler<Post.Post, CreatePostCommand>, CreatePostCommandHandler>();
         services.AddScoped<IHandler<bool, UploadPostImageCommand>, UploadPostImageCommandHandler>();
-
+        services.AddScoped<IHandler<bool, DeletePostCommand>, DeletePostCommandHandler>();
+        services.AddScoped<IHandler<Post.Post, EditPostCommand>, EditPostCommandHandler>();
+        
+        services.AddScoped<IHandler<bool, CommentOnPostCommand>, CommentOnPostCommandHandler>();
+        services.AddScoped<IHandler<IEnumerable<Comment>, GetPostCommentsQuery>, GetPostCommentsQueryHandler>();
+        services.AddScoped<IHandler<bool, LikePostCommand>, LikePostCommandHandler>();
+        
         #endregion
 
         #endregion

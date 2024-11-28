@@ -9,7 +9,7 @@ namespace SocialService.Friends;
 /// </summary>
 public class Friendship : GraphEntity
 {
-    public Friendship(Guid profileAId, Guid profileBId) : base("Friendship")
+    public Friendship(Guid profileAId, Guid profileBId)
     {
         ProfileAId = profileAId.ToString();
         ProfileBId = profileBId.ToString();
@@ -17,10 +17,11 @@ public class Friendship : GraphEntity
 
     public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
-        Id = result["id"].ToString();
         ProfileAId = result["profileAId"].ToString();
         ProfileBId = result["profileBId"].ToString();
         CreatedAt = DateTime.Parse(result["createdAt"].ToString());
+        
+        base.MapToEntityFromNeo4j(result);
     }
 
     public string ProfileAId { get; set; } // One of the profiles involved in the friendship

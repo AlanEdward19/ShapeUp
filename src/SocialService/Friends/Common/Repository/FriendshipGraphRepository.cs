@@ -59,7 +59,7 @@ public class FriendshipGraphRepository(
         if (response == null)
             return null;
 
-        FriendRequest result = new(Guid.Empty);
+        FriendRequest result = new();
         var parsedResponse = response.As<IRelationship>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
         parsedResponse.Add("senderProfileId", senderProfileId);
@@ -146,7 +146,7 @@ DELETE r";
         foreach (var record in result)
         {
             var relationship = record["r"].As<IRelationship>();
-            var friendRequest = new FriendRequest(Guid.Parse(relationship.Properties["id"].ToString()));
+            var friendRequest = new FriendRequest();
 
             var parsedResponse = relationship.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedResponse.Add("senderProfileId", record["senderProfileId"].ToString()!);
@@ -176,7 +176,7 @@ DELETE r";
         foreach (var record in result)
         {
             var relationship = record["r"].As<IRelationship>();
-            var friendRequest = new FriendRequest(Guid.Parse(relationship.Properties["id"].ToString()));
+            var friendRequest = new FriendRequest();
 
             var parsedResponse = relationship.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedResponse.Add("senderProfileId", senderProfileId.ToString());

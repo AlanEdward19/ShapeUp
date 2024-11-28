@@ -23,7 +23,7 @@ public class UploadPostImageCommandHandler(IPostGraphRepository repository, ISto
     /// <exception cref="NotFoundException"></exception>
     public async Task<bool> HandleAsync(UploadPostImageCommand command, CancellationToken cancellationToken)
     {
-        if(await repository.PostExistsAsync(command.PostId))
+        if(!await repository.PostExistsAsync(command.PostId, ProfileContext.ProfileId))
             throw new NotFoundException($"Post with id: '{command.PostId}' not found.");
         
         List<Guid> images = new();

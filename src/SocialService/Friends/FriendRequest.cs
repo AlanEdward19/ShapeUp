@@ -4,17 +4,14 @@ namespace SocialService.Friends;
 
 public class FriendRequest : GraphEntity
 {
-    public FriendRequest(Guid id) : base(id, "FriendRequest")
-    {
-    }
-
     public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
-        Id = result["id"].ToString();
         SenderProfileId = result["senderProfileId"].ToString();
         ReceiverProfileId = result["receiverProfileId"].ToString();
         CreatedAt = DateTime.Parse(result["createdAt"].ToString());
         Message = result["message"].ToString();
+        
+        base.MapToEntityFromNeo4j(result);
     }
 
     public string SenderProfileId { get; set; } // Profile who sent the request
