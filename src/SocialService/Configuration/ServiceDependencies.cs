@@ -17,6 +17,9 @@ using SocialService.Friends.ListFriends;
 using SocialService.Friends.ManageFriendRequests;
 using SocialService.Friends.RemoveFriend;
 using SocialService.Friends.RemoveFriendRequest;
+using SocialService.Post.Common.Repository;
+using SocialService.Post.CreatePost;
+using SocialService.Post.UploadPostImages;
 using SocialService.Profile;
 using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
@@ -62,24 +65,13 @@ public static class ServiceDependencies
         });
         
         services.AddScoped(typeof(GraphContext));
-        
-        // Ensure nodes are created
-        using (var serviceProvider = services.BuildServiceProvider())
-        {
-            var friendRequestContext = serviceProvider.GetService<GraphContext>();
-            var friendshipContext = serviceProvider.GetService<GraphContext>();
-            var profileContext = serviceProvider.GetService<GraphContext>();
-
-            friendRequestContext?.CreateNodeIfDoesntExists("FriendRequest").Wait();
-            friendshipContext?.CreateNodeIfDoesntExists("Friendship").Wait();
-            profileContext?.CreateNodeIfDoesntExists("Profile").Wait();
-        }
 
         #region Repositories
 
         services.AddScoped<IProfileGraphRepository, ProfileGraphRepository>();
         services.AddScoped<IFriendshipGraphRepository, FriendshipGraphRepository>();
         services.AddScoped<IFollowerGraphRepository, FollowerGraphRepository>();
+        services.AddScoped<IPostGraphRepository, PostGraphRepository>();
 
         #endregion
 
@@ -127,6 +119,13 @@ public static class ServiceDependencies
         services.AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowersQuery>, GetFollowersQueryHandler>();
         services.AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>, GetFollowingQueryHandler>();
         services.AddScoped<IHandler<bool, UnfollowUserCommand>, UnfollowUserCommandHandler>();
+
+        #endregion
+
+        #region Post
+
+        services.AddScoped<IHandler<Post.Post, CreatePostCommand>, CreatePostCommandHandler>();
+        services.AddScoped<IHandler<bool, UploadPostImageCommand>, UploadPostImageCommandHandler>();
 
         #endregion
 

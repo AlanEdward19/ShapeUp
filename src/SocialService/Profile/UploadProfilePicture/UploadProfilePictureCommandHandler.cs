@@ -21,34 +21,16 @@ public class UploadProfilePictureCommandHandler(DatabaseContext context, IStorag
     public async Task<bool> HandleAsync(UploadProfilePictureCommand command, CancellationToken cancellationToken)
     {
         await context.Database.BeginTransactionAsync(cancellationToken);
-        
-        var containerName = "profile-pictures";
-        string blobName;
 
         Profile profile = await context.Profiles.FirstAsync(
             x => x.ObjectId.Equals(ProfileContext.ProfileId),
             cancellationToken);
 
         ProfileAggregate profileAggregate = new(profile);
+        
+        var containerName = $"{profileAggregate.ObjectId}";
 
-        if (string.IsNullOrWhiteSpace(profileAggregate.ImageUrl))
-        {
-            blobName = $"{profileAggregate.ObjectId}.{command.ImageFileName.Split('.').Last()}";
-        }
-
-        else
-        {
-            blobName = profileAggregate.ImageUrl;
-            var format = profileAggregate.ImageUrl.Split('.').Last();
-
-            if (!format.Equals(command.ImageFileName.Split('.').Last()))
-            {
-                string oldFileName = profileAggregate.ImageUrl.Split(".").First();
-                blobName = $"{oldFileName}.{command.ImageFileName.Split('.').Last()}";
-            }
-
-            await storageProvider.DeleteBlobAsync(profileAggregate.ImageUrl, containerName);
-        }
+        var blobName = $"profile-pictures/{DateTime.Today:yyyy-MM-dd}.{command.ImageFileName.Split('.').Last()}";
 
         await storageProvider.WriteBlobAsync(command.Image, blobName, containerName);
 
