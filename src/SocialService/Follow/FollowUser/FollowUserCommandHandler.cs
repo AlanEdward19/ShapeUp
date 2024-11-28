@@ -1,6 +1,6 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Mongo.Contracts;
+using SocialService.Follow.Common.Repository;
 
 namespace SocialService.Follow.FollowUser;
 
@@ -8,7 +8,7 @@ namespace SocialService.Follow.FollowUser;
 /// Handler para seguir um usuário.
 /// </summary>
 /// <param name="followerMongoContext"></param>
-public class FollowUserCommandHandler(IFollowerMongoContext followerMongoContext) : IHandler<bool, FollowUserCommand>
+public class FollowUserCommandHandler(IFollowerGraphRepository graphRepository) : IHandler<bool, FollowUserCommand>
 {
     /// <summary>
     /// Método para seguir um usuário.
@@ -18,7 +18,7 @@ public class FollowUserCommandHandler(IFollowerMongoContext followerMongoContext
     /// <returns></returns>
     public async Task<bool> HandleAsync(FollowUserCommand command, CancellationToken cancellationToken)
     {
-        await followerMongoContext.FollowProfileAsync(ProfileContext.ProfileId, command.FollowedUserId);
+        await graphRepository.FollowAsync(ProfileContext.ProfileId, command.FollowedUserId);
         
         return true;
     }

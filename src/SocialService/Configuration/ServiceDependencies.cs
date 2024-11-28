@@ -1,21 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Gremlin.Net.Driver;
+using Microsoft.EntityFrameworkCore;
+using Neo4j.Driver;
 using SocialService.Common.Interfaces;
 using SocialService.Common.Models;
-using SocialService.Database.Mongo;
-using SocialService.Database.Mongo.Contracts;
+using SocialService.Database.Graph;
 using SocialService.Database.Sql;
+using SocialService.Follow.Common.Repository;
 using SocialService.Follow.FollowUser;
 using SocialService.Follow.GetFollowers;
 using SocialService.Follow.GetFollowing;
 using SocialService.Follow.UnfollowUser;
-using SocialService.Friends;
 using SocialService.Friends.AddFriend;
 using SocialService.Friends.CheckFriendRequestStatus;
+using SocialService.Friends.Common.Repository;
 using SocialService.Friends.ListFriends;
 using SocialService.Friends.ManageFriendRequests;
 using SocialService.Friends.RemoveFriend;
 using SocialService.Friends.RemoveFriendRequest;
 using SocialService.Profile;
+using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;
@@ -48,21 +51,37 @@ public static class ServiceDependencies
 
         #endregion
 
-        #region Mongo Db
+        #region Graph
+        
+        services.AddSingleton<IDriver>(_ =>
+        {
+            var uri = configuration["Neo4j:Uri"];
+            var user = configuration["Neo4j:User"];
+            var password = configuration["Neo4j:Password"];
+            return GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));
+        });
+        
+        services.AddScoped(typeof(GraphContext));
+        
+        // Ensure nodes are created
+        using (var serviceProvider = services.BuildServiceProvider())
+        {
+            var friendRequestContext = serviceProvider.GetService<GraphContext>();
+            var friendshipContext = serviceProvider.GetService<GraphContext>();
+            var profileContext = serviceProvider.GetService<GraphContext>();
 
-        string mongoConnectionString = configuration.GetConnectionString("MongoConnection")!;
-        
-        services.AddScoped<IFriendMongoContext>(provider =>
-        {
-            return new FriendMongoContext(mongoConnectionString, "SocialService", "Friends",
-                provider.GetService<ILogger<FriendMongoContext>>()!);
-        });
-        
-        services.AddScoped<IFollowerMongoContext>(provider =>
-        {
-            return new FollowerMongoContext(mongoConnectionString, "SocialService", "Followers",
-                provider.GetService<ILogger<FollowerMongoContext>>()!);
-        });
+            friendRequestContext?.CreateNodeIfDoesntExists("FriendRequest").Wait();
+            friendshipContext?.CreateNodeIfDoesntExists("Friendship").Wait();
+            profileContext?.CreateNodeIfDoesntExists("Profile").Wait();
+        }
+
+        #region Repositories
+
+        services.AddScoped<IProfileGraphRepository, ProfileGraphRepository>();
+        services.AddScoped<IFriendshipGraphRepository, FriendshipGraphRepository>();
+        services.AddScoped<IFollowerGraphRepository, FollowerGraphRepository>();
+
+        #endregion
 
         #endregion
 

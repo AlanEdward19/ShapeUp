@@ -1,10 +1,7 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Mongo;
-using SocialService.Database.Mongo.Contracts;
 using SocialService.Database.Sql;
-using SocialService.Follow;
-using SocialService.Friends;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.CreateProfile;
 
@@ -13,7 +10,7 @@ namespace SocialService.Profile.CreateProfile;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="friendMongoContext"></param>
-public class CreateProfileCommandHandler(DatabaseContext context, IFriendMongoContext friendMongoContext, IFollowerMongoContext followerMongoContext)
+public class CreateProfileCommandHandler(DatabaseContext context, IProfileGraphRepository graphRepository) 
     : IHandler<ProfileAggregate, CreateProfileCommand>
 {
     /// <summary>
@@ -30,17 +27,9 @@ public class CreateProfileCommandHandler(DatabaseContext context, IFriendMongoCo
 
         await context.Profiles.AddAsync(profile, cancellationToken);
 
-        #region Build Friend Document
+        #region Create Profile Graph
 
-        Friend friend = new(ProfileContext.ProfileId);
-        await friendMongoContext.AddProfileDocumentAsync(friend);
-
-        #endregion
-
-        #region Build Follow/Follower Document
-
-        ProfileConnections profileConnections = new(ProfileContext.ProfileId);
-        await followerMongoContext.AddProfileDocumentAsync(profileConnections);
+        await graphRepository.CreateProfileAsync(ProfileContext.ProfileId);
 
         #endregion
 

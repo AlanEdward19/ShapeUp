@@ -1,16 +1,14 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Mongo;
-using SocialService.Database.Mongo.Contracts;
+using SocialService.Friends.Common.Repository;
 
 namespace SocialService.Friends.RemoveFriendRequest;
 
-public class RemoveFriendRequestCommandHandler(IFriendMongoContext friendMongoContext) : IHandler<bool, RemoveFriendRequestCommand>
+public class RemoveFriendRequestCommandHandler(IFriendshipGraphRepository graphRepository) : IHandler<bool, RemoveFriendRequestCommand>
 {
     public async Task<bool> HandleAsync(RemoveFriendRequestCommand command, CancellationToken cancellationToken)
     {
-        await friendMongoContext.RemoveRequestFromProfile(ProfileContext.ProfileId, command.ProfileId, true);
-        await friendMongoContext.RemoveRequestFromProfile(command.ProfileId, ProfileContext.ProfileId, false);
+        await graphRepository.RejectFriendRequestAsync(ProfileContext.ProfileId, command.ProfileId);
         
         return true;
     }

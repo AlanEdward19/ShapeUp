@@ -1,18 +1,7 @@
-﻿services:
-  
-#  trainingservice:
-#    image: trainingservice
-#    container_name: TrainingService
-#    build:
-#      context: .
-#      dockerfile: TrainingService/Dockerfile
-#    
-#    networks:
-#      - internal-network
-#
-#    environment:
-#      ASPNETCORE_URLS: "https://+:5001"
-      
+﻿version: "3.8"
+
+services:
+
   socialservice:
     image: socialservice
     container_name: SocialService
@@ -28,7 +17,7 @@
     
     ports:
       - "5000:5000"
-  
+
   database:
     user: root
     container_name: SQLServer
@@ -47,7 +36,7 @@
 
   storage:
     container_name: 'Storage'
-    image: mcr.microsoft.com/azure-storage/azurite:latest  # Update to the latest version
+    image: mcr.microsoft.com/azure-storage/azurite:latest
     restart: always
     hostname: azurite
     command: "azurite --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --skipApiVersionCheck"
@@ -59,22 +48,6 @@
     networks:
       - internal-network
 
-  mongodb:
-    image: mongo:latest
-    container_name: MongoDB
-    networks:
-      - internal-network
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - "27017:27017"
-    volumes:
-      - ../volumes/mongo_data:/data/db
-
 networks:
   internal-network:
     driver: bridge
-
-  

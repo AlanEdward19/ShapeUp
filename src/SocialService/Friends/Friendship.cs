@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using SocialService.Common.Entities;
 using SocialService.Friends.Common.Enums;
 
 namespace SocialService.Friends;
@@ -6,26 +7,23 @@ namespace SocialService.Friends;
 /// <summary>
 /// Classe que representa uma amizade entre dois perfis
 /// </summary>
-public class Friendship
+public class Friendship : GraphEntity
 {
-    /// <summary>
-    /// Construtor padrao
-    /// </summary>
-    /// <param name="friendId"></param>
-    /// <param name="acceptedAt"></param>
-    public Friendship(string friendId, DateTime acceptedAt)
+    public Friendship(Guid profileAId, Guid profileBId) : base("Friendship")
     {
-        FriendId = friendId;
-        AcceptedAt = acceptedAt;
+        ProfileAId = profileAId.ToString();
+        ProfileBId = profileBId.ToString();
     }
 
-    /// <summary>
-    /// Id do amigo
-    /// </summary>
-    [BsonElement("friendId")] public string FriendId { get; set; }
+    public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
+    {
+        Id = result["id"].ToString();
+        ProfileAId = result["profileAId"].ToString();
+        ProfileBId = result["profileBId"].ToString();
+        CreatedAt = DateTime.Parse(result["createdAt"].ToString());
+    }
 
-    /// <summary>
-    /// Data em que a amizade foi aceita
-    /// </summary>
-    [BsonElement("acceptedAt")] public DateTime? AcceptedAt { get; set; }
+    public string ProfileAId { get; set; } // One of the profiles involved in the friendship
+    public string ProfileBId { get; set; } // The other profile involved in the friendship
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

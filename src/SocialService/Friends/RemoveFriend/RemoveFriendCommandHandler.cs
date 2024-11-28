@@ -1,7 +1,6 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Mongo;
-using SocialService.Database.Mongo.Contracts;
+using SocialService.Friends.Common.Repository;
 
 namespace SocialService.Friends.RemoveFriend;
 
@@ -9,7 +8,7 @@ namespace SocialService.Friends.RemoveFriend;
 /// Handler para remover um amigo.
 /// </summary>
 /// <param name="friendMongoContext"></param>
-public class RemoveFriendCommandHandler(IFriendMongoContext friendMongoContext) : IHandler<bool, RemoveFriendCommand>
+public class RemoveFriendCommandHandler(IFriendshipGraphRepository graphRepository) : IHandler<bool, RemoveFriendCommand>
 {
     /// <summary>
     /// Método para remover um amigo.
@@ -19,7 +18,7 @@ public class RemoveFriendCommandHandler(IFriendMongoContext friendMongoContext) 
     /// <returns></returns>
     public async Task<bool> HandleAsync(RemoveFriendCommand command, CancellationToken cancellationToken)
     {
-        await friendMongoContext.RemoveFriendAsync(ProfileContext.ProfileId, command.ProfileId);
+        await graphRepository.UnfriendAsync(ProfileContext.ProfileId, command.ProfileId);
 
         return true;
     }

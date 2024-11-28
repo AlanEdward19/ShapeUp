@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialService.Common.Interfaces;
 using SocialService.Common.Models;
-using SocialService.Database.Mongo.Contracts;
 using SocialService.Database.Sql;
-using SocialService.Follow.GetFollowers;
+using SocialService.Follow.Common.Repository;
 
 namespace SocialService.Follow.GetFollowing;
 
@@ -12,7 +11,7 @@ namespace SocialService.Follow.GetFollowing;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="followerMongoContext"></param>
-public class GetFollowingQueryHandler(DatabaseContext context,IFollowerMongoContext followerMongoContext) : IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>
+public class GetFollowingQueryHandler(DatabaseContext context,IFollowerGraphRepository graphRepository) : IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>
 {
     /// <summary>
     /// Método para obter os perfis seguidos de um perfil
@@ -22,8 +21,8 @@ public class GetFollowingQueryHandler(DatabaseContext context,IFollowerMongoCont
     /// <returns></returns>
     public async Task<IEnumerable<ProfileBasicInformationViewModel>> HandleAsync(GetFollowingQuery query, CancellationToken cancellationToken)
     {
-        var profile = await followerMongoContext.GetProfileDocumentByIdAsync(query.ProfileId);
-        var pagedFollowingIds = profile.Following
+        var following = await graphRepository.GetFollowingAsync(query.ProfileId);
+        var pagedFollowingIds = following
             .Skip((query.Page - 1) * query.Rows).Take(query.Rows).Select(Guid.Parse);
         
         return await context.Profiles.AsNoTracking().Where(x => pagedFollowingIds.Contains(x.ObjectId))

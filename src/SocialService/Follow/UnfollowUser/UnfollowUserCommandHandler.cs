@@ -1,6 +1,6 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Mongo.Contracts;
+using SocialService.Follow.Common.Repository;
 
 namespace SocialService.Follow.UnfollowUser;
 
@@ -8,7 +8,7 @@ namespace SocialService.Follow.UnfollowUser;
 /// Handler para o comando de unfollow de um usuário.
 /// </summary>
 /// <param name="followerMongoContext"></param>
-public class UnfollowUserCommandHandler(IFollowerMongoContext followerMongoContext) : IHandler<bool, UnfollowUserCommand>
+public class UnfollowUserCommandHandler(IFollowerGraphRepository graphRepository) : IHandler<bool, UnfollowUserCommand>
 {
     /// <summary>
     /// Método para realizar o unfollow de um usuário.
@@ -18,7 +18,7 @@ public class UnfollowUserCommandHandler(IFollowerMongoContext followerMongoConte
     /// <returns></returns>
     public async Task<bool> HandleAsync(UnfollowUserCommand command, CancellationToken cancellationToken)
     {
-        await followerMongoContext.UnfollowProfileAsync(ProfileContext.ProfileId, command.UnfollowedUserId);
+        await graphRepository.UnfollowAsync(ProfileContext.ProfileId, command.UnfollowedUserId);
         
         return true;
     }

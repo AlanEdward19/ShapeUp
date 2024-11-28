@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Mongo;
-using SocialService.Database.Mongo.Contracts;
 using SocialService.Database.Sql;
 using SocialService.Friends.Common.Enums;
+using SocialService.Friends.Common.Repository;
 
 namespace SocialService.Friends.CheckFriendRequestStatus;
 
@@ -13,7 +12,7 @@ namespace SocialService.Friends.CheckFriendRequestStatus;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="friendMongoContext"></param>
-public class CheckFriendRequestStatusQueryHandler(DatabaseContext context, IFriendMongoContext friendMongoContext) : IHandler<IEnumerable<CheckFriendRequestStatusViewModel>, CheckFriendRequestStatusQuery>
+public class CheckFriendRequestStatusQueryHandler(DatabaseContext context, IFriendshipGraphRepository graphRepository) : IHandler<IEnumerable<CheckFriendRequestStatusViewModel>, CheckFriendRequestStatusQuery>
 {
     /// <summary>
     /// Método para verificar o status das solicitações de amizade.
@@ -23,9 +22,11 @@ public class CheckFriendRequestStatusQueryHandler(DatabaseContext context, IFrie
     /// <returns></returns>
     public async Task<IEnumerable<CheckFriendRequestStatusViewModel>> HandleAsync(CheckFriendRequestStatusQuery query, CancellationToken cancellationToken)
     {
-        var profile = await friendMongoContext.GetProfileDocumentByIdAsync(ProfileContext.ProfileId);
-        var invitesSentIdList = profile.InvitesSent.Select(x => Guid.Parse(x.FriendId));
-        var invitesReceivedIdList = profile.InvitesReceived.Select(x => Guid.Parse(x.FriendId));
+        var requests = await graphRepository.GetPendingRequestsForProfileAsync(ProfileContext.ProfileId);
+        var sentRequests = await graphRepository.GetSentFriendRequestsAsync(ProfileContext.ProfileId);
+        
+        var invitesSentIdList = sentRequests.Select(x => Guid.Parse( x.SenderProfileId));
+        var invitesReceivedIdList =requests.Select(x => Guid.Parse(x.ReceiverProfileId));
 
         IEnumerable<Profile.Profile> profiles = await context.Profiles.AsNoTracking()
             .Where(x => invitesReceivedIdList.Concat(invitesSentIdList).Contains(x.ObjectId))

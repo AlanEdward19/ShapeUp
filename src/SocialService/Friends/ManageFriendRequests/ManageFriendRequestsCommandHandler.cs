@@ -1,8 +1,6 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Mongo;
-using SocialService.Database.Mongo.Contracts;
-using SocialService.Database.Sql;
+using SocialService.Friends.Common.Repository;
 
 namespace SocialService.Friends.ManageFriendRequests;
 
@@ -10,7 +8,8 @@ namespace SocialService.Friends.ManageFriendRequests;
 /// Handler para gerenciar solicitações de amizade.
 /// </summary>
 /// <param name="friendMongoContext"></param>
-public class ManageFriendRequestsCommandHandler(IFriendMongoContext friendMongoContext) : IHandler<bool, ManageFriendRequestsCommand>
+public class ManageFriendRequestsCommandHandler(IFriendshipGraphRepository graphRepository)
+    : IHandler<bool, ManageFriendRequestsCommand>
 {
     /// <summary>
     /// Método para gerenciar solicitações de amizade.
@@ -21,10 +20,10 @@ public class ManageFriendRequestsCommandHandler(IFriendMongoContext friendMongoC
     public async Task<bool> HandleAsync(ManageFriendRequestsCommand command, CancellationToken cancellationToken)
     {
         if (command.Accept)
-            await friendMongoContext.AcceptFriendshipInviteAsync(ProfileContext.ProfileId, command.ProfileId);
-        
+            await graphRepository.AcceptFriendRequestAsync(command.ProfileId, ProfileContext.ProfileId);
+
         else
-            await friendMongoContext.DeclineFriendshipInviteAsync(ProfileContext.ProfileId, command.ProfileId);
+            await graphRepository.RejectFriendRequestAsync(command.ProfileId, ProfileContext.ProfileId);
 
         return true;
     }

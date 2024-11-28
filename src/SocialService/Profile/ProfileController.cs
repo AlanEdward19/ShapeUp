@@ -87,7 +87,7 @@ public class ProfileController : ControllerBase
     /// <returns></returns>
     [HttpPut("uploadProfilePicture")]
     public async Task<IActionResult> UploadProfilePicture([FromServices] IHandler<bool, UploadProfilePictureCommand> handler,
-        [FromForm] IFormFile image, CancellationToken cancellationToken)
+        IFormFile image, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
         
