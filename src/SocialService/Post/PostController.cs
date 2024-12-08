@@ -12,6 +12,7 @@ using SocialService.Post.DeletePost;
 using SocialService.Post.DeleteReactionFromPost;
 using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.GetPostComments;
+using SocialService.Post.GetPostInformations;
 using SocialService.Post.GetReactionsOnPost;
 using SocialService.Post.LikePost;
 using SocialService.Post.UploadPostImages;
@@ -26,6 +27,17 @@ public class PostController : ControllerBase
 {
     #region Post
 
+    [HttpGet("{id:guid}/getPost")]
+    public async Task<IActionResult> GetPost([FromServices] IHandler<Post, GetPostQuery> handler,
+        Guid id, CancellationToken cancellationToken)
+    {
+        GetPostQuery query = new();
+        query.SetPostId(id);
+        
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
+    
     [HttpPost("createPost")]
     public async Task<IActionResult> CreatePost([FromServices] IHandler<Post, CreatePostCommand> handler,
         [FromBody] CreatePostCommand command, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)

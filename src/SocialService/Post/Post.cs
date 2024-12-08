@@ -1,21 +1,50 @@
-﻿namespace SocialService.Post;
+﻿using SocialService.Common.Entities;
+using SocialService.Post.Common.Enums;
+
+namespace SocialService.Post;
 
 /// <summary>
 /// Classe que representa um post.
 /// </summary>
-public class Post
+public class Post : GraphEntity
 {
     /// <summary>
-    /// Id do post.
+    /// Visibilidade do post.
     /// </summary>
-    public Guid PostId { get; private set; }
+    public EPostVisibility Visibility { get; private set; }
 
     /// <summary>
-    /// Construtor da classe.
+    /// Data de criação do post.
     /// </summary>
-    /// <param name="postId"></param>
-    public Post(Guid postId)
+    public DateTime CreatedAt { get; private set; }
+
+    /// <summary>
+    /// Data de atualização do post.
+    /// </summary>
+    public DateTime UpdatedAt { get; private set; }
+
+    public IEnumerable<Guid> Images { get; private set; }
+
+    /// <summary>
+    /// Conteúdo do post.
+    /// </summary>
+    public string Content { get; private set; }
+
+    public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
-        PostId = postId;
+        Visibility = (EPostVisibility) Enum.Parse(typeof(EPostVisibility), result["visibility"].ToString()!);
+        CreatedAt = DateTime.Parse(result["createdAt"].ToString()!);
+        UpdatedAt = DateTime.Parse(result["updatedAt"].ToString()!);
+        Content = result["content"].ToString()!;
+
+        if (result.ContainsKey("images"))
+            Images = result["images"] == null
+                ? new List<Guid>()
+                : ((List<object>) result["images"]).Select(id => Guid.Parse(id.ToString()!)).ToList();
+
+        else
+            Images = new List<Guid>();
+
+        base.MapToEntityFromNeo4j(result);
     }
 }

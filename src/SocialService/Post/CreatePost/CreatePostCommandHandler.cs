@@ -1,6 +1,7 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
 using SocialService.Post.Common.Repository;
+using SocialService.Storage;
 
 namespace SocialService.Post.CreatePost;
 
@@ -8,7 +9,7 @@ namespace SocialService.Post.CreatePost;
 /// Handler para criação de post.
 /// </summary>
 /// <param name="repository"></param>
-public class CreatePostCommandHandler(IPostGraphRepository repository)
+public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
     : IHandler<Post, CreatePostCommand>
 {
     /// <summary>
@@ -21,8 +22,11 @@ public class CreatePostCommandHandler(IPostGraphRepository repository)
     {
         Guid postId = Guid.NewGuid();
 
-        await repository.CreatePostAsync(ProfileContext.ProfileId, postId, command);
+        var blobName = $"post-images/{postId}";
+        var containerName = ProfileContext.ProfileId.ToString();
 
-        return new(postId);
+        await storageProvider.CreateFolderAsync(blobName, containerName);
+
+        return await repository.CreatePostAsync(ProfileContext.ProfileId, postId, command);
     }
 }

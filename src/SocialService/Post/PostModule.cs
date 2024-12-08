@@ -8,6 +8,7 @@ using SocialService.Post.DeleteReactionFromPost;
 using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.EditPost;
 using SocialService.Post.GetPostComments;
+using SocialService.Post.GetPostInformations;
 using SocialService.Post.GetReactionsOnPost;
 using SocialService.Post.LikePost;
 using SocialService.Post.UploadPostImages;
@@ -37,6 +38,7 @@ public static class PostModule
     {
         #region Post
 
+        services.AddScoped<IHandler<Post, GetPostQuery>, GetPostQueryHandler>();
         services.AddScoped<IHandler<Post, CreatePostCommand>, CreatePostCommandHandler>();
         services.AddScoped<IHandler<bool, UploadPostImageCommand>, UploadPostImageCommandHandler>();
         services.AddScoped<IHandler<bool, DeletePostCommand>, DeletePostCommandHandler>();

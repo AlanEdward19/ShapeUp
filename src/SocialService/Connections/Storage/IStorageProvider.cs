@@ -30,6 +30,14 @@ public interface IStorageProvider
     /// <param name="containerName"></param>
     /// <returns></returns>
     Task WriteBlobAsync(MemoryStream data, string blobName, string containerName);
+
+    /// <summary>
+    /// Método para criar uma pasta
+    /// </summary>
+    /// <param name="folderName"></param>
+    /// <param name="containerName"></param>
+    /// <returns></returns>
+    Task CreateFolderAsync(string folderName, string containerName);
     
     /// <summary>
     /// Método para deletar um blob

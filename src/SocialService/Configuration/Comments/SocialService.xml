@@ -238,6 +238,14 @@
             <param name="containerName"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Storage.IStorageProvider.CreateFolderAsync(System.String,System.String)">
+            <summary>
+            Método para criar uma pasta
+            </summary>
+            <param name="folderName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Storage.IStorageProvider.DeleteBlobAsync(System.String,System.String)">
             <summary>
             Método para deletar um blob
@@ -290,6 +298,13 @@
             </summary>
             <param name="data"></param>
             <param name="blobName"></param>
+            <param name="containerName"></param>
+        </member>
+        <member name="M:SocialService.Storage.StorageProvider.CreateFolderAsync(System.String,System.String)">
+            <summary>
+            Método para criar uma pasta
+            </summary>
+            <param name="folderName"></param>
             <param name="containerName"></param>
         </member>
         <member name="M:SocialService.Storage.StorageProvider.DeleteBlobAsync(System.String,System.String)">
@@ -1176,6 +1191,13 @@
             Interface do repositório de grafo para post
             </summary>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid)">
+            <summary>
+            Método que retorna um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.PostExistsAsync(System.Guid,System.Guid)">
             <summary>
             Método que verifica se um post existe
@@ -1193,6 +1215,14 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UpdatePostAsync(SocialService.Post.CreatePost.EditPostCommand)">
+            <summary>
+            Método que atualiza um post
+            </summary>
+            <param name="postId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.Guid})">
             <summary>
             Método que adiciona imagens a um post
@@ -1206,14 +1236,6 @@
             Método que deleta um post
             </summary>
             <param name="postId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UpdatePostAsync(SocialService.Post.CreatePost.EditPostCommand)">
-            <summary>
-            Método que atualiza um post
-            </summary>
-            <param name="postId"></param>
-            <param name="command"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CommentOnPostAsync(SocialService.Post.CommentsOnPost.CommentOnPostCommand,System.Guid)">
@@ -1281,6 +1303,13 @@
             </summary>
             <param name="graphContext"></param>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid)">
+            <summary>
+            Método que retorna um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.PostExistsAsync(System.Guid,System.Guid)">
             <summary>
             Método que verifica se um post existe
@@ -1297,6 +1326,13 @@
             <param name="postId"></param>
             <param name="command"></param>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UpdatePostAsync(SocialService.Post.CreatePost.EditPostCommand)">
+            <summary>
+            Método que atualiza um post
+            </summary>
+            <param name="postId"></param>
+            <param name="command"></param>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.Guid})">
             <summary>
             Método que adiciona imagens a um post
@@ -1309,13 +1345,6 @@
             Método que deleta um post
             </summary>
             <param name="postId"></param>
-        </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UpdatePostAsync(SocialService.Post.CreatePost.EditPostCommand)">
-            <summary>
-            Método que atualiza um post
-            </summary>
-            <param name="postId"></param>
-            <param name="command"></param>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CommentOnPostAsync(SocialService.Post.CommentsOnPost.CommentOnPostCommand,System.Guid)">
             <summary>
@@ -1380,7 +1409,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.CreatePost.CreatePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.CreatePost.CreatePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Storage.IStorageProvider)">
             <summary>
             Handler para criação de post.
             </summary>
@@ -1560,16 +1589,25 @@
             Classe que representa um post.
             </summary>
         </member>
-        <member name="P:SocialService.Post.Post.PostId">
+        <member name="P:SocialService.Post.Post.Visibility">
             <summary>
-            Id do post.
+            Visibilidade do post.
             </summary>
         </member>
-        <member name="M:SocialService.Post.Post.#ctor(System.Guid)">
+        <member name="P:SocialService.Post.Post.CreatedAt">
             <summary>
-            Construtor da classe.
+            Data de criação do post.
             </summary>
-            <param name="postId"></param>
+        </member>
+        <member name="P:SocialService.Post.Post.UpdatedAt">
+            <summary>
+            Data de atualização do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.Content">
+            <summary>
+            Conteúdo do post.
+            </summary>
         </member>
         <member name="T:SocialService.Post.PostModule">
             <summary>

@@ -62,6 +62,22 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
 
         await blobClient.UploadAsync(data, true);
     }
+    
+    /// <summary>
+    /// Método para criar uma pasta
+    /// </summary>
+    /// <param name="folderName"></param>
+    /// <param name="containerName"></param>
+    public async Task CreateFolderAsync(string folderName, string containerName)
+    {
+        folderName = SanitizeName(folderName, true);
+        containerName = SanitizeName(containerName);
+
+        logger.LogInformation("Criando pasta");
+
+        var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+        await containerClient.CreateIfNotExistsAsync();
+    }
 
     /// <summary>
     /// Método para deletar um blob

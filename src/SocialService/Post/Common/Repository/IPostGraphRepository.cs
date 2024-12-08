@@ -15,13 +15,20 @@ public interface IPostGraphRepository
     #region Post
 
     /// <summary>
+    /// Método que retorna um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    Task<Post> GetPostAsync(Guid postId);
+    
+    /// <summary>
     /// Método que verifica se um post existe
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="profileId"></param>
     /// <returns></returns>
     Task<bool> PostExistsAsync(Guid postId, Guid profileId);
-    
+
     /// <summary>
     /// Método que cria um post
     /// </summary>
@@ -29,7 +36,15 @@ public interface IPostGraphRepository
     /// <param name="postId"></param>
     /// <param name="command"></param>
     /// <returns></returns>
-    Task CreatePostAsync(Guid profileId, Guid postId, CreatePostCommand command);
+    Task<Post> CreatePostAsync(Guid profileId, Guid postId,  CreatePostCommand command);
+    
+    /// <summary>
+    /// Método que atualiza um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    Task<Post> UpdatePostAsync(EditPostCommand command);
     
     /// <summary>
     /// Método que adiciona imagens a um post
@@ -45,14 +60,6 @@ public interface IPostGraphRepository
     /// <param name="postId"></param>
     /// <returns></returns>
     Task DeletePostAsync(Guid postId);
-
-    /// <summary>
-    /// Método que atualiza um post
-    /// </summary>
-    /// <param name="postId"></param>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    Task UpdatePostAsync(EditPostCommand command);
 
     #endregion
     
