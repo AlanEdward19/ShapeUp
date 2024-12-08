@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SocialService.Database.Sql;
+namespace SocialService.Connections.Sql;
 
 public partial class DatabaseContext
 {
     /// <summary>
-    /// Perfis de usuários.
+    ///     Perfis de usuários.
     /// </summary>
     public DbSet<Profile.Profile> Profiles { get; set; }
 }

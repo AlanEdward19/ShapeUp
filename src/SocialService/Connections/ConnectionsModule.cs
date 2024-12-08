@@ -1,43 +1,43 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Neo4j.Driver;
-using SocialService.Database.Graph;
-using SocialService.Database.Sql;
-using SocialService.Storage;
+using SocialService.Connections.Graph;
+using SocialService.Connections.Sql;
+using SocialService.Connections.Storage;
 
 namespace SocialService.Connections;
 
 /// <summary>
-/// Modulo de conexões externas
+///     Modulo de conexões externas
 /// </summary>
 public static class ConnectionsModule
 {
     /// <summary>
-    /// Método para configurar as conexões
+    ///     Método para configurar as conexões
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <returns></returns>
-    public static IServiceCollection ConfigureConnections(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureConnections(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services
             .ConfigureSqlServer(configuration)
             .ConfigureNeo4J(configuration)
             .ConfigureStorageProvider(configuration);
-        
+
         return services;
     }
-    
+
     private static IServiceCollection ConfigureSqlServer(this IServiceCollection services, IConfiguration configuration)
     {
-        
         services.AddDbContext<DatabaseContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection"));
         });
-        
+
         return services;
     }
-    
+
     private static IServiceCollection ConfigureNeo4J(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IDriver>(_ =>
@@ -47,13 +47,14 @@ public static class ConnectionsModule
             var password = configuration["Neo4j:Password"];
             return GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));
         });
-        
+
         services.AddScoped(typeof(GraphContext));
-        
+
         return services;
     }
-    
-    private static IServiceCollection ConfigureStorageProvider(this IServiceCollection services, IConfiguration configuration)
+
+    private static IServiceCollection ConfigureStorageProvider(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddScoped<IStorageProvider>(provider =>
         {
@@ -61,7 +62,7 @@ public static class ConnectionsModule
 
             return new StorageProvider(connectionString, provider.GetService<ILogger<StorageProvider>>()!);
         });
-        
+
         return services;
     }
 }

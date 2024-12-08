@@ -22,7 +22,7 @@ public static class EndpointsConfiguration
     {
         var healthCheck = configuration["EndPointsConfig:HealthCheckPath"];
 
-        app.MapHealthChecks(healthCheck);
+        app.MapHealthChecks(healthCheck!);
         app.MapControllers();
         return app;
     }

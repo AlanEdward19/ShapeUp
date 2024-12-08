@@ -10,12 +10,11 @@ using SocialService.Follow.FollowUser;
 using SocialService.Follow.GetFollowers;
 using SocialService.Follow.GetFollowing;
 using SocialService.Follow.UnfollowUser;
-using SocialService.Profile;
 
 namespace SocialService.Follow;
 
 /// <summary>
-/// Controller responsavel por gerenciar funções de seguir e deixar de seguir de um perfil
+///     Controller responsavel por gerenciar funções de seguir e deixar de seguir de um perfil
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
@@ -24,7 +23,7 @@ namespace SocialService.Follow;
 public class FollowController : ControllerBase
 {
     /// <summary>
-    /// Rota para seguir um perfil
+    ///     Rota para seguir um perfil
     /// </summary>
     /// <param name="handler"></param>
     /// <param name="profileId"></param>
@@ -40,7 +39,7 @@ public class FollowController : ControllerBase
     }
 
     /// <summary>
-    /// Rotar para deixar de seguir um perfil
+    ///     Rotar para deixar de seguir um perfil
     /// </summary>
     /// <param name="handler"></param>
     /// <param name="profileId"></param>
@@ -56,7 +55,7 @@ public class FollowController : ControllerBase
     }
 
     /// <summary>
-    /// Rotar para obter os seguidores de um perfil
+    ///     Rotar para obter os seguidores de um perfil
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="page"></param>
@@ -78,9 +77,9 @@ public class FollowController : ControllerBase
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
-    
+
     /// <summary>
-    /// Rotar para obter os perfis que um perfil segue
+    ///     Rotar para obter os perfis que um perfil segue
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="page"></param>

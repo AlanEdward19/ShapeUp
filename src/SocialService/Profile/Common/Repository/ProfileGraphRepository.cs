@@ -1,16 +1,15 @@
-﻿using SocialService.Database.Graph;
-using SocialService.Storage;
+﻿using SocialService.Connections.Graph;
 
 namespace SocialService.Profile.Common.Repository;
 
 /// <summary>
-/// Repositório de grafo sobre perfis.
+///     Repositório de grafo sobre perfis.
 /// </summary>
 /// <param name="graphContext"></param>
 public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRepository
 {
     /// <summary>
-    /// Método para criar um perfil
+    ///     Método para criar um perfil
     /// </summary>
     /// <param name="id"></param>
     public async Task CreateProfileAsync(Guid id)
@@ -22,7 +21,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     }
 
     /// <summary>
-    /// Método para deletar um perfil
+    ///     Método para deletar um perfil
     /// </summary>
     /// <param name="id"></param>
     public async Task DeleteProfileAsync(Guid id)

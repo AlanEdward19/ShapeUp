@@ -1,17 +1,17 @@
 ﻿using Neo4j.Driver;
-using SocialService.Database.Graph;
+using SocialService.Connections.Graph;
 
 namespace SocialService.Friends.Common.Repository;
 
 /// <summary>
-/// Repositório de grafo sobre amizades.
+///     Repositório de grafo sobre amizades.
 /// </summary>
 /// <param name="graphContext"></param>
 public class FriendshipGraphRepository(
     GraphContext graphContext) : IFriendshipGraphRepository
 {
     /// <summary>
-    /// Método para enviar um pedido de amizade
+    ///     Método para enviar um pedido de amizade
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
@@ -37,7 +37,7 @@ public class FriendshipGraphRepository(
     }
 
     /// <summary>
-    /// Método para obter um pedido de amizade
+    ///     Método para obter um pedido de amizade
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
@@ -49,7 +49,7 @@ public class FriendshipGraphRepository(
     RETURN r
         """;
 
-        var responseList = (await graphContext.ExecuteQueryAsync(query));
+        var responseList = await graphContext.ExecuteQueryAsync(query);
 
         if (responseList == null || !responseList.Any())
             return null;
@@ -71,7 +71,7 @@ public class FriendshipGraphRepository(
     }
 
     /// <summary>
-    /// Método para aceitar um pedido de amizade
+    ///     Método para aceitar um pedido de amizade
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
@@ -107,7 +107,7 @@ DELETE r";
     }
 
     /// <summary>
-    /// Método para rejeitar um pedido de amizade
+    ///     Método para rejeitar um pedido de amizade
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
@@ -130,7 +130,7 @@ DELETE r";
     }
 
     /// <summary>
-    /// Método para obter os pedidos de amizade pendentes para um perfil
+    ///     Método para obter os pedidos de amizade pendentes para um perfil
     /// </summary>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
@@ -160,7 +160,7 @@ DELETE r";
     }
 
     /// <summary>
-    /// Método para obter os pedidos de amizade enviados por um perfil
+    ///     Método para obter os pedidos de amizade enviados por um perfil
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <returns></returns>
@@ -190,7 +190,7 @@ DELETE r";
     }
 
     /// <summary>
-    /// Método para obter as amizades de um perfil
+    ///     Método para obter as amizades de um perfil
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
@@ -199,18 +199,18 @@ DELETE r";
         var query = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})-[:FRIEND]-(friend:Profile)
     RETURN friend.id AS id";
-        
+
         var result = await graphContext.ExecuteQueryAsync(query);
         var friendships = new List<Friendship>();
 
         foreach (var item in result)
-            friendships.Add(new(profileId, Guid.Parse(item["id"].ToString()!)));
+            friendships.Add(new Friendship(profileId, Guid.Parse(item["id"].ToString()!)));
 
         return friendships;
     }
 
     /// <summary>
-    /// Método para desfazer uma amizade
+    ///     Método para desfazer uma amizade
     /// </summary>
     /// <param name="profileAId"></param>
     /// <param name="profileBId"></param>

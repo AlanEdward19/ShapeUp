@@ -5,13 +5,14 @@ using SocialService.Friends.Common.Repository;
 namespace SocialService.Friends.RemoveFriend;
 
 /// <summary>
-/// Handler para remover um amigo.
+///     Handler para remover um amigo.
 /// </summary>
-/// <param name="friendMongoContext"></param>
-public class RemoveFriendCommandHandler(IFriendshipGraphRepository graphRepository) : IHandler<bool, RemoveFriendCommand>
+/// <param name="graphRepository"></param>
+public class RemoveFriendCommandHandler(IFriendshipGraphRepository graphRepository)
+    : IHandler<bool, RemoveFriendCommand>
 {
     /// <summary>
-    /// Método para remover um amigo.
+    ///     Método para remover um amigo.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>

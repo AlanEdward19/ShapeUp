@@ -1,24 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialService.Common.Interfaces;
+using SocialService.Connections.Storage;
 using SocialService.Profile.Common.Repository;
-using SocialService.Storage;
-using DatabaseContext = SocialService.Database.Sql.DatabaseContext;
+using DatabaseContext = SocialService.Connections.Sql.DatabaseContext;
 
 namespace SocialService.Profile.DeleteProfile;
 
 /// <summary>
-/// Handler para o comando de deletar um perfil
+///     Handler para o comando de deletar um perfil
 /// </summary>
 /// <param name="context"></param>
 /// <param name="storageProvider"></param>
-/// <param name="friendMongoContext"></param>
+/// <param name="graphRepository"></param>
 public class DeleteProfileCommandHandler(
     DatabaseContext context,
     IStorageProvider storageProvider,
-    IProfileGraphRepository graphRepository) :  IHandler<bool, DeleteProfileCommand>
+    IProfileGraphRepository graphRepository) : IHandler<bool, DeleteProfileCommand>
 {
     /// <summary>
-    /// Método para lidar com o comando de deletar um perfil
+    ///     Método para lidar com o comando de deletar um perfil
     /// </summary>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
@@ -32,10 +32,10 @@ public class DeleteProfileCommandHandler(
         await graphRepository.DeleteProfileAsync(command.ProfileId);
 
         await storageProvider.DeleteContainerAsync(profile.ObjectId.ToString());
-        
+
         await context.SaveChangesAsync(cancellationToken);
         await context.Database.CommitTransactionAsync(cancellationToken);
-        
+
         return true;
     }
 }

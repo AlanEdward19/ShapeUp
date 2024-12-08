@@ -7,21 +7,21 @@ using SocialService.Post.DeletePost;
 using SocialService.Post.DeleteReactionFromPost;
 using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.EditPost;
+using SocialService.Post.GetPost;
 using SocialService.Post.GetPostComments;
-using SocialService.Post.GetPostInformations;
 using SocialService.Post.GetReactionsOnPost;
-using SocialService.Post.LikePost;
+using SocialService.Post.ReactToPost;
 using SocialService.Post.UploadPostImages;
 
 namespace SocialService.Post;
 
 /// <summary>
-/// Modulo para resolver as dependências relacionadas a postagens
+///     Modulo para resolver as dependências relacionadas a postagens
 /// </summary>
 public static class PostModule
 {
     /// <summary>
-    /// Método para resolver as dependências relacionadas a postagens
+    ///     Método para resolver as dependências relacionadas a postagens
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -30,7 +30,7 @@ public static class PostModule
         services
             .AddRepositories()
             .AddHandlers();
-        
+
         return services;
     }
 
@@ -62,14 +62,14 @@ public static class PostModule
         services.AddScoped<IHandler<bool, DeleteReactionFromPostCommand>, DeleteReactionFromPostCommandHandler>();
 
         #endregion
-        
+
         return services;
     }
-    
+
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IPostGraphRepository, PostGraphRepository>();
-        
+
         return services;
     }
 }

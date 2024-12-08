@@ -14,7 +14,7 @@ using SocialService.Profile.ViewProfile;
 namespace SocialService.Profile;
 
 /// <summary>
-/// Controller responsavel por gerenciar o perfil do usuario
+///     Controller responsavel por gerenciar o perfil do usuario
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
@@ -23,40 +23,42 @@ namespace SocialService.Profile;
 public class ProfileController : ControllerBase
 {
     /// <summary>
-    /// Rota para criar um perfil
+    ///     Rota para criar um perfil
     /// </summary>
     /// <returns></returns>
     [HttpPost("createProfile")]
-    public async Task<IActionResult> CreateProfile([FromServices] IHandler<ProfileAggregate, CreateProfileCommand> handler,
+    public async Task<IActionResult> CreateProfile(
+        [FromServices] IHandler<ProfileAggregate, CreateProfileCommand> handler,
         [FromBody] CreateProfileCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         command.SetEmail(User.GetEmail());
         command.SetFirstName(User.GetFirstName());
         command.SetLastName(User.GetLastName());
-        
+
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
-    /// Rota para visualizar um perfil
+    ///     Rota para visualizar um perfil
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("viewProfile/{profileId:guid}")]
-    public async Task<IActionResult> ViewProfile(Guid profileId, [FromServices] IHandler<ProfileAggregate, ViewProfileQuery> handler,
+    public async Task<IActionResult> ViewProfile(Guid profileId,
+        [FromServices] IHandler<ProfileAggregate, ViewProfileQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         return Ok(await handler.HandleAsync(new ViewProfileQuery(profileId), cancellationToken));
     }
 
     /// <summary>
-    /// Rota para editar um perfil
+    ///     Rota para editar um perfil
     /// </summary>
     /// <returns></returns>
     [HttpPatch("editProfile")]
@@ -64,36 +66,38 @@ public class ProfileController : ControllerBase
         [FromBody] EditProfileCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
-    /// Rota para deletar um perfil
+    ///     Rota para deletar um perfil
     /// </summary>
     /// <returns></returns>
     [HttpDelete("deleteProfile/{profileId:guid}")]
-    public async Task<IActionResult> DeleteProfile(Guid profileId, [FromServices] IHandler<bool, DeleteProfileCommand> handler,
+    public async Task<IActionResult> DeleteProfile(Guid profileId,
+        [FromServices] IHandler<bool, DeleteProfileCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         return Ok(await handler.HandleAsync(new DeleteProfileCommand(profileId), cancellationToken));
     }
 
     /// <summary>
-    /// Rota para fazer upload de uma foto de perfil
+    ///     Rota para fazer upload de uma foto de perfil
     /// </summary>
     /// <returns></returns>
     [HttpPut("uploadProfilePicture")]
-    public async Task<IActionResult> UploadProfilePicture([FromServices] IHandler<bool, UploadProfilePictureCommand> handler,
+    public async Task<IActionResult> UploadProfilePicture(
+        [FromServices] IHandler<bool, UploadProfilePictureCommand> handler,
         IFormFile image, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         UploadProfilePictureCommand command = new();
         await command.SetImage(image, image.FileName, cancellationToken);
-        
+
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 }

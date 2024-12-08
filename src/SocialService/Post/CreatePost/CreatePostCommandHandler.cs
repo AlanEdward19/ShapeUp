@@ -1,19 +1,19 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
+using SocialService.Connections.Storage;
 using SocialService.Post.Common.Repository;
-using SocialService.Storage;
 
 namespace SocialService.Post.CreatePost;
 
 /// <summary>
-/// Handler para criação de post.
+///     Handler para criação de post.
 /// </summary>
 /// <param name="repository"></param>
 public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
     : IHandler<Post, CreatePostCommand>
 {
     /// <summary>
-    /// Método para criação de post.
+    ///     Método para criação de post.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>

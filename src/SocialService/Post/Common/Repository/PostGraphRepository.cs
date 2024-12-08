@@ -1,24 +1,25 @@
 ﻿using Neo4j.Driver;
-using SocialService.Database.Graph;
+using SocialService.Connections.Graph;
 using SocialService.Post.CommentsOnPost;
 using SocialService.Post.Common.Enums;
 using SocialService.Post.CreatePost;
 using SocialService.Post.EditCommentOnPost;
+using SocialService.Post.EditPost;
 using SocialService.Post.GetPostComments;
 using SocialService.Post.GetReactionsOnPost;
 
 namespace SocialService.Post.Common.Repository;
 
 /// <summary>
-/// Repositorio de grafo para post
+///     Repositorio de grafo para post
 /// </summary>
 /// <param name="graphContext"></param>
 public class PostGraphRepository(GraphContext graphContext) : IPostGraphRepository
 {
     #region Post
-    
+
     /// <summary>
-    /// Método que retorna um post
+    ///     Método que retorna um post
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
@@ -42,7 +43,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que verifica se um post existe
+    ///     Método que verifica se um post existe
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="profileId"></param>
@@ -58,7 +59,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que cria um post
+    ///     Método que cria um post
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="postId"></param>
@@ -92,9 +93,8 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que atualiza um post
+    ///     Método que atualiza um post
     /// </summary>
-    /// <param name="postId"></param>
     /// <param name="command"></param>
     public async Task<Post> UpdatePostAsync(EditPostCommand command)
     {
@@ -127,7 +127,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que adiciona imagens a um post
+    ///     Método que adiciona imagens a um post
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="images"></param>
@@ -143,7 +143,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que deleta um post
+    ///     Método que deleta um post
     /// </summary>
     /// <param name="postId"></param>
     public async Task DeletePostAsync(Guid postId)
@@ -162,7 +162,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     #region Comment
 
     /// <summary>
-    /// Método que comenta em um post
+    ///     Método que comenta em um post
     /// </summary>
     /// <param name="command"></param>
     /// <param name="profileId"></param>
@@ -180,6 +180,11 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         await graphContext.ExecuteQueryAsync(query);
     }
 
+    /// <summary>
+    ///     Método que retorna os comentários de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
     public async Task<IEnumerable<Comment>> GetPostCommentsAsync(Guid postId)
     {
         var comments = new List<Comment>();
@@ -205,7 +210,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que edita um comentário
+    ///     Método que edita um comentário
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
@@ -231,7 +236,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que deleta um comentário
+    ///     Método que deleta um comentário
     /// </summary>
     /// <param name="commentId"></param>
     public async Task DeleteCommentOnPostAsync(Guid commentId)
@@ -249,7 +254,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     #region React
 
     /// <summary>
-    /// Método que cria/atualiza se ja existir uma reação em um post
+    ///     Método que cria/atualiza se ja existir uma reação em um post
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="profileId"></param>
@@ -268,7 +273,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que retorna as reações de um post
+    ///     Método que retorna as reações de um post
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
@@ -296,7 +301,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que deleta uma reação em um post
+    ///     Método que deleta uma reação em um post
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="profileId"></param>
