@@ -1,20 +1,20 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Database.Sql;
+using SocialService.Connections.Sql;
 using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.CreateProfile;
 
 /// <summary>
-/// Handler para o comando de criação de perfil.
+///     Handler para o comando de criação de perfil.
 /// </summary>
 /// <param name="context"></param>
-/// <param name="friendMongoContext"></param>
-public class CreateProfileCommandHandler(DatabaseContext context, IProfileGraphRepository graphRepository) 
+/// <param name="graphRepository"></param>
+public class CreateProfileCommandHandler(DatabaseContext context, IProfileGraphRepository graphRepository)
     : IHandler<ProfileAggregate, CreateProfileCommand>
 {
     /// <summary>
-    /// Método para lidar com o comando de criação de perfil.
+    ///     Método para lidar com o comando de criação de perfil.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>

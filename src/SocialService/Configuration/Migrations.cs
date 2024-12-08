@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SocialService.Database.Sql;
+using SocialService.Connections.Sql;
 
 namespace SocialService.Configuration;
 

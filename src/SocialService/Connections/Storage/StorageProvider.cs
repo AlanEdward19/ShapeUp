@@ -1,10 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using Azure.Storage.Blobs;
 
-namespace SocialService.Storage;
+namespace SocialService.Connections.Storage;
 
 /// <summary>
-/// Provedor de armazenamento de arquivos
+///     Provedor de armazenamento de arquivos
 /// </summary>
 /// <param name="connectionString"></param>
 /// <param name="logger"></param>
@@ -13,7 +13,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     private readonly BlobServiceClient _blobServiceClient = new(connectionString);
 
     /// <summary>
-    /// Método para ler o conteúdo de um blob
+    ///     Método para ler o conteúdo de um blob
     /// </summary>
     /// <param name="blobName"></param>
     /// <param name="containerName"></param>
@@ -42,7 +42,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     }
 
     /// <summary>
-    /// Método para escrever o conteúdo em um blob
+    ///     Método para escrever o conteúdo em um blob
     /// </summary>
     /// <param name="data"></param>
     /// <param name="blobName"></param>
@@ -62,9 +62,9 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
 
         await blobClient.UploadAsync(data, true);
     }
-    
+
     /// <summary>
-    /// Método para criar uma pasta
+    ///     Método para criar uma pasta
     /// </summary>
     /// <param name="folderName"></param>
     /// <param name="containerName"></param>
@@ -80,7 +80,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     }
 
     /// <summary>
-    /// Método para deletar um blob
+    ///     Método para deletar um blob
     /// </summary>
     /// <param name="blobName"></param>
     /// <param name="containerName"></param>
@@ -101,7 +101,13 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
 
         await blobClient.DeleteIfExistsAsync();
     }
-    
+
+    /// <summary>
+    ///     Método para deletar uma pasta
+    /// </summary>
+    /// <param name="folderName"></param>
+    /// <param name="containerName"></param>
+    /// <exception cref="Exception"></exception>
     public async Task DeleteFolderAsync(string folderName, string containerName)
     {
         folderName = SanitizeName(folderName, true);
@@ -121,6 +127,10 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
         }
     }
 
+    /// <summary>
+    ///     Método para deletar um container
+    /// </summary>
+    /// <param name="containerName"></param>
     public async Task DeleteContainerAsync(string containerName)
     {
         containerName = SanitizeName(containerName);
@@ -133,7 +143,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     }
 
     /// <summary>
-    /// Método para renomear um blob
+    ///     Método para renomear um blob
     /// </summary>
     /// <param name="oldBlobName"></param>
     /// <param name="newBlobName"></param>

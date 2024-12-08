@@ -9,12 +9,12 @@ using SocialService.Follow.UnfollowUser;
 namespace SocialService.Follow;
 
 /// <summary>
-/// Modulo para resolver as dependências relacionadas a seguidores
+///     Modulo para resolver as dependências relacionadas a seguidores
 /// </summary>
 public static class FollowModule
 {
     /// <summary>
-    /// Método para resolver as dependências relacionadas a seguidores
+    ///     Método para resolver as dependências relacionadas a seguidores
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -23,24 +23,28 @@ public static class FollowModule
         services
             .AddRepositories()
             .AddHandlers();
-        
+
         return services;
     }
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddScoped<IHandler<bool, FollowUserCommand>, FollowUserCommandHandler>();
-        services.AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowersQuery>, GetFollowersQueryHandler>();
-        services.AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>, GetFollowingQueryHandler>();
+        services
+            .AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowersQuery>,
+                GetFollowersQueryHandler>();
+        services
+            .AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>,
+                GetFollowingQueryHandler>();
         services.AddScoped<IHandler<bool, UnfollowUserCommand>, UnfollowUserCommandHandler>();
-        
+
         return services;
     }
-    
+
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IFollowerGraphRepository, FollowerGraphRepository>();
-        
+
         return services;
     }
 }

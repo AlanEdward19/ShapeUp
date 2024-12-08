@@ -5,14 +5,14 @@ using SocialService.Friends.Common.Repository;
 namespace SocialService.Friends.ManageFriendRequests;
 
 /// <summary>
-/// Handler para gerenciar solicitações de amizade.
+///     Handler para gerenciar solicitações de amizade.
 /// </summary>
-/// <param name="friendMongoContext"></param>
+/// <param name="graphRepository"></param>
 public class ManageFriendRequestsCommandHandler(IFriendshipGraphRepository graphRepository)
     : IHandler<bool, ManageFriendRequestsCommand>
 {
     /// <summary>
-    /// Método para gerenciar solicitações de amizade.
+    ///     Método para gerenciar solicitações de amizade.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>

@@ -5,12 +5,12 @@ using SocialService.Profile.CreateProfile;
 namespace SocialService.Profile;
 
 /// <summary>
-/// Classe que representa o perfil do usuário.
+///     Classe que representa o perfil do usuário.
 /// </summary>
 public class Profile
 {
     /// <summary>
-    /// Construtor padrão.
+    ///     Construtor padrão.
     /// </summary>
     /// <param name="objectId"></param>
     /// <param name="email"></param>
@@ -22,7 +22,8 @@ public class Profile
     /// <param name="gender"></param>
     /// <param name="birthDate"></param>
     /// <param name="bio"></param>
-    public Profile(Guid objectId, string email, string firstName, string lastName, string? imageUrl, DateTime createdAt, DateTime updatedAt,
+    public Profile(Guid objectId, string email, string firstName, string lastName, string? imageUrl, DateTime createdAt,
+        DateTime updatedAt,
         EGender gender, DateTime birthDate, string? bio)
     {
         FirstName = firstName;
@@ -38,7 +39,7 @@ public class Profile
     }
 
     /// <summary>
-    /// Construtor para criação de um novo perfil através de um comando.
+    ///     Construtor para criação de um novo perfil através de um comando.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="id"></param>
@@ -56,57 +57,58 @@ public class Profile
     }
 
     /// <summary>
-    /// Id do perfil
+    ///     Id do perfil
     /// </summary>
-    [Key] public Guid ObjectId { get; private set; }
+    [Key]
+    public Guid ObjectId { get; private set; }
 
     /// <summary>
-    /// Email do perfil.
+    ///     Email do perfil.
     /// </summary>
     public string Email { get; private set; }
-    
+
     /// <summary>
-    /// Primeiro nome do perfil.
+    ///     Primeiro nome do perfil.
     /// </summary>
     public string FirstName { get; private set; }
-    
+
     /// <summary>
-    /// Sobrenome do perfil.
+    ///     Sobrenome do perfil.
     /// </summary>
     public string LastName { get; private set; }
-    
+
     /// <summary>
-    /// Url da imagem do perfil no blob storage
+    ///     Url da imagem do perfil no blob storage
     /// </summary>
     public string? ImageUrl { get; private set; }
-    
+
     /// <summary>
-    /// Biografia do perfil.
+    ///     Biografia do perfil.
     /// </summary>
     public string? Bio { get; private set; }
-    
+
     /// <summary>
-    /// Data de nascimento do perfil.
+    ///     Data de nascimento do perfil.
     /// </summary>
     public DateTime BirthDate { get; private set; }
-    
+
     /// <summary>
-    /// Gênero do perfil.
+    ///     Gênero do perfil.
     /// </summary>
     public EGender Gender { get; private set; }
-    
+
     /// <summary>
-    /// Data de criação do perfil.
+    ///     Data de criação do perfil.
     /// </summary>
     public DateTime CreatedAt { get; private set; }
-    
+
     /// <summary>
-    /// Data de atualização do perfil.
+    ///     Data de atualização do perfil.
     /// </summary>
     public DateTime UpdatedAt { get; private set; }
 
     /// <summary>
-    /// Método para atualizar o perfil com base em um objeto de valor.
+    ///     Método para atualizar o perfil com base em um objeto de valor.
     /// </summary>
     /// <param name="profile"></param>
     public void UpdateBasedOnValueObject(ProfileAggregate profile)

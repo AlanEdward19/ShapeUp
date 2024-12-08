@@ -3,8 +3,16 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SocialService.Configuration.Filters;
 
+/// <summary>
+///     Filtro para substituir a versão pela versão exata no path
+/// </summary>
 public class ReplaceVersionWithExactValueInPathFilter : IDocumentFilter
 {
+    /// <summary>
+    ///     Método para aplicar o filtro
+    /// </summary>
+    /// <param name="swaggerDoc"></param>
+    /// <param name="context"></param>
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
         var paths = swaggerDoc.Paths;

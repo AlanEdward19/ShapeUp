@@ -1,22 +1,22 @@
 ﻿namespace SocialService.Profile.UploadProfilePicture;
 
 /// <summary>
-/// Comando para upload de foto de perfil.
+///     Comando para upload de foto de perfil.
 /// </summary>
 public class UploadProfilePictureCommand
 {
     /// <summary>
-    /// Imagem a ser enviada.
+    ///     Imagem a ser enviada.
     /// </summary>
     public MemoryStream Image { get; private set; } = new();
 
     /// <summary>
-    /// Nome do arquivo da imagem.
+    ///     Nome do arquivo da imagem.
     /// </summary>
     public string ImageFileName { get; private set; } = "";
 
     /// <summary>
-    /// Método para setar a imagem.
+    ///     Método para setar a imagem.
     /// </summary>
     /// <param name="image"></param>
     /// <param name="imageFileName"></param>

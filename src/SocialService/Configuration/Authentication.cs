@@ -4,12 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 namespace SocialService.Configuration;
 
 /// <summary>
-/// Classe responsavel por configurar a autenticacao
+///     Classe responsavel por configurar a autenticacao
 /// </summary>
 public static class Authentication
 {
     /// <summary>
-    /// Metodo responsavel por configurar a autenticacao
+    ///     Metodo responsavel por configurar a autenticacao
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>

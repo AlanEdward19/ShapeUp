@@ -9,12 +9,12 @@ using SocialService.Profile.ViewProfile;
 namespace SocialService.Profile;
 
 /// <summary>
-/// Modulo para resolver as dependências relacionadas a perfil
+///     Modulo para resolver as dependências relacionadas a perfil
 /// </summary>
 public static class ProfileModule
 {
     /// <summary>
-    /// Método para resolver as dependências relacionadas a perfil
+    ///     Método para resolver as dependências relacionadas a perfil
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -23,7 +23,7 @@ public static class ProfileModule
         services
             .AddRepositories()
             .AddHandlers();
-        
+
         return services;
     }
 
@@ -34,14 +34,14 @@ public static class ProfileModule
         services.AddScoped<IHandler<ProfileAggregate, EditProfileCommand>, EditProfileCommandHandler>();
         services.AddScoped<IHandler<bool, UploadProfilePictureCommand>, UploadProfilePictureCommandHandler>();
         services.AddScoped<IHandler<ProfileAggregate, ViewProfileQuery>, ViewProfileQueryHandler>();
-        
+
         return services;
     }
-    
+
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IProfileGraphRepository, ProfileGraphRepository>();
-        
+
         return services;
     }
 }

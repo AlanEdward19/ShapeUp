@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SocialService.Database.Sql;
+namespace SocialService.Connections.Sql;
 
 /// <summary>
-/// Contexto do banco de dados.
+///     Contexto do banco de dados.
 /// </summary>
 public partial class DatabaseContext : DbContext
 {
     /// <summary>
-    /// Construtor
+    ///     Construtor
     /// </summary>
     /// <param name="options"></param>
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)

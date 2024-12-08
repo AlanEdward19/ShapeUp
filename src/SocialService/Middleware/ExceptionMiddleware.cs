@@ -1,12 +1,22 @@
 ﻿using System.Net;
 using System.Text.Json;
-using SocialService.Database.Sql;
 using SocialService.Exceptions;
 
 namespace SocialService.Middleware;
 
-public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger/*, DatabaseContext databaseContext*/)
+/// <summary>
+///     Middleware para tratamento de exceções
+/// </summary>
+/// <param name="next"></param>
+/// <param name="logger"></param>
+public class ExceptionMiddleware(
+    RequestDelegate next,
+    ILogger<ExceptionMiddleware> logger /*, DatabaseContext databaseContext*/)
 {
+    /// <summary>
+    ///     Método para invocar o middleware
+    /// </summary>
+    /// <param name="context"></param>
     public async Task Invoke(HttpContext context)
     {
         try
@@ -17,7 +27,7 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
         {
             // if (databaseContext.Database.CurrentTransaction != null)
             //     await databaseContext.Database.RollbackTransactionAsync();
-            
+
             var response = context.Response;
             response.ContentType = "application/json";
 
