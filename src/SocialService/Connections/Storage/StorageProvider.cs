@@ -23,7 +23,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     {
         blobName = SanitizeName(blobName, true);
         containerName = SanitizeName(containerName);
-        
+
         logger.LogInformation("Retornando conteudo do blob");
 
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
@@ -51,7 +51,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     {
         blobName = SanitizeName(blobName, true);
         containerName = SanitizeName(containerName);
-        
+
         logger.LogInformation("Escrevendo conteudo no blob");
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
         await containerClient.CreateIfNotExistsAsync();
@@ -73,7 +73,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     {
         blobName = SanitizeName(blobName, true);
         containerName = SanitizeName(containerName);
-        
+
         logger.LogInformation("Deletando blob");
 
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
@@ -86,6 +86,36 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
         await blobClient.DeleteIfExistsAsync();
     }
     
+    public async Task DeleteFolderAsync(string folderName, string containerName)
+    {
+        folderName = SanitizeName(folderName, true);
+        containerName = SanitizeName(containerName);
+
+        logger.LogInformation("Deletando pasta");
+
+        var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+
+        if (!await containerClient.ExistsAsync())
+            throw new Exception("Container não existe");
+
+        await foreach (var blobItem in containerClient.GetBlobsAsync(prefix: folderName))
+        {
+            var blobClient = containerClient.GetBlobClient(blobItem.Name);
+            await blobClient.DeleteIfExistsAsync();
+        }
+    }
+
+    public async Task DeleteContainerAsync(string containerName)
+    {
+        containerName = SanitizeName(containerName);
+
+        logger.LogInformation("Deletando container");
+
+        var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+
+        await containerClient.DeleteIfExistsAsync();
+    }
+
     /// <summary>
     /// Método para renomear um blob
     /// </summary>
@@ -98,7 +128,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
         oldBlobName = SanitizeName(oldBlobName);
         newBlobName = SanitizeName(newBlobName);
         containerName = SanitizeName(containerName);
-        
+
         logger.LogInformation("Renomeando blob");
 
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
@@ -127,7 +157,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
         // Deletar o blob antigo
         await oldBlobClient.DeleteIfExistsAsync();
     }
-    
+
     private string SanitizeName(string name, bool allowSlashes = false)
     {
         if (allowSlashes)

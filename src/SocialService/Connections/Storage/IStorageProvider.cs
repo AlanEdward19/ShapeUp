@@ -38,4 +38,19 @@ public interface IStorageProvider
     /// <param name="containerName"></param>
     /// <returns></returns>
     Task DeleteBlobAsync(string blobName, string containerName);
+    
+    /// <summary>
+    /// Método para deletar um container
+    /// </summary>
+    /// <param name="containerName"></param>
+    /// <returns></returns>
+    Task DeleteContainerAsync(string containerName);
+
+    /// <summary>
+    /// Método para deletar uma pasta
+    /// </summary>
+    /// <param name="folderName"></param>
+    /// <param name="containerName"></param>
+    /// <returns></returns>
+    Task DeleteFolderAsync(string folderName, string containerName);
 }
