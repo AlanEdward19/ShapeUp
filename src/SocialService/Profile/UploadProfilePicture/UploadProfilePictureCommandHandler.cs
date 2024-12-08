@@ -30,7 +30,7 @@ public class UploadProfilePictureCommandHandler(DatabaseContext context, IStorag
         
         var containerName = $"{profileAggregate.ObjectId}";
 
-        var blobName = $"profile-pictures/{DateTime.Today:yyyy-MM-dd}.{command.ImageFileName.Split('.').Last()}";
+        var blobName = $"profile-pictures/{DateTime.Today:yyyy-MM-dd}/{Guid.NewGuid()}.{command.ImageFileName.Split('.').Last()}";
 
         await storageProvider.WriteBlobAsync(command.Image, blobName, containerName);
 

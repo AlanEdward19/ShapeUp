@@ -35,7 +35,7 @@ public class FriendController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("addFriend")]
-    public async Task<IActionResult> CreateProfile([FromServices] IHandler<bool, AddFriendCommand> handler,
+    public async Task<IActionResult> AddFriend([FromServices] IHandler<bool, AddFriendCommand> handler,
         [FromBody] AddFriendCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());

@@ -178,6 +178,19 @@
             <param name="app"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Connections.ConnectionsModule">
+            <summary>
+            Modulo de conexões externas
+            </summary>
+        </member>
+        <member name="M:SocialService.Connections.ConnectionsModule.ConfigureConnections(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Método para configurar as conexões
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Database.Sql.DatabaseContext">
             <summary>
             Contexto do banco de dados.
@@ -193,6 +206,108 @@
             <summary>
             Perfis de usuários.
             </summary>
+        </member>
+        <member name="T:SocialService.Storage.IStorageProvider">
+            <summary>
+            Interface para prover armazenamento de arquivos
+            </summary>
+        </member>
+        <member name="M:SocialService.Storage.IStorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
+            <summary>
+            Método para renomear um blob
+            </summary>
+            <param name="oldBlobName"></param>
+            <param name="newBlobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Storage.IStorageProvider.ReadBlobAsync(System.String,System.String)">
+            <summary>
+            Método para ler um blob
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Storage.IStorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
+            <summary>
+            Método para escrever um blob
+            </summary>
+            <param name="data"></param>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Storage.IStorageProvider.DeleteBlobAsync(System.String,System.String)">
+            <summary>
+            Método para deletar um blob
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Storage.IStorageProvider.DeleteContainerAsync(System.String)">
+            <summary>
+            Método para deletar um container
+            </summary>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Storage.IStorageProvider.DeleteFolderAsync(System.String,System.String)">
+            <summary>
+            Método para deletar uma pasta
+            </summary>
+            <param name="folderName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Storage.StorageProvider">
+            <summary>
+            Provedor de armazenamento de arquivos
+            </summary>
+            <param name="connectionString"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:SocialService.Storage.StorageProvider.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{SocialService.Storage.StorageProvider})">
+            <summary>
+            Provedor de armazenamento de arquivos
+            </summary>
+            <param name="connectionString"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:SocialService.Storage.StorageProvider.ReadBlobAsync(System.String,System.String)">
+            <summary>
+            Método para ler o conteúdo de um blob
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:SocialService.Storage.StorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
+            <summary>
+            Método para escrever o conteúdo em um blob
+            </summary>
+            <param name="data"></param>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+        </member>
+        <member name="M:SocialService.Storage.StorageProvider.DeleteBlobAsync(System.String,System.String)">
+            <summary>
+            Método para deletar um blob
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:SocialService.Storage.StorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
+            <summary>
+            Método para renomear um blob
+            </summary>
+            <param name="oldBlobName"></param>
+            <param name="newBlobName"></param>
+            <param name="containerName"></param>
+            <exception cref="T:System.Exception"></exception>
         </member>
         <member name="T:SocialService.Follow.Common.Repository.FollowerGraphRepository">
             <summary>
@@ -312,6 +427,18 @@
             <param name="rows"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Follow.FollowModule">
+            <summary>
+            Modulo para resolver as dependências relacionadas a seguidores
+            </summary>
+        </member>
+        <member name="M:SocialService.Follow.FollowModule.ConfigureFollowRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências relacionadas a seguidores
+            </summary>
+            <param name="services"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Follow.FollowUser.FollowUserCommand">
@@ -783,7 +910,7 @@
             Controller responsavel por gerenciar o perfil do usuario
             </summary>
         </member>
-        <member name="M:SocialService.Friends.FriendController.CreateProfile(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.AddFriend.AddFriendCommand},SocialService.Friends.AddFriend.AddFriendCommand,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Friends.FriendController.AddFriend(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.AddFriend.AddFriendCommand},SocialService.Friends.AddFriend.AddFriendCommand,System.Threading.CancellationToken)">
             <summary>
             Rota para adicionar um amigo
             </summary>
@@ -830,6 +957,18 @@
             <summary>
             Classe que representa uma amizade entre dois perfis
             </summary>
+        </member>
+        <member name="T:SocialService.Friends.FriendsModule">
+            <summary>
+            Modulo para resolver as dependências relacionadas a amizades
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.FriendsModule.ConfigureFriendsRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências relacionadas a amizades
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
         </member>
         <member name="T:SocialService.Friends.ListFriends.ListFriendsQuery">
             <summary>
@@ -1092,13 +1231,42 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.LikePostAsync(System.Guid,System.Guid,SocialService.Post.Common.Enums.EReactionType)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.EditCommentOnPostAsync(SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand)">
+            <summary>
+            Método que edita um comentário
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeleteCommentOnPostAsync(System.Guid)">
+            <summary>
+            Método que deleta um comentário
+            </summary>
+            <param name="commentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.ReactToPostAsync(System.Guid,System.Guid,SocialService.Post.Common.Enums.EReactionType)">
             <summary>
             Método que adiciona uma reação a um post
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
             <param name="reactionType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetReactionsOnPostAsync(System.Guid)">
+            <summary>
+            Método que retorna as reações de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.Guid)">
+            <summary>
+            Método que deleta uma reação em um post
+            </summary>
+            <param name="postId"></param>
+            <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Post.Common.Repository.PostGraphRepository">
@@ -1156,13 +1324,40 @@
             <param name="command"></param>
             <param name="profileId"></param>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.LikePostAsync(System.Guid,System.Guid,SocialService.Post.Common.Enums.EReactionType)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.EditCommentOnPostAsync(SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand)">
             <summary>
-            Método que cria uma reação em um post
+            Método que edita um comentário
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.DeleteCommentOnPostAsync(System.Guid)">
+            <summary>
+            Método que deleta um comentário
+            </summary>
+            <param name="commentId"></param>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.ReactToPostAsync(System.Guid,System.Guid,SocialService.Post.Common.Enums.EReactionType)">
+            <summary>
+            Método que cria/atualiza se ja existir uma reação em um post
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
             <param name="reactionType"></param>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetReactionsOnPostAsync(System.Guid)">
+            <summary>
+            Método que retorna as reações de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.Guid)">
+            <summary>
+            Método que deleta uma reação em um post
+            </summary>
+            <param name="postId"></param>
+            <param name="profileId"></param>
         </member>
         <member name="T:SocialService.Post.CreatePost.CreatePostCommand">
             <summary>
@@ -1225,6 +1420,33 @@
             </summary>
             <param name="postId"></param>
         </member>
+        <member name="P:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommand.CommentId">
+            <summary>
+            Id do comentário
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommand.SetCommentId(System.Guid)">
+            <summary>
+            Método para setar o id do comentário
+            </summary>
+            <param name="commentId"></param>
+        </member>
+        <member name="P:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.CommentId">
+            <summary>
+            Id do comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.Content">
+            <summary>
+            Conteúdo do comentário
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.SetCommentId(System.Guid)">
+            <summary>
+            Método para setar o id do comentário
+            </summary>
+            <param name="commentId"></param>
+        </member>
         <member name="T:SocialService.Post.DeletePost.DeletePostCommand">
             <summary>
             Comando para deletar um post
@@ -1247,7 +1469,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.DeletePost.DeletePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.DeletePost.DeletePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Storage.IStorageProvider)">
             <summary>
             Handler para o comando de deletar um post.
             </summary>
@@ -1297,44 +1519,39 @@
             </summary>
             <param name="postId"></param>
         </member>
-        <member name="T:SocialService.Post.LikePost.LikePostCommand">
+        <member name="T:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery">
             <summary>
-            Comando para reagir a um post.
+            Query para pegar reações em um post.
             </summary>
         </member>
-        <member name="P:SocialService.Post.LikePost.LikePostCommand.PostId">
+        <member name="P:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery.PostId">
             <summary>
-            Id do post
+            Id do post.
             </summary>
         </member>
-        <member name="P:SocialService.Post.LikePost.LikePostCommand.ReactionType">
+        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery.SetPostId(System.Guid)">
             <summary>
-            Tipo de reação
-            </summary>
-        </member>
-        <member name="M:SocialService.Post.LikePost.LikePostCommand.SetPostId(System.Guid)">
-            <summary>
-            Método para setar o id do post
+            Método para setar o id do post.
             </summary>
             <param name="postId"></param>
         </member>
-        <member name="T:SocialService.Post.LikePost.LikePostCommandHandler">
+        <member name="T:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler">
             <summary>
-            Handler para o comando de like em um post.
+            Handler para a query de pegar reações em um post.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.LikePost.LikePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
             <summary>
-            Handler para o comando de like em um post.
+            Handler para a query de pegar reações em um post.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.LikePost.LikePostCommandHandler.HandleAsync(SocialService.Post.LikePost.LikePostCommand,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler.HandleAsync(SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de like em um post.
+            Método para lidar com a query de pegar reações em um post.
             </summary>
-            <param name="command"></param>
+            <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -1353,6 +1570,59 @@
             Construtor da classe.
             </summary>
             <param name="postId"></param>
+        </member>
+        <member name="T:SocialService.Post.PostModule">
+            <summary>
+            Modulo para resolver as dependências relacionadas a postagens
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.PostModule.ConfigurePostRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências relacionadas a postagens
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.LikePost.ReactToPostCommand">
+            <summary>
+            Comando para reagir a um post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.LikePost.ReactToPostCommand.PostId">
+            <summary>
+            Id do post
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.LikePost.ReactToPostCommand.ReactionType">
+            <summary>
+            Tipo de reação
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.LikePost.ReactToPostCommand.SetPostId(System.Guid)">
+            <summary>
+            Método para setar o id do post
+            </summary>
+            <param name="postId"></param>
+        </member>
+        <member name="T:SocialService.Post.LikePost.ReactToPostCommandHandler">
+            <summary>
+            Handler para o comando de like em um post.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.LikePost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+            Handler para o comando de like em um post.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.LikePost.ReactToPostCommandHandler.HandleAsync(SocialService.Post.LikePost.ReactToPostCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com o comando de like em um post.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommand">
             <summary>
@@ -1811,6 +2081,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Profile.ProfileModule">
+            <summary>
+            Modulo para resolver as dependências relacionadas a perfil
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ProfileModule.ConfigureProfileRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências relacionadas a perfil
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand">
             <summary>
             Comando para upload de foto de perfil.
@@ -1889,93 +2171,6 @@
             <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
-        </member>
-        <member name="T:SocialService.Storage.IStorageProvider">
-            <summary>
-            Interface para prover armazenamento de arquivos
-            </summary>
-        </member>
-        <member name="M:SocialService.Storage.IStorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
-            <summary>
-            Método para renomear um blob
-            </summary>
-            <param name="oldBlobName"></param>
-            <param name="newBlobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Storage.IStorageProvider.ReadBlobAsync(System.String,System.String)">
-            <summary>
-            Método para ler um blob
-            </summary>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Storage.IStorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
-            <summary>
-            Método para escrever um blob
-            </summary>
-            <param name="data"></param>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Storage.IStorageProvider.DeleteBlobAsync(System.String,System.String)">
-            <summary>
-            Método para deletar um blob
-            </summary>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="T:SocialService.Storage.StorageProvider">
-            <summary>
-            Provedor de armazenamento de arquivos
-            </summary>
-            <param name="connectionString"></param>
-            <param name="logger"></param>
-        </member>
-        <member name="M:SocialService.Storage.StorageProvider.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{SocialService.Storage.StorageProvider})">
-            <summary>
-            Provedor de armazenamento de arquivos
-            </summary>
-            <param name="connectionString"></param>
-            <param name="logger"></param>
-        </member>
-        <member name="M:SocialService.Storage.StorageProvider.ReadBlobAsync(System.String,System.String)">
-            <summary>
-            Método para ler o conteúdo de um blob
-            </summary>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-            <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:SocialService.Storage.StorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
-            <summary>
-            Método para escrever o conteúdo em um blob
-            </summary>
-            <param name="data"></param>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-        </member>
-        <member name="M:SocialService.Storage.StorageProvider.DeleteBlobAsync(System.String,System.String)">
-            <summary>
-            Método para deletar um blob
-            </summary>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:SocialService.Storage.StorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
-            <summary>
-            Método para renomear um blob
-            </summary>
-            <param name="oldBlobName"></param>
-            <param name="newBlobName"></param>
-            <param name="containerName"></param>
-            <exception cref="T:System.Exception"></exception>
         </member>
     </members>
 </doc>

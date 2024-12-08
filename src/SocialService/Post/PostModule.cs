@@ -4,9 +4,11 @@ using SocialService.Post.Common.Repository;
 using SocialService.Post.CreatePost;
 using SocialService.Post.DeleteCommentOnPost;
 using SocialService.Post.DeletePost;
+using SocialService.Post.DeleteReactionFromPost;
 using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.EditPost;
 using SocialService.Post.GetPostComments;
+using SocialService.Post.GetReactionsOnPost;
 using SocialService.Post.LikePost;
 using SocialService.Post.UploadPostImages;
 
@@ -54,6 +56,8 @@ public static class PostModule
         #region Reaction
 
         services.AddScoped<IHandler<bool, ReactToPostCommand>, ReactToPostCommandHandler>();
+        services.AddScoped<IHandler<IEnumerable<Reaction>, GetReactionsOnPostQuery>, GetReactionsOnPostQueryHandler>();
+        services.AddScoped<IHandler<bool, DeleteReactionFromPostCommand>, DeleteReactionFromPostCommandHandler>();
 
         #endregion
         

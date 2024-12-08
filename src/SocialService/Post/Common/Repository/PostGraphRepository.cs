@@ -3,7 +3,9 @@ using SocialService.Database.Graph;
 using SocialService.Post.CommentsOnPost;
 using SocialService.Post.Common.Enums;
 using SocialService.Post.CreatePost;
+using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.GetPostComments;
+using SocialService.Post.GetReactionsOnPost;
 
 namespace SocialService.Post.Common.Repository;
 
@@ -13,7 +15,8 @@ namespace SocialService.Post.Common.Repository;
 /// <param name="graphContext"></param>
 public class PostGraphRepository(GraphContext graphContext) : IPostGraphRepository
 {
-    
+    #region Post
+
     /// <summary>
     /// Método que verifica se um post existe
     /// </summary>
@@ -105,6 +108,10 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         await graphContext.ExecuteQueryAsync(query);
     }
 
+    #endregion
+    
+    #region Comment
+
     /// <summary>
     /// Método que comenta em um post
     /// </summary>
@@ -147,22 +154,110 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
 
         return comments;
     }
+    
+    /// <summary>
+    /// Método que edita um comentário
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    public async Task<Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command)
+    {
+        var query = $@"
+    MATCH (comment:Comment {{id: '{command.CommentId}'}})<-[:COMMENTED]-(profile:Profile)
+    SET comment.content = '{command.Content}'
+    RETURN comment, profile.id AS profileId";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+        var record = result.FirstOrDefault();
+
+        if (record == null)
+            return null;
+
+        var comment = new Comment();
+        var parsedDictionary = record["comment"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        parsedDictionary.Add("profileId", record["profileId"].ToString()!);
+        comment.MapToEntityFromNeo4j(parsedDictionary);
+
+        return comment;
+    }
 
     /// <summary>
-    /// Método que cria uma reação em um post
+    /// Método que deleta um comentário
+    /// </summary>
+    /// <param name="commentId"></param>
+    public async Task DeleteCommentOnPostAsync(Guid commentId)
+    {
+        var query = $@"
+    MATCH (comment:Comment {{id: '{commentId}'}})
+    OPTIONAL MATCH (comment)-[r]-()
+    DELETE comment, r";
+
+        await graphContext.ExecuteQueryAsync(query);
+    }
+
+    #endregion
+
+    #region React
+
+    /// <summary>
+    /// Método que cria/atualiza se ja existir uma reação em um post
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="profileId"></param>
     /// <param name="reactionType"></param>
-    public async Task LikePostAsync(Guid postId, Guid profileId, EReactionType reactionType)
+    public async Task ReactToPostAsync(Guid postId, Guid profileId, EReactionType reactionType)
     {
         var query = $@"
     MATCH (p:Profile {{id: '{profileId}'}})
     MATCH (post:Post {{id: '{postId}'}})
     MERGE (p)-[r:REACTED]->(post)
-    SET r.type = '{reactionType}'
+    ON CREATE SET r.id = '{Guid.NewGuid()}', r.createdAt = datetime()
+    ON MATCH SET r.type = '{reactionType}', r.createdAt = datetime()
     RETURN r";
 
         await graphContext.ExecuteQueryAsync(query);
     }
+    
+    /// <summary>
+    /// Método que retorna as reações de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<Reaction>> GetReactionsOnPostAsync(Guid postId)
+    {
+        var reactions = new List<Reaction>();
+        var query = $@"
+    MATCH (post:Post {{id: '{postId}'}})<-[r:REACTED]-(profile:Profile)
+    RETURN r, profile.id AS profileId";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+
+        foreach (var record in result)
+        {
+            var reaction = new Reaction();
+            var parsedDictionary = record["r"].As<IRelationship>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            parsedDictionary.Add("profileId", record["profileId"].ToString()!);
+            reaction.MapToEntityFromNeo4j(parsedDictionary);
+
+            reactions.Add(reaction);
+        }
+
+        return reactions;
+    }
+
+    /// <summary>
+    /// Método que deleta uma reação em um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <param name="profileId"></param>
+    public async Task DeleteReactionOnPostAsync(Guid postId, Guid profileId)
+    {
+        var query = $@"
+    MATCH (post:Post {{id: '{postId}'}})<-[r:REACTED]-(profile:Profile {{id: '{profileId}'}})
+    DELETE r";
+
+        await graphContext.ExecuteQueryAsync(query);
+    }
+
+    #endregion
 }

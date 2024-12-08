@@ -1,7 +1,9 @@
 ﻿using SocialService.Post.CommentsOnPost;
 using SocialService.Post.Common.Enums;
 using SocialService.Post.CreatePost;
+using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.GetPostComments;
+using SocialService.Post.GetReactionsOnPost;
 
 namespace SocialService.Post.Common.Repository;
 
@@ -10,6 +12,8 @@ namespace SocialService.Post.Common.Repository;
 /// </summary>
 public interface IPostGraphRepository
 {
+    #region Post
+
     /// <summary>
     /// Método que verifica se um post existe
     /// </summary>
@@ -50,6 +54,10 @@ public interface IPostGraphRepository
     /// <returns></returns>
     Task UpdatePostAsync(EditPostCommand command);
 
+    #endregion
+    
+    #region Comment
+
     /// <summary>
     /// Método que comenta em um post
     /// </summary>
@@ -57,13 +65,31 @@ public interface IPostGraphRepository
     /// <param name="profileId"></param>
     /// <returns></returns>
     Task CommentOnPostAsync(CommentOnPostCommand command, Guid profileId);
-
+    
     /// <summary>
     /// Método que retorna os comentários de um post
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
     Task<IEnumerable<Comment>> GetPostCommentsAsync(Guid postId);
+    
+    /// <summary>
+    /// Método que edita um comentário
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    Task<Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command);
+
+    /// <summary>
+    /// Método que deleta um comentário
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <returns></returns>
+    Task DeleteCommentOnPostAsync(Guid commentId);
+
+    #endregion
+    
+    #region React
 
     /// <summary>
     /// Método que adiciona uma reação a um post
@@ -72,5 +98,22 @@ public interface IPostGraphRepository
     /// <param name="profileId"></param>
     /// <param name="reactionType"></param>
     /// <returns></returns>
-    Task LikePostAsync(Guid postId, Guid profileId, EReactionType reactionType);
+    Task ReactToPostAsync(Guid postId, Guid profileId, EReactionType reactionType);
+    
+    /// <summary>
+    /// Método que retorna as reações de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    Task<IEnumerable<Reaction>> GetReactionsOnPostAsync(Guid postId);
+
+    /// <summary>
+    /// Método que deleta uma reação em um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <param name="profileId"></param>
+    /// <returns></returns>
+    Task DeleteReactionOnPostAsync(Guid postId, Guid profileId);
+
+    #endregion
 }

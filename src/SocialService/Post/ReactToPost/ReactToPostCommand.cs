@@ -5,7 +5,7 @@ namespace SocialService.Post.LikePost;
 /// <summary>
 /// Comando para reagir a um post.
 /// </summary>
-public class LikePostCommand
+public class ReactToPostCommand
 {
     /// <summary>
     /// Id do post

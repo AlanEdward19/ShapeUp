@@ -7,8 +7,12 @@ using SocialService.Common.Interfaces;
 using SocialService.Common.Utils;
 using SocialService.Post.CommentsOnPost;
 using SocialService.Post.CreatePost;
+using SocialService.Post.DeleteCommentOnPost;
 using SocialService.Post.DeletePost;
+using SocialService.Post.DeleteReactionFromPost;
+using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.GetPostComments;
+using SocialService.Post.GetReactionsOnPost;
 using SocialService.Post.LikePost;
 using SocialService.Post.UploadPostImages;
 
@@ -20,6 +24,8 @@ namespace SocialService.Post;
 [Route("[Controller]/v{version:apiVersion}")]
 public class PostController : ControllerBase
 {
+    #region Post
+
     [HttpPost("createPost")]
     public async Task<IActionResult> CreatePost([FromServices] IHandler<Post, CreatePostCommand> handler,
         [FromBody] CreatePostCommand command, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)
@@ -64,7 +70,11 @@ public class PostController : ControllerBase
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
-    
+
+    #endregion
+
+    #region Comment
+
     [HttpPost("{id:guid}/commentOnPost")]
     public async Task<IActionResult> CommentOnPost([FromServices] IHandler<bool, CommentOnPostCommand> handler,
         Guid id, [FromBody] CommentOnPostCommand command, CancellationToken cancellationToken)
@@ -75,7 +85,7 @@ public class PostController : ControllerBase
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     
-    [HttpGet("{id:guid}/getPostComments")]
+    [HttpGet("{id:guid}/getComments")]
     public async Task<IActionResult> GetPostComments([FromServices] IHandler<IEnumerable<Comment>, GetPostCommentsQuery> handler,
         Guid id, CancellationToken cancellationToken)
     {
@@ -85,9 +95,36 @@ public class PostController : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
-    [HttpPut("{id:guid}/likePost")]
-    public async Task<IActionResult> LikePost([FromServices] IHandler<bool, LikePostCommand> handler,
-        Guid id, [FromBody] LikePostCommand command, CancellationToken cancellationToken)
+    [HttpPut("{id:guid}/editComment")]
+    public async Task<IActionResult> EditCommentOnPost([FromServices] IHandler<bool, EditCommentOnPostCommand> handler,
+        Guid id, [FromBody] EditCommentOnPostCommand command, CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        command.SetCommentId(id);
+        
+        return Ok(await handler.HandleAsync(command, cancellationToken));
+    }
+    
+    [HttpDelete("{id:guid}/deleteComment")]
+    public async Task<IActionResult> DeleteCommentOnPost([FromServices] IHandler<bool, DeleteCommentOnPostCommand> handler,
+        Guid id, CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        DeleteCommentOnPostCommand command = new();
+        command.SetCommentId(id);
+        
+        return Ok(await handler.HandleAsync(command, cancellationToken));
+    }
+
+    #endregion
+
+    #region Reaction
+
+    [HttpPut("{id:guid}/react")]
+    public async Task<IActionResult> ReactToPost([FromServices] IHandler<bool, ReactToPostCommand> handler,
+        Guid id, [FromBody] ReactToPostCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
         
@@ -95,4 +132,28 @@ public class PostController : ControllerBase
         
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
+    
+    [HttpGet("{id:guid}/getReactions")]
+    public async Task<IActionResult> GetReactionsOnPost([FromServices] IHandler<IEnumerable<Reaction>, GetReactionsOnPostQuery> handler,
+        Guid id, CancellationToken cancellationToken)
+    {
+        GetReactionsOnPostQuery query = new();
+        query.SetPostId(id);
+        
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
+    [HttpDelete("{id:guid}/deleteReaction")]
+    public async Task<IActionResult> DeleteReactionFromPost([FromServices] IHandler<bool, DeleteReactionFromPostCommand> handler,
+        Guid id, CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        DeleteReactionFromPostCommand command = new();
+        command.SetPostId(id);
+        
+        return Ok(await handler.HandleAsync(command, cancellationToken));
+    }
+
+    #endregion
 }

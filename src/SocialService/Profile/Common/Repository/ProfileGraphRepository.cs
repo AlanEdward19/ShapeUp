@@ -1,4 +1,5 @@
 ﻿using SocialService.Database.Graph;
+using SocialService.Storage;
 
 namespace SocialService.Profile.Common.Repository;
 
@@ -16,7 +17,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     {
         var query = $@"
             CREATE (p:Profile {{id: '{id}'}})";
-        
+
         await graphContext.ExecuteQueryAsync(query);
     }
 
@@ -27,9 +28,18 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     public async Task DeleteProfileAsync(Guid id)
     {
         var query = $@"
-            MATCH (p:Profile {{id: '{id}'}})
-            DETACH DELETE p";
-        
+    MATCH (p:Profile {{id: '{id}'}})
+    OPTIONAL MATCH (p)-[:PUBLISHED_BY]->(post:Post)
+    OPTIONAL MATCH (p)-[:REACTED]->(post)
+    OPTIONAL MATCH (p)-[:FRIEND]->(friend:Profile)
+    OPTIONAL MATCH (p)-[:SENT_REQUEST]->(request:FriendRequest)
+    OPTIONAL MATCH (p)<-[:RECEIVED_REQUEST]-(request)
+    OPTIONAL MATCH (p)-[:FOLLOWING]->(followed:Profile)
+    OPTIONAL MATCH (p)<-[:FOLLOWING]-(follower:Profile)
+    OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+    OPTIONAL MATCH (post)<-[r:REACTED]-()
+    DETACH DELETE p, post, comment, r, friend, request, followed, follower";
+
         await graphContext.ExecuteQueryAsync(query);
     }
 }

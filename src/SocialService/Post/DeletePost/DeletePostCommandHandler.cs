@@ -2,6 +2,7 @@
 using SocialService.Common.Interfaces;
 using SocialService.Exceptions;
 using SocialService.Post.Common.Repository;
+using SocialService.Storage;
 
 namespace SocialService.Post.DeletePost;
 
@@ -9,7 +10,7 @@ namespace SocialService.Post.DeletePost;
 /// Handler para o comando de deletar um post.
 /// </summary>
 /// <param name="repository"></param>
-public class DeletePostCommandHandler(IPostGraphRepository repository)
+public class DeletePostCommandHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
     : IHandler<bool, DeletePostCommand>
 {
     /// <summary>
@@ -24,6 +25,10 @@ public class DeletePostCommandHandler(IPostGraphRepository repository)
             throw new NotFoundException($"Post with id: '{command.PostId}' not found.");
         
         await repository.DeletePostAsync(command.PostId);
+        
+        var containerName = ProfileContext.ProfileId.ToString();
+        var blobName = $"post-images/{command.PostId}";
+        await storageProvider.DeleteFolderAsync(blobName,containerName);
 
         return true;
     }
