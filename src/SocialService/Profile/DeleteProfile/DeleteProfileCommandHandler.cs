@@ -28,11 +28,10 @@ public class DeleteProfileCommandHandler(
 
         var profile = await context.Profiles.FirstAsync(x => x.ObjectId.Equals(command.ProfileId), cancellationToken);
 
-        if (!string.IsNullOrWhiteSpace(profile.ImageUrl))
-            await storageProvider.DeleteBlobAsync(profile.ImageUrl, "profile-pictures");
-
         context.Profiles.Remove(profile);
         await graphRepository.DeleteProfileAsync(command.ProfileId);
+
+        await storageProvider.DeleteContainerAsync(profile.ObjectId.ToString());
         
         await context.SaveChangesAsync(cancellationToken);
         await context.Database.CommitTransactionAsync(cancellationToken);
