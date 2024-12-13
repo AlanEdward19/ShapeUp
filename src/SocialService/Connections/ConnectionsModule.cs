@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Neo4j.Driver;
+﻿using Neo4j.Driver;
 using SocialService.Connections.Graph;
-using SocialService.Connections.Sql;
 using SocialService.Connections.Storage;
 
 namespace SocialService.Connections;
@@ -21,19 +19,8 @@ public static class ConnectionsModule
         IConfiguration configuration)
     {
         services
-            .ConfigureSqlServer(configuration)
             .ConfigureNeo4J(configuration)
             .ConfigureStorageProvider(configuration);
-
-        return services;
-    }
-
-    private static IServiceCollection ConfigureSqlServer(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddDbContext<DatabaseContext>(options =>
-        {
-            options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection"));
-        });
 
         return services;
     }

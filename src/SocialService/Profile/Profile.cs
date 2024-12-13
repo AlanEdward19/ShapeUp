@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SocialService.Common.Entities;
 using SocialService.Profile.Common.Enums;
 using SocialService.Profile.CreateProfile;
 
@@ -7,7 +7,7 @@ namespace SocialService.Profile;
 /// <summary>
 ///     Classe que representa o perfil do usuário.
 /// </summary>
-public class Profile
+public class Profile : GraphEntity
 {
     /// <summary>
     ///     Construtor padrão.
@@ -28,7 +28,7 @@ public class Profile
     {
         FirstName = firstName;
         LastName = lastName;
-        ObjectId = objectId;
+        Id = objectId;
         Email = email;
         ImageUrl = imageUrl;
         CreatedAt = createdAt;
@@ -50,17 +50,16 @@ public class Profile
         Gender = command.Gender;
         BirthDate = command.BirthDate;
         Bio = command.Bio;
-        ObjectId = id;
+        Id = id;
         Email = command.Email;
         CreatedAt = command.CreatedAt;
         UpdatedAt = command.CreatedAt;
     }
 
     /// <summary>
-    ///     Id do perfil
+    /// Construtor padrão.
     /// </summary>
-    [Key]
-    public Guid ObjectId { get; private set; }
+    public Profile() { }
 
     /// <summary>
     ///     Email do perfil.
@@ -121,5 +120,19 @@ public class Profile
         Email = profile.Email;
         ImageUrl = profile.ImageUrl;
         UpdatedAt = DateTime.Now;
+    }
+
+    public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
+    {
+        Email = result["email"].ToString();
+        FirstName = result["firstName"].ToString();
+        LastName = result["lastName"].ToString();
+        ImageUrl = result["imageUrl"].ToString();
+        CreatedAt = DateTime.Parse(result["createdAt"].ToString());
+        UpdatedAt = DateTime.Parse(result["updatedAt"].ToString());
+        BirthDate = DateTime.Parse(result["birthDate"].ToString());
+        Bio = result["bio"].ToString();
+        
+        base.MapToEntityFromNeo4j(result);
     }
 }

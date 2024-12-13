@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SocialService.Common.Interfaces;
+﻿using SocialService.Common.Interfaces;
 using SocialService.Connections.Storage;
 using SocialService.Profile.Common.Repository;
-using DatabaseContext = SocialService.Connections.Sql.DatabaseContext;
 
 namespace SocialService.Profile.DeleteProfile;
 
@@ -13,7 +11,6 @@ namespace SocialService.Profile.DeleteProfile;
 /// <param name="storageProvider"></param>
 /// <param name="graphRepository"></param>
 public class DeleteProfileCommandHandler(
-    DatabaseContext context,
     IStorageProvider storageProvider,
     IProfileGraphRepository graphRepository) : IHandler<bool, DeleteProfileCommand>
 {
@@ -24,17 +21,9 @@ public class DeleteProfileCommandHandler(
     /// <param name="cancellationToken"></param>
     public async Task<bool> HandleAsync(DeleteProfileCommand command, CancellationToken cancellationToken)
     {
-        await context.Database.BeginTransactionAsync(cancellationToken);
-
-        var profile = await context.Profiles.FirstAsync(x => x.ObjectId.Equals(command.ProfileId), cancellationToken);
-
-        context.Profiles.Remove(profile);
         await graphRepository.DeleteProfileAsync(command.ProfileId);
 
-        await storageProvider.DeleteContainerAsync(profile.ObjectId.ToString());
-
-        await context.SaveChangesAsync(cancellationToken);
-        await context.Database.CommitTransactionAsync(cancellationToken);
+        await storageProvider.DeleteContainerAsync(command.ProfileId.ToString());
 
         return true;
     }

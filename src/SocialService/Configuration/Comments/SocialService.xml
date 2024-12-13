@@ -6,14 +6,14 @@
     <members>
         <member name="T:SocialService.Common.Interfaces.IHandler`2">
             <summary>
-            Interface para padronizar handlers.
+                Interface para padronizar handlers.
             </summary>
             <typeparam name="TResponse"></typeparam>
             <typeparam name="TItem"></typeparam>
         </member>
         <member name="M:SocialService.Common.Interfaces.IHandler`2.HandleAsync(`1,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com operações.
+                Método para lidar com operações.
             </summary>
             <param name="item"></param>
             <param name="cancellationToken"></param>
@@ -21,88 +21,88 @@
         </member>
         <member name="T:SocialService.Common.Models.ProfileBasicInformationViewModel">
             <summary>
-            ViewModel para informações básicas de um perfil.
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.FirstName">
-            <summary>
-            Primeiro nome do perfil.
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.LastName">
-            <summary>
-            Sobrenome do perfil.
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.ProfileId">
-            <summary>
-            Id do perfil.
+                ViewModel para informações básicas de um perfil.
             </summary>
         </member>
         <member name="M:SocialService.Common.Models.ProfileBasicInformationViewModel.#ctor(System.String,System.String,System.Guid)">
             <summary>
-            Construtor
+                Construtor
             </summary>
             <param name="firstName"></param>
             <param name="lastName"></param>
             <param name="profileId"></param>
         </member>
+        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.FirstName">
+            <summary>
+                Primeiro nome do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.LastName">
+            <summary>
+                Sobrenome do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.ProfileId">
+            <summary>
+                Id do perfil.
+            </summary>
+        </member>
         <member name="T:SocialService.Common.ProfileContext">
             <summary>
-            Context para perfil logado
+                Context para perfil logado
             </summary>
         </member>
         <member name="F:SocialService.Common.ProfileContext._profileId">
             <summary>
-            Id do perfil logado
+                Id do perfil logado
             </summary>
         </member>
         <member name="P:SocialService.Common.ProfileContext.ProfileId">
             <summary>
-            Método para obter e definir o Id do perfil logado
+                Método para obter e definir o Id do perfil logado
             </summary>
         </member>
         <member name="T:SocialService.Common.Utils.ClaimsPrincipalUtils">
             <summary>
-            Classe utilitária para ClaimsPrincipal
+                Classe utilitária para ClaimsPrincipal
             </summary>
         </member>
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetEmail(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            Método para obter o email do usuário
+                Método para obter o email do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetObjectId(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            Método para obter o id do usuário
+                Método para obter o id do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetFirstName(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            Método para obter o primeiro nome do usuário
+                Método para obter o primeiro nome do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetLastName(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            Método para obter o sobrenome do usuário
+                Método para obter o sobrenome do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Configuration.Authentication">
             <summary>
-            Classe responsavel por configurar a autenticacao
+                Classe responsavel por configurar a autenticacao
             </summary>
         </member>
         <member name="M:SocialService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Metodo responsavel por configurar a autenticacao
+                Metodo responsavel por configurar a autenticacao
             </summary>
             <param name="services"></param>
             <param name="configuration"></param>
@@ -128,6 +128,30 @@
             <param name="services"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter">
+            <summary>
+                Filtro para substituir a versão pela versão exata no path
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:SocialService.Configuration.Filters.VersionHeaderFilter">
+            <summary>
+                Filtro para remover o parâmetro de versão da documentação
+            </summary>
+        </member>
+        <member name="M:SocialService.Configuration.Filters.VersionHeaderFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
         <member name="T:SocialService.Configuration.MiddlewareConfiguration">
             <summary>
                 Classe para configuração de middlewares
@@ -140,22 +164,9 @@
             <param name="app"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Configuration.Migrations">
-            <summary>
-                Classe para atualização de migrações
-            </summary>
-        </member>
-        <member name="M:SocialService.Configuration.Migrations.UpdateMigrations(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-            <summary>
-                Método para atualizar as migrações
-            </summary>
-            <param name="app"></param>
-            <returns></returns>
-            <exception cref="T:System.Exception"></exception>
-        </member>
         <member name="T:SocialService.Configuration.ServiceDependencies">
             <summary>
-            Classe para resolver as dependências de serviços
+                Classe para resolver as dependências de serviços
             </summary>
         </member>
         <member name="M:SocialService.Configuration.ServiceDependencies.SolveServiceDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
@@ -180,198 +191,231 @@
         </member>
         <member name="T:SocialService.Connections.ConnectionsModule">
             <summary>
-            Modulo de conexões externas
+                Modulo de conexões externas
             </summary>
         </member>
         <member name="M:SocialService.Connections.ConnectionsModule.ConfigureConnections(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Método para configurar as conexões
+                Método para configurar as conexões
             </summary>
             <param name="services"></param>
             <param name="configuration"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Database.Sql.DatabaseContext">
+        <member name="T:SocialService.Connections.Graph.GraphContext">
             <summary>
-            Contexto do banco de dados.
+                Classe de contexto para conexão com o banco de dados de grafo
+            </summary>
+            <param name="neo4JDriver"></param>
+        </member>
+        <member name="M:SocialService.Connections.Graph.GraphContext.#ctor(Neo4j.Driver.IDriver)">
+            <summary>
+                Classe de contexto para conexão com o banco de dados de grafo
+            </summary>
+            <param name="neo4JDriver"></param>
+        </member>
+        <member name="M:SocialService.Connections.Graph.GraphContext.ExecuteQueryAsync(System.String)">
+            <summary>
+                Método para executar uma query no banco de dados de grafo
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Connections.Storage.IStorageProvider">
+            <summary>
+                Interface para prover armazenamento de arquivos
             </summary>
         </member>
-        <member name="M:SocialService.Database.Sql.DatabaseContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{SocialService.Database.Sql.DatabaseContext})">
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
             <summary>
-            Construtor
-            </summary>
-            <param name="options"></param>
-        </member>
-        <member name="P:SocialService.Database.Sql.DatabaseContext.Profiles">
-            <summary>
-            Perfis de usuários.
-            </summary>
-        </member>
-        <member name="T:SocialService.Storage.IStorageProvider">
-            <summary>
-            Interface para prover armazenamento de arquivos
-            </summary>
-        </member>
-        <member name="M:SocialService.Storage.IStorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
-            <summary>
-            Método para renomear um blob
+                Método para renomear um blob
             </summary>
             <param name="oldBlobName"></param>
             <param name="newBlobName"></param>
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Storage.IStorageProvider.ReadBlobAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.ReadBlobAsync(System.String,System.String)">
             <summary>
-            Método para ler um blob
+                Método para ler um blob
             </summary>
             <param name="blobName"></param>
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Storage.IStorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
             <summary>
-            Método para escrever um blob
+                Método para escrever um blob
             </summary>
             <param name="data"></param>
             <param name="blobName"></param>
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Storage.IStorageProvider.CreateFolderAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.CreateFolderAsync(System.String,System.String)">
             <summary>
-            Método para criar uma pasta
+                Método para criar uma pasta
             </summary>
             <param name="folderName"></param>
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Storage.IStorageProvider.DeleteBlobAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.DeleteBlobAsync(System.String,System.String)">
             <summary>
-            Método para deletar um blob
+                Método para deletar um blob
             </summary>
             <param name="blobName"></param>
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Storage.IStorageProvider.DeleteContainerAsync(System.String)">
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.DeleteContainerAsync(System.String)">
             <summary>
-            Método para deletar um container
+                Método para deletar um container
             </summary>
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Storage.IStorageProvider.DeleteFolderAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.DeleteFolderAsync(System.String,System.String)">
             <summary>
-            Método para deletar uma pasta
+                Método para deletar uma pasta
             </summary>
             <param name="folderName"></param>
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Storage.StorageProvider">
+        <member name="T:SocialService.Connections.Storage.StorageProvider">
             <summary>
-            Provedor de armazenamento de arquivos
+                Provedor de armazenamento de arquivos
             </summary>
             <param name="connectionString"></param>
             <param name="logger"></param>
         </member>
-        <member name="M:SocialService.Storage.StorageProvider.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{SocialService.Storage.StorageProvider})">
+        <member name="M:SocialService.Connections.Storage.StorageProvider.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{SocialService.Connections.Storage.StorageProvider})">
             <summary>
-            Provedor de armazenamento de arquivos
+                Provedor de armazenamento de arquivos
             </summary>
             <param name="connectionString"></param>
             <param name="logger"></param>
         </member>
-        <member name="M:SocialService.Storage.StorageProvider.ReadBlobAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.StorageProvider.ReadBlobAsync(System.String,System.String)">
             <summary>
-            Método para ler o conteúdo de um blob
+                Método para ler o conteúdo de um blob
             </summary>
             <param name="blobName"></param>
             <param name="containerName"></param>
             <returns></returns>
             <exception cref="T:System.Exception"></exception>
         </member>
-        <member name="M:SocialService.Storage.StorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.StorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
             <summary>
-            Método para escrever o conteúdo em um blob
+                Método para escrever o conteúdo em um blob
             </summary>
             <param name="data"></param>
             <param name="blobName"></param>
             <param name="containerName"></param>
         </member>
-        <member name="M:SocialService.Storage.StorageProvider.CreateFolderAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.StorageProvider.CreateFolderAsync(System.String,System.String)">
             <summary>
-            Método para criar uma pasta
+                Método para criar uma pasta
             </summary>
             <param name="folderName"></param>
             <param name="containerName"></param>
         </member>
-        <member name="M:SocialService.Storage.StorageProvider.DeleteBlobAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.StorageProvider.DeleteBlobAsync(System.String,System.String)">
             <summary>
-            Método para deletar um blob
+                Método para deletar um blob
             </summary>
             <param name="blobName"></param>
             <param name="containerName"></param>
             <exception cref="T:System.Exception"></exception>
         </member>
-        <member name="M:SocialService.Storage.StorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.StorageProvider.DeleteFolderAsync(System.String,System.String)">
             <summary>
-            Método para renomear um blob
+                Método para deletar uma pasta
+            </summary>
+            <param name="folderName"></param>
+            <param name="containerName"></param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:SocialService.Connections.Storage.StorageProvider.DeleteContainerAsync(System.String)">
+            <summary>
+                Método para deletar um container
+            </summary>
+            <param name="containerName"></param>
+        </member>
+        <member name="M:SocialService.Connections.Storage.StorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
+            <summary>
+                Método para renomear um blob
             </summary>
             <param name="oldBlobName"></param>
             <param name="newBlobName"></param>
             <param name="containerName"></param>
             <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:SocialService.Exceptions.NotFoundException">
+            <summary>
+                Exceção para quando um item não é encontrado
+            </summary>
+        </member>
+        <member name="M:SocialService.Exceptions.NotFoundException.#ctor">
+            <summary>
+                Construtor padrão
+            </summary>
+        </member>
+        <member name="M:SocialService.Exceptions.NotFoundException.#ctor(System.String)">
+            <summary>
+                Construtor com mensagem
+            </summary>
+            <param name="message"></param>
         </member>
         <member name="T:SocialService.Follow.Common.Repository.FollowerGraphRepository">
             <summary>
-            Repositório de grafo sobre seguidores.
+                Repositório de grafo sobre seguidores.
             </summary>
             <param name="graphContext"></param>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.#ctor(SocialService.Database.Graph.GraphContext)">
+        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.#ctor(SocialService.Connections.Graph.GraphContext)">
             <summary>
-            Repositório de grafo sobre seguidores.
+                Repositório de grafo sobre seguidores.
             </summary>
             <param name="graphContext"></param>
         </member>
         <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.FollowAsync(System.Guid,System.Guid)">
             <summary>
-            Método para seguir um perfil: cria uma aresta de "FOLLOWING" entre os perfis
+                Método para seguir um perfil: cria uma aresta de "FOLLOWING" entre os perfis
             </summary>
             <param name="followerProfileId"></param>
             <param name="followedProfileId"></param>
         </member>
         <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.UnfollowAsync(System.Guid,System.Guid)">
             <summary>
-            Método para deixar de seguir um perfil: deleta a aresta de "FOLLOWING" entre os perfis
+                Método para deixar de seguir um perfil: deleta a aresta de "FOLLOWING" entre os perfis
             </summary>
             <param name="followerProfileId"></param>
             <param name="followedProfileId"></param>
         </member>
         <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowersAsync(System.Guid)">
             <summary>
-            Método para verificar se um perfil segue outro: retorna a lista de ids de perfil que o perfil dado segue
+                Método para verificar se um perfil segue outro: retorna a lista de ids de perfil que o perfil dado segue
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowingAsync(System.Guid)">
             <summary>
-            Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
+                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Follow.Common.Repository.IFollowerGraphRepository">
             <summary>
-            Interface do repositório de grafo sobre seguidores.
+                Interface do repositório de grafo sobre seguidores.
             </summary>
         </member>
         <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.FollowAsync(System.Guid,System.Guid)">
             <summary>
-            Método para seguir um perfil: cria uma aresta de "FOLLOWING" entre os perfis
+                Método para seguir um perfil: cria uma aresta de "FOLLOWING" entre os perfis
             </summary>
             <param name="followerProfileId"></param>
             <param name="followedProfileId"></param>
@@ -379,7 +423,7 @@
         </member>
         <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.UnfollowAsync(System.Guid,System.Guid)">
             <summary>
-            Método para deixar de seguir um perfil: deleta a aresta de "FOLLOWING" entre os perfis
+                Método para deixar de seguir um perfil: deleta a aresta de "FOLLOWING" entre os perfis
             </summary>
             <param name="followerProfileId"></param>
             <param name="followedProfileId"></param>
@@ -387,26 +431,26 @@
         </member>
         <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowersAsync(System.Guid)">
             <summary>
-            Método para verificar se um perfil segue outro: retorna a lista de ids de perfil que o perfil dado segue
+                Método para verificar se um perfil segue outro: retorna a lista de ids de perfil que o perfil dado segue
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowingAsync(System.Guid)">
             <summary>
-            Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
+                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Follow.FollowController">
             <summary>
-            Controller responsavel por gerenciar funções de seguir e deixar de seguir de um perfil
+                Controller responsavel por gerenciar funções de seguir e deixar de seguir de um perfil
             </summary>
         </member>
         <member name="M:SocialService.Follow.FollowController.FollowUser(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Follow.FollowUser.FollowUserCommand},System.Guid,System.Threading.CancellationToken)">
             <summary>
-            Rota para seguir um perfil
+                Rota para seguir um perfil
             </summary>
             <param name="handler"></param>
             <param name="profileId"></param>
@@ -415,7 +459,7 @@
         </member>
         <member name="M:SocialService.Follow.FollowController.UnfollowUser(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Follow.UnfollowUser.UnfollowUserCommand},System.Guid,System.Threading.CancellationToken)">
             <summary>
-            Rotar para deixar de seguir um perfil
+                Rotar para deixar de seguir um perfil
             </summary>
             <param name="handler"></param>
             <param name="profileId"></param>
@@ -424,7 +468,7 @@
         </member>
         <member name="M:SocialService.Follow.FollowController.GetFollowers(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformationViewModel},SocialService.Follow.GetFollowers.GetFollowersQuery},System.Threading.CancellationToken)">
             <summary>
-            Rotar para obter os seguidores de um perfil
+                Rotar para obter os seguidores de um perfil
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -435,7 +479,7 @@
         </member>
         <member name="M:SocialService.Follow.FollowController.GetFollowing(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformationViewModel},SocialService.Follow.GetFollowing.GetFollowingQuery},System.Threading.CancellationToken)">
             <summary>
-            Rotar para obter os perfis que um perfil segue
+                Rotar para obter os perfis que um perfil segue
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -446,47 +490,47 @@
         </member>
         <member name="T:SocialService.Follow.FollowModule">
             <summary>
-            Modulo para resolver as dependências relacionadas a seguidores
+                Modulo para resolver as dependências relacionadas a seguidores
             </summary>
         </member>
         <member name="M:SocialService.Follow.FollowModule.ConfigureFollowRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Método para resolver as dependências relacionadas a seguidores
+                Método para resolver as dependências relacionadas a seguidores
             </summary>
             <param name="services"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Follow.FollowUser.FollowUserCommand">
             <summary>
-            Comando para seguir um usuário.
-            </summary>
-        </member>
-        <member name="P:SocialService.Follow.FollowUser.FollowUserCommand.FollowedUserId">
-            <summary>
-            Id do usuário a ser seguido.
+                Comando para seguir um usuário.
             </summary>
         </member>
         <member name="M:SocialService.Follow.FollowUser.FollowUserCommand.#ctor(System.Guid)">
             <summary>
-            Construtor do comando.
+                Construtor do comando.
             </summary>
             <param name="followedUserId"></param>
         </member>
+        <member name="P:SocialService.Follow.FollowUser.FollowUserCommand.FollowedUserId">
+            <summary>
+                Id do usuário a ser seguido.
+            </summary>
+        </member>
         <member name="T:SocialService.Follow.FollowUser.FollowUserCommandHandler">
             <summary>
-            Handler para seguir um usuário.
+                Handler para seguir um usuário.
             </summary>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
             <summary>
-            Handler para seguir um usuário.
+                Handler para seguir um usuário.
             </summary>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.HandleAsync(SocialService.Follow.FollowUser.FollowUserCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para seguir um usuário.
+                Método para seguir um usuário.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -494,59 +538,59 @@
         </member>
         <member name="T:SocialService.Follow.GetFollowers.GetFollowersQuery">
             <summary>
-            Query para obter o perfil dos seguidores de um perfil.
+                Query para obter o perfil dos seguidores de um perfil.
             </summary>
         </member>
         <member name="P:SocialService.Follow.GetFollowers.GetFollowersQuery.ProfileId">
             <summary>
-            Id do perfil.
+                Id do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Follow.GetFollowers.GetFollowersQuery.Page">
             <summary>
-            Página.
+                Página.
             </summary>
         </member>
         <member name="P:SocialService.Follow.GetFollowers.GetFollowersQuery.Rows">
             <summary>
-            Quantidade de registros por página.
+                Quantidade de registros por página.
             </summary>
         </member>
         <member name="M:SocialService.Follow.GetFollowers.GetFollowersQuery.SetProfileId(System.Guid)">
             <summary>
-            Método para setar o Id do perfil.
+                Método para setar o Id do perfil.
             </summary>
             <param name="profileId"></param>
         </member>
         <member name="M:SocialService.Follow.GetFollowers.GetFollowersQuery.SetPage(System.Int32)">
             <summary>
-            Método para setar a página.
+                Método para setar a página.
             </summary>
             <param name="page"></param>
         </member>
         <member name="M:SocialService.Follow.GetFollowers.GetFollowersQuery.SetRows(System.Int32)">
             <summary>
-            Método para setar a quantidade de registros por página.
+                Método para setar a quantidade de registros por página.
             </summary>
             <param name="rows"></param>
         </member>
         <member name="T:SocialService.Follow.GetFollowers.GetFollowersQueryHandler">
             <summary>
-            Handler para obter os seguidores de um perfil.
+                Handler para obter os seguidores de um perfil.
             </summary>
             <param name="context"></param>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
+        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
             <summary>
-            Handler para obter os seguidores de um perfil.
+                Handler para obter os seguidores de um perfil.
             </summary>
             <param name="context"></param>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryHandler.HandleAsync(SocialService.Follow.GetFollowers.GetFollowersQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para obter os seguidores de um perfil.
+                Método para obter os seguidores de um perfil.
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>
@@ -554,126 +598,95 @@
         </member>
         <member name="T:SocialService.Follow.GetFollowing.GetFollowingQuery">
             <summary>
-            Query para obter os perfis que um perfil está seguindo.
+                Query para obter os perfis que um perfil está seguindo.
             </summary>
         </member>
         <member name="P:SocialService.Follow.GetFollowing.GetFollowingQuery.ProfileId">
             <summary>
-            Id do perfil.
+                Id do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Follow.GetFollowing.GetFollowingQuery.Page">
             <summary>
-            Página.
+                Página.
             </summary>
         </member>
         <member name="P:SocialService.Follow.GetFollowing.GetFollowingQuery.Rows">
             <summary>
-            Quantidade de registros por página.
+                Quantidade de registros por página.
             </summary>
         </member>
         <member name="M:SocialService.Follow.GetFollowing.GetFollowingQuery.SetProfileId(System.Guid)">
             <summary>
-            Método para setar o Id do perfil.
+                Método para setar o Id do perfil.
             </summary>
             <param name="profileId"></param>
         </member>
         <member name="M:SocialService.Follow.GetFollowing.GetFollowingQuery.SetPage(System.Int32)">
             <summary>
-            Método para setar a página.
+                Método para setar a página.
             </summary>
             <param name="page"></param>
         </member>
         <member name="M:SocialService.Follow.GetFollowing.GetFollowingQuery.SetRows(System.Int32)">
             <summary>
-            Método para setar a quantidade de registros por página.
+                Método para setar a quantidade de registros por página.
             </summary>
             <param name="rows"></param>
         </member>
         <member name="T:SocialService.Follow.GetFollowing.GetFollowingQueryHandler">
             <summary>
-            Handler para obter os perfis seguidos de um perfil
+                Handler para obter os perfis seguidos de um perfil
             </summary>
             <param name="context"></param>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
+        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
             <summary>
-            Handler para obter os perfis seguidos de um perfil
+                Handler para obter os perfis seguidos de um perfil
             </summary>
             <param name="context"></param>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryHandler.HandleAsync(SocialService.Follow.GetFollowing.GetFollowingQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para obter os perfis seguidos de um perfil
+                Método para obter os perfis seguidos de um perfil
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Follow.ProfileConnections">
-            <summary>
-            Classe que representa a conexão de um perfil com outros perfis.
-            </summary>
-        </member>
-        <member name="P:SocialService.Follow.ProfileConnections.Id">
-            <summary>
-            Identificador único do documento.
-            </summary>
-        </member>
-        <member name="P:SocialService.Follow.ProfileConnections.ProfileId">
-            <summary>
-            Id do perfil.
-            </summary>
-        </member>
-        <member name="P:SocialService.Follow.ProfileConnections.Followers">
-            <summary>
-            Lista de seguidores.
-            </summary>
-        </member>
-        <member name="P:SocialService.Follow.ProfileConnections.Following">
-            <summary>
-            Lista de perfis seguidos.
-            </summary>
-        </member>
-        <member name="M:SocialService.Follow.ProfileConnections.#ctor(System.Guid)">
-            <summary>
-            Construtor da classe.
-            </summary>
-            <param name="profileId"></param>
-        </member>
         <member name="T:SocialService.Follow.UnfollowUser.UnfollowUserCommand">
             <summary>
-            Comando para deixar de seguir um usuário.
-            </summary>
-        </member>
-        <member name="P:SocialService.Follow.UnfollowUser.UnfollowUserCommand.UnfollowedUserId">
-            <summary>
-            Id do usuário que será deixado de seguir.
+                Comando para deixar de seguir um usuário.
             </summary>
         </member>
         <member name="M:SocialService.Follow.UnfollowUser.UnfollowUserCommand.#ctor(System.Guid)">
             <summary>
-            Construtor do comando.
+                Construtor do comando.
             </summary>
             <param name="unfollowedUserId"></param>
         </member>
+        <member name="P:SocialService.Follow.UnfollowUser.UnfollowUserCommand.UnfollowedUserId">
+            <summary>
+                Id do usuário que será deixado de seguir.
+            </summary>
+        </member>
         <member name="T:SocialService.Follow.UnfollowUser.UnfollowUserCommandHandler">
             <summary>
-            Handler para o comando de unfollow de um usuário.
+                Handler para o comando de unfollow de um usuário.
             </summary>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Follow.UnfollowUser.UnfollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
             <summary>
-            Handler para o comando de unfollow de um usuário.
+                Handler para o comando de unfollow de um usuário.
             </summary>
-            <param name="followerMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Follow.UnfollowUser.UnfollowUserCommandHandler.HandleAsync(SocialService.Follow.UnfollowUser.UnfollowUserCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para realizar o unfollow de um usuário.
+                Método para realizar o unfollow de um usuário.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -681,34 +694,34 @@
         </member>
         <member name="T:SocialService.Friends.AddFriend.AddFriendCommand">
             <summary>
-            Comando para adicionar um amigo.
+                Comando para adicionar um amigo.
             </summary>
         </member>
         <member name="P:SocialService.Friends.AddFriend.AddFriendCommand.FriendId">
             <summary>
-            Id do amigo.
+                Id do amigo.
             </summary>
         </member>
         <member name="P:SocialService.Friends.AddFriend.AddFriendCommand.RequestMessage">
             <summary>
-            Mensagem de solicitação.
+                Mensagem de solicitação.
             </summary>
         </member>
         <member name="T:SocialService.Friends.AddFriend.AddFriendCommandHandler">
             <summary>
-            Handler para adicionar um amigo.
+                Handler para adicionar um amigo.
             </summary>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Friends.AddFriend.AddFriendCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
             <summary>
-            Handler para adicionar um amigo.
+                Handler para adicionar um amigo.
             </summary>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Friends.AddFriend.AddFriendCommandHandler.HandleAsync(SocialService.Friends.AddFriend.AddFriendCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para adicionar um amigo.
+                Método para adicionar um amigo.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -716,26 +729,26 @@
         </member>
         <member name="T:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQuery">
             <summary>
-            Query para verificar o status solicitações de amizade.
+                Query para verificar o status solicitações de amizade.
             </summary>
         </member>
         <member name="T:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQueryHandler">
             <summary>
-            Handler para verificar o status das solicitações de amizade.
+                Handler para verificar o status das solicitações de amizade.
             </summary>
             <param name="context"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQueryHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+        <member name="M:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
             <summary>
-            Handler para verificar o status das solicitações de amizade.
+                Handler para verificar o status das solicitações de amizade.
             </summary>
             <param name="context"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQueryHandler.HandleAsync(SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para verificar o status das solicitações de amizade.
+                Método para verificar o status das solicitações de amizade.
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>
@@ -743,58 +756,68 @@
         </member>
         <member name="T:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel">
             <summary>
-            ViewModel para a verificação do status de uma solicitação de amizade.
-            </summary>
-        </member>
-        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.FirstName">
-            <summary>
-            Primeiro nome do perfil.
-            </summary>
-        </member>
-        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.LastName">
-            <summary>
-            Sobrenome do perfil.
-            </summary>
-        </member>
-        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.Status">
-            <summary>
-            Status da solicitação de amizade.
-            </summary>
-        </member>
-        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.ProfileId">
-            <summary>
-            Id do perfil.
+                ViewModel para a verificação do status de uma solicitação de amizade.
             </summary>
         </member>
         <member name="M:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.#ctor(System.String,System.String,SocialService.Friends.Common.Enums.EFriendStatus,System.Guid)">
             <summary>
-            Construtor.
+                Construtor.
             </summary>
             <param name="firstName"></param>
             <param name="lastName"></param>
             <param name="status"></param>
             <param name="profileId"></param>
         </member>
+        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.FirstName">
+            <summary>
+                Primeiro nome do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.LastName">
+            <summary>
+                Sobrenome do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.Status">
+            <summary>
+                Status da solicitação de amizade.
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.ProfileId">
+            <summary>
+                Id do perfil.
+            </summary>
+        </member>
         <member name="T:SocialService.Friends.Common.Enums.EFriendStatus">
             <summary>
-            Status de um pedido de amizade.
+                Status de um pedido de amizade.
+            </summary>
+        </member>
+        <member name="F:SocialService.Friends.Common.Enums.EFriendStatus.Pending">
+            <summary>
+                Status de amizade pendente.
+            </summary>
+        </member>
+        <member name="F:SocialService.Friends.Common.Enums.EFriendStatus.PendingResponse">
+            <summary>
+                Status de amizade esperando resposta.
             </summary>
         </member>
         <member name="T:SocialService.Friends.Common.Repository.FriendshipGraphRepository">
             <summary>
-            Repositório de grafo sobre amizades.
+                Repositório de grafo sobre amizades.
             </summary>
             <param name="graphContext"></param>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.#ctor(SocialService.Database.Graph.GraphContext)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.#ctor(SocialService.Connections.Graph.GraphContext)">
             <summary>
-            Repositório de grafo sobre amizades.
+                Repositório de grafo sobre amizades.
             </summary>
             <param name="graphContext"></param>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.SendFriendRequestAsync(System.Guid,System.Guid,System.String)">
             <summary>
-            Método para enviar um pedido de amizade
+                Método para enviar um pedido de amizade
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -803,7 +826,7 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetFriendRequestAsync(System.Guid,System.Guid)">
             <summary>
-            Método para obter um pedido de amizade
+                Método para obter um pedido de amizade
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -811,7 +834,7 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.AcceptFriendRequestAsync(System.Guid,System.Guid)">
             <summary>
-            Método para aceitar um pedido de amizade
+                Método para aceitar um pedido de amizade
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -819,7 +842,7 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.RejectFriendRequestAsync(System.Guid,System.Guid)">
             <summary>
-            Método para rejeitar um pedido de amizade
+                Método para rejeitar um pedido de amizade
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -827,40 +850,40 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetPendingRequestsForProfileAsync(System.Guid)">
             <summary>
-            Método para obter os pedidos de amizade pendentes para um perfil
+                Método para obter os pedidos de amizade pendentes para um perfil
             </summary>
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetSentFriendRequestsAsync(System.Guid)">
             <summary>
-            Método para obter os pedidos de amizade enviados por um perfil
+                Método para obter os pedidos de amizade enviados por um perfil
             </summary>
             <param name="senderProfileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetFriendshipsForProfileAsync(System.Guid)">
             <summary>
-            Método para obter as amizades de um perfil
+                Método para obter as amizades de um perfil
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.UnfriendAsync(System.Guid,System.Guid)">
             <summary>
-            Método para desfazer uma amizade
+                Método para desfazer uma amizade
             </summary>
             <param name="profileAId"></param>
             <param name="profileBId"></param>
         </member>
         <member name="T:SocialService.Friends.Common.Repository.IFriendshipGraphRepository">
             <summary>
-            Interface para o repositório de grafo de amizades.
+                Interface para o repositório de grafo de amizades.
             </summary>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.SendFriendRequestAsync(System.Guid,System.Guid,System.String)">
             <summary>
-            Método para enviar uma solicitação de amizade.
+                Método para enviar uma solicitação de amizade.
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -869,7 +892,7 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetFriendRequestAsync(System.Guid,System.Guid)">
             <summary>
-            Método para obter uma solicitação de amizade.
+                Método para obter uma solicitação de amizade.
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -877,7 +900,7 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.AcceptFriendRequestAsync(System.Guid,System.Guid)">
             <summary>
-            Método para aceitar uma solicitação de amizade.
+                Método para aceitar uma solicitação de amizade.
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -885,7 +908,7 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.RejectFriendRequestAsync(System.Guid,System.Guid)">
             <summary>
-            Método para rejeitar uma solicitação de amizade.
+                Método para rejeitar uma solicitação de amizade.
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -893,28 +916,28 @@
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetPendingRequestsForProfileAsync(System.Guid)">
             <summary>
-            Método para obter as solicitações pendentes de amizade.
+                Método para obter as solicitações pendentes de amizade.
             </summary>
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetSentFriendRequestsAsync(System.Guid)">
             <summary>
-            Método para obter as solicitações de amizade enviadas.
+                Método para obter as solicitações de amizade enviadas.
             </summary>
             <param name="senderProfileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetFriendshipsForProfileAsync(System.Guid)">
             <summary>
-            Método para obter as amizades de um perfil.
+                Método para obter as amizades de um perfil.
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.UnfriendAsync(System.Guid,System.Guid)">
             <summary>
-            Método para desfazer uma amizade.
+                Método para desfazer uma amizade.
             </summary>
             <param name="profileAId"></param>
             <param name="profileBId"></param>
@@ -922,18 +945,18 @@
         </member>
         <member name="T:SocialService.Friends.FriendController">
             <summary>
-            Controller responsavel por gerenciar o perfil do usuario
+                Controller responsavel por gerenciar o perfil do usuario
             </summary>
         </member>
         <member name="M:SocialService.Friends.FriendController.AddFriend(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.AddFriend.AddFriendCommand},SocialService.Friends.AddFriend.AddFriendCommand,System.Threading.CancellationToken)">
             <summary>
-            Rota para adicionar um amigo
+                Rota para adicionar um amigo
             </summary>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.FriendController.CheckRequestStatus(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel},SocialService.Friends.CheckFriendRequestStatus.CheckFriendRequestStatusQuery},System.Threading.CancellationToken)">
             <summary>
-            Rota para verificar o status de uma solicitação de amizade
+                Rota para verificar o status de uma solicitação de amizade
             </summary>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
@@ -941,7 +964,7 @@
         </member>
         <member name="M:SocialService.Friends.FriendController.ViewProfile(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformationViewModel},SocialService.Friends.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
             <summary>
-            Rota para listar os amigos de um perfil
+                Rota para listar os amigos de um perfil
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -952,94 +975,153 @@
         </member>
         <member name="M:SocialService.Friends.FriendController.ManageFriendRequests(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand},SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand,System.Threading.CancellationToken)">
             <summary>
-            Rota para gerenciar solicitações de amizade
+                Rota para gerenciar solicitações de amizade
             </summary>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.FriendController.RemoveFriend(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.RemoveFriend.RemoveFriendCommand},System.Threading.CancellationToken)">
             <summary>
-            Rota para remover um amigo
+                Rota para remover um amigo
             </summary>
             <returns></returns>
         </member>
         <member name="M:SocialService.Friends.FriendController.RemoveFriendRequest(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommand},System.Threading.CancellationToken)">
             <summary>
-            Rota para remover uma solicitação de amizade
+                Rota para remover uma solicitação de amizade
             </summary>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Friends.FriendRequest">
+            <summary>
+                Classe que representa uma solicitação de amizade
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.FriendRequest.SenderProfileId">
+            <summary>
+                Perfil que enviou a solicitação
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.FriendRequest.ReceiverProfileId">
+            <summary>
+                Perfil que recebeu a solicitação
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.FriendRequest.Message">
+            <summary>
+                Mensagem enviada com a solicitação
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.FriendRequest.CreatedAt">
+            <summary>
+                Data de criação da solicitação
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.FriendRequest.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+                Método para mapear os dados da solicitação de amizade de um dicionário
+            </summary>
+            <param name="result"></param>
+        </member>
         <member name="T:SocialService.Friends.Friendship">
             <summary>
-            Classe que representa uma amizade entre dois perfis
+                Classe que representa uma amizade entre dois perfis
             </summary>
+        </member>
+        <member name="M:SocialService.Friends.Friendship.#ctor(System.Guid,System.Guid)">
+            <summary>
+                Construtor padrão
+            </summary>
+            <param name="profileAId"></param>
+            <param name="profileBId"></param>
+        </member>
+        <member name="P:SocialService.Friends.Friendship.ProfileAId">
+            <summary>
+                Id do perfil A
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.Friendship.ProfileBId">
+            <summary>
+                Id do perfil B
+            </summary>
+        </member>
+        <member name="P:SocialService.Friends.Friendship.CreatedAt">
+            <summary>
+                Data de criação da amizade
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.Friendship.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+                Método para setar as informações da amizade
+            </summary>
+            <param name="result"></param>
         </member>
         <member name="T:SocialService.Friends.FriendsModule">
             <summary>
-            Modulo para resolver as dependências relacionadas a amizades
+                Modulo para resolver as dependências relacionadas a amizades
             </summary>
         </member>
         <member name="M:SocialService.Friends.FriendsModule.ConfigureFriendsRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Método para resolver as dependências relacionadas a amizades
+                Método para resolver as dependências relacionadas a amizades
             </summary>
             <param name="services"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Friends.ListFriends.ListFriendsQuery">
             <summary>
-            Query para listar amigos de um perfil.
+                Query para listar amigos de um perfil.
             </summary>
         </member>
         <member name="P:SocialService.Friends.ListFriends.ListFriendsQuery.ProfileId">
             <summary>
-            Id do perfil.
+                Id do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Friends.ListFriends.ListFriendsQuery.Page">
             <summary>
-            Página atual.
+                Página atual.
             </summary>
         </member>
         <member name="P:SocialService.Friends.ListFriends.ListFriendsQuery.Rows">
             <summary>
-            Quantidade de registros por página.
+                Quantidade de registros por página.
             </summary>
         </member>
         <member name="M:SocialService.Friends.ListFriends.ListFriendsQuery.SetProfileId(System.Guid)">
             <summary>
-            Método para setar o Id do perfil.
+                Método para setar o Id do perfil.
             </summary>
             <param name="profileId"></param>
         </member>
         <member name="M:SocialService.Friends.ListFriends.ListFriendsQuery.SetPage(System.Int32)">
             <summary>
-            Método para setar a página atual.
+                Método para setar a página atual.
             </summary>
             <param name="page"></param>
         </member>
         <member name="M:SocialService.Friends.ListFriends.ListFriendsQuery.SetRows(System.Int32)">
             <summary>
-            Método para setar a quantidade de registros por página.
+                Método para setar a quantidade de registros por página.
             </summary>
             <param name="rows"></param>
         </member>
         <member name="T:SocialService.Friends.ListFriends.ListFriendsQueryHandler">
             <summary>
-            Handler para a query de listagem de amigos.
+                Handler para a query de listagem de amigos.
             </summary>
             <param name="context"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.ListFriends.ListFriendsQueryHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+        <member name="M:SocialService.Friends.ListFriends.ListFriendsQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
             <summary>
-            Handler para a query de listagem de amigos.
+                Handler para a query de listagem de amigos.
             </summary>
             <param name="context"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Friends.ListFriends.ListFriendsQueryHandler.HandleAsync(SocialService.Friends.ListFriends.ListFriendsQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com a query de listagem de amigos.
+                Método para lidar com a query de listagem de amigos.
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>
@@ -1047,43 +1129,43 @@
         </member>
         <member name="T:SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand">
             <summary>
-            Comando para gerenciar solicitações de amizade.
+                Comando para gerenciar solicitações de amizade.
             </summary>
             <param name="accept"></param>
             <param name="profileId"></param>
         </member>
         <member name="M:SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand.#ctor(System.Boolean,System.Guid)">
             <summary>
-            Comando para gerenciar solicitações de amizade.
+                Comando para gerenciar solicitações de amizade.
             </summary>
             <param name="accept"></param>
             <param name="profileId"></param>
         </member>
         <member name="P:SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand.Accept">
             <summary>
-            Aceitar ou recusar a solicitação.
+                Aceitar ou recusar a solicitação.
             </summary>
         </member>
         <member name="P:SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand.ProfileId">
             <summary>
-            Id do perfil.
+                Id do perfil.
             </summary>
         </member>
         <member name="T:SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommandHandler">
             <summary>
-            Handler para gerenciar solicitações de amizade.
+                Handler para gerenciar solicitações de amizade.
             </summary>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
             <summary>
-            Handler para gerenciar solicitações de amizade.
+                Handler para gerenciar solicitações de amizade.
             </summary>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommandHandler.HandleAsync(SocialService.Friends.ManageFriendRequests.ManageFriendRequestsCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para gerenciar solicitações de amizade.
+                Método para gerenciar solicitações de amizade.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -1091,116 +1173,227 @@
         </member>
         <member name="T:SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommand">
             <summary>
-            Comando para remover uma solicitação de amizade.
-            </summary>
-        </member>
-        <member name="P:SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommand.ProfileId">
-            <summary>
-            Id do perfil.
+                Comando para remover uma solicitação de amizade.
             </summary>
         </member>
         <member name="M:SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommand.#ctor(System.Guid)">
             <summary>
-            Construtor.
+                Construtor.
             </summary>
             <param name="profileId"></param>
         </member>
-        <member name="T:SocialService.Friends.RemoveFriend.RemoveFriendCommand">
+        <member name="P:SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommand.ProfileId">
             <summary>
-            Comando para remover um amigo.
+                Id do perfil.
             </summary>
         </member>
-        <member name="P:SocialService.Friends.RemoveFriend.RemoveFriendCommand.ProfileId">
+        <member name="T:SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommandHandler">
             <summary>
-            Id do perfil.
+                Handler para remover um pedido de amizade
             </summary>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.RemoveFriend.RemoveFriendCommand.#ctor(System.Guid)">
+        <member name="M:SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
             <summary>
-            Construtor.
+                Handler para remover um pedido de amizade
             </summary>
-            <param name="profileId"></param>
+            <param name="graphRepository"></param>
         </member>
-        <member name="T:SocialService.Friends.RemoveFriend.RemoveFriendCommandHandler">
+        <member name="M:SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommandHandler.HandleAsync(SocialService.Friends.RemoveFriendRequest.RemoveFriendRequestCommand,System.Threading.CancellationToken)">
             <summary>
-            Handler para remover um amigo.
-            </summary>
-            <param name="friendMongoContext"></param>
-        </member>
-        <member name="M:SocialService.Friends.RemoveFriend.RemoveFriendCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
-            <summary>
-            Handler para remover um amigo.
-            </summary>
-            <param name="friendMongoContext"></param>
-        </member>
-        <member name="M:SocialService.Friends.RemoveFriend.RemoveFriendCommandHandler.HandleAsync(SocialService.Friends.RemoveFriend.RemoveFriendCommand,System.Threading.CancellationToken)">
-            <summary>
-            Método para remover um amigo.
+                Método para remover um pedido de amizade
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Migrations.initial">
-            <inheritdoc />
+        <member name="T:SocialService.Friends.RemoveFriend.RemoveFriendCommand">
+            <summary>
+                Comando para remover um amigo.
+            </summary>
         </member>
-        <member name="M:SocialService.Migrations.initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
+        <member name="M:SocialService.Friends.RemoveFriend.RemoveFriendCommand.#ctor(System.Guid)">
+            <summary>
+                Construtor.
+            </summary>
+            <param name="profileId"></param>
         </member>
-        <member name="M:SocialService.Migrations.initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
+        <member name="P:SocialService.Friends.RemoveFriend.RemoveFriendCommand.ProfileId">
+            <summary>
+                Id do perfil.
+            </summary>
         </member>
-        <member name="M:SocialService.Migrations.initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
+        <member name="T:SocialService.Friends.RemoveFriend.RemoveFriendCommandHandler">
+            <summary>
+                Handler para remover um amigo.
+            </summary>
+            <param name="graphRepository"></param>
         </member>
-        <member name="T:SocialService.Migrations.NewFieldsOnProfile">
-            <inheritdoc />
+        <member name="M:SocialService.Friends.RemoveFriend.RemoveFriendCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+            <summary>
+                Handler para remover um amigo.
+            </summary>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Migrations.NewFieldsOnProfile.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
+        <member name="M:SocialService.Friends.RemoveFriend.RemoveFriendCommandHandler.HandleAsync(SocialService.Friends.RemoveFriend.RemoveFriendCommand,System.Threading.CancellationToken)">
+            <summary>
+                Método para remover um amigo.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
-        <member name="M:SocialService.Migrations.NewFieldsOnProfile.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
+        <member name="T:SocialService.Middleware.ExceptionMiddleware">
+            <summary>
+                Middleware para tratamento de exceções
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
         </member>
-        <member name="M:SocialService.Migrations.NewFieldsOnProfile.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
+        <member name="M:SocialService.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{SocialService.Middleware.ExceptionMiddleware})">
+            <summary>
+                Middleware para tratamento de exceções
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:SocialService.Middleware.ExceptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+                Método para invocar o middleware
+            </summary>
+            <param name="context"></param>
         </member>
         <member name="T:SocialService.Post.CommentsOnPost.CommentOnPostCommand">
             <summary>
-            Comando para comentar em um post
+                Comando para comentar em um post
             </summary>
         </member>
         <member name="P:SocialService.Post.CommentsOnPost.CommentOnPostCommand.PostId">
             <summary>
-            Id do post
+                Id do post
             </summary>
         </member>
         <member name="P:SocialService.Post.CommentsOnPost.CommentOnPostCommand.Content">
             <summary>
-            Conteúdo do comentário
+                Conteúdo do comentário
             </summary>
         </member>
         <member name="M:SocialService.Post.CommentsOnPost.CommentOnPostCommand.SetPostId(System.Guid)">
             <summary>
-            Método para setar o id do post
+                Método para setar o id do post
             </summary>
             <param name="postId"></param>
         </member>
+        <member name="T:SocialService.Post.CommentsOnPost.CommentOnPostCommandHandler">
+            <summary>
+                Handler para comentar em um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.CommentsOnPost.CommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Handler para comentar em um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.CommentsOnPost.CommentOnPostCommandHandler.HandleAsync(SocialService.Post.CommentsOnPost.CommentOnPostCommand,System.Threading.CancellationToken)">
+            <summary>
+                Método para comentar em um post
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.Common.Enums.EPostVisibility">
+            <summary>
+                Enum para visibilidade de post
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EPostVisibility.Public">
+            <summary>
+                Visibilidade pública
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EPostVisibility.FriendsOnly">
+            <summary>
+                Visibilidade somente para amigos
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EPostVisibility.Private">
+            <summary>
+                Visibilidade privada
+            </summary>
+        </member>
+        <member name="T:SocialService.Post.Common.Enums.EReactionType">
+            <summary>
+                Enum para os tipos de reações
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Like">
+            <summary>
+                Reação de like
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Dislike">
+            <summary>
+                Reação de dislike
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Love">
+            <summary>
+                Reação de amor
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Haha">
+            <summary>
+                Reação de risada
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Wow">
+            <summary>
+                Reação de surpresa
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Sad">
+            <summary>
+                Reação de tristeza
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Angry">
+            <summary>
+                Reação de raiva
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Care">
+            <summary>
+                Reação de cuidado
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Support">
+            <summary>
+                Reação de apoio
+            </summary>
+        </member>
+        <member name="F:SocialService.Post.Common.Enums.EReactionType.Celebrate">
+            <summary>
+                Reação de celebração
+            </summary>
+        </member>
         <member name="T:SocialService.Post.Common.Repository.IPostGraphRepository">
             <summary>
-            Interface do repositório de grafo para post
+                Interface do repositório de grafo para post
             </summary>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid)">
             <summary>
-            Método que retorna um post
+                Método que retorna um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.PostExistsAsync(System.Guid,System.Guid)">
             <summary>
-            Método que verifica se um post existe
+                Método que verifica se um post existe
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
@@ -1208,24 +1401,23 @@
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CreatePostAsync(System.Guid,System.Guid,SocialService.Post.CreatePost.CreatePostCommand)">
             <summary>
-            Método que cria um post
+                Método que cria um post
             </summary>
             <param name="profileId"></param>
             <param name="postId"></param>
             <param name="command"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UpdatePostAsync(SocialService.Post.CreatePost.EditPostCommand)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UpdatePostAsync(SocialService.Post.EditPost.EditPostCommand)">
             <summary>
-            Método que atualiza um post
+                Método que atualiza um post
             </summary>
-            <param name="postId"></param>
             <param name="command"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.Guid})">
             <summary>
-            Método que adiciona imagens a um post
+                Método que adiciona imagens a um post
             </summary>
             <param name="postId"></param>
             <param name="images"></param>
@@ -1233,14 +1425,14 @@
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeletePostAsync(System.Guid)">
             <summary>
-            Método que deleta um post
+                Método que deleta um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CommentOnPostAsync(SocialService.Post.CommentsOnPost.CommentOnPostCommand,System.Guid)">
             <summary>
-            Método que comenta em um post
+                Método que comenta em um post
             </summary>
             <param name="command"></param>
             <param name="profileId"></param>
@@ -1248,28 +1440,28 @@
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostCommentsAsync(System.Guid)">
             <summary>
-            Método que retorna os comentários de um post
+                Método que retorna os comentários de um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.EditCommentOnPostAsync(SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand)">
             <summary>
-            Método que edita um comentário
+                Método que edita um comentário
             </summary>
             <param name="command"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeleteCommentOnPostAsync(System.Guid)">
             <summary>
-            Método que deleta um comentário
+                Método que deleta um comentário
             </summary>
             <param name="commentId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.ReactToPostAsync(System.Guid,System.Guid,SocialService.Post.Common.Enums.EReactionType)">
             <summary>
-            Método que adiciona uma reação a um post
+                Método que adiciona uma reação a um post
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
@@ -1278,14 +1470,14 @@
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetReactionsOnPostAsync(System.Guid)">
             <summary>
-            Método que retorna as reações de um post
+                Método que retorna as reações de um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.Guid)">
             <summary>
-            Método que deleta uma reação em um post
+                Método que deleta uma reação em um post
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
@@ -1293,26 +1485,26 @@
         </member>
         <member name="T:SocialService.Post.Common.Repository.PostGraphRepository">
             <summary>
-            Repositorio de grafo para post
+                Repositorio de grafo para post
             </summary>
             <param name="graphContext"></param>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.#ctor(SocialService.Database.Graph.GraphContext)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.#ctor(SocialService.Connections.Graph.GraphContext)">
             <summary>
-            Repositorio de grafo para post
+                Repositorio de grafo para post
             </summary>
             <param name="graphContext"></param>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid)">
             <summary>
-            Método que retorna um post
+                Método que retorna um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.PostExistsAsync(System.Guid,System.Guid)">
             <summary>
-            Método que verifica se um post existe
+                Método que verifica se um post existe
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
@@ -1320,55 +1512,61 @@
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CreatePostAsync(System.Guid,System.Guid,SocialService.Post.CreatePost.CreatePostCommand)">
             <summary>
-            Método que cria um post
+                Método que cria um post
             </summary>
             <param name="profileId"></param>
             <param name="postId"></param>
             <param name="command"></param>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UpdatePostAsync(SocialService.Post.CreatePost.EditPostCommand)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UpdatePostAsync(SocialService.Post.EditPost.EditPostCommand)">
             <summary>
-            Método que atualiza um post
+                Método que atualiza um post
             </summary>
-            <param name="postId"></param>
             <param name="command"></param>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.Guid})">
             <summary>
-            Método que adiciona imagens a um post
+                Método que adiciona imagens a um post
             </summary>
             <param name="postId"></param>
             <param name="images"></param>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.DeletePostAsync(System.Guid)">
             <summary>
-            Método que deleta um post
+                Método que deleta um post
             </summary>
             <param name="postId"></param>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CommentOnPostAsync(SocialService.Post.CommentsOnPost.CommentOnPostCommand,System.Guid)">
             <summary>
-            Método que comenta em um post
+                Método que comenta em um post
             </summary>
             <param name="command"></param>
             <param name="profileId"></param>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostCommentsAsync(System.Guid)">
+            <summary>
+                Método que retorna os comentários de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.EditCommentOnPostAsync(SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand)">
             <summary>
-            Método que edita um comentário
+                Método que edita um comentário
             </summary>
             <param name="command"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.DeleteCommentOnPostAsync(System.Guid)">
             <summary>
-            Método que deleta um comentário
+                Método que deleta um comentário
             </summary>
             <param name="commentId"></param>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.ReactToPostAsync(System.Guid,System.Guid,SocialService.Post.Common.Enums.EReactionType)">
             <summary>
-            Método que cria/atualiza se ja existir uma reação em um post
+                Método que cria/atualiza se ja existir uma reação em um post
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
@@ -1376,287 +1574,601 @@
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetReactionsOnPostAsync(System.Guid)">
             <summary>
-            Método que retorna as reações de um post
+                Método que retorna as reações de um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.Guid)">
             <summary>
-            Método que deleta uma reação em um post
+                Método que deleta uma reação em um post
             </summary>
             <param name="postId"></param>
             <param name="profileId"></param>
         </member>
         <member name="T:SocialService.Post.CreatePost.CreatePostCommand">
             <summary>
-            Comando para criação de post.
+                Comando para criação de post.
             </summary>
         </member>
         <member name="P:SocialService.Post.CreatePost.CreatePostCommand.Content">
             <summary>
-            Conteúdo do post.
+                Conteúdo do post.
             </summary>
         </member>
         <member name="P:SocialService.Post.CreatePost.CreatePostCommand.Visibility">
             <summary>
-            Visibilidade do post.
+                Visibilidade do post.
             </summary>
         </member>
         <member name="T:SocialService.Post.CreatePost.CreatePostCommandHandler">
             <summary>
-            Handler para criação de post.
+                Handler para criação de post.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.CreatePost.CreatePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.CreatePost.CreatePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
-            Handler para criação de post.
+                Handler para criação de post.
             </summary>
             <param name="repository"></param>
         </member>
         <member name="M:SocialService.Post.CreatePost.CreatePostCommandHandler.HandleAsync(SocialService.Post.CreatePost.CreatePostCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para criação de post.
+                Método para criação de post.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Post.CreatePost.EditPostCommand">
+        <member name="T:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommand">
             <summary>
-            Comando para criação de post.
+                Comando para deletar um comentário em um post
             </summary>
-        </member>
-        <member name="P:SocialService.Post.CreatePost.EditPostCommand.PostId">
-            <summary>
-            Id do post
-            </summary>
-        </member>
-        <member name="P:SocialService.Post.CreatePost.EditPostCommand.Content">
-            <summary>
-            Conteúdo do post.
-            </summary>
-        </member>
-        <member name="P:SocialService.Post.CreatePost.EditPostCommand.Visibility">
-            <summary>
-            Visibilidade do post.
-            </summary>
-        </member>
-        <member name="M:SocialService.Post.CreatePost.EditPostCommand.SetPostId(System.Guid)">
-            <summary>
-            Método para setar o id do post
-            </summary>
-            <param name="postId"></param>
         </member>
         <member name="P:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommand.CommentId">
             <summary>
-            Id do comentário
+                Id do comentário
             </summary>
         </member>
         <member name="M:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommand.SetCommentId(System.Guid)">
             <summary>
-            Método para setar o id do comentário
+                Método para setar o id do comentário
             </summary>
             <param name="commentId"></param>
         </member>
-        <member name="P:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.CommentId">
+        <member name="T:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommandHandler">
             <summary>
-            Id do comentário
+                Handler para deletar um comentário em um post
             </summary>
+            <param name="repository"></param>
         </member>
-        <member name="P:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.Content">
+        <member name="M:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
             <summary>
-            Conteúdo do comentário
+                Handler para deletar um comentário em um post
             </summary>
+            <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.SetCommentId(System.Guid)">
+        <member name="M:SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommandHandler.HandleAsync(SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para setar o id do comentário
+                Método para deletar um comentário em um post
             </summary>
-            <param name="commentId"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:SocialService.Post.DeletePost.DeletePostCommand">
             <summary>
-            Comando para deletar um post
+                Comando para deletar um post
             </summary>
         </member>
         <member name="P:SocialService.Post.DeletePost.DeletePostCommand.PostId">
             <summary>
-            Id do post
+                Id do post
             </summary>
         </member>
         <member name="M:SocialService.Post.DeletePost.DeletePostCommand.SetPostId(System.Guid)">
             <summary>
-            Método para setar o id do post
+                Método para setar o id do post
             </summary>
             <param name="postId"></param>
         </member>
         <member name="T:SocialService.Post.DeletePost.DeletePostCommandHandler">
             <summary>
-            Handler para o comando de deletar um post.
+                Handler para o comando de deletar um post.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.DeletePost.DeletePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.DeletePost.DeletePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
-            Handler para o comando de deletar um post.
+                Handler para o comando de deletar um post.
             </summary>
             <param name="repository"></param>
         </member>
         <member name="M:SocialService.Post.DeletePost.DeletePostCommandHandler.HandleAsync(SocialService.Post.DeletePost.DeletePostCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de deletar um post.
+                Método para lidar com o comando de deletar um post.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommand">
+            <summary>
+                Comando para deletar uma reação de um post
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommand.PostId">
+            <summary>
+                Id do post
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommand.SetPostId(System.Guid)">
+            <summary>
+                Método para set o id do post
+            </summary>
+            <param name="postId"></param>
+        </member>
+        <member name="T:SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommandHandler">
+            <summary>
+                Handler para deletar uma reação de um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Handler para deletar uma reação de um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommandHandler.HandleAsync(SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommand,System.Threading.CancellationToken)">
+            <summary>
+                Método para deletar uma reação de um post
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand">
+            <summary>
+                Comando para editar um comentário em um post
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.CommentId">
+            <summary>
+                Id do comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.Content">
+            <summary>
+                Conteúdo do comentário
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand.SetCommentId(System.Guid)">
+            <summary>
+                Método para setar o id do comentário
+            </summary>
+            <param name="commentId"></param>
+        </member>
+        <member name="T:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommandHandler">
+            <summary>
+                Handler para editar um comentário em um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Handler para editar um comentário em um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.EditCommentOnPost.EditCommentOnPostCommandHandler.HandleAsync(SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand,System.Threading.CancellationToken)">
+            <summary>
+                Método para editar um comentário em um post
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.EditPost.EditPostCommand">
+            <summary>
+                Comando para criação de post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.EditPost.EditPostCommand.PostId">
+            <summary>
+                Id do post
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.EditPost.EditPostCommand.Content">
+            <summary>
+                Conteúdo do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.EditPost.EditPostCommand.Visibility">
+            <summary>
+                Visibilidade do post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.EditPost.EditPostCommand.SetPostId(System.Guid)">
+            <summary>
+                Método para setar o id do post
+            </summary>
+            <param name="postId"></param>
+        </member>
         <member name="T:SocialService.Post.EditPost.EditPostCommandHandler">
             <summary>
-            Handler para criação de post.
+                Handler para criação de post.
             </summary>
             <param name="repository"></param>
         </member>
         <member name="M:SocialService.Post.EditPost.EditPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
             <summary>
-            Handler para criação de post.
+                Handler para criação de post.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.EditPost.EditPostCommandHandler.HandleAsync(SocialService.Post.CreatePost.EditPostCommand,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.EditPost.EditPostCommandHandler.HandleAsync(SocialService.Post.EditPost.EditPostCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para criação de post.
+                Método para criação de post.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.GetPostComments.Comment">
+            <summary>
+                Classe que representa um comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetPostComments.Comment.ProfileId">
+            <summary>
+                Id do perfil que fez o comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetPostComments.Comment.CreatedAt">
+            <summary>
+                Data de criação do comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetPostComments.Comment.Content">
+            <summary>
+                Conteúdo do comentário
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.GetPostComments.Comment.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+                Método para mapear os dados do neo4j para a entidade
+            </summary>
+            <param name="result"></param>
+        </member>
         <member name="T:SocialService.Post.GetPostComments.GetPostCommentsQuery">
             <summary>
-            Query para obter os comentários de um post
+                Query para obter os comentários de um post
             </summary>
         </member>
         <member name="P:SocialService.Post.GetPostComments.GetPostCommentsQuery.PostId">
             <summary>
-            Id do post
+                Id do post
             </summary>
         </member>
         <member name="M:SocialService.Post.GetPostComments.GetPostCommentsQuery.SetPostId(System.Guid)">
             <summary>
-            Método para setar o id do post
+                Método para setar o id do post
             </summary>
             <param name="postId"></param>
         </member>
-        <member name="T:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery">
+        <member name="T:SocialService.Post.GetPostComments.GetPostCommentsQueryHandler">
             <summary>
-            Query para pegar reações em um post.
-            </summary>
-        </member>
-        <member name="P:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery.PostId">
-            <summary>
-            Id do post.
-            </summary>
-        </member>
-        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery.SetPostId(System.Guid)">
-            <summary>
-            Método para setar o id do post.
-            </summary>
-            <param name="postId"></param>
-        </member>
-        <member name="T:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler">
-            <summary>
-            Handler para a query de pegar reações em um post.
+                Handler para obter os comentários de um post
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.GetPostComments.GetPostCommentsQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
             <summary>
-            Handler para a query de pegar reações em um post.
+                Handler para obter os comentários de um post
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler.HandleAsync(SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.GetPostComments.GetPostCommentsQueryHandler.HandleAsync(SocialService.Post.GetPostComments.GetPostCommentsQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com a query de pegar reações em um post.
+                Método para obter os comentários de um post
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.GetPost.GetPostQuery">
+            <summary>
+                Query para buscar um post
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetPost.GetPostQuery.PostId">
+            <summary>
+                Id do post
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.GetPost.GetPostQuery.SetPostId(System.Guid)">
+            <summary>
+                Método para set o id do post
+            </summary>
+            <param name="postId"></param>
+        </member>
+        <member name="T:SocialService.Post.GetPost.GetPostQueryHandler">
+            <summary>
+                Handler para a query de informações de um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.GetPost.GetPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Handler para a query de informações de um post
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.GetPost.GetPostQueryHandler.HandleAsync(SocialService.Post.GetPost.GetPostQuery,System.Threading.CancellationToken)">
+            <summary>
+                Método para obter as informações de um post
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery">
+            <summary>
+                Query para pegar reações em um post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery.PostId">
+            <summary>
+                Id do post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery.SetPostId(System.Guid)">
+            <summary>
+                Método para setar o id do post.
+            </summary>
+            <param name="postId"></param>
+        </member>
+        <member name="T:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler">
+            <summary>
+                Handler para a query de pegar reações em um post.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Handler para a query de pegar reações em um post.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQueryHandler.HandleAsync(SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery,System.Threading.CancellationToken)">
+            <summary>
+                Método para lidar com a query de pegar reações em um post.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.GetReactionsOnPost.Reaction">
+            <summary>
+                Classe que representa uma reação
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetReactionsOnPost.Reaction.ProfileId">
+            <summary>
+                Id do perfil que reagiu
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetReactionsOnPost.Reaction.CreatedAt">
+            <summary>
+                Data de criação da reação
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetReactionsOnPost.Reaction.ReactionType">
+            <summary>
+                Tipo da reação
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.GetReactionsOnPost.Reaction.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+                Método para mapear os dados do neo4j para a entidade
+            </summary>
+            <param name="result"></param>
+        </member>
         <member name="T:SocialService.Post.Post">
             <summary>
-            Classe que representa um post.
+                Classe que representa um post.
             </summary>
         </member>
         <member name="P:SocialService.Post.Post.Visibility">
             <summary>
-            Visibilidade do post.
+                Visibilidade do post.
             </summary>
         </member>
         <member name="P:SocialService.Post.Post.CreatedAt">
             <summary>
-            Data de criação do post.
+                Data de criação do post.
             </summary>
         </member>
         <member name="P:SocialService.Post.Post.UpdatedAt">
             <summary>
-            Data de atualização do post.
+                Data de atualização do post.
             </summary>
         </member>
         <member name="P:SocialService.Post.Post.Content">
             <summary>
-            Conteúdo do post.
+                Conteúdo do post.
             </summary>
+        </member>
+        <member name="M:SocialService.Post.Post.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+                Método para mapear os dados do neo4j para a entidade.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:SocialService.Post.PostController.GetPost(SocialService.Common.Interfaces.IHandler{SocialService.Post.Post,SocialService.Post.GetPost.GetPostQuery},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+                Rota para pegar as informações de um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.CreatePost(SocialService.Common.Interfaces.IHandler{SocialService.Post.Post,SocialService.Post.CreatePost.CreatePostCommand},SocialService.Post.CreatePost.CreatePostCommand,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
+            <summary>
+                Rota para criar um post
+            </summary>
+            <param name="handler"></param>
+            <param name="command"></param>
+            <param name="files"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.UploadPostImages(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.UploadPostImages.UploadPostImageCommand},System.Guid,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
+            <summary>
+                Rota para fazer upload de imagens em um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="files"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.DeletePost(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.DeletePost.DeletePostCommand},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+                Rota para deletar um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.EditPost(SocialService.Common.Interfaces.IHandler{SocialService.Post.Post,SocialService.Post.EditPost.EditPostCommand},System.Guid,SocialService.Post.EditPost.EditPostCommand,System.Threading.CancellationToken)">
+            <summary>
+                Rota para editar um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.CommentOnPost(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.CommentsOnPost.CommentOnPostCommand},System.Guid,SocialService.Post.CommentsOnPost.CommentOnPostCommand,System.Threading.CancellationToken)">
+            <summary>
+                Rota para comentar em um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.GetPostComments(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.GetPostComments.Comment},SocialService.Post.GetPostComments.GetPostCommentsQuery},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+                Rota para pegar os comentários de um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.EditCommentOnPost(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand},System.Guid,SocialService.Post.EditCommentOnPost.EditCommentOnPostCommand,System.Threading.CancellationToken)">
+            <summary>
+                Rota para editar um comentário em um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.DeleteCommentOnPost(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.DeleteCommentOnPost.DeleteCommentOnPostCommand},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+                Rota para deletar um comentário em um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.ReactToPost(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.ReactToPost.ReactToPostCommand},System.Guid,SocialService.Post.ReactToPost.ReactToPostCommand,System.Threading.CancellationToken)">
+            <summary>
+                Rotas para reagir a um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.GetReactionsOnPost(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.GetReactionsOnPost.Reaction},SocialService.Post.GetReactionsOnPost.GetReactionsOnPostQuery},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+                Rota para pegar as reações de um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.DeleteReactionFromPost(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.DeleteReactionFromPost.DeleteReactionFromPostCommand},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+                Rota para deletar uma reação de um post
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:SocialService.Post.PostModule">
             <summary>
-            Modulo para resolver as dependências relacionadas a postagens
+                Modulo para resolver as dependências relacionadas a postagens
             </summary>
         </member>
         <member name="M:SocialService.Post.PostModule.ConfigurePostRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Método para resolver as dependências relacionadas a postagens
+                Método para resolver as dependências relacionadas a postagens
             </summary>
             <param name="services"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Post.LikePost.ReactToPostCommand">
+        <member name="T:SocialService.Post.ReactToPost.ReactToPostCommand">
             <summary>
-            Comando para reagir a um post.
+                Comando para reagir a um post.
             </summary>
         </member>
-        <member name="P:SocialService.Post.LikePost.ReactToPostCommand.PostId">
+        <member name="P:SocialService.Post.ReactToPost.ReactToPostCommand.PostId">
             <summary>
-            Id do post
+                Id do post
             </summary>
         </member>
-        <member name="P:SocialService.Post.LikePost.ReactToPostCommand.ReactionType">
+        <member name="P:SocialService.Post.ReactToPost.ReactToPostCommand.ReactionType">
             <summary>
-            Tipo de reação
+                Tipo de reação
             </summary>
         </member>
-        <member name="M:SocialService.Post.LikePost.ReactToPostCommand.SetPostId(System.Guid)">
+        <member name="M:SocialService.Post.ReactToPost.ReactToPostCommand.SetPostId(System.Guid)">
             <summary>
-            Método para setar o id do post
+                Método para setar o id do post
             </summary>
             <param name="postId"></param>
         </member>
-        <member name="T:SocialService.Post.LikePost.ReactToPostCommandHandler">
+        <member name="T:SocialService.Post.ReactToPost.ReactToPostCommandHandler">
             <summary>
-            Handler para o comando de like em um post.
+                Handler para o comando de like em um post.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.LikePost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.ReactToPost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
             <summary>
-            Handler para o comando de like em um post.
+                Handler para o comando de like em um post.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.LikePost.ReactToPostCommandHandler.HandleAsync(SocialService.Post.LikePost.ReactToPostCommand,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.ReactToPost.ReactToPostCommandHandler.HandleAsync(SocialService.Post.ReactToPost.ReactToPostCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de like em um post.
+                Método para lidar com o comando de like em um post.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -1664,49 +2176,49 @@
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommand">
             <summary>
-            Comando para criação de post.
+                Comando para criação de post.
             </summary>
         </member>
         <member name="P:SocialService.Post.UploadPostImages.UploadPostImageCommand.PostId">
             <summary>
-            Id do post.
+                Id do post.
             </summary>
         </member>
         <member name="P:SocialService.Post.UploadPostImages.UploadPostImageCommand.Images">
             <summary>
-            Lista de imagens a serem enviadas.
+                Lista de imagens a serem enviadas.
             </summary>
         </member>
         <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetImages(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
             <summary>
-            Método para setar as imagens.
+                Método para setar as imagens.
             </summary>
             <param name="images"></param>
             <param name="cancellationToken"></param>
         </member>
         <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetPostId(System.Guid)">
             <summary>
-            Método para setar o id do post.
+                Método para setar o id do post.
             </summary>
             <param name="postId"></param>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler">
             <summary>
-            Handler para o comando de upload de imagens de um post.
+                Handler para o comando de upload de imagens de um post.
             </summary>
             <param name="repository"></param>
             <param name="storageProvider"></param>
         </member>
-        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
-            Handler para o comando de upload de imagens de um post.
+                Handler para o comando de upload de imagens de um post.
             </summary>
             <param name="repository"></param>
             <param name="storageProvider"></param>
         </member>
         <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler.HandleAsync(SocialService.Post.UploadPostImages.UploadPostImageCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de upload de imagens de um post.
+                Método para lidar com o comando de upload de imagens de um post.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -1715,55 +2227,107 @@
         </member>
         <member name="T:SocialService.Profile.Common.Enums.EGender">
             <summary>
-            Gênero do perfil.
+                Gênero do perfil.
+            </summary>
+        </member>
+        <member name="F:SocialService.Profile.Common.Enums.EGender.Male">
+            <summary>
+                Masculino.
+            </summary>
+        </member>
+        <member name="F:SocialService.Profile.Common.Enums.EGender.Female">
+            <summary>
+                Feminino.
             </summary>
         </member>
         <member name="T:SocialService.Profile.Common.Repository.IProfileGraphRepository">
             <summary>
-            Interface para repositório de grafo sobre perfis.
+                Interface para repositório de grafo sobre perfis.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.CreateProfileAsync(System.Guid)">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.CreateProfileAsync(SocialService.Profile.Profile)">
             <summary>
-            Método para criar um perfil no grafo.
+                Método para criar um perfil no grafo.
             </summary>
-            <param name="id"></param>
+            <param name="profile"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.DeleteProfileAsync(System.Guid)">
             <summary>
-            Método para deletar um perfil do grafo.
+                Método para deletar um perfil do grafo.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Profile.Common.Repository.ProfileGraphRepository">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.Guid)">
             <summary>
-            Repositório de grafo sobre perfis.
-            </summary>
-            <param name="graphContext"></param>
-        </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.#ctor(SocialService.Database.Graph.GraphContext)">
-            <summary>
-            Repositório de grafo sobre perfis.
-            </summary>
-            <param name="graphContext"></param>
-        </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.CreateProfileAsync(System.Guid)">
-            <summary>
-            Método para criar um perfil
+            Método para obter um perfil do grafo.
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
+            <summary>
+            Método para atualizar um perfil no grafo.
+            </summary>
+            <param name="profile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            Método para obter perfis do grafo.
+            </summary>
+            <param name="ids"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Profile.Common.Repository.ProfileGraphRepository">
+            <summary>
+                Repositório de grafo sobre perfis.
+            </summary>
+            <param name="graphContext"></param>
+        </member>
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.#ctor(SocialService.Connections.Graph.GraphContext)">
+            <summary>
+                Repositório de grafo sobre perfis.
+            </summary>
+            <param name="graphContext"></param>
+        </member>
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.CreateProfileAsync(SocialService.Profile.Profile)">
+            <summary>
+                Método para criar um perfil
+            </summary>
+            <param name="profile"></param>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.DeleteProfileAsync(System.Guid)">
             <summary>
-            Método para deletar um perfil
+                Método para deletar um perfil
             </summary>
             <param name="id"></param>
         </member>
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.Guid)">
+            <summary>
+            Método para obter um perfil
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
+            <summary>
+            Método para atualizar um perfil
+            </summary>
+            <param name="profile"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            Método para obter perfis
+            </summary>
+            <param name="ids"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommand">
             <summary>
-            Comando para criar um perfil
+                Comando para criar um perfil
             </summary>
             <param name="gender"></param>
             <param name="birthDate"></param>
@@ -1771,7 +2335,7 @@
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.#ctor(SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
             <summary>
-            Comando para criar um perfil
+                Comando para criar um perfil
             </summary>
             <param name="gender"></param>
             <param name="birthDate"></param>
@@ -1779,56 +2343,74 @@
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Email">
             <summary>
-            Email do perfil
+                Email do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.FirstName">
             <summary>
-            Primeiro nome do perfil
+                Primeiro nome do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.LastName">
             <summary>
-            Sobrenome do perfil
+                Sobrenome do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Gender">
             <summary>
-            Gênero do perfil
+                Gênero do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.BirthDate">
             <summary>
-            Data de nascimento do perfil
+                Data de nascimento do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Bio">
             <summary>
-            Biografia do perfil
+                Biografia do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.CreatedAt">
             <summary>
-            Data de criação do perfil
+                Data de criação do perfil
             </summary>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetFirstName(System.String)">
+            <summary>
+                Método para set o primeiro nome do perfil
+            </summary>
+            <param name="firstName"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetLastName(System.String)">
+            <summary>
+                Método para set o sobrenome do perfil
+            </summary>
+            <param name="lastName"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetEmail(System.String)">
+            <summary>
+                Método para set o email do perfil
+            </summary>
+            <param name="email"></param>
         </member>
         <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommandHandler">
             <summary>
-            Handler para o comando de criação de perfil.
+                Handler para o comando de criação de perfil.
             </summary>
             <param name="context"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
-            Handler para o comando de criação de perfil.
+                Handler para o comando de criação de perfil.
             </summary>
             <param name="context"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.HandleAsync(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de criação de perfil.
+                Método para lidar com o comando de criação de perfil.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -1836,45 +2418,45 @@
         </member>
         <member name="T:SocialService.Profile.DeleteProfile.DeleteProfileCommand">
             <summary>
-            Comando para deletar um perfil.
+                Comando para deletar um perfil.
             </summary>
         </member>
         <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommand.#ctor(System.Guid)">
             <summary>
-            Comando para deletar um perfil.
+                Comando para deletar um perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.DeleteProfile.DeleteProfileCommand.ProfileId">
             <summary>
-            Identificador do perfil.
+                Identificador do perfil.
             </summary>
         </member>
         <member name="T:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler">
             <summary>
-            Handler para o comando de deletar um perfil
+                Handler para o comando de deletar um perfil
             </summary>
             <param name="context"></param>
             <param name="storageProvider"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Storage.IStorageProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Connections.Storage.IStorageProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
-            Handler para o comando de deletar um perfil
+                Handler para o comando de deletar um perfil
             </summary>
             <param name="context"></param>
             <param name="storageProvider"></param>
-            <param name="friendMongoContext"></param>
+            <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.HandleAsync(SocialService.Profile.DeleteProfile.DeleteProfileCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de deletar um perfil
+                Método para lidar com o comando de deletar um perfil
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
         </member>
         <member name="T:SocialService.Profile.EditProfile.EditProfileCommand">
             <summary>
-            Comando para editar um perfil
+                Comando para editar um perfil
             </summary>
             <param name="gender"></param>
             <param name="birthDate"></param>
@@ -1882,7 +2464,7 @@
         </member>
         <member name="M:SocialService.Profile.EditProfile.EditProfileCommand.#ctor(System.Nullable{SocialService.Profile.Common.Enums.EGender},System.Nullable{System.DateTime},System.String)">
             <summary>
-            Comando para editar um perfil
+                Comando para editar um perfil
             </summary>
             <param name="gender"></param>
             <param name="birthDate"></param>
@@ -1890,46 +2472,46 @@
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Gender">
             <summary>
-            Gênero do perfil
+                Gênero do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.BirthDate">
             <summary>
-            Data de nascimento do perfil
+                Data de nascimento do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Bio">
             <summary>
-            Biografia do perfil
+                Biografia do perfil
             </summary>
         </member>
         <member name="T:SocialService.Profile.EditProfile.EditProfileCommandHandler">
             <summary>
-            Handler para o comando de edição de perfil
+                Handler para o comando de edição de perfil
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext)">
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
-            Handler para o comando de edição de perfil
+                Handler para o comando de edição de perfil
             </summary>
             <param name="context"></param>
         </member>
         <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.HandleAsync(SocialService.Profile.EditProfile.EditProfileCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de edição de perfil.
+                Método para lidar com o comando de edição de perfil.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
         </member>
         <member name="T:SocialService.Profile.Profile">
             <summary>
-            Classe que representa o perfil do usuário.
+                Classe que representa o perfil do usuário.
             </summary>
         </member>
         <member name="M:SocialService.Profile.Profile.#ctor(System.Guid,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
             <summary>
-            Construtor padrão.
+                Construtor padrão.
             </summary>
             <param name="objectId"></param>
             <param name="email"></param>
@@ -1944,157 +2526,157 @@
         </member>
         <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Guid)">
             <summary>
-            Construtor para criação de um novo perfil através de um comando.
+                Construtor para criação de um novo perfil através de um comando.
             </summary>
             <param name="command"></param>
             <param name="id"></param>
         </member>
-        <member name="P:SocialService.Profile.Profile.ObjectId">
+        <member name="M:SocialService.Profile.Profile.#ctor">
             <summary>
-            Id do perfil
+            Construtor padrão.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.Email">
             <summary>
-            Email do perfil.
+                Email do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.FirstName">
             <summary>
-            Primeiro nome do perfil.
+                Primeiro nome do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.LastName">
             <summary>
-            Sobrenome do perfil.
+                Sobrenome do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.ImageUrl">
             <summary>
-            Url da imagem do perfil no blob storage
+                Url da imagem do perfil no blob storage
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.Bio">
             <summary>
-            Biografia do perfil.
+                Biografia do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.BirthDate">
             <summary>
-            Data de nascimento do perfil.
+                Data de nascimento do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.Gender">
             <summary>
-            Gênero do perfil.
+                Gênero do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.CreatedAt">
             <summary>
-            Data de criação do perfil.
+                Data de criação do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.UpdatedAt">
             <summary>
-            Data de atualização do perfil.
+                Data de atualização do perfil.
             </summary>
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateBasedOnValueObject(SocialService.Profile.ProfileAggregate)">
             <summary>
-            Método para atualizar o perfil com base em um objeto de valor.
+                Método para atualizar o perfil com base em um objeto de valor.
             </summary>
             <param name="profile"></param>
         </member>
         <member name="T:SocialService.Profile.ProfileAggregate">
             <summary>
-            Agregador de perfil.
+                Agregador de perfil.
             </summary>
             <param name="profile"></param>
         </member>
         <member name="M:SocialService.Profile.ProfileAggregate.#ctor(SocialService.Profile.Profile)">
             <summary>
-            Agregador de perfil.
+                Agregador de perfil.
             </summary>
             <param name="profile"></param>
         </member>
-        <member name="P:SocialService.Profile.ProfileAggregate.ObjectId">
+        <member name="P:SocialService.Profile.ProfileAggregate.Id">
             <summary>
-            Id do perfil
+                Id do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileAggregate.Email">
             <summary>
-            Email do perfil
+                Email do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileAggregate.FirstName">
             <summary>
-            Primeiro nome do perfil
+                Primeiro nome do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileAggregate.LastName">
             <summary>
-            Sobrenome do perfil
+                Sobrenome do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileAggregate.ImageUrl">
             <summary>
-            Url da imagem do perfil no blob storage
+                Url da imagem do perfil no blob storage
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileAggregate.Bio">
             <summary>
-            Biografia do perfil
+                Biografia do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileAggregate.BirthDate">
             <summary>
-            Data de nascimento do perfil
+                Data de nascimento do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileAggregate.Gender">
             <summary>
-            Gênero do perfil
+                Gênero do perfil
             </summary>
         </member>
         <member name="M:SocialService.Profile.ProfileAggregate.UpdateImage(System.String)">
             <summary>
-            Método para atualizar a imagem do perfil.
+                Método para atualizar a imagem do perfil.
             </summary>
             <param name="imageUrl"></param>
         </member>
         <member name="M:SocialService.Profile.ProfileAggregate.UpdateBio(System.String)">
             <summary>
-            Método para atualizar a biografia do perfil.
+                Método para atualizar a biografia do perfil.
             </summary>
             <param name="bio"></param>
         </member>
         <member name="M:SocialService.Profile.ProfileAggregate.UpdateGender(System.Nullable{SocialService.Profile.Common.Enums.EGender})">
             <summary>
-            Método para atualizar o gênero do perfil.
+                Método para atualizar o gênero do perfil.
             </summary>
             <param name="gender"></param>
         </member>
         <member name="M:SocialService.Profile.ProfileAggregate.UpdateBirthDate(System.Nullable{System.DateTime})">
             <summary>
-            Método para atualizar a data de nascimento do perfil.
+                Método para atualizar a data de nascimento do perfil.
             </summary>
             <param name="birthDate"></param>
         </member>
         <member name="T:SocialService.Profile.ProfileController">
             <summary>
-            Controller responsavel por gerenciar o perfil do usuario
+                Controller responsavel por gerenciar o perfil do usuario
             </summary>
         </member>
         <member name="M:SocialService.Profile.ProfileController.CreateProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileAggregate,SocialService.Profile.CreateProfile.CreateProfileCommand},SocialService.Profile.CreateProfile.CreateProfileCommand,System.Threading.CancellationToken)">
             <summary>
-            Rota para criar um perfil
+                Rota para criar um perfil
             </summary>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.Guid,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileAggregate,SocialService.Profile.ViewProfile.ViewProfileQuery},System.Threading.CancellationToken)">
             <summary>
-            Rota para visualizar um perfil
+                Rota para visualizar um perfil
             </summary>
             <param name="profileId"></param>
             <param name="handler"></param>
@@ -2103,52 +2685,52 @@
         </member>
         <member name="M:SocialService.Profile.ProfileController.EditProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileAggregate,SocialService.Profile.EditProfile.EditProfileCommand},SocialService.Profile.EditProfile.EditProfileCommand,System.Threading.CancellationToken)">
             <summary>
-            Rota para editar um perfil
+                Rota para editar um perfil
             </summary>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.ProfileController.DeleteProfile(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.DeleteProfile.DeleteProfileCommand},System.Threading.CancellationToken)">
             <summary>
-            Rota para deletar um perfil
+                Rota para deletar um perfil
             </summary>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.ProfileController.UploadProfilePicture(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
             <summary>
-            Rota para fazer upload de uma foto de perfil
+                Rota para fazer upload de uma foto de perfil
             </summary>
             <returns></returns>
         </member>
         <member name="T:SocialService.Profile.ProfileModule">
             <summary>
-            Modulo para resolver as dependências relacionadas a perfil
+                Modulo para resolver as dependências relacionadas a perfil
             </summary>
         </member>
         <member name="M:SocialService.Profile.ProfileModule.ConfigureProfileRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Método para resolver as dependências relacionadas a perfil
+                Método para resolver as dependências relacionadas a perfil
             </summary>
             <param name="services"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand">
             <summary>
-            Comando para upload de foto de perfil.
+                Comando para upload de foto de perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand.Image">
             <summary>
-            Imagem a ser enviada.
+                Imagem a ser enviada.
             </summary>
         </member>
         <member name="P:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand.ImageFileName">
             <summary>
-            Nome do arquivo da imagem.
+                Nome do arquivo da imagem.
             </summary>
         </member>
         <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand.SetImage(Microsoft.AspNetCore.Http.IFormFile,System.String,System.Threading.CancellationToken)">
             <summary>
-            Método para setar a imagem.
+                Método para setar a imagem.
             </summary>
             <param name="image"></param>
             <param name="imageFileName"></param>
@@ -2156,14 +2738,14 @@
         </member>
         <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler">
             <summary>
-            Handler para o comando de upload de foto de perfil.
+                Handler para o comando de upload de foto de perfil.
             </summary>
             <param name="context"></param>
             <param name="storageProvider"></param>
         </member>
-        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.#ctor(SocialService.Database.Sql.DatabaseContext,SocialService.Storage.IStorageProvider)">
+        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
-            Handler para o comando de upload de foto de perfil.
+                Handler para o comando de upload de foto de perfil.
             </summary>
             <param name="context"></param>
             <param name="storageProvider"></param>
@@ -2177,34 +2759,34 @@
         </member>
         <member name="T:SocialService.Profile.ViewProfile.ViewProfileQuery">
             <summary>
-            Query para visualização de perfil.
+                Query para visualização de perfil.
             </summary>
         </member>
         <member name="M:SocialService.Profile.ViewProfile.ViewProfileQuery.#ctor(System.Guid)">
             <summary>
-            Query para visualização de perfil.
+                Query para visualização de perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.ViewProfile.ViewProfileQuery.ProfileId">
             <summary>
-            Id do perfil.
+                Id do perfil.
             </summary>
         </member>
         <member name="T:SocialService.Profile.ViewProfile.ViewProfileQueryHandler">
             <summary>
-            Handler para a query de visualização de perfil.
+                Handler para a query de visualização de perfil.
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Database.Sql.DatabaseContext)">
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
-            Handler para a query de visualização de perfil.
+                Handler para a query de visualização de perfil.
             </summary>
             <param name="context"></param>
         </member>
         <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.HandleAsync(SocialService.Profile.ViewProfile.ViewProfileQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com a query de visualização de perfil.
+                Método para lidar com a query de visualização de perfil.
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>

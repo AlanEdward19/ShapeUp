@@ -11,7 +11,7 @@ public class ProfileAggregate(Profile profile)
     /// <summary>
     ///     Id do perfil
     /// </summary>
-    public Guid ObjectId { get; private set; } = profile.ObjectId;
+    public Guid Id { get; private set; } = profile.Id;
 
     /// <summary>
     ///     Email do perfil

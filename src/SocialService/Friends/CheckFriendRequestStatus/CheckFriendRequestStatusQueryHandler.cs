@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SocialService.Common;
+﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Connections.Sql;
 using SocialService.Friends.Common.Enums;
 using SocialService.Friends.Common.Repository;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Friends.CheckFriendRequestStatus;
 
@@ -12,7 +11,9 @@ namespace SocialService.Friends.CheckFriendRequestStatus;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
-public class CheckFriendRequestStatusQueryHandler(DatabaseContext context, IFriendshipGraphRepository graphRepository)
+public class CheckFriendRequestStatusQueryHandler(
+    IProfileGraphRepository profileGraphRepository,
+    IFriendshipGraphRepository graphRepository)
     : IHandler<IEnumerable<CheckFriendRequestStatusViewModel>, CheckFriendRequestStatusQuery>
 {
     /// <summary>
@@ -27,16 +28,22 @@ public class CheckFriendRequestStatusQueryHandler(DatabaseContext context, IFrie
         var requests = await graphRepository.GetPendingRequestsForProfileAsync(ProfileContext.ProfileId);
         var sentRequests = await graphRepository.GetSentFriendRequestsAsync(ProfileContext.ProfileId);
 
-        var invitesSentIdList = sentRequests.Select(x => Guid.Parse(x.SenderProfileId));
-        var invitesReceivedIdList = requests.Select(x => Guid.Parse(x.ReceiverProfileId));
+        var invitesSentIdList = sentRequests
+            .Select(x => Guid.Parse(x.SenderProfileId))
+            .ToList();
+        var invitesReceivedIdList = requests
+            .Select(x => Guid.Parse(x.ReceiverProfileId))
+            .ToList();
+        var clearList = invitesSentIdList
+            .Concat(invitesReceivedIdList)
+            .Distinct()
+            .ToList();
 
-        IEnumerable<Profile.Profile> profiles = await context.Profiles.AsNoTracking()
-            .Where(x => invitesReceivedIdList.Concat(invitesSentIdList).Contains(x.ObjectId))
-            .ToListAsync(cancellationToken);
+        IEnumerable<Profile.Profile> profiles = await profileGraphRepository.GetProfilesAsync(clearList);
 
         var result = profiles.Select(x => new CheckFriendRequestStatusViewModel(x.FirstName, x.LastName,
-            invitesSentIdList.Contains(x.ObjectId) ? EFriendStatus.Pending : EFriendStatus.PendingResponse,
-            x.ObjectId)).ToList();
+            invitesSentIdList.Contains(x.Id) ? EFriendStatus.Pending : EFriendStatus.PendingResponse,
+            x.Id)).ToList();
 
         return result;
     }

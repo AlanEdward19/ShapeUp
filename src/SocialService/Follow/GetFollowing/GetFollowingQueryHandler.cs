@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SocialService.Common.Interfaces;
+﻿using SocialService.Common.Interfaces;
 using SocialService.Common.Models;
-using SocialService.Connections.Sql;
 using SocialService.Follow.Common.Repository;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Follow.GetFollowing;
 
@@ -11,7 +10,7 @@ namespace SocialService.Follow.GetFollowing;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
-public class GetFollowingQueryHandler(DatabaseContext context, IFollowerGraphRepository graphRepository)
+public class GetFollowingQueryHandler(IProfileGraphRepository profileGraphRepository, IFollowerGraphRepository graphRepository)
     : IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>
 {
     /// <summary>
@@ -25,10 +24,15 @@ public class GetFollowingQueryHandler(DatabaseContext context, IFollowerGraphRep
     {
         var following = await graphRepository.GetFollowingAsync(query.ProfileId);
         var pagedFollowingIds = following
-            .Skip((query.Page - 1) * query.Rows).Take(query.Rows).Select(Guid.Parse);
-
-        return await context.Profiles.AsNoTracking().Where(x => pagedFollowingIds.Contains(x.ObjectId))
-            .Select(x => new ProfileBasicInformationViewModel(x.FirstName, x.LastName, x.ObjectId))
-            .ToListAsync(cancellationToken);
+            .Skip((query.Page - 1) * query.Rows)
+            .Take(query.Rows)
+            .Select(Guid.Parse)
+            .ToList();
+        
+        var profiles = await profileGraphRepository.GetProfilesAsync(pagedFollowingIds);
+        
+        return profiles
+            .Select(x => new ProfileBasicInformationViewModel(x.FirstName, x.LastName, x.Id))
+            .ToList();
     }
 }

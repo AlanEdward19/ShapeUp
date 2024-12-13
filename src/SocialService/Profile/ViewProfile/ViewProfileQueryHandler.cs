@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SocialService.Common.Interfaces;
-using DatabaseContext = SocialService.Connections.Sql.DatabaseContext;
+﻿using SocialService.Common.Interfaces;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.ViewProfile;
 
@@ -8,7 +7,7 @@ namespace SocialService.Profile.ViewProfile;
 ///     Handler para a query de visualização de perfil.
 /// </summary>
 /// <param name="context"></param>
-public class ViewProfileQueryHandler(DatabaseContext context) : IHandler<ProfileAggregate, ViewProfileQuery>
+public class ViewProfileQueryHandler(IProfileGraphRepository repository) : IHandler<ProfileAggregate, ViewProfileQuery>
 {
     /// <summary>
     ///     Método para lidar com a query de visualização de perfil.
@@ -18,9 +17,7 @@ public class ViewProfileQueryHandler(DatabaseContext context) : IHandler<Profile
     /// <returns></returns>
     public async Task<ProfileAggregate> HandleAsync(ViewProfileQuery query, CancellationToken cancellationToken)
     {
-        Profile profile = await context.Profiles.FirstAsync(
-            x => x.ObjectId.Equals(query.ProfileId),
-            cancellationToken);
+        Profile profile = await repository.GetProfileAsync(query.ProfileId);
 
         return new ProfileAggregate(profile);
     }

@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SocialService.Common;
+﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using DatabaseContext = SocialService.Connections.Sql.DatabaseContext;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.EditProfile;
 
@@ -9,7 +8,7 @@ namespace SocialService.Profile.EditProfile;
 ///     Handler para o comando de edição de perfil
 /// </summary>
 /// <param name="context"></param>
-public class EditProfileCommandHandler(DatabaseContext context) : IHandler<ProfileAggregate, EditProfileCommand>
+public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) : IHandler<ProfileAggregate, EditProfileCommand>
 {
     /// <summary>
     ///     Método para lidar com o comando de edição de perfil.
@@ -18,11 +17,7 @@ public class EditProfileCommandHandler(DatabaseContext context) : IHandler<Profi
     /// <param name="cancellationToken"></param>
     public async Task<ProfileAggregate> HandleAsync(EditProfileCommand command, CancellationToken cancellationToken)
     {
-        await context.Database.BeginTransactionAsync(cancellationToken);
-
-        Profile profile = await context.Profiles.FirstAsync(
-            x => x.ObjectId.Equals(ProfileContext.ProfileId),
-            cancellationToken);
+        Profile profile = await graphRepository.GetProfileAsync(ProfileContext.ProfileId);
 
         ProfileAggregate profileAggregate = new(profile);
 
@@ -32,10 +27,7 @@ public class EditProfileCommandHandler(DatabaseContext context) : IHandler<Profi
 
         profile.UpdateBasedOnValueObject(profileAggregate);
 
-        context.Profiles.Update(profile);
-
-        await context.SaveChangesAsync(cancellationToken);
-        await context.Database.CommitTransactionAsync(cancellationToken);
+        await graphRepository.UpdateProfileAsync(profile);
 
         return profileAggregate;
     }

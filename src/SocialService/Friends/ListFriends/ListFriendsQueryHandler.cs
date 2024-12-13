@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SocialService.Common.Interfaces;
+﻿using SocialService.Common.Interfaces;
 using SocialService.Common.Models;
-using SocialService.Connections.Sql;
 using SocialService.Friends.Common.Repository;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Friends.ListFriends;
 
@@ -11,7 +10,7 @@ namespace SocialService.Friends.ListFriends;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
-public class ListFriendsQueryHandler(DatabaseContext context, IFriendshipGraphRepository graphRepository)
+public class ListFriendsQueryHandler(IProfileGraphRepository profileGraphRepository, IFriendshipGraphRepository graphRepository)
     : IHandler<IEnumerable<ProfileBasicInformationViewModel>, ListFriendsQuery>
 {
     /// <summary>
@@ -34,9 +33,11 @@ public class ListFriendsQueryHandler(DatabaseContext context, IFriendshipGraphRe
             .Distinct()
             .Where(x => x != query.ProfileId)
             .ToList();
-
-        return await context.Profiles.AsNoTracking().Where(x => pagedFriendsIds.Contains(x.ObjectId))
-            .Select(x => new ProfileBasicInformationViewModel(x.FirstName, x.LastName, x.ObjectId))
-            .ToListAsync(cancellationToken);
+        
+        var profiles = await profileGraphRepository.GetProfilesAsync(pagedFriendsIds);
+        
+        return profiles
+            .Select(x => new ProfileBasicInformationViewModel(x.FirstName, x.LastName, x.Id))
+            .ToList();
     }
 }

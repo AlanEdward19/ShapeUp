@@ -17,7 +17,6 @@ var app = builder.Build();
 app.ConfigureSwagger();
 app.MapEndpoints(configuration);
 app.ConfigureMiddleware();
-app.UpdateMigrations();
 
 app.Run();
 app.Logger.LogInformation("Application instance is ready to handle incoming requests");

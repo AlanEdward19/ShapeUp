@@ -1,6 +1,5 @@
 ﻿using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Connections.Sql;
 using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.CreateProfile;
@@ -10,7 +9,7 @@ namespace SocialService.Profile.CreateProfile;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
-public class CreateProfileCommandHandler(DatabaseContext context, IProfileGraphRepository graphRepository)
+public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository)
     : IHandler<ProfileAggregate, CreateProfileCommand>
 {
     /// <summary>
@@ -21,23 +20,16 @@ public class CreateProfileCommandHandler(DatabaseContext context, IProfileGraphR
     /// <returns></returns>
     public async Task<ProfileAggregate> HandleAsync(CreateProfileCommand command, CancellationToken cancellationToken)
     {
-        await context.Database.BeginTransactionAsync(cancellationToken);
-
         Profile profile = new(command, ProfileContext.ProfileId);
-
-        await context.Profiles.AddAsync(profile, cancellationToken);
 
         #region Create Profile Graph
 
-        await graphRepository.CreateProfileAsync(ProfileContext.ProfileId);
+        await graphRepository.CreateProfileAsync(profile);
 
         #endregion
 
         ProfileAggregate profileAggregate = new(profile);
-
-        await context.SaveChangesAsync(cancellationToken);
-        await context.Database.CommitTransactionAsync(cancellationToken);
-
+        
         return profileAggregate;
     }
 }
