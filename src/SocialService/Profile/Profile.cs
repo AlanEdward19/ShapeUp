@@ -1,4 +1,5 @@
-﻿using SocialService.Common.Entities;
+﻿using System.Text.RegularExpressions;
+using SocialService.Common.Entities;
 using SocialService.Profile.Common.Enums;
 using SocialService.Profile.CreateProfile;
 
@@ -10,40 +11,9 @@ namespace SocialService.Profile;
 public class Profile : GraphEntity
 {
     /// <summary>
-    ///     Construtor padrão.
+    /// Construtor padrão.
     /// </summary>
-    /// <param name="objectId"></param>
-    /// <param name="email"></param>
-    /// <param name="firstName"></param>
-    /// <param name="lastName"></param>
-    /// <param name="state"></param>
-    /// <param name="city"></param>
-    /// <param name="country"></param>
-    /// <param name="imageUrl"></param>
-    /// <param name="createdAt"></param>
-    /// <param name="updatedAt"></param>
-    /// <param name="gender"></param>
-    /// <param name="birthDate"></param>
-    /// <param name="bio"></param>
-    public Profile(Guid objectId, string email, string firstName, string lastName, string state, string city, string country, string? imageUrl, DateTime createdAt,
-        DateTime updatedAt,
-        EGender gender, DateTime birthDate, string? bio)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Country = country;
-        State = state;
-        City = city;
-        
-        Id = objectId;
-        Email = email;
-        ImageUrl = imageUrl;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        Gender = gender;
-        BirthDate = birthDate;
-        Bio = bio;
-    }
+    public Profile() { }
 
     /// <summary>
     ///     Construtor para criação de um novo perfil através de um comando.
@@ -52,24 +22,19 @@ public class Profile : GraphEntity
     /// <param name="id"></param>
     public Profile(CreateProfileCommand command, Guid id)
     {
-        FirstName = command.FirstName;
-        LastName = command.LastName;
-        Country = command.Country;
-        State = command.State;
-        City = command.City;
-        Gender = command.Gender;
-        BirthDate = command.BirthDate;
-        Bio = command.Bio;
         Id = id;
-        Email = command.Email;
-        CreatedAt = command.CreatedAt;
-        UpdatedAt = command.CreatedAt;
+        UpdateFirstName(command.FirstName, false);
+        UpdateLastName(command.LastName, false);
+        UpdateCountry(command.Country, false);
+        UpdateState(command.State, false);
+        UpdateCity(command.City, false);
+        UpdateGender(command.Gender, false);
+        UpdateBirthDate(command.BirthDate, false);
+        UpdateBio(command.Bio, false);
+        UpdateEmail(command.Email, false);
+        CreatedAt = DateTime.Now;
+        UpdatedAt = DateTime.Now;
     }
-
-    /// <summary>
-    /// Construtor padrão.
-    /// </summary>
-    public Profile() { }
 
     /// <summary>
     ///     Email do perfil.
@@ -85,17 +50,17 @@ public class Profile : GraphEntity
     ///     Sobrenome do perfil.
     /// </summary>
     public string LastName { get; private set; }
-    
+
     /// <summary>
     /// Cidade do perfil
     /// </summary>
     public string City { get; private set; }
-    
+
     /// <summary>
     /// Estado do perfil
     /// </summary>
     public string State { get; private set; }
-    
+
     /// <summary>
     /// País do perfil
     /// </summary>
@@ -132,24 +97,9 @@ public class Profile : GraphEntity
     public DateTime UpdatedAt { get; private set; }
 
     /// <summary>
-    ///     Método para atualizar o perfil com base em um objeto de valor.
+    /// Método para mapear os dados do neo4j para o perfil
     /// </summary>
-    /// <param name="profile"></param>
-    public void UpdateBasedOnValueObject(ProfileDto profile)
-    {
-        FirstName = profile.FirstName;
-        LastName = profile.LastName;
-        Country = profile.Country;
-        State = profile.State;
-        City = profile.City;
-        Gender = profile.Gender;
-        BirthDate = profile.BirthDate;
-        Bio = profile.Bio;
-        Email = profile.Email;
-        ImageUrl = profile.ImageUrl;
-        UpdatedAt = DateTime.Now;
-    }
-
+    /// <param name="result"></param>
     public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
         Email = result["email"].ToString();
@@ -163,7 +113,158 @@ public class Profile : GraphEntity
         UpdatedAt = DateTime.Parse(result["updatedAt"].ToString());
         BirthDate = DateTime.Parse(result["birthDate"].ToString());
         Bio = result["bio"].ToString();
-        
+
         base.MapToEntityFromNeo4j(result);
+    }
+
+    /// <summary>
+    /// Método para atualizar o primeiro nome do perfil.
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateFirstName(string? firstName, bool isUpdate = true)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            throw new ArgumentException("First name cannot be empty.");
+        
+        if (FirstName != firstName)
+            FirstName = firstName;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Método para atualizar o sobrenome do perfil.
+    /// </summary>
+    /// <param name="lastName"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateLastName(string? lastName, bool isUpdate = true)
+    {
+        if (string.IsNullOrWhiteSpace(lastName))
+            throw new ArgumentException("Last name cannot be empty.");
+        
+        if (LastName != lastName)
+            LastName = lastName;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Método para atualizar o email do perfil.
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateEmail(string? email, bool isUpdate = true)
+    {
+        Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
+        if (string.IsNullOrWhiteSpace(email) || !regex.IsMatch(email))
+            throw new ArgumentException("Invalid email format.");
+        
+        if (Email != email)
+            Email = email;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    ///     Método para atualizar a imagem do perfil.
+    /// </summary>
+    /// <param name="imageUrl"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateImage(string? imageUrl, bool isUpdate = true)
+    {
+        if (!string.IsNullOrWhiteSpace(imageUrl) && ImageUrl != imageUrl)
+            ImageUrl = imageUrl;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    ///     Método para atualizar a biografia do perfil.
+    /// </summary>
+    /// <param name="bio"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateBio(string? bio, bool isUpdate = true)
+    {
+        if (!string.IsNullOrWhiteSpace(bio) && Bio != bio)
+            Bio = bio;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    ///     Método para atualizar o gênero do perfil.
+    /// </summary>
+    /// <param name="gender"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateGender(EGender? gender, bool isUpdate = true)
+    {
+        if (gender != null && Gender != gender.Value)
+            Gender = gender.Value;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    ///     Método para atualizar a data de nascimento do perfil.
+    /// </summary>
+    /// <param name="birthDate"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateBirthDate(DateTime? birthDate, bool isUpdate = true)
+    {
+        if (birthDate != null && BirthDate != birthDate.Value)
+            BirthDate = birthDate.Value;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Método para atualizar o estado do perfil.
+    /// </summary>
+    /// <param name="state"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateState(string? state, bool isUpdate = true)
+    {
+        if (!string.IsNullOrWhiteSpace(state) && State != state)
+            State = state;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Método para atualizar a cidade do perfil.
+    /// </summary>
+    /// <param name="city"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateCity(string? city, bool isUpdate = true)
+    {
+        if (!string.IsNullOrWhiteSpace(city) && City != city)
+            City = city;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Método para atualizar o país do perfil.
+    /// </summary>
+    /// <param name="country"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateCountry(string? country, bool isUpdate = true)
+    {
+        if (!string.IsNullOrWhiteSpace(country) && Country != country)
+            Country = country;
+        
+        if(isUpdate)
+            UpdatedAt = DateTime.Now;
     }
 }

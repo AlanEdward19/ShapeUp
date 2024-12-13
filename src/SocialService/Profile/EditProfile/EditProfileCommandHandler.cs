@@ -7,7 +7,7 @@ namespace SocialService.Profile.EditProfile;
 /// <summary>
 ///     Handler para o comando de edição de perfil
 /// </summary>
-/// <param name="context"></param>
+/// <param name="graphRepository"></param>
 public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) : IHandler<ProfileDto, EditProfileCommand>
 {
     /// <summary>
@@ -19,19 +19,15 @@ public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) 
     {
         Profile profile = await graphRepository.GetProfileAsync(ProfileContext.ProfileId);
 
-        ProfileDto profileDto = new(profile);
-
-        profileDto.UpdateBio(command.Bio);
-        profileDto.UpdateBirthDate(command.BirthDate);
-        profileDto.UpdateGender(command.Gender);
-        profileDto.UpdateCity(command.City);
-        profileDto.UpdateState(command.State);
-        profileDto.UpdateCountry(command.Country);
-
-        profile.UpdateBasedOnValueObject(profileDto);
+        profile.UpdateBio(command.Bio);
+        profile.UpdateBirthDate(command.BirthDate);
+        profile.UpdateGender(command.Gender);
+        profile.UpdateCity(command.City);
+        profile.UpdateState(command.State);
+        profile.UpdateCountry(command.Country);
 
         await graphRepository.UpdateProfileAsync(profile);
 
-        return profileDto;
+        return new(profile);
     }
 }

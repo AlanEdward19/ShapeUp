@@ -8,9 +8,9 @@ namespace SocialService.Profile.UploadProfilePicture;
 /// <summary>
 ///     Handler para o comando de upload de foto de perfil.
 /// </summary>
-/// <param name="context"></param>
+/// <param name="repository"></param>
 /// <param name="storageProvider"></param>
-public class UploadProfilePictureCommandHandler(IProfileGraphRepository repository,IStorageProvider storageProvider)
+public class UploadProfilePictureCommandHandler(IProfileGraphRepository repository, IStorageProvider storageProvider)
     : IHandler<bool, UploadProfilePictureCommand>
 {
     /// <summary>
@@ -31,12 +31,10 @@ public class UploadProfilePictureCommandHandler(IProfileGraphRepository reposito
 
         await storageProvider.WriteBlobAsync(command.Image, blobName, containerName);
 
-        profileDto.UpdateImage(blobName);
-
-        profile.UpdateBasedOnValueObject(profileDto);
+        profile.UpdateImage(blobName);
 
         await repository.UpdateProfileAsync(profile);
-        
+
         return true;
     }
 }
