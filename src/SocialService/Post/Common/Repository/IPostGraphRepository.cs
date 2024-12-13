@@ -67,24 +67,30 @@ public interface IPostGraphRepository
     /// <summary>
     ///     Método que comenta em um post
     /// </summary>
-    /// <param name="command"></param>
-    /// <param name="profileId"></param>
+    /// <param name="comment"></param>
     /// <returns></returns>
-    Task CommentOnPostAsync(CommentOnPostCommand command, Guid profileId);
+    Task CommentOnPostAsync(Comment.Comment comment);
 
+    /// <summary>
+    ///     Método que retorna os comentários de um post
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <returns></returns>
+    Task<Comment.Comment> GetPostCommentsByCommentIdAsync(Guid commentId);
+    
     /// <summary>
     ///     Método que retorna os comentários de um post
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
-    Task<IEnumerable<Comment.Comment>> GetPostCommentsAsync(Guid postId);
+    Task<IEnumerable<Comment.Comment>> GetPostCommentsByPostIdAsync(Guid postId);
 
     /// <summary>
     ///     Método que edita um comentário
     /// </summary>
-    /// <param name="command"></param>
+    /// <param name="comment"></param>
     /// <returns></returns>
-    Task<Comment.Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command);
+    Task EditCommentOnPostAsync(Comment.Comment comment);
 
     /// <summary>
     ///     Método que deleta um comentário

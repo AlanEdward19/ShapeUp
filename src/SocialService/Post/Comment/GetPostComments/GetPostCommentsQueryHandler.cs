@@ -18,6 +18,6 @@ public class GetPostCommentsQueryHandler(IPostGraphRepository repository)
     /// <returns></returns>
     public async Task<IEnumerable<Comment>> HandleAsync(GetPostCommentsQuery query, CancellationToken cancellationToken)
     {
-        return await repository.GetPostCommentsAsync(query.PostId);
+        return await repository.GetPostCommentsByPostIdAsync(query.PostId);
     }
 }

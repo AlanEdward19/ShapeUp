@@ -133,15 +133,14 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     ///     Método que comenta em um post
     /// </summary>
     /// <param name="command"></param>
-    /// <param name="profileId"></param>
-    public async Task CommentOnPostAsync(CommentOnPostCommand command, Guid profileId)
+    public async Task CommentOnPostAsync(Comment.Comment comment)
     {
         var query = $@"
-    MATCH (p:Profile {{id: '{profileId}'}})
-    MATCH (post:Post {{id: '{command.PostId}'}})
+    MATCH (p:Profile {{id: '{comment.ProfileId}'}})
+    MATCH (post:Post {{id: '{comment.PostId}'}})
     CREATE (p)-[:COMMENTED]->(comment:Comment {{
-        id: '{Guid.NewGuid()}',
-        content: '{command.Content}',
+        id: '{comment.Id}',
+        content: '{comment.Content}',
         createdAt: datetime('{DateTime.Now:yyyy-MM-dd}')
     }})-[:COMMENTED_ON]->(post)";
 
@@ -149,11 +148,36 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
+    /// Método que retorna um comentário de um post
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <returns></returns>
+    public async Task<Comment.Comment> GetPostCommentsByCommentIdAsync(Guid commentId)
+    {
+        var cypherQuery = $@"
+    MATCH (comment:Comment {{id: '{commentId}'}})<-[:COMMENTED_ON]-(post:Post)
+    RETURN comment, post.id AS postId";
+
+        var result = await graphContext.ExecuteQueryAsync(cypherQuery);
+        var record = result.FirstOrDefault();
+
+        if (record == null)
+            return null;
+
+        var comment = new Comment.Comment();
+        var parsedDictionary = record["comment"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        parsedDictionary.Add("postId", record["postId"].ToString()!);
+        comment.MapToEntityFromNeo4j(parsedDictionary);
+
+        return comment;
+    }
+
+    /// <summary>
     ///     Método que retorna os comentários de um post
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Comment.Comment>> GetPostCommentsAsync(Guid postId)
+    public async Task<IEnumerable<Comment.Comment>> GetPostCommentsByPostIdAsync(Guid postId)
     {
         var comments = new List<Comment.Comment>();
         var cypherQuery = $@"
@@ -180,27 +204,15 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// <summary>
     ///     Método que edita um comentário
     /// </summary>
-    /// <param name="command"></param>
+    /// <param name="comment"></param>
     /// <returns></returns>
-    public async Task<Comment.Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command)
+    public async Task EditCommentOnPostAsync(Comment.Comment comment)
     {
         var query = $@"
-    MATCH (comment:Comment {{id: '{command.CommentId}'}})<-[:COMMENTED]-(profile:Profile)
-    SET comment.content = '{command.Content}'
-    RETURN comment, profile.id AS profileId";
+    MATCH (comment:Comment {{id: '{comment.Id}'}})<-[:COMMENTED]-(profile:Profile)
+    SET comment.content = '{comment.Content}'";
 
-        var result = await graphContext.ExecuteQueryAsync(query);
-        var record = result.FirstOrDefault();
-
-        if (record == null)
-            return null;
-
-        var comment = new Comment.Comment();
-        var parsedDictionary = record["comment"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        parsedDictionary.Add("profileId", record["profileId"].ToString()!);
-        comment.MapToEntityFromNeo4j(parsedDictionary);
-
-        return comment;
+        await graphContext.ExecuteQueryAsync(query);
     }
 
     /// <summary>

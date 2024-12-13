@@ -18,7 +18,9 @@ public class CommentOnPostCommandHandler(IPostGraphRepository repository) : IHan
     /// <returns></returns>
     public async Task<bool> HandleAsync(CommentOnPostCommand command, CancellationToken cancellationToken)
     {
-        await repository.CommentOnPostAsync(command, ProfileContext.ProfileId);
+        Comment comment = new(command, ProfileContext.ProfileId);
+        
+        await repository.CommentOnPostAsync(comment);
 
         return true;
     }

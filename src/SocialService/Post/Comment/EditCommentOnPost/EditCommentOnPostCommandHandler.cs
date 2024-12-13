@@ -17,7 +17,11 @@ public class EditCommentOnPostCommandHandler(IPostGraphRepository repository) : 
     /// <returns></returns>
     public async Task<bool> HandleAsync(EditCommentOnPostCommand command, CancellationToken cancellationToken)
     {
-        await repository.EditCommentOnPostAsync(command);
+        Comment comment = await repository.GetPostCommentsByCommentIdAsync(command.CommentId);
+        
+        comment.UpdateContent(command.Content);
+        
+        await repository.EditCommentOnPostAsync(comment);
 
         return true;
     }

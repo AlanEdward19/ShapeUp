@@ -1,4 +1,5 @@
 ﻿using SocialService.Common.Entities;
+using SocialService.Post.Comment.CommentOnPost;
 
 namespace SocialService.Post.Comment;
 
@@ -8,9 +9,34 @@ namespace SocialService.Post.Comment;
 public class Comment : GraphEntity
 {
     /// <summary>
+    /// Construtor padrão
+    /// </summary>
+    public Comment() { }
+    
+    /// <summary>
+    /// Construtor para criar um novo comentário.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="profileId"></param>
+    public Comment(CommentOnPostCommand command, Guid profileId)
+    {
+        Id = Guid.NewGuid();
+        ProfileId = profileId;
+        PostId = command.PostId;
+        UpdateContent(command.Content);
+        
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
     ///     Id do perfil que fez o comentário
     /// </summary>
     public Guid ProfileId { get; private set; }
+    
+    /// <summary>
+    /// Id do post
+    /// </summary>
+    public Guid PostId { get; private set; }
 
     /// <summary>
     ///     Data de criação do comentário
@@ -33,5 +59,18 @@ public class Comment : GraphEntity
         CreatedAt = DateTime.Parse(result["createdAt"].ToString());
 
         base.MapToEntityFromNeo4j(result);
+    }
+
+    /// <summary>
+    /// Método para atualizar o conteúdo do comentário.
+    /// </summary>
+    /// <param name="content"></param>
+    public void UpdateContent(string content)
+    {
+        if (string.IsNullOrWhiteSpace(content))
+            throw new ArgumentException("O conteúdo não pode ser vazio.");
+        
+        if (Content != content)
+            Content = content;
     }
 }
