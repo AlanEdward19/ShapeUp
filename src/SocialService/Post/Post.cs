@@ -1,5 +1,6 @@
 ﻿using SocialService.Common.Entities;
 using SocialService.Post.Common.Enums;
+using SocialService.Post.CreatePost;
 
 namespace SocialService.Post;
 
@@ -8,6 +9,25 @@ namespace SocialService.Post;
 /// </summary>
 public class Post : GraphEntity
 {
+    /// <summary>
+    /// Construtor padrão
+    /// </summary>
+    public Post() { }
+    
+    /// <summary>
+    /// Construtor para criar um novo post.
+    /// </summary>
+    /// <param name="command"></param>
+    public Post(CreatePostCommand command)
+    {
+        Id = Guid.NewGuid();
+        UpdateVisibility(command.Visibility);
+        UpdateContent(command.Content);
+        Images = new List<Guid>();
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
     /// <summary>
     ///     Visibilidade do post.
     /// </summary>
@@ -53,5 +73,42 @@ public class Post : GraphEntity
             Images = new List<Guid>();
 
         base.MapToEntityFromNeo4j(result);
+    }
+
+    /// <summary>
+    /// Método para atualizar a visibilidade do post.
+    /// </summary>
+    /// <param name="visibility"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateVisibility(EPostVisibility? visibility, bool isUpdate = true)
+    {
+        if(visibility == null)
+            return;
+        
+        if (!Enum.IsDefined(typeof(EPostVisibility), visibility))
+            throw new ArgumentException("Valor de visibilidade inválido.");
+        
+        if (Visibility != visibility)
+            Visibility = visibility.Value;
+        
+        if (isUpdate)
+            UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Método para atualizar o conteúdo do post.
+    /// </summary>
+    /// <param name="content"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateContent(string? content, bool isUpdate = true)
+    {
+        if (string.IsNullOrWhiteSpace(content))
+            return;
+        
+        if (Content != content)
+            Content = content;
+        
+        if (isUpdate)
+            UpdatedAt = DateTime.UtcNow;
     }
 }

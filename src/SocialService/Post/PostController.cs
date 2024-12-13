@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using SocialService.Common;
 using SocialService.Common.Interfaces;
 using SocialService.Common.Utils;
-using SocialService.Post.CommentsOnPost;
+using SocialService.Post.Comment.CommentOnPost;
+using SocialService.Post.Comment.DeleteCommentOnPost;
+using SocialService.Post.Comment.EditCommentOnPost;
+using SocialService.Post.Comment.GetPostComments;
 using SocialService.Post.CreatePost;
-using SocialService.Post.DeleteCommentOnPost;
 using SocialService.Post.DeletePost;
-using SocialService.Post.DeleteReactionFromPost;
-using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.EditPost;
 using SocialService.Post.GetPost;
-using SocialService.Post.GetPostComments;
-using SocialService.Post.GetReactionsOnPost;
-using SocialService.Post.ReactToPost;
+using SocialService.Post.React;
+using SocialService.Post.React.DeleteReactionFromPost;
+using SocialService.Post.React.GetReactionsOnPost;
+using SocialService.Post.React.ReactToPost;
 using SocialService.Post.UploadPostImages;
 
 namespace SocialService.Post;
@@ -152,7 +153,7 @@ public class PostController : ControllerBase
     /// <returns></returns>
     [HttpGet("{id:guid}/getComments")]
     public async Task<IActionResult> GetPostComments(
-        [FromServices] IHandler<IEnumerable<Comment>, GetPostCommentsQuery> handler,
+        [FromServices] IHandler<IEnumerable<Comment.Comment>, GetPostCommentsQuery> handler,
         Guid id, CancellationToken cancellationToken)
     {
         GetPostCommentsQuery query = new();

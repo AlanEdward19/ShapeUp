@@ -1,10 +1,9 @@
-﻿using SocialService.Post.CommentsOnPost;
+﻿using SocialService.Post.Comment.CommentOnPost;
+using SocialService.Post.Comment.EditCommentOnPost;
 using SocialService.Post.Common.Enums;
 using SocialService.Post.CreatePost;
-using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.EditPost;
-using SocialService.Post.GetPostComments;
-using SocialService.Post.GetReactionsOnPost;
+using SocialService.Post.React;
 
 namespace SocialService.Post.Common.Repository;
 
@@ -35,16 +34,16 @@ public interface IPostGraphRepository
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="postId"></param>
-    /// <param name="command"></param>
+    /// <param name="post"></param>
     /// <returns></returns>
-    Task<Post> CreatePostAsync(Guid profileId, Guid postId, CreatePostCommand command);
+    Task CreatePostAsync(Guid profileId, Post post);
 
     /// <summary>
     ///     Método que atualiza um post
     /// </summary>
-    /// <param name="command"></param>
+    /// <param name="post"></param>
     /// <returns></returns>
-    Task<Post> UpdatePostAsync(EditPostCommand command);
+    Task UpdatePostAsync(Post post);
 
     /// <summary>
     ///     Método que adiciona imagens a um post
@@ -78,14 +77,14 @@ public interface IPostGraphRepository
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
-    Task<IEnumerable<Comment>> GetPostCommentsAsync(Guid postId);
+    Task<IEnumerable<Comment.Comment>> GetPostCommentsAsync(Guid postId);
 
     /// <summary>
     ///     Método que edita um comentário
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    Task<Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command);
+    Task<Comment.Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command);
 
     /// <summary>
     ///     Método que deleta um comentário

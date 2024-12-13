@@ -1,12 +1,12 @@
 ﻿using SocialService.Common.Interfaces;
 using SocialService.Common.Models;
-using SocialService.Friends.AddFriend;
-using SocialService.Friends.CheckFriendRequestStatus;
 using SocialService.Friends.Common.Repository;
-using SocialService.Friends.ListFriends;
-using SocialService.Friends.ManageFriendRequests;
-using SocialService.Friends.RemoveFriend;
-using SocialService.Friends.RemoveFriendRequest;
+using SocialService.Friends.FriendRequest.CheckFriendRequestStatus;
+using SocialService.Friends.FriendRequest.ManageFriendRequests;
+using SocialService.Friends.FriendRequest.RemoveFriendRequest;
+using SocialService.Friends.FriendRequest.SendFriendRequest;
+using SocialService.Friends.Friendship.ListFriends;
+using SocialService.Friends.Friendship.RemoveFriend;
 
 namespace SocialService.Friends;
 
@@ -33,7 +33,7 @@ public static class FriendsModule
     {
         #region Friend Request
 
-        services.AddScoped<IHandler<bool, AddFriendCommand>, AddFriendCommandHandler>();
+        services.AddScoped<IHandler<bool, SendFriendRequestCommand>, SendFriendRequestCommandHandler>();
         services
             .AddScoped<IHandler<IEnumerable<CheckFriendRequestStatusViewModel>, CheckFriendRequestStatusQuery>,
                 CheckFriendRequestStatusQueryHandler>();

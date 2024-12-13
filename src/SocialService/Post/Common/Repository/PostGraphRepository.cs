@@ -1,12 +1,11 @@
 ﻿using Neo4j.Driver;
 using SocialService.Connections.Graph;
-using SocialService.Post.CommentsOnPost;
+using SocialService.Post.Comment.CommentOnPost;
+using SocialService.Post.Comment.EditCommentOnPost;
 using SocialService.Post.Common.Enums;
 using SocialService.Post.CreatePost;
-using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.EditPost;
-using SocialService.Post.GetPostComments;
-using SocialService.Post.GetReactionsOnPost;
+using SocialService.Post.React;
 
 namespace SocialService.Post.Common.Repository;
 
@@ -62,68 +61,37 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     ///     Método que cria um post
     /// </summary>
     /// <param name="profileId"></param>
-    /// <param name="postId"></param>
-    /// <param name="command"></param>
-    public async Task<Post> CreatePostAsync(Guid profileId, Guid postId, CreatePostCommand command)
+    /// <param name="post"></param>
+    public async Task CreatePostAsync(Guid profileId, Post post)
     {
         var query = $@"
     MATCH (p:Profile {{id: '{profileId}'}})
     CREATE (post:Post {{
-        id: '{postId}',
-        content: '{command.Content}',
+        id: '{post.Id}',
+        content: '{post.Content}',
         images: null,
-        createdAt: datetime('{DateTime.Now:yyyy-MM-dd}'),
-        updatedAt: datetime('{DateTime.Now:yyyy-MM-dd}'),
-        visibility: '{command.Visibility}'
+        createdAt: datetime('{DateTime.UtcNow:yyyy-MM-ddTHH:mm:ssZ}'),
+        updatedAt: datetime('{DateTime.UtcNow:yyyy-MM-ddTHH:mm:ssZ}'),
+        visibility: '{post.Visibility}'
     }})
-    CREATE (p)-[:PUBLISHED_BY]->(post)
-    RETURN post";
+    CREATE (p)-[:PUBLISHED_BY]->(post)";
 
-        var result = await graphContext.ExecuteQueryAsync(query);
-        var record = result.FirstOrDefault();
-
-        if (record == null)
-            return null;
-
-        var post = new Post();
-        var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        post.MapToEntityFromNeo4j(parsedDictionary);
-
-        return post;
+        await graphContext.ExecuteQueryAsync(query);
     }
 
     /// <summary>
     ///     Método que atualiza um post
     /// </summary>
-    /// <param name="command"></param>
-    public async Task<Post> UpdatePostAsync(EditPostCommand command)
+    /// <param name="post"></param>
+    public async Task UpdatePostAsync(Post post)
     {
-        List<string> @params = new();
-
-        if (command.Visibility != null)
-            @params.Add($"post.visibility = '{command.Visibility}'");
-
-        if (command.Content != null)
-            @params.Add($"post.content = '{command.Content}'");
-
-        @params.Add("post.updatedAt = datetime()");
-
         var query = $@"
-    MATCH (post:Post {{id: '{command.PostId}'}})
-    SET {string.Join(", ", @params)}
-    RETURN post";
+    MATCH (post:Post {{id: '{post.Id}'}})
+    SET post.visibility = '{post.Visibility}', 
+        post.content = '{post.Content}', 
+        post.updatedAt = datetime('{DateTime.UtcNow:yyyy-MM-ddTHH:mm:ssZ}')";
 
-        var result = await graphContext.ExecuteQueryAsync(query);
-        var record = result.FirstOrDefault();
-
-        if (record == null)
-            return null;
-
-        var post = new Post();
-        var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        post.MapToEntityFromNeo4j(parsedDictionary);
-
-        return post;
+        await graphContext.ExecuteQueryAsync(query);
     }
 
     /// <summary>
@@ -185,9 +153,9 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Comment>> GetPostCommentsAsync(Guid postId)
+    public async Task<IEnumerable<Comment.Comment>> GetPostCommentsAsync(Guid postId)
     {
-        var comments = new List<Comment>();
+        var comments = new List<Comment.Comment>();
         var cypherQuery = $@"
     MATCH (post:Post {{id: '{postId}'}})<-[:COMMENTED_ON]-(comment:Comment)<-[:COMMENTED]-(profile:Profile)
     RETURN comment, profile.id AS profileId";
@@ -196,7 +164,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
 
         foreach (var record in result)
         {
-            var comment = new Comment();
+            var comment = new Comment.Comment();
 
             var parsedDictionary =
                 record["comment"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -214,7 +182,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    public async Task<Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command)
+    public async Task<Comment.Comment> EditCommentOnPostAsync(EditCommentOnPostCommand command)
     {
         var query = $@"
     MATCH (comment:Comment {{id: '{command.CommentId}'}})<-[:COMMENTED]-(profile:Profile)
@@ -227,7 +195,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         if (record == null)
             return null;
 
-        var comment = new Comment();
+        var comment = new Comment.Comment();
         var parsedDictionary = record["comment"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         parsedDictionary.Add("profileId", record["profileId"].ToString()!);
         comment.MapToEntityFromNeo4j(parsedDictionary);

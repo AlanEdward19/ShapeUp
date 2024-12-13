@@ -20,13 +20,14 @@ public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageP
     /// <returns></returns>
     public async Task<PostDto> HandleAsync(CreatePostCommand command, CancellationToken cancellationToken)
     {
-        Guid postId = Guid.NewGuid();
+        Post post = new(command);
 
-        var blobName = $"post-images/{postId}";
+        var blobName = $"post-images/{post.Id}";
         var containerName = ProfileContext.ProfileId.ToString();
 
         await storageProvider.CreateFolderAsync(blobName, containerName);
+        await repository.CreatePostAsync(ProfileContext.ProfileId, post);
 
-        return new(await repository.CreatePostAsync(ProfileContext.ProfileId, postId, command));
+        return new(post);
     }
 }

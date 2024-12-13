@@ -18,6 +18,13 @@ public class EditPostCommandHandler(IPostGraphRepository repository)
     /// <returns></returns>
     public async Task<PostDto> HandleAsync(EditPostCommand command, CancellationToken cancellationToken)
     {
-        return new(await repository.UpdatePostAsync(command));
+        Post post = await repository.GetPostAsync(command.PostId);
+        
+        post.UpdateContent(command.Content);
+        post.UpdateVisibility(command.Visibility);
+
+        await repository.UpdatePostAsync(post);
+        
+        return new(post);
     }
 }

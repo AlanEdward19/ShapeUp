@@ -6,12 +6,12 @@ using SocialService.Common;
 using SocialService.Common.Interfaces;
 using SocialService.Common.Models;
 using SocialService.Common.Utils;
-using SocialService.Friends.AddFriend;
-using SocialService.Friends.CheckFriendRequestStatus;
-using SocialService.Friends.ListFriends;
-using SocialService.Friends.ManageFriendRequests;
-using SocialService.Friends.RemoveFriend;
-using SocialService.Friends.RemoveFriendRequest;
+using SocialService.Friends.FriendRequest.CheckFriendRequestStatus;
+using SocialService.Friends.FriendRequest.ManageFriendRequests;
+using SocialService.Friends.FriendRequest.RemoveFriendRequest;
+using SocialService.Friends.FriendRequest.SendFriendRequest;
+using SocialService.Friends.Friendship.ListFriends;
+using SocialService.Friends.Friendship.RemoveFriend;
 
 namespace SocialService.Friends;
 
@@ -25,16 +25,16 @@ namespace SocialService.Friends;
 public class FriendController : ControllerBase
 {
     /// <summary>
-    ///     Rota para adicionar um amigo
+    ///     Rota para enviar uma solicitação de amigo
     /// </summary>
     /// <returns></returns>
-    [HttpPost("addFriend")]
-    public async Task<IActionResult> AddFriend([FromServices] IHandler<bool, AddFriendCommand> handler,
-        [FromBody] AddFriendCommand command, CancellationToken cancellationToken)
+    [HttpPost("sendFriendRequest")]
+    public async Task<IActionResult> SendFriendRequest([FromServices] IHandler<bool, SendFriendRequestCommand> handler,
+        [FromBody] SendFriendRequestCommand requestCommand, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        return Ok(await handler.HandleAsync(requestCommand, cancellationToken));
     }
 
     /// <summary>

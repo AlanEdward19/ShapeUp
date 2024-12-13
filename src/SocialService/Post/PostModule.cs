@@ -1,16 +1,17 @@
 ﻿using SocialService.Common.Interfaces;
-using SocialService.Post.CommentsOnPost;
+using SocialService.Post.Comment.CommentOnPost;
+using SocialService.Post.Comment.DeleteCommentOnPost;
+using SocialService.Post.Comment.EditCommentOnPost;
+using SocialService.Post.Comment.GetPostComments;
 using SocialService.Post.Common.Repository;
 using SocialService.Post.CreatePost;
-using SocialService.Post.DeleteCommentOnPost;
 using SocialService.Post.DeletePost;
-using SocialService.Post.DeleteReactionFromPost;
-using SocialService.Post.EditCommentOnPost;
 using SocialService.Post.EditPost;
 using SocialService.Post.GetPost;
-using SocialService.Post.GetPostComments;
-using SocialService.Post.GetReactionsOnPost;
-using SocialService.Post.ReactToPost;
+using SocialService.Post.React;
+using SocialService.Post.React.DeleteReactionFromPost;
+using SocialService.Post.React.GetReactionsOnPost;
+using SocialService.Post.React.ReactToPost;
 using SocialService.Post.UploadPostImages;
 
 namespace SocialService.Post;
@@ -49,7 +50,7 @@ public static class PostModule
         #region Comment
 
         services.AddScoped<IHandler<bool, CommentOnPostCommand>, CommentOnPostCommandHandler>();
-        services.AddScoped<IHandler<IEnumerable<Comment>, GetPostCommentsQuery>, GetPostCommentsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<Comment.Comment>, GetPostCommentsQuery>, GetPostCommentsQueryHandler>();
         services.AddScoped<IHandler<bool, EditCommentOnPostCommand>, EditCommentOnPostCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteCommentOnPostCommand>, DeleteCommentOnPostCommandHandler>();
 

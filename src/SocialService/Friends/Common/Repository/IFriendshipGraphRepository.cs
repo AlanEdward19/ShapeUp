@@ -20,7 +20,7 @@ public interface IFriendshipGraphRepository
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    Task<FriendRequest?> GetFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId);
+    Task<FriendRequest.FriendRequest?> GetFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId);
 
     /// <summary>
     ///     Método para aceitar uma solicitação de amizade.
@@ -43,21 +43,21 @@ public interface IFriendshipGraphRepository
     /// </summary>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    Task<IEnumerable<FriendRequest>> GetPendingRequestsForProfileAsync(Guid receiverProfileId);
+    Task<IEnumerable<FriendRequest.FriendRequest>> GetPendingRequestsForProfileAsync(Guid receiverProfileId);
 
     /// <summary>
     ///     Método para obter as solicitações de amizade enviadas.
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <returns></returns>
-    Task<List<FriendRequest>> GetSentFriendRequestsAsync(Guid senderProfileId);
+    Task<List<FriendRequest.FriendRequest>> GetSentFriendRequestsAsync(Guid senderProfileId);
 
     /// <summary>
     ///     Método para obter as amizades de um perfil.
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    Task<IEnumerable<Friendship>> GetFriendshipsForProfileAsync(Guid profileId);
+    Task<IEnumerable<Friendship.Friendship>> GetFriendshipsForProfileAsync(Guid profileId);
 
     /// <summary>
     ///     Método para desfazer uma amizade.

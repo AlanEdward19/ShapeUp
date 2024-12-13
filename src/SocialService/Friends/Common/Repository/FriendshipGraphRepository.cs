@@ -42,7 +42,7 @@ public class FriendshipGraphRepository(
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    public async Task<FriendRequest?> GetFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
+    public async Task<FriendRequest.FriendRequest?> GetFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
     {
         var query = $@"""
     MATCH (sender:Profile {{id: '{senderProfileId}'}})-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})
@@ -59,7 +59,7 @@ public class FriendshipGraphRepository(
         if (response == null)
             return null;
 
-        FriendRequest result = new();
+        FriendRequest.FriendRequest result = new();
         var parsedResponse = response.As<IRelationship>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
         parsedResponse.Add("senderProfileId", senderProfileId);
@@ -134,19 +134,19 @@ DELETE r";
     /// </summary>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<FriendRequest>> GetPendingRequestsForProfileAsync(Guid receiverProfileId)
+    public async Task<IEnumerable<FriendRequest.FriendRequest>> GetPendingRequestsForProfileAsync(Guid receiverProfileId)
     {
         var query = $@"
     MATCH (sender:Profile)-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})
     RETURN r, sender.id AS senderProfileId";
 
         var result = await graphContext.ExecuteQueryAsync(query);
-        var requests = new List<FriendRequest>();
+        var requests = new List<FriendRequest.FriendRequest>();
 
         foreach (var record in result)
         {
             var relationship = record["r"].As<IRelationship>();
-            var friendRequest = new FriendRequest();
+            var friendRequest = new FriendRequest.FriendRequest();
 
             var parsedResponse = relationship.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedResponse.Add("senderProfileId", record["senderProfileId"].ToString()!);
@@ -164,19 +164,19 @@ DELETE r";
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <returns></returns>
-    public async Task<List<FriendRequest>> GetSentFriendRequestsAsync(Guid senderProfileId)
+    public async Task<List<FriendRequest.FriendRequest>> GetSentFriendRequestsAsync(Guid senderProfileId)
     {
         var query = $@"
     MATCH (sender:Profile {{id: '{senderProfileId}'}})-[r:FRIEND_REQUEST]->(receiver:Profile)
     RETURN r, receiver.id AS receiverProfileId";
 
         var result = await graphContext.ExecuteQueryAsync(query);
-        var requests = new List<FriendRequest>();
+        var requests = new List<FriendRequest.FriendRequest>();
 
         foreach (var record in result)
         {
             var relationship = record["r"].As<IRelationship>();
-            var friendRequest = new FriendRequest();
+            var friendRequest = new FriendRequest.FriendRequest();
 
             var parsedResponse = relationship.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedResponse.Add("senderProfileId", senderProfileId.ToString());
@@ -194,17 +194,17 @@ DELETE r";
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Friendship>> GetFriendshipsForProfileAsync(Guid profileId)
+    public async Task<IEnumerable<Friendship.Friendship>> GetFriendshipsForProfileAsync(Guid profileId)
     {
         var query = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})-[:FRIEND]-(friend:Profile)
     RETURN friend.id AS id";
 
         var result = await graphContext.ExecuteQueryAsync(query);
-        var friendships = new List<Friendship>();
+        var friendships = new List<Friendship.Friendship>();
 
         foreach (var item in result)
-            friendships.Add(new Friendship(profileId, Guid.Parse(item["id"].ToString()!)));
+            friendships.Add(new Friendship.Friendship(profileId, Guid.Parse(item["id"].ToString()!)));
 
         return friendships;
     }
