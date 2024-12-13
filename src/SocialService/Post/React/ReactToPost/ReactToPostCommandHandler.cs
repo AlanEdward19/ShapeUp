@@ -18,7 +18,9 @@ public class ReactToPostCommandHandler(IPostGraphRepository repository) : IHandl
     /// <returns></returns>
     public async Task<bool> HandleAsync(ReactToPostCommand command, CancellationToken cancellationToken)
     {
-        await repository.ReactToPostAsync(command.PostId, ProfileContext.ProfileId, command.ReactionType);
+        Reaction reaction = new(ProfileContext.ProfileId, command);
+        
+        await repository.ReactToPostAsync(reaction);
 
         return true;
     }

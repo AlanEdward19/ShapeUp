@@ -106,11 +106,9 @@ public interface IPostGraphRepository
     /// <summary>
     ///     Método que adiciona uma reação a um post
     /// </summary>
-    /// <param name="postId"></param>
-    /// <param name="profileId"></param>
-    /// <param name="reactionType"></param>
+    /// <param name="reaction"></param>
     /// <returns></returns>
-    Task ReactToPostAsync(Guid postId, Guid profileId, EReactionType reactionType);
+    Task ReactToPostAsync(Reaction reaction);
 
     /// <summary>
     ///     Método que retorna as reações de um post

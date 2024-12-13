@@ -236,17 +236,15 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// <summary>
     ///     Método que cria/atualiza se ja existir uma reação em um post
     /// </summary>
-    /// <param name="postId"></param>
-    /// <param name="profileId"></param>
-    /// <param name="reactionType"></param>
-    public async Task ReactToPostAsync(Guid postId, Guid profileId, EReactionType reactionType)
+    /// <param name="reaction"></param>
+    public async Task ReactToPostAsync(Reaction reaction)
     {
         var query = $@"
-    MATCH (p:Profile {{id: '{profileId}'}})
-    MATCH (post:Post {{id: '{postId}'}})
+    MATCH (p:Profile {{id: '{reaction.ProfileId}'}})
+    MATCH (post:Post {{id: '{reaction.PostId}'}})
     MERGE (p)-[r:REACTED]->(post)
-    ON CREATE SET r.id = '{Guid.NewGuid()}', r.createdAt = datetime()
-    ON MATCH SET r.type = '{reactionType}', r.createdAt = datetime()
+    ON CREATE SET r.id = '{reaction.Id}', r.createdAt = datetime()
+    ON MATCH SET r.type = '{reaction.ReactionType}', r.createdAt = datetime()
     RETURN r";
 
         await graphContext.ExecuteQueryAsync(query);
@@ -262,7 +260,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         var reactions = new List<Reaction>();
         var query = $@"
     MATCH (post:Post {{id: '{postId}'}})<-[r:REACTED]-(profile:Profile)
-    RETURN r, profile.id AS profileId";
+    RETURN r, profile.id AS profileId, post.id AS postId";
 
         var result = await graphContext.ExecuteQueryAsync(query);
 
@@ -272,6 +270,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
             var parsedDictionary = record["r"].As<IRelationship>().Properties
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedDictionary.Add("profileId", record["profileId"].ToString()!);
+            parsedDictionary.Add("postId", record["postId"].ToString()!);
             reaction.MapToEntityFromNeo4j(parsedDictionary);
 
             reactions.Add(reaction);
