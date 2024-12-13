@@ -4,6 +4,100 @@
         <name>SocialService</name>
     </assembly>
     <members>
+        <member name="T:SocialService.ActivityFeed.ActivityFeedController">
+            <summary>
+                Controller responsavel por gerenciar funções relacionadas ao feed de atividades
+            </summary>
+        </member>
+        <member name="M:SocialService.ActivityFeed.ActivityFeedController.BuildActivityFeed(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.Post},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Threading.CancellationToken)">
+            <summary>
+                Rota para seguir um perfil
+            </summary>
+            <param name="handler"></param>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.ActivityFeed.ActivityFeedModule">
+            <summary>
+                Modulo para resolver as dependências relacionadas a feed de atividades
+            </summary>
+        </member>
+        <member name="M:SocialService.ActivityFeed.ActivityFeedModule.ConfigureActivityFeedRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Método para resolver as dependências relacionadas a feed de atividades
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.ActivityFeed.Common.Repository.ActivityFeedRepository">
+            <summary>
+            Repositório de feed de atividades.
+            </summary>
+            <param name="graphContext"></param>
+        </member>
+        <member name="M:SocialService.ActivityFeed.Common.Repository.ActivityFeedRepository.#ctor(SocialService.Connections.Graph.GraphContext)">
+            <summary>
+            Repositório de feed de atividades.
+            </summary>
+            <param name="graphContext"></param>
+        </member>
+        <member name="M:SocialService.ActivityFeed.Common.Repository.ActivityFeedRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Guid)">
+            <summary>
+            Método para construir o feed de atividades.
+            </summary>
+            <param name="query"></param>
+            <param name="profileId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.ActivityFeed.Common.Repository.IActivityFeedRepository">
+            <summary>
+            Interface para o repositório de feed de atividades.
+            </summary>
+        </member>
+        <member name="M:SocialService.ActivityFeed.Common.Repository.IActivityFeedRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Guid)">
+            <summary>
+            Método para construir o feed de atividades.
+            </summary>
+            <param name="query"></param>
+            <param name="profileId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery">
+            <summary>
+            Query para obter o feed de atividades.
+            </summary>
+        </member>
+        <member name="P:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery.Page">
+            <summary>
+            Página.
+            </summary>
+        </member>
+        <member name="P:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery.Rows">
+            <summary>
+            Quantidade de registros por página.
+            </summary>
+        </member>
+        <member name="T:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler">
+            <summary>
+            Handler para obter o feed de atividades.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.#ctor(SocialService.ActivityFeed.Common.Repository.IActivityFeedRepository)">
+            <summary>
+            Handler para obter o feed de atividades.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.HandleAsync(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter o feed de atividades.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Common.Interfaces.IHandler`2">
             <summary>
                 Interface para padronizar handlers.
@@ -91,6 +185,27 @@
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetLastName(System.Security.Claims.ClaimsPrincipal)">
             <summary>
                 Método para obter o sobrenome do usuário
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetCity(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Método para obter a cidade do usuário
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetCountry(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Método para obter o país do usuário
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetState(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Método para obter o estado do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
@@ -2356,6 +2471,21 @@
                 Sobrenome do perfil
             </summary>
         </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.City">
+            <summary>
+            Cidade do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.State">
+            <summary>
+            Estado do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Country">
+            <summary>
+            País do perfil
+            </summary>
+        </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Gender">
             <summary>
                 Gênero do perfil
@@ -2393,6 +2523,24 @@
                 Método para set o email do perfil
             </summary>
             <param name="email"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetCity(System.String)">
+            <summary>
+            Método para setar a cidade do perfil
+            </summary>
+            <param name="city"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetState(System.String)">
+            <summary>
+            Método para setar o estado do perfil
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetCountry(System.String)">
+            <summary>
+            Método para setar o país do perfil
+            </summary>
+            <param name="country"></param>
         </member>
         <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommandHandler">
             <summary>
@@ -2462,7 +2610,7 @@
             <param name="birthDate"></param>
             <param name="bio"></param>
         </member>
-        <member name="M:SocialService.Profile.EditProfile.EditProfileCommand.#ctor(System.Nullable{SocialService.Profile.Common.Enums.EGender},System.Nullable{System.DateTime},System.String)">
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommand.#ctor(System.Nullable{SocialService.Profile.Common.Enums.EGender},System.Nullable{System.DateTime},System.String,System.String,System.String,System.String)">
             <summary>
                 Comando para editar um perfil
             </summary>
@@ -2478,6 +2626,21 @@
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.BirthDate">
             <summary>
                 Data de nascimento do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.City">
+            <summary>
+            Cidade do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.State">
+            <summary>
+            Estado do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Country">
+            <summary>
+            País do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Bio">
@@ -2509,7 +2672,7 @@
                 Classe que representa o perfil do usuário.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.Profile.#ctor(System.Guid,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
+        <member name="M:SocialService.Profile.Profile.#ctor(System.Guid,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
             <summary>
                 Construtor padrão.
             </summary>
@@ -2517,6 +2680,9 @@
             <param name="email"></param>
             <param name="firstName"></param>
             <param name="lastName"></param>
+            <param name="state"></param>
+            <param name="city"></param>
+            <param name="country"></param>
             <param name="imageUrl"></param>
             <param name="createdAt"></param>
             <param name="updatedAt"></param>
@@ -2549,6 +2715,21 @@
         <member name="P:SocialService.Profile.Profile.LastName">
             <summary>
                 Sobrenome do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.City">
+            <summary>
+            Cidade do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.State">
+            <summary>
+            Estado do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.Country">
+            <summary>
+            País do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.ImageUrl">
@@ -2619,6 +2800,21 @@
                 Sobrenome do perfil
             </summary>
         </member>
+        <member name="P:SocialService.Profile.ProfileAggregate.City">
+            <summary>
+            Cidade do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileAggregate.State">
+            <summary>
+            Estado do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileAggregate.Country">
+            <summary>
+            País do perfil
+            </summary>
+        </member>
         <member name="P:SocialService.Profile.ProfileAggregate.ImageUrl">
             <summary>
                 Url da imagem do perfil no blob storage
@@ -2662,6 +2858,24 @@
                 Método para atualizar a data de nascimento do perfil.
             </summary>
             <param name="birthDate"></param>
+        </member>
+        <member name="M:SocialService.Profile.ProfileAggregate.UpdateState(System.String)">
+            <summary>
+            Método para atualizar o estado do perfil.
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:SocialService.Profile.ProfileAggregate.UpdateCity(System.String)">
+            <summary>
+            Método para atualizar a cidade do perfil.
+            </summary>
+            <param name="city"></param>
+        </member>
+        <member name="M:SocialService.Profile.ProfileAggregate.UpdateCountry(System.String)">
+            <summary>
+            Método para atualizar o país do perfil.
+            </summary>
+            <param name="country"></param>
         </member>
         <member name="T:SocialService.Profile.ProfileController">
             <summary>

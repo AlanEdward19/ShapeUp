@@ -16,18 +16,25 @@ public class Profile : GraphEntity
     /// <param name="email"></param>
     /// <param name="firstName"></param>
     /// <param name="lastName"></param>
+    /// <param name="state"></param>
+    /// <param name="city"></param>
+    /// <param name="country"></param>
     /// <param name="imageUrl"></param>
     /// <param name="createdAt"></param>
     /// <param name="updatedAt"></param>
     /// <param name="gender"></param>
     /// <param name="birthDate"></param>
     /// <param name="bio"></param>
-    public Profile(Guid objectId, string email, string firstName, string lastName, string? imageUrl, DateTime createdAt,
+    public Profile(Guid objectId, string email, string firstName, string lastName, string state, string city, string country, string? imageUrl, DateTime createdAt,
         DateTime updatedAt,
         EGender gender, DateTime birthDate, string? bio)
     {
         FirstName = firstName;
         LastName = lastName;
+        Country = country;
+        State = state;
+        City = city;
+        
         Id = objectId;
         Email = email;
         ImageUrl = imageUrl;
@@ -47,6 +54,9 @@ public class Profile : GraphEntity
     {
         FirstName = command.FirstName;
         LastName = command.LastName;
+        Country = command.Country;
+        State = command.State;
+        City = command.City;
         Gender = command.Gender;
         BirthDate = command.BirthDate;
         Bio = command.Bio;
@@ -75,6 +85,21 @@ public class Profile : GraphEntity
     ///     Sobrenome do perfil.
     /// </summary>
     public string LastName { get; private set; }
+    
+    /// <summary>
+    /// Cidade do perfil
+    /// </summary>
+    public string City { get; private set; }
+    
+    /// <summary>
+    /// Estado do perfil
+    /// </summary>
+    public string State { get; private set; }
+    
+    /// <summary>
+    /// País do perfil
+    /// </summary>
+    public string Country { get; private set; }
 
     /// <summary>
     ///     Url da imagem do perfil no blob storage
@@ -114,6 +139,9 @@ public class Profile : GraphEntity
     {
         FirstName = profile.FirstName;
         LastName = profile.LastName;
+        Country = profile.Country;
+        State = profile.State;
+        City = profile.City;
         Gender = profile.Gender;
         BirthDate = profile.BirthDate;
         Bio = profile.Bio;
@@ -127,6 +155,9 @@ public class Profile : GraphEntity
         Email = result["email"].ToString();
         FirstName = result["firstName"].ToString();
         LastName = result["lastName"].ToString();
+        City = result["city"].ToString();
+        State = result["state"].ToString();
+        Country = result["country"].ToString();
         ImageUrl = result["imageUrl"].ToString();
         CreatedAt = DateTime.Parse(result["createdAt"].ToString());
         UpdatedAt = DateTime.Parse(result["updatedAt"].ToString());

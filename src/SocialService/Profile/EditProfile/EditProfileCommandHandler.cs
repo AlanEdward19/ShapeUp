@@ -24,6 +24,9 @@ public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) 
         profileAggregate.UpdateBio(command.Bio);
         profileAggregate.UpdateBirthDate(command.BirthDate);
         profileAggregate.UpdateGender(command.Gender);
+        profileAggregate.UpdateCity(command.City);
+        profileAggregate.UpdateState(command.State);
+        profileAggregate.UpdateCountry(command.Country);
 
         profile.UpdateBasedOnValueObject(profileAggregate);
 

@@ -29,6 +29,21 @@ public class ProfileAggregate(Profile profile)
     public string LastName { get; private set; } = profile.LastName;
 
     /// <summary>
+    /// Cidade do perfil
+    /// </summary>
+    public string City { get; private set; } = profile.City;
+
+    /// <summary>
+    /// Estado do perfil
+    /// </summary>
+    public string State { get; private set; } = profile.State;
+
+    /// <summary>
+    /// País do perfil
+    /// </summary>
+    public string Country { get; private set; } = profile.Country;
+
+    /// <summary>
     ///     Url da imagem do perfil no blob storage
     /// </summary>
     public string? ImageUrl { get; private set; } = profile.ImageUrl;
@@ -88,5 +103,38 @@ public class ProfileAggregate(Profile profile)
     {
         if (birthDate != null)
             BirthDate = birthDate.Value;
+    }
+    
+    /// <summary>
+    /// Método para atualizar o estado do perfil.
+    /// </summary>
+    /// <param name="state"></param>
+    public void UpdateState(string? state)
+    {
+        if (!string.IsNullOrWhiteSpace(state) &&
+            (State == null || !State.Equals(state, StringComparison.InvariantCultureIgnoreCase)))
+            State = state;
+    }
+    
+    /// <summary>
+    /// Método para atualizar a cidade do perfil.
+    /// </summary>
+    /// <param name="city"></param>
+    public void UpdateCity(string? city)
+    {
+        if (!string.IsNullOrWhiteSpace(city) &&
+            (City == null || !City.Equals(city, StringComparison.InvariantCultureIgnoreCase)))
+            City = city;
+    }
+    
+    /// <summary>
+    /// Método para atualizar o país do perfil.
+    /// </summary>
+    /// <param name="country"></param>
+    public void UpdateCountry(string? country)
+    {
+        if (!string.IsNullOrWhiteSpace(country) &&
+            (Country == null || !Country.Equals(country, StringComparison.InvariantCultureIgnoreCase)))
+            Country = country;
     }
 }

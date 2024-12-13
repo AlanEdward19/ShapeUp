@@ -11,6 +11,9 @@ namespace SocialService.Profile.EditProfile;
 public class EditProfileCommand(
     EGender? gender,
     DateTime? birthDate,
+    string? city,
+    string? state,
+    string? country,
     string? bio)
 {
     /// <summary>
@@ -22,6 +25,21 @@ public class EditProfileCommand(
     ///     Data de nascimento do perfil
     /// </summary>
     public DateTime? BirthDate { get; set; } = birthDate;
+    
+    /// <summary>
+    /// Cidade do perfil
+    /// </summary>
+    public string? City { get; set; } = city;
+    
+    /// <summary>
+    /// Estado do perfil
+    /// </summary>
+    public string? State { get; set; } = state;
+    
+    /// <summary>
+    /// País do perfil
+    /// </summary>
+    public string? Country { get; set; } = country;
 
     /// <summary>
     ///     Biografia do perfil

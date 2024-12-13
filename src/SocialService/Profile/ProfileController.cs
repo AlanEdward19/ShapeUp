@@ -36,6 +36,9 @@ public class ProfileController : ControllerBase
         command.SetEmail(User.GetEmail());
         command.SetFirstName(User.GetFirstName());
         command.SetLastName(User.GetLastName());
+        command.SetCity(User.GetCity());
+        command.SetState(User.GetState());
+        command.SetCountry(User.GetCountry());
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
