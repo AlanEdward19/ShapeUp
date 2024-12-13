@@ -7,7 +7,7 @@ namespace SocialService.Profile.ViewProfile;
 ///     Handler para a query de visualização de perfil.
 /// </summary>
 /// <param name="context"></param>
-public class ViewProfileQueryHandler(IProfileGraphRepository repository) : IHandler<ProfileAggregate, ViewProfileQuery>
+public class ViewProfileQueryHandler(IProfileGraphRepository repository) : IHandler<ProfileDto, ViewProfileQuery>
 {
     /// <summary>
     ///     Método para lidar com a query de visualização de perfil.
@@ -15,10 +15,10 @@ public class ViewProfileQueryHandler(IProfileGraphRepository repository) : IHand
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<ProfileAggregate> HandleAsync(ViewProfileQuery query, CancellationToken cancellationToken)
+    public async Task<ProfileDto> HandleAsync(ViewProfileQuery query, CancellationToken cancellationToken)
     {
         Profile profile = await repository.GetProfileAsync(query.ProfileId);
 
-        return new ProfileAggregate(profile);
+        return new ProfileDto(profile);
     }
 }

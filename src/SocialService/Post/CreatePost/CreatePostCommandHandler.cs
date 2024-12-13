@@ -10,7 +10,7 @@ namespace SocialService.Post.CreatePost;
 /// </summary>
 /// <param name="repository"></param>
 public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
-    : IHandler<Post, CreatePostCommand>
+    : IHandler<PostDto, CreatePostCommand>
 {
     /// <summary>
     ///     Método para criação de post.
@@ -18,7 +18,7 @@ public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageP
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<Post> HandleAsync(CreatePostCommand command, CancellationToken cancellationToken)
+    public async Task<PostDto> HandleAsync(CreatePostCommand command, CancellationToken cancellationToken)
     {
         Guid postId = Guid.NewGuid();
 
@@ -27,6 +27,6 @@ public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageP
 
         await storageProvider.CreateFolderAsync(blobName, containerName);
 
-        return await repository.CreatePostAsync(ProfileContext.ProfileId, postId, command);
+        return new(await repository.CreatePostAsync(ProfileContext.ProfileId, postId, command));
     }
 }

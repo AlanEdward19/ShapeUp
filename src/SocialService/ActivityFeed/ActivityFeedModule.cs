@@ -32,7 +32,7 @@ public static class ActivityFeedModule
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IActivityFeedRepository, ActivityFeedRepository>();
+        services.AddScoped<IActivityFeedGraphRepository, ActivityFeedGraphGraphRepository>();
 
         return services;
     }

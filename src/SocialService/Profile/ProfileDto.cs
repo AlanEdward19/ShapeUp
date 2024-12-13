@@ -3,10 +3,10 @@
 namespace SocialService.Profile;
 
 /// <summary>
-///     Agregador de perfil.
+///  Objeto de transferência de dados do perfil
 /// </summary>
 /// <param name="profile"></param>
-public class ProfileAggregate(Profile profile)
+public class ProfileDto(Profile profile)
 {
     /// <summary>
     ///     Id do perfil

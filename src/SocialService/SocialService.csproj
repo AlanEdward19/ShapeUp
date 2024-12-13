@@ -34,9 +34,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Recommendations\GetFriendRecommendations\" />
-      <Folder Include="Recommendations\GetRecommendedUsers\" />
-    </ItemGroup>
-
 </Project>

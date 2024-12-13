@@ -1,0 +1,41 @@
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SocialService.Common;
+using SocialService.Common.Interfaces;
+using SocialService.Common.Utils;
+using SocialService.Profile;
+using SocialService.Profile.CreateProfile;
+using SocialService.Profile.DeleteProfile;
+using SocialService.Profile.EditProfile;
+using SocialService.Profile.UploadProfilePicture;
+using SocialService.Profile.ViewProfile;
+using SocialService.Recommendation.GetFriendRecommendations;
+
+namespace SocialService.Recommendation;
+
+/// <summary>
+///     Controller responsavel por gerenciar o perfil do usuario
+/// </summary>
+[ApiVersion("1.0")]
+[ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Route("[Controller]/v{version:apiVersion}")]
+public class RecommendationController : ControllerBase
+{
+    /// <summary>
+    ///     Rota para receber recomendações de amigos
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("FriendRecommendations")]
+    public async Task<IActionResult> GetFriendRecommendations(
+        [FromServices] IHandler<IEnumerable<FriendRecommendation>, GetFriendRecommendationQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        GetFriendRecommendationQuery query = new();
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+}

@@ -28,7 +28,7 @@ public class ProfileController : ControllerBase
     /// <returns></returns>
     [HttpPost("createProfile")]
     public async Task<IActionResult> CreateProfile(
-        [FromServices] IHandler<ProfileAggregate, CreateProfileCommand> handler,
+        [FromServices] IHandler<ProfileDto, CreateProfileCommand> handler,
         [FromBody] CreateProfileCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
@@ -52,7 +52,7 @@ public class ProfileController : ControllerBase
     /// <returns></returns>
     [HttpGet("viewProfile/{profileId:guid}")]
     public async Task<IActionResult> ViewProfile(Guid profileId,
-        [FromServices] IHandler<ProfileAggregate, ViewProfileQuery> handler,
+        [FromServices] IHandler<ProfileDto, ViewProfileQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
@@ -65,7 +65,7 @@ public class ProfileController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPatch("editProfile")]
-    public async Task<IActionResult> EditProfile([FromServices] IHandler<ProfileAggregate, EditProfileCommand> handler,
+    public async Task<IActionResult> EditProfile([FromServices] IHandler<ProfileDto, EditProfileCommand> handler,
         [FromBody] EditProfileCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());

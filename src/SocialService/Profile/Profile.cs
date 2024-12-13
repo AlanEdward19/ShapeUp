@@ -135,7 +135,7 @@ public class Profile : GraphEntity
     ///     Método para atualizar o perfil com base em um objeto de valor.
     /// </summary>
     /// <param name="profile"></param>
-    public void UpdateBasedOnValueObject(ProfileAggregate profile)
+    public void UpdateBasedOnValueObject(ProfileDto profile)
     {
         FirstName = profile.FirstName;
         LastName = profile.LastName;

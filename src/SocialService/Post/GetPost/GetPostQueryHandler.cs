@@ -7,7 +7,7 @@ namespace SocialService.Post.GetPost;
 ///     Handler para a query de informações de um post
 /// </summary>
 /// <param name="repository"></param>
-public class GetPostQueryHandler(IPostGraphRepository repository) : IHandler<Post, GetPostQuery>
+public class GetPostQueryHandler(IPostGraphRepository repository) : IHandler<PostDto, GetPostQuery>
 {
     /// <summary>
     ///     Método para obter as informações de um post
@@ -15,8 +15,8 @@ public class GetPostQueryHandler(IPostGraphRepository repository) : IHandler<Pos
     /// <param name="item"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<Post> HandleAsync(GetPostQuery item, CancellationToken cancellationToken)
+    public async Task<PostDto> HandleAsync(GetPostQuery item, CancellationToken cancellationToken)
     {
-        return await repository.GetPostAsync(item.PostId);
+        return new(await repository.GetPostAsync(item.PostId));
     }
 }

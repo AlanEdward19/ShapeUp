@@ -4,6 +4,7 @@ using SocialService.Follow;
 using SocialService.Friends;
 using SocialService.Post;
 using SocialService.Profile;
+using SocialService.Recommendation;
 
 namespace SocialService.Configuration;
 
@@ -27,7 +28,8 @@ public static class ServiceDependencies
             .ConfigureProfileRelatedDependencies()
             .ConfigureFollowRelatedDependencies()
             .ConfigureFriendsRelatedDependencies()
-            .ConfigurePostRelatedDependencies();
+            .ConfigurePostRelatedDependencies()
+            .ConfigureRecomendationRelatedDependencies();
 
         return services;
     }

@@ -22,18 +22,18 @@ public class UploadProfilePictureCommandHandler(IProfileGraphRepository reposito
     {
         Profile profile = await repository.GetProfileAsync(ProfileContext.ProfileId);
 
-        ProfileAggregate profileAggregate = new(profile);
+        ProfileDto profileDto = new(profile);
 
-        var containerName = $"{profileAggregate.Id}";
+        var containerName = $"{profileDto.Id}";
 
         var blobName =
             $"profile-pictures/{DateTime.Today:yyyy-MM-dd}/{Guid.NewGuid()}.{command.ImageFileName.Split('.').Last()}";
 
         await storageProvider.WriteBlobAsync(command.Image, blobName, containerName);
 
-        profileAggregate.UpdateImage(blobName);
+        profileDto.UpdateImage(blobName);
 
-        profile.UpdateBasedOnValueObject(profileAggregate);
+        profile.UpdateBasedOnValueObject(profileDto);
 
         await repository.UpdateProfileAsync(profile);
         

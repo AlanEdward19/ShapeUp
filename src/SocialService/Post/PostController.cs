@@ -36,7 +36,7 @@ public class PostController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("{id:guid}/getPost")]
-    public async Task<IActionResult> GetPost([FromServices] IHandler<Post, GetPostQuery> handler,
+    public async Task<IActionResult> GetPost([FromServices] IHandler<PostDto, GetPostQuery> handler,
         Guid id, CancellationToken cancellationToken)
     {
         GetPostQuery query = new();
@@ -54,7 +54,7 @@ public class PostController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost("createPost")]
-    public async Task<IActionResult> CreatePost([FromServices] IHandler<Post, CreatePostCommand> handler,
+    public async Task<IActionResult> CreatePost([FromServices] IHandler<PostDto, CreatePostCommand> handler,
         [FromBody] CreatePostCommand command, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
@@ -112,7 +112,7 @@ public class PostController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPatch("{id:guid}/editPost")]
-    public async Task<IActionResult> EditPost([FromServices] IHandler<Post, EditPostCommand> handler,
+    public async Task<IActionResult> EditPost([FromServices] IHandler<PostDto, EditPostCommand> handler,
         Guid id, [FromBody] EditPostCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());

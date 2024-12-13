@@ -29,11 +29,11 @@ public static class ProfileModule
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<ProfileAggregate, CreateProfileCommand>, CreateProfileCommandHandler>();
+        services.AddScoped<IHandler<ProfileDto, CreateProfileCommand>, CreateProfileCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteProfileCommand>, DeleteProfileCommandHandler>();
-        services.AddScoped<IHandler<ProfileAggregate, EditProfileCommand>, EditProfileCommandHandler>();
+        services.AddScoped<IHandler<ProfileDto, EditProfileCommand>, EditProfileCommandHandler>();
         services.AddScoped<IHandler<bool, UploadProfilePictureCommand>, UploadProfilePictureCommandHandler>();
-        services.AddScoped<IHandler<ProfileAggregate, ViewProfileQuery>, ViewProfileQueryHandler>();
+        services.AddScoped<IHandler<ProfileDto, ViewProfileQuery>, ViewProfileQueryHandler>();
 
         return services;
     }

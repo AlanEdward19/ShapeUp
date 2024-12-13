@@ -7,8 +7,8 @@ namespace SocialService.ActivityFeed.GetActivityFeed;
 /// <summary>
 /// Handler para obter o feed de atividades.
 /// </summary>
-/// <param name="repository"></param>
-public class GetActivityFeedQueryHandler(IActivityFeedRepository repository) : IHandler<IEnumerable<Post.Post>, GetActivityFeedQuery>
+/// <param name="graphRepository"></param>
+public class GetActivityFeedQueryHandler(IActivityFeedGraphRepository graphRepository) : IHandler<IEnumerable<Post.Post>, GetActivityFeedQuery>
 {
     /// <summary>
     /// Método para obter o feed de atividades.
@@ -18,6 +18,6 @@ public class GetActivityFeedQueryHandler(IActivityFeedRepository repository) : I
     /// <returns></returns>
     public async Task<IEnumerable<Post.Post>> HandleAsync(GetActivityFeedQuery query, CancellationToken cancellationToken)
     {
-        return await repository.BuildActivityFeed(query, ProfileContext.ProfileId);
+        return await graphRepository.BuildActivityFeed(query, ProfileContext.ProfileId);
     }
 }

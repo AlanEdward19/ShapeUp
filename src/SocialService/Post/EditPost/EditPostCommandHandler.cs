@@ -8,7 +8,7 @@ namespace SocialService.Post.EditPost;
 /// </summary>
 /// <param name="repository"></param>
 public class EditPostCommandHandler(IPostGraphRepository repository)
-    : IHandler<Post, EditPostCommand>
+    : IHandler<PostDto, EditPostCommand>
 {
     /// <summary>
     ///     Método para criação de post.
@@ -16,8 +16,8 @@ public class EditPostCommandHandler(IPostGraphRepository repository)
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<Post> HandleAsync(EditPostCommand command, CancellationToken cancellationToken)
+    public async Task<PostDto> HandleAsync(EditPostCommand command, CancellationToken cancellationToken)
     {
-        return await repository.UpdatePostAsync(command);
+        return new(await repository.UpdatePostAsync(command));
     }
 }

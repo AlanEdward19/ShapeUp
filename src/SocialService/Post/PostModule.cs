@@ -38,11 +38,11 @@ public static class PostModule
     {
         #region Post
 
-        services.AddScoped<IHandler<Post, GetPostQuery>, GetPostQueryHandler>();
-        services.AddScoped<IHandler<Post, CreatePostCommand>, CreatePostCommandHandler>();
+        services.AddScoped<IHandler<PostDto, GetPostQuery>, GetPostQueryHandler>();
+        services.AddScoped<IHandler<PostDto, CreatePostCommand>, CreatePostCommandHandler>();
         services.AddScoped<IHandler<bool, UploadPostImageCommand>, UploadPostImageCommandHandler>();
         services.AddScoped<IHandler<bool, DeletePostCommand>, DeletePostCommandHandler>();
-        services.AddScoped<IHandler<Post, EditPostCommand>, EditPostCommandHandler>();
+        services.AddScoped<IHandler<PostDto, EditPostCommand>, EditPostCommandHandler>();
 
         #endregion
 

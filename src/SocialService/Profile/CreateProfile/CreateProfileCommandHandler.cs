@@ -10,7 +10,7 @@ namespace SocialService.Profile.CreateProfile;
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
 public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository)
-    : IHandler<ProfileAggregate, CreateProfileCommand>
+    : IHandler<ProfileDto, CreateProfileCommand>
 {
     /// <summary>
     ///     Método para lidar com o comando de criação de perfil.
@@ -18,7 +18,7 @@ public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<ProfileAggregate> HandleAsync(CreateProfileCommand command, CancellationToken cancellationToken)
+    public async Task<ProfileDto> HandleAsync(CreateProfileCommand command, CancellationToken cancellationToken)
     {
         Profile profile = new(command, ProfileContext.ProfileId);
 
@@ -28,8 +28,8 @@ public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository
 
         #endregion
 
-        ProfileAggregate profileAggregate = new(profile);
+        ProfileDto profileDto = new(profile);
         
-        return profileAggregate;
+        return profileDto;
     }
 }

@@ -8,30 +8,30 @@ namespace SocialService.Profile.EditProfile;
 ///     Handler para o comando de edição de perfil
 /// </summary>
 /// <param name="context"></param>
-public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) : IHandler<ProfileAggregate, EditProfileCommand>
+public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) : IHandler<ProfileDto, EditProfileCommand>
 {
     /// <summary>
     ///     Método para lidar com o comando de edição de perfil.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
-    public async Task<ProfileAggregate> HandleAsync(EditProfileCommand command, CancellationToken cancellationToken)
+    public async Task<ProfileDto> HandleAsync(EditProfileCommand command, CancellationToken cancellationToken)
     {
         Profile profile = await graphRepository.GetProfileAsync(ProfileContext.ProfileId);
 
-        ProfileAggregate profileAggregate = new(profile);
+        ProfileDto profileDto = new(profile);
 
-        profileAggregate.UpdateBio(command.Bio);
-        profileAggregate.UpdateBirthDate(command.BirthDate);
-        profileAggregate.UpdateGender(command.Gender);
-        profileAggregate.UpdateCity(command.City);
-        profileAggregate.UpdateState(command.State);
-        profileAggregate.UpdateCountry(command.Country);
+        profileDto.UpdateBio(command.Bio);
+        profileDto.UpdateBirthDate(command.BirthDate);
+        profileDto.UpdateGender(command.Gender);
+        profileDto.UpdateCity(command.City);
+        profileDto.UpdateState(command.State);
+        profileDto.UpdateCountry(command.Country);
 
-        profile.UpdateBasedOnValueObject(profileAggregate);
+        profile.UpdateBasedOnValueObject(profileDto);
 
         await graphRepository.UpdateProfileAsync(profile);
 
-        return profileAggregate;
+        return profileDto;
     }
 }

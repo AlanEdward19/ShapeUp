@@ -8,7 +8,7 @@ namespace SocialService.ActivityFeed.Common.Repository;
 /// Repositório de feed de atividades.
 /// </summary>
 /// <param name="graphContext"></param>
-public class ActivityFeedRepository(GraphContext graphContext) : IActivityFeedRepository
+public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActivityFeedGraphRepository
 {
     /// <summary>
     /// Método para construir o feed de atividades.

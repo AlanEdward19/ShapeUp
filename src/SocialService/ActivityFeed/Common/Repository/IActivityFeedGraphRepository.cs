@@ -5,7 +5,7 @@ namespace SocialService.ActivityFeed.Common.Repository;
 /// <summary>
 /// Interface para o repositório de feed de atividades.
 /// </summary>
-public interface IActivityFeedRepository
+public interface IActivityFeedGraphRepository
 {
     /// <summary>
     /// Método para construir o feed de atividades.

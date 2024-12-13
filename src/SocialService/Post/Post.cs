@@ -23,6 +23,9 @@ public class Post : GraphEntity
     /// </summary>
     public DateTime UpdatedAt { get; private set; }
 
+    /// <summary>
+    /// Ids das imagens do post
+    /// </summary>
     public IEnumerable<Guid> Images { get; private set; }
 
     /// <summary>
