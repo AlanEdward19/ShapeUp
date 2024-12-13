@@ -1,4 +1,5 @@
-﻿using SocialService.Connections;
+﻿using SocialService.ActivityFeed;
+using SocialService.Connections;
 using SocialService.Follow;
 using SocialService.Friends;
 using SocialService.Post;
@@ -22,6 +23,7 @@ public static class ServiceDependencies
     {
         services
             .ConfigureConnections(configuration)
+            .ConfigureActivityFeedRelatedDependencies()
             .ConfigureProfileRelatedDependencies()
             .ConfigureFollowRelatedDependencies()
             .ConfigureFriendsRelatedDependencies()
