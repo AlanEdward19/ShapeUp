@@ -22,6 +22,7 @@ A arquitetura do ShapeUp é baseada em microserviços, divididos em componentes 
 *   **Serviço de Profissionais**: Gerencia a validação de profissionais e a oferta de seus serviços.
 *   **Serviço de Assinaturas**: Controla recursos premium e pagamentos.
 *   **Serviço de Mensagens**: Facilita a comunicação entre usuários e profissionais.
+*   **Serviço de Autenticação e Autorização**: Controla fluxo de permissão para usuário.
 
 ## **Objetivos Futuros**
 
