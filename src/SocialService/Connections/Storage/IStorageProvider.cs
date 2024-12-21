@@ -1,4 +1,6 @@
-﻿namespace SocialService.Connections.Storage;
+﻿using SocialService.Profile.GetProfilePictures;
+
+namespace SocialService.Connections.Storage;
 
 /// <summary>
 ///     Interface para prover armazenamento de arquivos
@@ -6,13 +8,13 @@
 public interface IStorageProvider
 {
     /// <summary>
-    ///     Método para renomear um blob
+    /// Método para obter fotos de perfil
     /// </summary>
-    /// <param name="oldBlobName"></param>
-    /// <param name="newBlobName"></param>
-    /// <param name="containerName"></param>
+    /// <param name="profileId"></param>
+    /// <param name="page"></param>
+    /// <param name="rows"></param>
     /// <returns></returns>
-    Task RenameBlobAsync(string oldBlobName, string newBlobName, string containerName);
+    Task<IEnumerable<ProfilePicture>> GetProfilePicturesAsync(Guid profileId, int page, int rows);
 
     /// <summary>
     ///     Método para ler um blob
@@ -61,4 +63,12 @@ public interface IStorageProvider
     /// <param name="containerName"></param>
     /// <returns></returns>
     Task DeleteFolderAsync(string folderName, string containerName);
+
+    /// <summary>
+    /// Método para sanitizar um nome
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="allowSlashes"></param>
+    /// <returns></returns>
+    string SanitizeName(string name, bool allowSlashes = false);
 }

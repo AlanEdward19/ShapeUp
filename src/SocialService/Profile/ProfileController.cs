@@ -8,6 +8,7 @@ using SocialService.Common.Utils;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;
+using SocialService.Profile.GetProfilePictures;
 using SocialService.Profile.UploadProfilePicture;
 using SocialService.Profile.ViewProfile;
 
@@ -102,5 +103,25 @@ public class ProfileController : ControllerBase
         await command.SetImage(image, image.FileName, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
+    }
+    
+    /// <summary>
+    /// Rota para obter fotos de perfil.
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="page"></param>
+    /// <param name="rows"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("getProfilePictures/{profileId:guid}")]
+    public async Task<IActionResult> GetProfilePictures(Guid profileId,
+        [FromQuery] int? page, [FromQuery] int? rows,
+        [FromServices] IHandler<IEnumerable<ProfilePicture>, GetProfilePicturesQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+
+        return Ok(await handler.HandleAsync(new GetProfilePicturesQuery(profileId, page, rows), cancellationToken));
     }
 }

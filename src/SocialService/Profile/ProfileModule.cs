@@ -3,6 +3,7 @@ using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;
+using SocialService.Profile.GetProfilePictures;
 using SocialService.Profile.UploadProfilePicture;
 using SocialService.Profile.ViewProfile;
 
@@ -34,6 +35,9 @@ public static class ProfileModule
         services.AddScoped<IHandler<ProfileDto, EditProfileCommand>, EditProfileCommandHandler>();
         services.AddScoped<IHandler<bool, UploadProfilePictureCommand>, UploadProfilePictureCommandHandler>();
         services.AddScoped<IHandler<ProfileDto, ViewProfileQuery>, ViewProfileQueryHandler>();
+        services
+            .AddScoped<IHandler<IEnumerable<ProfilePicture>, GetProfilePicturesQuery>,
+                GetProfilePicturesQueryHandler>();
 
         return services;
     }

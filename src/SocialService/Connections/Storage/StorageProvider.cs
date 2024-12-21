@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Azure.Storage.Blobs;
+using SocialService.Profile.GetProfilePictures;
 
 namespace SocialService.Connections.Storage;
 
@@ -11,6 +12,47 @@ namespace SocialService.Connections.Storage;
 public class StorageProvider(string connectionString, ILogger<StorageProvider> logger) : IStorageProvider
 {
     private readonly BlobServiceClient _blobServiceClient = new(connectionString);
+
+    /// <summary>
+    /// Método para obter fotos de perfil
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="page"></param>
+    /// <param name="rows"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<IEnumerable<ProfilePicture>> GetProfilePicturesAsync(Guid profileId, int page, int rows)
+    {
+        var profilePictures = new List<ProfilePicture>();
+        var containerName = SanitizeName(profileId.ToString());
+        var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+
+        if (!await containerClient.ExistsAsync())
+            throw new Exception("Container não existe");
+
+        var prefix = "profilepictures/";
+        await foreach (var blobItem in containerClient.GetBlobsByHierarchyAsync(prefix: prefix, delimiter: "/"))
+        {
+            if (blobItem.IsPrefix)
+            {
+                var folderName = blobItem.Prefix.TrimEnd('/');
+                var datePart = folderName.Substring(prefix.Length);
+                if (DateTime.TryParseExact(datePart, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out var createdAt))
+                {
+                    await foreach (var fileItem in containerClient.GetBlobsByHierarchyAsync(prefix: folderName + "/"))
+                    {
+                        if (fileItem.IsBlob)
+                        {
+                            var imagePath = fileItem.Blob.Name;
+                            profilePictures.Add(new ProfilePicture(imagePath, createdAt));
+                        }
+                    }
+                }
+            }
+        }
+
+        return profilePictures.Skip((page - 1) * rows).Take(rows);
+    }
 
     /// <summary>
     ///     Método para ler o conteúdo de um blob
@@ -184,7 +226,13 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
         await oldBlobClient.DeleteIfExistsAsync();
     }
 
-    private string SanitizeName(string name, bool allowSlashes = false)
+    /// <summary>
+    /// Método para sanitizar um nome
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="allowSlashes"></param>
+    /// <returns></returns>
+    public string SanitizeName(string name, bool allowSlashes = false)
     {
         if (allowSlashes)
             name = Regex.Replace(name, "[^a-zA-Z0-9-/.]", "_");
