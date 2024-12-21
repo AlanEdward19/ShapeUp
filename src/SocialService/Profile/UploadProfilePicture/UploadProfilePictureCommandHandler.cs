@@ -26,8 +26,9 @@ public class UploadProfilePictureCommandHandler(IProfileGraphRepository reposito
 
         var containerName = $"{profileDto.Id}";
 
-        var blobName =
-            $"profile-pictures/{DateTime.Today:yyyy-MM-dd}/{Guid.NewGuid()}.{command.ImageFileName.Split('.').Last()}";
+        var blobName = storageProvider.SanitizeName(
+            $"profile-pictures/{DateTime.Today:yyyy-MM-dd}/{command.ImageHash}.{command.ImageFileName.Split('.').Last()}",
+            true);
 
         await storageProvider.WriteBlobAsync(command.Image, blobName, containerName);
 
