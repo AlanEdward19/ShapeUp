@@ -16,13 +16,13 @@ ShapeUp foi desenvolvido com a missão de promover um estilo de vida saudável, 
 
 A arquitetura do ShapeUp é baseada em microserviços, divididos em componentes que atendem a funcionalidades específicas:
 
-*   **Serviço Social**: Gerencia a criação de perfis, lista de amigos, seguidores e publicações.
-*   **Serviço de Treinamento**: Responsável pela elaboração e execução de treinos, permitindo a interação entre usuários e treinadores.
-*   **Serviço de Nutrição**: Focado na criação de receitas e acompanhamento nutricional.
-*   **Serviço de Profissionais**: Gerencia a validação de profissionais e a oferta de seus serviços.
-*   **Serviço de Assinaturas**: Controla recursos premium e pagamentos.
-*   **Serviço de Mensagens**: Facilita a comunicação entre usuários e profissionais.
-*   **Serviço de Autenticação e Autorização**: Controla fluxo de permissão para usuário.
+*   [x] **Serviço Social**: Gerencia a criação de perfis, lista de amigos, seguidores e publicações.
+*   [ ] **Serviço de Treinamento**: Responsável pela elaboração e execução de treinos, permitindo a interação entre usuários e treinadores.
+*   [ ] **Serviço de Nutrição**: Focado na criação de receitas e acompanhamento nutricional.
+*   [ ] **Serviço de Profissionais**: Gerencia a validação de profissionais e a oferta de seus serviços.
+*   [ ] **Serviço de Assinaturas**: Controla recursos premium e pagamentos.
+*   [ ] **Serviço de Mensagens**: Facilita a comunicação entre usuários e profissionais.
+*   [ ] **Serviço de Autenticação e Autorização**: Controla fluxo de permissão para usuário.
 
 ## **Objetivos Futuros**
 
