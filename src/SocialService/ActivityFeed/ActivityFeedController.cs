@@ -5,12 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialService.ActivityFeed.GetActivityFeed;
 using SocialService.Common;
 using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
 using SocialService.Common.Utils;
-using SocialService.Follow.FollowUser;
-using SocialService.Follow.GetFollowers;
-using SocialService.Follow.GetFollowing;
-using SocialService.Follow.UnfollowUser;
 
 namespace SocialService.ActivityFeed;
 
