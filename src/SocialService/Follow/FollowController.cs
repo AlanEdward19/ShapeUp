@@ -65,7 +65,7 @@ public class FollowController : ControllerBase
     /// <returns></returns>
     [HttpGet("getFollowers/{profileId:guid}")]
     public async Task<IActionResult> GetFollowers(Guid profileId, [FromQuery] int page, [FromQuery] int rows,
-        [FromServices] IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowersQuery> handler,
+        [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, GetFollowersQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
@@ -89,7 +89,7 @@ public class FollowController : ControllerBase
     /// <returns></returns>
     [HttpGet("getFollowing/{profileId:guid}")]
     public async Task<IActionResult> GetFollowing(Guid profileId, [FromQuery] int page, [FromQuery] int rows,
-        [FromServices] IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery> handler,
+        [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, GetFollowingQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());

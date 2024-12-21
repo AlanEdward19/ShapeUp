@@ -46,7 +46,7 @@ public static class FriendsModule
 
         services.AddScoped<IHandler<bool, RemoveFriendCommand>, RemoveFriendCommandHandler>();
         services
-            .AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, ListFriendsQuery>,
+            .AddScoped<IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery>,
                 ListFriendsQueryHandler>();
 
         #endregion

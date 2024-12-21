@@ -31,10 +31,10 @@ public static class FollowModule
     {
         services.AddScoped<IHandler<bool, FollowUserCommand>, FollowUserCommandHandler>();
         services
-            .AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowersQuery>,
+            .AddScoped<IHandler<IEnumerable<ProfileBasicInformation>, GetFollowersQuery>,
                 GetFollowersQueryHandler>();
         services
-            .AddScoped<IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>,
+            .AddScoped<IHandler<IEnumerable<ProfileBasicInformation>, GetFollowingQuery>,
                 GetFollowingQueryHandler>();
         services.AddScoped<IHandler<bool, UnfollowUserCommand>, UnfollowUserCommandHandler>();
 

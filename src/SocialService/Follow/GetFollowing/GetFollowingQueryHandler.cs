@@ -11,7 +11,7 @@ namespace SocialService.Follow.GetFollowing;
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
 public class GetFollowingQueryHandler(IProfileGraphRepository profileGraphRepository, IFollowerGraphRepository graphRepository)
-    : IHandler<IEnumerable<ProfileBasicInformationViewModel>, GetFollowingQuery>
+    : IHandler<IEnumerable<ProfileBasicInformation>, GetFollowingQuery>
 {
     /// <summary>
     ///     Método para obter os perfis seguidos de um perfil
@@ -19,7 +19,7 @@ public class GetFollowingQueryHandler(IProfileGraphRepository profileGraphReposi
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<ProfileBasicInformationViewModel>> HandleAsync(GetFollowingQuery query,
+    public async Task<IEnumerable<ProfileBasicInformation>> HandleAsync(GetFollowingQuery query,
         CancellationToken cancellationToken)
     {
         var following = await graphRepository.GetFollowingAsync(query.ProfileId);
@@ -32,7 +32,7 @@ public class GetFollowingQueryHandler(IProfileGraphRepository profileGraphReposi
         var profiles = await profileGraphRepository.GetProfilesAsync(pagedFollowingIds);
         
         return profiles
-            .Select(x => new ProfileBasicInformationViewModel(x.FirstName, x.LastName, x.Id))
+            .Select(x => new ProfileBasicInformation(x.FirstName, x.LastName, x.Id))
             .ToList();
     }
 }

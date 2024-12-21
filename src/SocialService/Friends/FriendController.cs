@@ -64,7 +64,7 @@ public class FriendController : ControllerBase
     /// <returns></returns>
     [HttpGet("listFriends/{profileId:guid}")]
     public async Task<IActionResult> ViewProfile(Guid profileId, [FromQuery] int page, [FromQuery] int rows,
-        [FromServices] IHandler<IEnumerable<ProfileBasicInformationViewModel>, ListFriendsQuery> handler,
+        [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());

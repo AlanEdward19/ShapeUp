@@ -11,7 +11,7 @@ namespace SocialService.Friends.Friendship.ListFriends;
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
 public class ListFriendsQueryHandler(IProfileGraphRepository profileGraphRepository, IFriendshipGraphRepository graphRepository)
-    : IHandler<IEnumerable<ProfileBasicInformationViewModel>, ListFriendsQuery>
+    : IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery>
 {
     /// <summary>
     ///     Método para lidar com a query de listagem de amigos.
@@ -19,7 +19,7 @@ public class ListFriendsQueryHandler(IProfileGraphRepository profileGraphReposit
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<ProfileBasicInformationViewModel>> HandleAsync(ListFriendsQuery query,
+    public async Task<IEnumerable<ProfileBasicInformation>> HandleAsync(ListFriendsQuery query,
         CancellationToken cancellationToken)
     {
         var friendsList = await graphRepository.GetFriendshipsForProfileAsync(query.ProfileId);
@@ -37,7 +37,7 @@ public class ListFriendsQueryHandler(IProfileGraphRepository profileGraphReposit
         var profiles = await profileGraphRepository.GetProfilesAsync(pagedFriendsIds);
         
         return profiles
-            .Select(x => new ProfileBasicInformationViewModel(x.FirstName, x.LastName, x.Id))
+            .Select(x => new ProfileBasicInformation(x.FirstName, x.LastName, x.Id))
             .ToList();
     }
 }
