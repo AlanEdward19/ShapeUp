@@ -8,6 +8,10 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <DocumentationFile>Configuration\Comments\NutritionService.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" NoWarn="NU1605"/>
@@ -27,8 +31,10 @@
 
     <ItemGroup>
       <Folder Include="Food\DeleteFood\" />
-      <Folder Include="Food\EditFood\" />
-      <Folder Include="Food\GetFoodDetails\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DocFileItem Remove="Configuration\Comments\SocialService.xml" />
     </ItemGroup>
 
 </Project>

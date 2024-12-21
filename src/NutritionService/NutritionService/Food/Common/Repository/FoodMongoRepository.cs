@@ -21,9 +21,9 @@ public class FoodMongoRepository(IMongoDatabase database) : IFoodMongoRepository
         await _foodCollection.InsertOneAsync(food);
     }
 
-    public async Task UpdateFoodAsync(string? barCode, Food updatedFood)
+    public async Task UpdateFoodAsync(Food updatedFood)
     {
-        var filter = Builders<Food>.Filter.Eq("barCode", barCode);
+        var filter = Builders<Food>.Filter.Eq("barCode", updatedFood.BarCode);
         await _foodCollection.ReplaceOneAsync(filter, updatedFood);
     }
 
@@ -31,5 +31,10 @@ public class FoodMongoRepository(IMongoDatabase database) : IFoodMongoRepository
     {
         var filter = Builders<Food>.Filter.Eq("barCode", barCode);
         await _foodCollection.DeleteOneAsync(filter);
+    }
+    
+    public async Task<IEnumerable<Food>> ListUnrevisedFoodsAsync()
+    {
+        return await _foodCollection.Find(food => !food.Revised).ToListAsync();
     }
 }

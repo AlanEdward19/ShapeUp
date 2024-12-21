@@ -1,10 +1,15 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using NutritionService.Food.Common;
 
 namespace NutritionService.Food;
 
 public class Food(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.String)]
+    public string Id { get; private set; }
+    
     [BsonElement("name")]
     public string Name { get; private set; } = name;
     
@@ -23,5 +28,10 @@ public class Food(string name, string brand, string barCode, NutritionalInfo nut
     public void MarkAsRevised()
     {
         Revised = true;
+    }
+    
+    public void GenerateId()
+    {
+        Id = ObjectId.GenerateNewId().ToString();
     }
 }

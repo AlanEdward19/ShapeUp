@@ -11,7 +11,7 @@ public class CreateFoodCommandHandler(IFoodMongoRepository repository) : IHandle
         var existingFood = await repository.GetFoodByBarCodeAsync(command.BarCode);
         
         if (existingFood != null)
-            throw new FoodAlreadyExistsException(command.Name);
+            throw new FoodAlreadyExistsException(command.BarCode);
 
         Food food = command.ToFood();
         

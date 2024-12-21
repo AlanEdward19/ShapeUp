@@ -18,6 +18,20 @@ services:
     ports:
       - "5000:5000"
 
+  mongodb:
+    image: mongo:latest
+    container_name: MongoDB
+    networks:
+      - internal-network
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../volumes/mongo_data:/data/db
+      
   storage:
     container_name: 'Storage'
     image: mcr.microsoft.com/azure-storage/azurite:latest

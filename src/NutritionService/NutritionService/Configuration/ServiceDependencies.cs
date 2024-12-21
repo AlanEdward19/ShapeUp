@@ -1,4 +1,7 @@
-﻿namespace NutritionService.Configuration;
+﻿using NutritionService.Connections;
+using NutritionService.Food;
+
+namespace NutritionService.Configuration;
 
 /// <summary>
 ///     Classe para resolver as dependências de serviços
@@ -14,7 +17,9 @@ public static class ServiceDependencies
     public static IServiceCollection SolveServiceDependencies(this IServiceCollection services,
         IConfiguration configuration)
     {
-
+        services.ConfigureConnections(configuration)
+            .ConfigureFoodRelatedDependencies();
+        
         return services;
     }
 }
