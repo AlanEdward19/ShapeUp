@@ -3,7 +3,7 @@
 /// <summary>
 ///     ViewModel para informações básicas de um perfil.
 /// </summary>
-public class ProfileBasicInformationViewModel
+public class ProfileBasicInformation
 {
     /// <summary>
     ///     Construtor
@@ -11,7 +11,7 @@ public class ProfileBasicInformationViewModel
     /// <param name="firstName"></param>
     /// <param name="lastName"></param>
     /// <param name="profileId"></param>
-    public ProfileBasicInformationViewModel(string firstName, string lastName, Guid profileId)
+    public ProfileBasicInformation(string firstName, string lastName, Guid profileId)
     {
         FirstName = firstName;
         LastName = lastName;
