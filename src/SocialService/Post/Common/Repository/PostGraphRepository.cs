@@ -45,13 +45,12 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     ///     Método que verifica se um post existe
     /// </summary>
     /// <param name="postId"></param>
-    /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<bool> PostExistsAsync(Guid postId, Guid profileId)
+    public async Task<bool> PostExistsAsync(Guid postId)
     {
         var query = $@"
-        MATCH (p:Profile {{id: '{profileId}'}})-[:PUBLISHED_BY]->(post:Post {{id: '{postId}'}})
-        RETURN post";
+    MATCH (post:Post {{id: '{postId}'}})
+    RETURN post";
 
         var result = await graphContext.ExecuteQueryAsync(query);
         return (result ?? Array.Empty<IRecord>()).Any();
@@ -227,6 +226,22 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     DELETE comment, r";
 
         await graphContext.ExecuteQueryAsync(query);
+    }
+
+    /// <summary>
+    /// Método que verifica se um comentário existe
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<bool> CommentExistsAsync(Guid commentId)
+    {
+        var query = $@"
+    MATCH (comment:Comment {{id: '{commentId}'}})
+    RETURN comment";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+        return (result ?? Array.Empty<IRecord>()).Any();
     }
 
     #endregion
