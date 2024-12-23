@@ -39,4 +39,11 @@ public interface IProfileGraphRepository
     /// <param name="ids"></param>
     /// <returns></returns>
     Task<IEnumerable<Profile>> GetProfilesAsync(IEnumerable<Guid> ids);
+
+    /// <summary>
+    /// Método para verificar se um perfil existe.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<bool> ProfileExistsAsync(Guid id);
 }

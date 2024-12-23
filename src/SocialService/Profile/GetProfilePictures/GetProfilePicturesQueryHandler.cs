@@ -12,12 +12,12 @@ public class GetProfilePicturesQueryHandler(IStorageProvider storageProvider) : 
     /// <summary>
     /// Método para lidar com a query de obter fotos de perfil.
     /// </summary>
-    /// <param name="item"></param>
+    /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task<IEnumerable<ProfilePicture>> HandleAsync(GetProfilePicturesQuery item, CancellationToken cancellationToken)
+    public Task<IEnumerable<ProfilePicture>> HandleAsync(GetProfilePicturesQuery query, CancellationToken cancellationToken)
     {
-        return storageProvider.GetProfilePicturesAsync(item.ProfileId, item.Page, item.Rows);
+        return storageProvider.GetProfilePicturesAsync(query.ProfileId, query.Page, query.Rows);
     }
 }

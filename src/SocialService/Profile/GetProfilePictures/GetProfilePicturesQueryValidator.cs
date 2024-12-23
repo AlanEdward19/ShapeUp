@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.GetProfilePictures;
 
@@ -10,7 +11,7 @@ public class GetProfilePicturesQueryValidator : AbstractValidator<GetProfilePict
     /// <summary>
     /// Validações para a query de obter fotos de perfil.
     /// </summary>
-    public GetProfilePicturesQueryValidator()
+    public GetProfilePicturesQueryValidator(IProfileGraphRepository repository)
     {
         RuleFor(x => x.Page)
             .GreaterThanOrEqualTo(1)
@@ -23,5 +24,9 @@ public class GetProfilePicturesQueryValidator : AbstractValidator<GetProfilePict
         RuleFor(x => x.Rows)
             .LessThanOrEqualTo(100)
             .WithMessage("Rows must be less than or equal to 100.");
+        
+        RuleFor(x => x.ProfileId)
+            .MustAsync(async (id, cancellationToken) => await repository.ProfileExistsAsync(id))
+            .WithMessage("ProfileId: '{PropertyValue}' doesn't exist.");
     }
 }
