@@ -22,9 +22,6 @@ public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) 
         profile.UpdateBio(command.Bio);
         profile.UpdateBirthDate(command.BirthDate);
         profile.UpdateGender(command.Gender);
-        profile.UpdateCity(command.City);
-        profile.UpdateState(command.State);
-        profile.UpdateCountry(command.Country);
 
         await graphRepository.UpdateProfileAsync(profile);
 
