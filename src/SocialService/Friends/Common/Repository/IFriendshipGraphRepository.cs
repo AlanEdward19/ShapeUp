@@ -15,12 +15,12 @@ public interface IFriendshipGraphRepository
     Task SendFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId, string message);
 
     /// <summary>
-    ///     Método para obter uma solicitação de amizade.
+    ///     Método para verificar se um pedido de amizade existe
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    Task<FriendRequest.FriendRequest?> GetFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId);
+    Task<bool> FriendRequestExistsAsync(Guid senderProfileId, Guid receiverProfileId);
 
     /// <summary>
     ///     Método para aceitar uma solicitação de amizade.
