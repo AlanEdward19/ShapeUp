@@ -1,14 +1,12 @@
-﻿using FluentValidation;
-
-namespace SocialService.Post.CreatePost;
+﻿namespace SocialService.Post.CreatePost;
 
 /// <summary>
-/// Validador para o comando de criação de post.
+///     Validador para o comando de criação de post.
 /// </summary>
 public class CreatePostCommandValidator : AbstractValidator<CreatePostCommand>
 {
     /// <summary>
-    /// Validações para o comando de criação de post.
+    ///     Validações para o comando de criação de post.
     /// </summary>
     public CreatePostCommandValidator()
     {

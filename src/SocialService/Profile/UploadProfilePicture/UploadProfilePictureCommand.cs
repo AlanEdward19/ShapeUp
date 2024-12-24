@@ -17,7 +17,7 @@ public class UploadProfilePictureCommand
     ///     Nome do arquivo da imagem.
     /// </summary>
     public string ImageFileName { get; private set; } = "";
-    
+
     public string ImageHash { get; private set; } = "";
 
     /// <summary>
@@ -32,10 +32,10 @@ public class UploadProfilePictureCommand
 
         await image.CopyToAsync(Image, cancellationToken);
         ImageFileName = imageFileName;
-        
+
         ImageHash = SetImageHash(Image);
     }
-    
+
     private string SetImageHash(MemoryStream content)
     {
         using SHA256 sha256 = SHA256.Create();
@@ -44,7 +44,7 @@ public class UploadProfilePictureCommand
 
         foreach (byte b in hashBytes)
             hash.Append(b.ToString("x2"));
-        
+
         return hash.ToString();
     }
 }

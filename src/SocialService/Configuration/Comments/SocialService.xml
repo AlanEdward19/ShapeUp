@@ -32,19 +32,19 @@
         </member>
         <member name="T:SocialService.ActivityFeed.Common.Repository.ActivityFeedGraphGraphRepository">
             <summary>
-            Repositório de feed de atividades.
+                Repositório de feed de atividades.
             </summary>
             <param name="graphContext"></param>
         </member>
         <member name="M:SocialService.ActivityFeed.Common.Repository.ActivityFeedGraphGraphRepository.#ctor(SocialService.Connections.Graph.GraphContext)">
             <summary>
-            Repositório de feed de atividades.
+                Repositório de feed de atividades.
             </summary>
             <param name="graphContext"></param>
         </member>
         <member name="M:SocialService.ActivityFeed.Common.Repository.ActivityFeedGraphGraphRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Guid)">
             <summary>
-            Método para construir o feed de atividades.
+                Método para construir o feed de atividades.
             </summary>
             <param name="query"></param>
             <param name="profileId"></param>
@@ -52,12 +52,12 @@
         </member>
         <member name="T:SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository">
             <summary>
-            Interface para o repositório de feed de atividades.
+                Interface para o repositório de feed de atividades.
             </summary>
         </member>
         <member name="M:SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Guid)">
             <summary>
-            Método para construir o feed de atividades.
+                Método para construir o feed de atividades.
             </summary>
             <param name="query"></param>
             <param name="profileId"></param>
@@ -65,34 +65,34 @@
         </member>
         <member name="T:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery">
             <summary>
-            Query para obter o feed de atividades.
+                Query para obter o feed de atividades.
             </summary>
         </member>
         <member name="P:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery.Page">
             <summary>
-            Página.
+                Página.
             </summary>
         </member>
         <member name="P:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery.Rows">
             <summary>
-            Quantidade de registros por página.
+                Quantidade de registros por página.
             </summary>
         </member>
         <member name="T:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler">
             <summary>
-            Handler para obter o feed de atividades.
+                Handler para obter o feed de atividades.
             </summary>
             <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.#ctor(SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository)">
             <summary>
-            Handler para obter o feed de atividades.
+                Handler para obter o feed de atividades.
             </summary>
             <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.HandleAsync(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para obter o feed de atividades.
+                Método para obter o feed de atividades.
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>
@@ -100,17 +100,17 @@
         </member>
         <member name="T:SocialService.Common.Entities.GraphEntity">
             <summary>
-            Entidade base para entidades do grafo.
+                Entidade base para entidades do grafo.
             </summary>
         </member>
         <member name="P:SocialService.Common.Entities.GraphEntity.Id">
             <summary>
-            Id da entidade
+                Id da entidade
             </summary>
         </member>
         <member name="M:SocialService.Common.Entities.GraphEntity.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>
-            Método para mapear os dados do neo4j para a entidade
+                Método para mapear os dados do neo4j para a entidade
             </summary>
             <param name="result"></param>
         </member>
@@ -207,21 +207,21 @@
         </member>
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetCity(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            Método para obter a cidade do usuário
+                Método para obter a cidade do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetCountry(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            Método para obter o país do usuário
+                Método para obter o país do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetState(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            Método para obter o estado do usuário
+                Método para obter o estado do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
@@ -359,7 +359,7 @@
         </member>
         <member name="M:SocialService.Connections.Storage.IStorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
             <summary>
-            Método para obter fotos de perfil
+                Método para obter fotos de perfil
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -416,7 +416,7 @@
         </member>
         <member name="M:SocialService.Connections.Storage.IStorageProvider.SanitizeName(System.String,System.Boolean)">
             <summary>
-            Método para sanitizar um nome
+                Método para sanitizar um nome
             </summary>
             <param name="name"></param>
             <param name="allowSlashes"></param>
@@ -438,7 +438,7 @@
         </member>
         <member name="M:SocialService.Connections.Storage.StorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
             <summary>
-            Método para obter fotos de perfil
+                Método para obter fotos de perfil
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -503,7 +503,7 @@
         </member>
         <member name="M:SocialService.Connections.Storage.StorageProvider.SanitizeName(System.String,System.Boolean)">
             <summary>
-            Método para sanitizar um nome
+                Método para sanitizar um nome
             </summary>
             <param name="name"></param>
             <param name="allowSlashes"></param>
@@ -560,7 +560,8 @@
         </member>
         <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowingAsync(System.Guid)">
             <summary>
-                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
+                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o
+                perfil dado
             </summary>
             <param name="profileId"></param>
             <returns></returns>
@@ -595,7 +596,8 @@
         </member>
         <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowingAsync(System.Guid)">
             <summary>
-                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
+                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o
+                perfil dado
             </summary>
             <param name="profileId"></param>
             <returns></returns>
@@ -1427,12 +1429,12 @@
         </member>
         <member name="M:SocialService.Post.Comment.Comment.#ctor">
             <summary>
-            Construtor padrão
+                Construtor padrão
             </summary>
         </member>
         <member name="M:SocialService.Post.Comment.Comment.#ctor(SocialService.Post.Comment.CommentOnPost.CommentOnPostCommand,System.Guid)">
             <summary>
-            Construtor para criar um novo comentário.
+                Construtor para criar um novo comentário.
             </summary>
             <param name="command"></param>
             <param name="profileId"></param>
@@ -1444,7 +1446,7 @@
         </member>
         <member name="P:SocialService.Post.Comment.Comment.PostId">
             <summary>
-            Id do post
+                Id do post
             </summary>
         </member>
         <member name="P:SocialService.Post.Comment.Comment.CreatedAt">
@@ -1465,7 +1467,7 @@
         </member>
         <member name="M:SocialService.Post.Comment.Comment.UpdateContent(System.String)">
             <summary>
-            Método para atualizar o conteúdo do comentário.
+                Método para atualizar o conteúdo do comentário.
             </summary>
             <param name="content"></param>
         </member>
@@ -1867,7 +1869,7 @@
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostCommentsByCommentIdAsync(System.Guid)">
             <summary>
-            Método que retorna um comentário de um post
+                Método que retorna um comentário de um post
             </summary>
             <param name="commentId"></param>
             <returns></returns>
@@ -2072,12 +2074,12 @@
         </member>
         <member name="M:SocialService.Post.Post.#ctor">
             <summary>
-            Construtor padrão
+                Construtor padrão
             </summary>
         </member>
         <member name="M:SocialService.Post.Post.#ctor(SocialService.Post.CreatePost.CreatePostCommand)">
             <summary>
-            Construtor para criar um novo post.
+                Construtor para criar um novo post.
             </summary>
             <param name="command"></param>
         </member>
@@ -2098,7 +2100,7 @@
         </member>
         <member name="P:SocialService.Post.Post.Images">
             <summary>
-            Ids das imagens do post
+                Ids das imagens do post
             </summary>
         </member>
         <member name="P:SocialService.Post.Post.Content">
@@ -2114,14 +2116,14 @@
         </member>
         <member name="M:SocialService.Post.Post.UpdateVisibility(System.Nullable{SocialService.Post.Common.Enums.EPostVisibility},System.Boolean)">
             <summary>
-            Método para atualizar a visibilidade do post.
+                Método para atualizar a visibilidade do post.
             </summary>
             <param name="visibility"></param>
             <param name="isUpdate"></param>
         </member>
         <member name="M:SocialService.Post.Post.UpdateContent(System.String,System.Boolean)">
             <summary>
-            Método para atualizar o conteúdo do post.
+                Método para atualizar o conteúdo do post.
             </summary>
             <param name="content"></param>
             <param name="isUpdate"></param>
@@ -2242,13 +2244,13 @@
         </member>
         <member name="T:SocialService.Post.PostDto">
             <summary>
-            Objeto de transferência de dados para post
+                Objeto de transferência de dados para post
             </summary>
             <param name="post"></param>
         </member>
         <member name="M:SocialService.Post.PostDto.#ctor(SocialService.Post.Post)">
             <summary>
-            Objeto de transferência de dados para post
+                Objeto de transferência de dados para post
             </summary>
             <param name="post"></param>
         </member>
@@ -2259,7 +2261,7 @@
         </member>
         <member name="P:SocialService.Post.PostDto.Images">
             <summary>
-            Ids das imagens do post.
+                Ids das imagens do post.
             </summary>
         </member>
         <member name="P:SocialService.Post.PostDto.Content">
@@ -2358,12 +2360,12 @@
         </member>
         <member name="M:SocialService.Post.React.Reaction.#ctor">
             <summary>
-            Construtor padrão
+                Construtor padrão
             </summary>
         </member>
         <member name="M:SocialService.Post.React.Reaction.#ctor(System.Guid,SocialService.Post.React.ReactToPost.ReactToPostCommand)">
             <summary>
-            Construtor para criar uma nova reação.
+                Construtor para criar uma nova reação.
             </summary>
             <param name="profileId"></param>
             <param name="command"></param>
@@ -2385,7 +2387,7 @@
         </member>
         <member name="P:SocialService.Post.React.Reaction.PostId">
             <summary>
-            Id do post
+                Id do post
             </summary>
         </member>
         <member name="M:SocialService.Post.React.Reaction.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
@@ -2396,7 +2398,7 @@
         </member>
         <member name="M:SocialService.Post.React.Reaction.UpdateReactionType(System.String)">
             <summary>
-            Método para atualizar o tipo de reação.
+                Método para atualizar o tipo de reação.
             </summary>
             <param name="reactionType"></param>
         </member>
@@ -2528,21 +2530,21 @@
         </member>
         <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.Guid)">
             <summary>
-            Método para obter um perfil do grafo.
+                Método para obter um perfil do grafo.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
             <summary>
-            Método para atualizar um perfil no grafo.
+                Método para atualizar um perfil no grafo.
             </summary>
             <param name="profile"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.Guid})">
             <summary>
-            Método para obter perfis do grafo.
+                Método para obter perfis do grafo.
             </summary>
             <param name="ids"></param>
             <returns></returns>
@@ -2573,21 +2575,21 @@
         </member>
         <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.Guid)">
             <summary>
-            Método para obter um perfil
+                Método para obter um perfil
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
             <summary>
-            Método para atualizar um perfil
+                Método para atualizar um perfil
             </summary>
             <param name="profile"></param>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.Guid})">
             <summary>
-            Método para obter perfis
+                Método para obter perfis
             </summary>
             <param name="ids"></param>
             <returns></returns>
@@ -2625,17 +2627,17 @@
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.City">
             <summary>
-            Cidade do perfil
+                Cidade do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.State">
             <summary>
-            Estado do perfil
+                Estado do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Country">
             <summary>
-            País do perfil
+                País do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Gender">
@@ -2678,19 +2680,19 @@
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetCity(System.String)">
             <summary>
-            Método para setar a cidade do perfil
+                Método para setar a cidade do perfil
             </summary>
             <param name="city"></param>
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetState(System.String)">
             <summary>
-            Método para setar o estado do perfil
+                Método para setar o estado do perfil
             </summary>
             <param name="state"></param>
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetCountry(System.String)">
             <summary>
-            Método para setar o país do perfil
+                Método para setar o país do perfil
             </summary>
             <param name="country"></param>
         </member>
@@ -2782,17 +2784,17 @@
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.City">
             <summary>
-            Cidade do perfil
+                Cidade do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.State">
             <summary>
-            Estado do perfil
+                Estado do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Country">
             <summary>
-            País do perfil
+                País do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Bio">
@@ -2821,7 +2823,7 @@
         </member>
         <member name="T:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery">
             <summary>
-            Query para obter fotos de perfil.
+                Query para obter fotos de perfil.
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -2829,7 +2831,7 @@
         </member>
         <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery.#ctor(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
-            Query para obter fotos de perfil.
+                Query para obter fotos de perfil.
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -2837,34 +2839,34 @@
         </member>
         <member name="P:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery.ProfileId">
             <summary>
-            Id do perfil.
+                Id do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery.Page">
             <summary>
-            Página atual.
+                Página atual.
             </summary>
         </member>
         <member name="P:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery.Rows">
             <summary>
-            Quantidade de registros por página.
+                Quantidade de registros por página.
             </summary>
         </member>
         <member name="T:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryHandler">
             <summary>
-            Handler para a query de obter fotos de perfil.
-            <param name="storageProvider"></param>
+                Handler para a query de obter fotos de perfil.
+                <param name="storageProvider"></param>
             </summary>
         </member>
         <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryHandler.#ctor(SocialService.Connections.Storage.IStorageProvider)">
             <summary>
-            Handler para a query de obter fotos de perfil.
-            <param name="storageProvider"></param>
+                Handler para a query de obter fotos de perfil.
+                <param name="storageProvider"></param>
             </summary>
         </member>
         <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryHandler.HandleAsync(SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com a query de obter fotos de perfil.
+                Método para lidar com a query de obter fotos de perfil.
             </summary>
             <param name="item"></param>
             <param name="cancellationToken"></param>
@@ -2873,22 +2875,22 @@
         </member>
         <member name="T:SocialService.Profile.GetProfilePictures.ProfilePicture">
             <summary>
-            Classe para representar uma foto de perfil.
+                Classe para representar uma foto de perfil.
             </summary>
         </member>
         <member name="M:SocialService.Profile.GetProfilePictures.ProfilePicture.#ctor(System.String,System.DateTime)">
             <summary>
-            Classe para representar uma foto de perfil.
+                Classe para representar uma foto de perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.GetProfilePictures.ProfilePicture.ImagePath">
             <summary>
-            Caminho da imagem.
+                Caminho da imagem.
             </summary>
         </member>
         <member name="P:SocialService.Profile.GetProfilePictures.ProfilePicture.CreatedAt">
             <summary>
-            Data de criação.
+                Data de criação.
             </summary>
         </member>
         <member name="T:SocialService.Profile.Profile">
@@ -2898,7 +2900,7 @@
         </member>
         <member name="M:SocialService.Profile.Profile.#ctor">
             <summary>
-            Construtor padrão.
+                Construtor padrão.
             </summary>
         </member>
         <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Guid)">
@@ -2925,17 +2927,17 @@
         </member>
         <member name="P:SocialService.Profile.Profile.City">
             <summary>
-            Cidade do perfil
+                Cidade do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.State">
             <summary>
-            Estado do perfil
+                Estado do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.Country">
             <summary>
-            País do perfil
+                País do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.ImageUrl">
@@ -2970,27 +2972,27 @@
         </member>
         <member name="M:SocialService.Profile.Profile.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>
-            Método para mapear os dados do neo4j para o perfil
+                Método para mapear os dados do neo4j para o perfil
             </summary>
             <param name="result"></param>
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateFirstName(System.String,System.Boolean)">
             <summary>
-            Método para atualizar o primeiro nome do perfil.
+                Método para atualizar o primeiro nome do perfil.
             </summary>
             <param name="firstName"></param>
             <param name="isUpdate"></param>
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateLastName(System.String,System.Boolean)">
             <summary>
-            Método para atualizar o sobrenome do perfil.
+                Método para atualizar o sobrenome do perfil.
             </summary>
             <param name="lastName"></param>
             <param name="isUpdate"></param>
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateEmail(System.String,System.Boolean)">
             <summary>
-            Método para atualizar o email do perfil.
+                Método para atualizar o email do perfil.
             </summary>
             <param name="email"></param>
             <param name="isUpdate"></param>
@@ -3025,21 +3027,21 @@
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateState(System.String,System.Boolean)">
             <summary>
-            Método para atualizar o estado do perfil.
+                Método para atualizar o estado do perfil.
             </summary>
             <param name="state"></param>
             <param name="isUpdate"></param>
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateCity(System.String,System.Boolean)">
             <summary>
-            Método para atualizar a cidade do perfil.
+                Método para atualizar a cidade do perfil.
             </summary>
             <param name="city"></param>
             <param name="isUpdate"></param>
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateCountry(System.String,System.Boolean)">
             <summary>
-            Método para atualizar o país do perfil.
+                Método para atualizar o país do perfil.
             </summary>
             <param name="country"></param>
             <param name="isUpdate"></param>
@@ -3084,7 +3086,7 @@
         </member>
         <member name="M:SocialService.Profile.ProfileController.GetProfilePictures(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32},SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Profile.GetProfilePictures.ProfilePicture},SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery},System.Threading.CancellationToken)">
             <summary>
-            Rota para obter fotos de perfil.
+                Rota para obter fotos de perfil.
             </summary>
             <param name="profileId"></param>
             <param name="page"></param>
@@ -3095,13 +3097,13 @@
         </member>
         <member name="T:SocialService.Profile.ProfileDto">
             <summary>
-             Objeto de transferência de dados do perfil
+                Objeto de transferência de dados do perfil
             </summary>
             <param name="profile"></param>
         </member>
         <member name="M:SocialService.Profile.ProfileDto.#ctor(SocialService.Profile.Profile)">
             <summary>
-             Objeto de transferência de dados do perfil
+                Objeto de transferência de dados do perfil
             </summary>
             <param name="profile"></param>
         </member>
@@ -3127,17 +3129,17 @@
         </member>
         <member name="P:SocialService.Profile.ProfileDto.City">
             <summary>
-            Cidade do perfil
+                Cidade do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileDto.State">
             <summary>
-            Estado do perfil
+                Estado do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileDto.Country">
             <summary>
-            País do perfil
+                País do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileDto.ImageUrl">
@@ -3211,7 +3213,7 @@
         </member>
         <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.HandleAsync(SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand,System.Threading.CancellationToken)">
             <summary>
-            Método para lidar com o comando de upload de foto de perfil.
+                Método para lidar com o comando de upload de foto de perfil.
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -3253,89 +3255,89 @@
         </member>
         <member name="T:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository">
             <summary>
-            Interface para o repositório de grafo de recomendações.
+                Interface para o repositório de grafo de recomendações.
             </summary>
         </member>
         <member name="M:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository.GetFriendRecommendationsAsync(System.Guid)">
             <summary>
-            Método para obter recomendações de amigos.
+                Método para obter recomendações de amigos.
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository">
             <summary>
-            Repositório de recomendações de amigos.
+                Repositório de recomendações de amigos.
             </summary>
             <param name="graphContext"></param>
         </member>
         <member name="M:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository.#ctor(SocialService.Connections.Graph.GraphContext)">
             <summary>
-            Repositório de recomendações de amigos.
+                Repositório de recomendações de amigos.
             </summary>
             <param name="graphContext"></param>
         </member>
         <member name="M:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository.GetFriendRecommendationsAsync(System.Guid)">
             <summary>
-            Método para obter recomendações de amigos.
+                Método para obter recomendações de amigos.
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Recommendation.GetFriendRecommendations.FriendRecommendation">
             <summary>
-            Classe de recomendação de amigos
-            <param name="profile"></param>
-            <param name="mutualFriends"></param>
+                Classe de recomendação de amigos
+                <param name="profile"></param>
+                <param name="mutualFriends"></param>
             </summary>
         </member>
         <member name="M:SocialService.Recommendation.GetFriendRecommendations.FriendRecommendation.#ctor(SocialService.Profile.ProfileDto,System.Int32)">
             <summary>
-            Classe de recomendação de amigos
-            <param name="profile"></param>
-            <param name="mutualFriends"></param>
+                Classe de recomendação de amigos
+                <param name="profile"></param>
+                <param name="mutualFriends"></param>
             </summary>
         </member>
         <member name="P:SocialService.Recommendation.GetFriendRecommendations.FriendRecommendation.Profile">
             <summary>
-            Informações do perfil
+                Informações do perfil
             </summary>
         </member>
         <member name="P:SocialService.Recommendation.GetFriendRecommendations.FriendRecommendation.MutualFriends">
             <summary>
-            Quantidade de amigos em comum
+                Quantidade de amigos em comum
             </summary>
         </member>
         <member name="T:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQuery">
             <summary>
-            Query para obter recomendações de amigos
+                Query para obter recomendações de amigos
             </summary>
         </member>
         <member name="P:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQuery.Page">
             <summary>
-            Página
+                Página
             </summary>
         </member>
         <member name="P:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQuery.Rows">
             <summary>
-            Quantidade de registros
+                Quantidade de registros
             </summary>
         </member>
         <member name="T:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryHandler">
             <summary>
-            Handler para a query de recomendações de amigos.
+                Handler para a query de recomendações de amigos.
             </summary>
             <param name="repository"></param>
         </member>
         <member name="M:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryHandler.#ctor(SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository)">
             <summary>
-            Handler para a query de recomendações de amigos.
+                Handler para a query de recomendações de amigos.
             </summary>
             <param name="repository"></param>
         </member>
         <member name="M:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryHandler.HandleAsync(SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQuery,System.Threading.CancellationToken)">
             <summary>
-            Método para obter recomendações de amigos.
+                Método para obter recomendações de amigos.
             </summary>
             <param name="query"></param>
             <param name="cancellationToken"></param>

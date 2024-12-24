@@ -1,6 +1,4 @@
-﻿using Neo4j.Driver;
-
-namespace SocialService.Connections.Graph;
+﻿namespace SocialService.Connections.Graph;
 
 /// <summary>
 ///     Classe de contexto para conexão com o banco de dados de grafo

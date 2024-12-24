@@ -1,15 +1,14 @@
-﻿using FluentValidation;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Friends.Friendship.RemoveFriend;
 
 /// <summary>
-/// Validador para o comando de remover um amigo.
+///     Validador para o comando de remover um amigo.
 /// </summary>
 public class RemoveFriendCommandValidator : AbstractValidator<RemoveFriendCommand>
 {
     /// <summary>
-    /// Validações para o comando de remover um amigo.
+    ///     Validações para o comando de remover um amigo.
     /// </summary>
     /// <param name="repository"></param>
     public RemoveFriendCommandValidator(IProfileGraphRepository repository)

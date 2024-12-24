@@ -1,6 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Friends.Common.Repository;
+﻿using SocialService.Friends.Common.Repository;
 
 namespace SocialService.Friends.FriendRequest.SendFriendRequest;
 
@@ -8,7 +6,8 @@ namespace SocialService.Friends.FriendRequest.SendFriendRequest;
 ///     Handler para adicionar um amigo.
 /// </summary>
 /// <param name="graphRepository"></param>
-public class SendFriendRequestCommandHandler(IFriendshipGraphRepository graphRepository) : IHandler<bool, SendFriendRequestCommand>
+public class SendFriendRequestCommandHandler(IFriendshipGraphRepository graphRepository)
+    : IHandler<bool, SendFriendRequestCommand>
 {
     /// <summary>
     ///     Método para adicionar um amigo.

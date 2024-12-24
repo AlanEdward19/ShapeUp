@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Post.Comment.CommentOnPost;
+﻿using SocialService.Post.Comment.CommentOnPost;
 using SocialService.Post.Comment.DeleteCommentOnPost;
 using SocialService.Post.Comment.EditCommentOnPost;
 using SocialService.Post.Comment.GetPostComments;

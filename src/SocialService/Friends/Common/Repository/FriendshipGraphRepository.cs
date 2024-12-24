@@ -1,7 +1,4 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-
-namespace SocialService.Friends.Common.Repository;
+﻿namespace SocialService.Friends.Common.Repository;
 
 /// <summary>
 ///     Repositório de grafo sobre amizades.
@@ -99,7 +96,7 @@ DELETE r";
     public async Task RejectFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
     {
         var requestExists = await FriendRequestExistsAsync(senderProfileId, receiverProfileId);
-        
+
         if (!requestExists)
             throw new InvalidOperationException("The friend request does not exist or has already been rejected.");
 
@@ -119,7 +116,8 @@ DELETE r";
     /// </summary>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<FriendRequest.FriendRequest>> GetPendingRequestsForProfileAsync(Guid receiverProfileId)
+    public async Task<IEnumerable<FriendRequest.FriendRequest>> GetPendingRequestsForProfileAsync(
+        Guid receiverProfileId)
     {
         var query = $@"
     MATCH (sender:Profile)-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})

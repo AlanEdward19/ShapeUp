@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.GetPost;
 
@@ -17,6 +16,6 @@ public class GetPostQueryHandler(IPostGraphRepository repository) : IHandler<Pos
     /// <returns></returns>
     public async Task<PostDto> HandleAsync(GetPostQuery item, CancellationToken cancellationToken)
     {
-        return new(await repository.GetPostAsync(item.PostId));
+        return new PostDto(await repository.GetPostAsync(item.PostId));
     }
 }

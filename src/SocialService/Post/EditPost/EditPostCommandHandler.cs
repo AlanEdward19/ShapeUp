@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.EditPost;
 
@@ -19,12 +18,12 @@ public class EditPostCommandHandler(IPostGraphRepository repository)
     public async Task<PostDto> HandleAsync(EditPostCommand command, CancellationToken cancellationToken)
     {
         Post post = await repository.GetPostAsync(command.PostId);
-        
+
         post.UpdateContent(command.Content);
         post.UpdateVisibility(command.Visibility);
 
         await repository.UpdatePostAsync(post);
-        
-        return new(post);
+
+        return new PostDto(post);
     }
 }

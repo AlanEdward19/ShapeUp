@@ -27,19 +27,19 @@ public class CreateProfileCommand(
     ///     Sobrenome do perfil
     /// </summary>
     public string LastName { get; private set; } = "";
-    
+
     /// <summary>
-    /// Cidade do perfil
+    ///     Cidade do perfil
     /// </summary>
     public string City { get; private set; } = "";
-    
+
     /// <summary>
-    /// Estado do perfil
+    ///     Estado do perfil
     /// </summary>
     public string State { get; private set; } = "";
-    
+
     /// <summary>
-    /// País do perfil
+    ///     País do perfil
     /// </summary>
     public string Country { get; private set; } = "";
 
@@ -89,27 +89,27 @@ public class CreateProfileCommand(
     {
         Email = email;
     }
-    
+
     /// <summary>
-    /// Método para setar a cidade do perfil
+    ///     Método para setar a cidade do perfil
     /// </summary>
     /// <param name="city"></param>
     public void SetCity(string city)
     {
         City = city;
     }
-    
+
     /// <summary>
-    /// Método para setar o estado do perfil
+    ///     Método para setar o estado do perfil
     /// </summary>
     /// <param name="state"></param>
     public void SetState(string state)
     {
         State = state;
     }
-    
+
     /// <summary>
-    /// Método para setar o país do perfil
+    ///     Método para setar o país do perfil
     /// </summary>
     /// <param name="country"></param>
     public void SetCountry(string country)

@@ -1,6 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.React.ReactToPost;
 
@@ -19,7 +17,7 @@ public class ReactToPostCommandHandler(IPostGraphRepository repository) : IHandl
     public async Task<bool> HandleAsync(ReactToPostCommand command, CancellationToken cancellationToken)
     {
         Reaction reaction = new(ProfileContext.ProfileId, command);
-        
+
         await repository.ReactToPostAsync(reaction);
 
         return true;

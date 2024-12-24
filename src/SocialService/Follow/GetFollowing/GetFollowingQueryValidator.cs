@@ -1,15 +1,14 @@
-﻿using FluentValidation;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Follow.GetFollowing;
 
 /// <summary>
-/// Validador para a query de obter os seguidores de um usuário.
+///     Validador para a query de obter os seguidores de um usuário.
 /// </summary>
 public class GetFollowingQueryValidator : AbstractValidator<GetFollowingQuery>
 {
     /// <summary>
-    /// Validações para a query de obter os seguidores de um usuário.
+    ///     Validações para a query de obter os seguidores de um usuário.
     /// </summary>
     /// <param name="repository"></param>
     public GetFollowingQueryValidator(IProfileGraphRepository repository)
@@ -21,7 +20,7 @@ public class GetFollowingQueryValidator : AbstractValidator<GetFollowingQuery>
         RuleFor(x => x.Page)
             .GreaterThanOrEqualTo(1)
             .WithMessage("Page must be greater than or equal to 1.");
-        
+
         RuleFor(x => x.Rows)
             .GreaterThanOrEqualTo(1)
             .WithMessage("Rows must be greater than or equal to 1.");

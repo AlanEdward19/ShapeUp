@@ -1,15 +1,14 @@
-﻿using FluentValidation;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Follow.UnfollowUser;
 
 /// <summary>
-/// Validador para o comando de parar de seguir um usuário.
+///     Validador para o comando de parar de seguir um usuário.
 /// </summary>
 public class UnfollowUserCommandValidator : AbstractValidator<UnfollowUserCommand>
 {
     /// <summary>
-    /// Validações para o comando de parar de seguir um usuário.
+    ///     Validações para o comando de parar de seguir um usuário.
     /// </summary>
     /// <param name="repository"></param>
     public UnfollowUserCommandValidator(IProfileGraphRepository repository)

@@ -1,6 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Friends.Common.Repository;
+﻿using SocialService.Friends.Common.Repository;
 
 namespace SocialService.Friends.FriendRequest.RemoveFriendRequest;
 

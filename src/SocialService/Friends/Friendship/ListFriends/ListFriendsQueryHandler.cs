@@ -1,6 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
-using SocialService.Friends.Common.Repository;
+﻿using SocialService.Friends.Common.Repository;
 using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Friends.Friendship.ListFriends;
@@ -10,7 +8,9 @@ namespace SocialService.Friends.Friendship.ListFriends;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
-public class ListFriendsQueryHandler(IProfileGraphRepository profileGraphRepository, IFriendshipGraphRepository graphRepository)
+public class ListFriendsQueryHandler(
+    IProfileGraphRepository profileGraphRepository,
+    IFriendshipGraphRepository graphRepository)
     : IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery>
 {
     /// <summary>
@@ -33,9 +33,9 @@ public class ListFriendsQueryHandler(IProfileGraphRepository profileGraphReposit
             .Distinct()
             .Where(x => x != query.ProfileId)
             .ToList();
-        
+
         var profiles = await profileGraphRepository.GetProfilesAsync(pagedFriendsIds);
-        
+
         return profiles
             .Select(x => new ProfileBasicInformation(x.FirstName, x.LastName, x.Id))
             .ToList();

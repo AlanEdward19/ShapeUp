@@ -46,9 +46,9 @@ public static class ClaimsPrincipalUtils
     {
         return user.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname")!.Value;
     }
-    
+
     /// <summary>
-    /// Método para obter a cidade do usuário
+    ///     Método para obter a cidade do usuário
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -56,9 +56,9 @@ public static class ClaimsPrincipalUtils
     {
         return user.FindFirst("city")!.Value;
     }
-    
+
     /// <summary>
-    /// Método para obter o país do usuário
+    ///     Método para obter o país do usuário
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -66,9 +66,9 @@ public static class ClaimsPrincipalUtils
     {
         return user.FindFirst("country")!.Value;
     }
-    
+
     /// <summary>
-    /// Método para obter o estado do usuário
+    ///     Método para obter o estado do usuário
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>

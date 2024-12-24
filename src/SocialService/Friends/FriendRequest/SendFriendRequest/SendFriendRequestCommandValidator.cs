@@ -1,15 +1,14 @@
-﻿using FluentValidation;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Friends.FriendRequest.SendFriendRequest;
 
 /// <summary>
-/// Validador para o comando de enviar solicitação de amizade.
+///     Validador para o comando de enviar solicitação de amizade.
 /// </summary>
 public class SendFriendRequestCommandValidator : AbstractValidator<SendFriendRequestCommand>
 {
     /// <summary>
-    /// Validações para o comando de enviar solicitação de amizade.
+    ///     Validações para o comando de enviar solicitação de amizade.
     /// </summary>
     /// <param name="repository"></param>
     public SendFriendRequestCommandValidator(IProfileGraphRepository repository)

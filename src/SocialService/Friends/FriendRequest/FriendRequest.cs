@@ -1,6 +1,4 @@
-﻿using SocialService.Common.Entities;
-
-namespace SocialService.Friends.FriendRequest;
+﻿namespace SocialService.Friends.FriendRequest;
 
 /// <summary>
 ///     Classe que representa uma solicitação de amizade

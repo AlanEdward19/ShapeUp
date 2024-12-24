@@ -1,12 +1,4 @@
-﻿using Asp.Versioning;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Common.Utils;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;
@@ -42,7 +34,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         command.SetCity(User.GetCity());
         command.SetState(User.GetState());
         command.SetCountry(User.GetCountry());
-        
+
         CreateProfileCommandValidator validator = new();
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
@@ -62,9 +54,9 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         ViewProfileQuery query = new(profileId);
-        
+
         ViewProfileQueryValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
 
@@ -80,7 +72,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         [FromBody] EditProfileCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         EditProfileCommandValidator validator = new();
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
@@ -97,9 +89,9 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         DeleteProfileCommand command = new(profileId);
-        
+
         DeleteProfileCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
@@ -122,9 +114,9 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
-    
+
     /// <summary>
-    /// Rota para obter fotos de perfil.
+    ///     Rota para obter fotos de perfil.
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="page"></param>
@@ -139,9 +131,9 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         GetProfilePicturesQuery query = new(profileId, page, rows);
-        
+
         GetProfilePicturesQueryValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
 

@@ -1,13 +1,4 @@
-﻿using Asp.Versioning;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
-using SocialService.Common.Utils;
-using SocialService.Follow.FollowUser;
+﻿using SocialService.Follow.FollowUser;
 using SocialService.Follow.GetFollowers;
 using SocialService.Follow.GetFollowing;
 using SocialService.Follow.UnfollowUser;
@@ -86,7 +77,7 @@ public class FollowController(IProfileGraphRepository repository) : ControllerBa
         query.SetProfileId(profileId);
         query.SetPage(page);
         query.SetRows(rows);
-        
+
         GetFollowersQueryValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
 
@@ -113,7 +104,7 @@ public class FollowController(IProfileGraphRepository repository) : ControllerBa
         query.SetProfileId(profileId);
         query.SetPage(page);
         query.SetRows(rows);
-        
+
         GetFollowingQueryValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
 

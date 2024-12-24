@@ -1,6 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Follow.Common.Repository;
+﻿using SocialService.Follow.Common.Repository;
 
 namespace SocialService.Follow.UnfollowUser;
 

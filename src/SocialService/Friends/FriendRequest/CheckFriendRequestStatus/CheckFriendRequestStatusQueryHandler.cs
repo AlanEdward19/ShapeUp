@@ -1,6 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Friends.Common.Enums;
+﻿using SocialService.Friends.Common.Enums;
 using SocialService.Friends.Common.Repository;
 using SocialService.Profile.Common.Repository;
 

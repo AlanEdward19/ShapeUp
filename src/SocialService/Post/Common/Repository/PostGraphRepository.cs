@@ -1,11 +1,4 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-using SocialService.Post.Comment.CommentOnPost;
-using SocialService.Post.Comment.EditCommentOnPost;
-using SocialService.Post.Common.Enums;
-using SocialService.Post.CreatePost;
-using SocialService.Post.EditPost;
-using SocialService.Post.React;
+﻿using SocialService.Post.React;
 
 namespace SocialService.Post.Common.Repository;
 
@@ -147,7 +140,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que retorna um comentário de um post
+    ///     Método que retorna um comentário de um post
     /// </summary>
     /// <param name="commentId"></param>
     /// <returns></returns>
@@ -229,7 +222,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que verifica se um comentário existe
+    ///     Método que verifica se um comentário existe
     /// </summary>
     /// <param name="commentId"></param>
     /// <returns></returns>

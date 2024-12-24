@@ -1,6 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.EditProfile;
 
@@ -8,7 +6,8 @@ namespace SocialService.Profile.EditProfile;
 ///     Handler para o comando de edição de perfil
 /// </summary>
 /// <param name="graphRepository"></param>
-public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) : IHandler<ProfileDto, EditProfileCommand>
+public class EditProfileCommandHandler(IProfileGraphRepository graphRepository)
+    : IHandler<ProfileDto, EditProfileCommand>
 {
     /// <summary>
     ///     Método para lidar com o comando de edição de perfil.
@@ -25,6 +24,6 @@ public class EditProfileCommandHandler(IProfileGraphRepository graphRepository) 
 
         await graphRepository.UpdateProfileAsync(profile);
 
-        return new(profile);
+        return new ProfileDto(profile);
     }
 }

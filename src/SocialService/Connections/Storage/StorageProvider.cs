@@ -14,7 +14,7 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     private readonly BlobServiceClient _blobServiceClient = new(connectionString);
 
     /// <summary>
-    /// Método para obter fotos de perfil
+    ///     Método para obter fotos de perfil
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="page"></param>
@@ -32,24 +32,19 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
 
         var prefix = "profilepictures/";
         await foreach (var blobItem in containerClient.GetBlobsByHierarchyAsync(prefix: prefix, delimiter: "/"))
-        {
             if (blobItem.IsPrefix)
             {
                 var folderName = blobItem.Prefix.TrimEnd('/');
                 var datePart = folderName.Substring(prefix.Length);
-                if (DateTime.TryParseExact(datePart, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out var createdAt))
-                {
+                if (DateTime.TryParseExact(datePart, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None,
+                        out var createdAt))
                     await foreach (var fileItem in containerClient.GetBlobsByHierarchyAsync(prefix: folderName + "/"))
-                    {
                         if (fileItem.IsBlob)
                         {
                             var imagePath = fileItem.Blob.Name;
                             profilePictures.Add(new ProfilePicture(imagePath, createdAt));
                         }
-                    }
-                }
             }
-        }
 
         return profilePictures.Skip((page - 1) * rows).Take(rows);
     }
@@ -185,6 +180,32 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
     }
 
     /// <summary>
+    ///     Método para sanitizar um nome
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="allowSlashes"></param>
+    /// <returns></returns>
+    public string SanitizeName(string name, bool allowSlashes = false)
+    {
+        if (allowSlashes)
+            name = Regex.Replace(name, "[^a-zA-Z0-9-/.]", "_");
+        else
+            name = Regex.Replace(name, "[^a-zA-Z0-9-.]", "_");
+
+        // Ensure that the blobName starts and ends with an alphanumeric character
+        if (!char.IsLetterOrDigit(name[0]))
+            name = "_" + name;
+
+        if (!char.IsLetterOrDigit(name[name.Length - 1]))
+            name = name + "_";
+
+        name = name.Replace("-", "");
+        name = name.Replace("_", "");
+
+        return name;
+    }
+
+    /// <summary>
     ///     Método para renomear um blob
     /// </summary>
     /// <param name="oldBlobName"></param>
@@ -224,31 +245,5 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
 
         // Deletar o blob antigo
         await oldBlobClient.DeleteIfExistsAsync();
-    }
-
-    /// <summary>
-    /// Método para sanitizar um nome
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="allowSlashes"></param>
-    /// <returns></returns>
-    public string SanitizeName(string name, bool allowSlashes = false)
-    {
-        if (allowSlashes)
-            name = Regex.Replace(name, "[^a-zA-Z0-9-/.]", "_");
-        else
-            name = Regex.Replace(name, "[^a-zA-Z0-9-.]", "_");
-
-        // Ensure that the blobName starts and ends with an alphanumeric character
-        if (!char.IsLetterOrDigit(name[0]))
-            name = "_" + name;
-
-        if (!char.IsLetterOrDigit(name[name.Length - 1]))
-            name = name + "_";
-
-        name = name.Replace("-", "");
-        name = name.Replace("_", "");
-
-        return name;
     }
 }

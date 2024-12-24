@@ -1,15 +1,14 @@
-﻿using FluentValidation;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Follow.FollowUser;
 
 /// <summary>
-/// Validador para o comando de seguir um usuário.
+///     Validador para o comando de seguir um usuário.
 /// </summary>
 public class FollowUserCommandValidator : AbstractValidator<FollowUserCommand>
 {
     /// <summary>
-    /// Validações para o comando de seguir um usuário.
+    ///     Validações para o comando de seguir um usuário.
     /// </summary>
     /// <param name="repository"></param>
     public FollowUserCommandValidator(IProfileGraphRepository repository)

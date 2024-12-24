@@ -1,7 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Connections.Storage;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.UploadProfilePicture;
 
@@ -14,7 +11,7 @@ public class UploadProfilePictureCommandHandler(IProfileGraphRepository reposito
     : IHandler<bool, UploadProfilePictureCommand>
 {
     /// <summary>
-    /// Método para lidar com o comando de upload de foto de perfil.
+    ///     Método para lidar com o comando de upload de foto de perfil.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>

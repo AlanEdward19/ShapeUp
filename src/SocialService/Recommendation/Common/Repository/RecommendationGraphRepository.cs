@@ -1,18 +1,16 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-using SocialService.Profile;
+﻿using SocialService.Profile;
 using SocialService.Recommendation.GetFriendRecommendations;
 
 namespace SocialService.Recommendation.Common.Repository;
 
 /// <summary>
-/// Repositório de recomendações de amigos.
+///     Repositório de recomendações de amigos.
 /// </summary>
 /// <param name="graphContext"></param>
 public class RecommendationGraphRepository(GraphContext graphContext) : IRecommendationGraphRepository
 {
     /// <summary>
-    /// Método para obter recomendações de amigos.
+    ///     Método para obter recomendações de amigos.
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>

@@ -1,15 +1,14 @@
-﻿using FluentValidation;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.DeletePost;
 
 /// <summary>
-/// Validador para o comando de deletar um post.
+///     Validador para o comando de deletar um post.
 /// </summary>
 public class DeletePostCommandValidator : AbstractValidator<DeletePostCommand>
 {
     /// <summary>
-    /// Validações para o comando de deletar um post.
+    ///     Validações para o comando de deletar um post.
     /// </summary>
     /// <param name="repository"></param>
     public DeletePostCommandValidator(IPostGraphRepository repository)

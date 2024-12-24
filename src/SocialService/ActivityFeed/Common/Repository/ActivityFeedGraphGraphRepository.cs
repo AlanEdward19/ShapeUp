@@ -1,17 +1,15 @@
-﻿using Neo4j.Driver;
-using SocialService.ActivityFeed.GetActivityFeed;
-using SocialService.Connections.Graph;
+﻿using SocialService.ActivityFeed.GetActivityFeed;
 
 namespace SocialService.ActivityFeed.Common.Repository;
 
 /// <summary>
-/// Repositório de feed de atividades.
+///     Repositório de feed de atividades.
 /// </summary>
 /// <param name="graphContext"></param>
 public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActivityFeedGraphRepository
 {
     /// <summary>
-    /// Método para construir o feed de atividades.
+    ///     Método para construir o feed de atividades.
     /// </summary>
     /// <param name="query"></param>
     /// <param name="profileId"></param>

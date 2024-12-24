@@ -1,13 +1,4 @@
-﻿using Asp.Versioning;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
-using SocialService.Common.Utils;
-using SocialService.Friends.Common.Repository;
+﻿using SocialService.Friends.Common.Repository;
 using SocialService.Friends.FriendRequest.CheckFriendRequestStatus;
 using SocialService.Friends.FriendRequest.ManageFriendRequests;
 using SocialService.Friends.FriendRequest.RemoveFriendRequest;
@@ -25,7 +16,8 @@ namespace SocialService.Friends;
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("[Controller]/v{version:apiVersion}")]
-public class FriendController(IProfileGraphRepository profileGraphRepository, IFriendshipGraphRepository repository) : ControllerBase
+public class FriendController(IProfileGraphRepository profileGraphRepository, IFriendshipGraphRepository repository)
+    : ControllerBase
 {
     /// <summary>
     ///     Rota para enviar uma solicitação de amigo
@@ -36,7 +28,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         [FromBody] SendFriendRequestCommand requestCommand, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         SendFriendRequestCommandValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(requestCommand, cancellationToken);
 
@@ -79,7 +71,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         query.SetProfileId(profileId);
         query.SetPage(page);
         query.SetRows(rows);
-        
+
         ListFriendsQueryValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
 
@@ -96,7 +88,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         [FromBody] ManageFriendRequestsCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         ManageFriendRequestsCommandValidator validator = new(profileGraphRepository, repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
@@ -113,9 +105,9 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         RemoveFriendCommand command = new(profileId);
-        
+
         RemoveFriendCommandValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
@@ -132,12 +124,12 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+
         RemoveFriendRequestCommand command = new(profileId);
-        
+
         RemoveFriendRequestCommandValidator validator = new(profileGraphRepository, repository);
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
-        
+
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 

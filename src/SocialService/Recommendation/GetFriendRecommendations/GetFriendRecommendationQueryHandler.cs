@@ -1,18 +1,16 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Recommendation.Common.Repository;
+﻿using SocialService.Recommendation.Common.Repository;
 
 namespace SocialService.Recommendation.GetFriendRecommendations;
 
 /// <summary>
-/// Handler para a query de recomendações de amigos.
+///     Handler para a query de recomendações de amigos.
 /// </summary>
 /// <param name="repository"></param>
 public class GetFriendRecommendationQueryHandler(IRecommendationGraphRepository repository)
     : IHandler<IEnumerable<FriendRecommendation>, GetFriendRecommendationQuery>
 {
     /// <summary>
-    /// Método para obter recomendações de amigos.
+    ///     Método para obter recomendações de amigos.
     /// </summary>
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>

@@ -1,15 +1,14 @@
-﻿using FluentValidation;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.Comment.EditCommentOnPost;
 
 /// <summary>
-/// Validador para o comando de editar um comentário em um post.
+///     Validador para o comando de editar um comentário em um post.
 /// </summary>
 public class EditCommentOnPostCommandValidator : AbstractValidator<EditCommentOnPostCommand>
 {
     /// <summary>
-    /// Validações para o comando de editar um comentário em um post.
+    ///     Validações para o comando de editar um comentário em um post.
     /// </summary>
     /// <param name="repository"></param>
     public EditCommentOnPostCommandValidator(IPostGraphRepository repository)
