@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,12 +7,14 @@ using SocialService.Common;
 using SocialService.Common.Interfaces;
 using SocialService.Common.Models;
 using SocialService.Common.Utils;
+using SocialService.Friends.Common.Repository;
 using SocialService.Friends.FriendRequest.CheckFriendRequestStatus;
 using SocialService.Friends.FriendRequest.ManageFriendRequests;
 using SocialService.Friends.FriendRequest.RemoveFriendRequest;
 using SocialService.Friends.FriendRequest.SendFriendRequest;
 using SocialService.Friends.Friendship.ListFriends;
 using SocialService.Friends.Friendship.RemoveFriend;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Friends;
 
@@ -22,7 +25,7 @@ namespace SocialService.Friends;
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("[Controller]/v{version:apiVersion}")]
-public class FriendController : ControllerBase
+public class FriendController(IProfileGraphRepository profileGraphRepository, IFriendshipGraphRepository repository) : ControllerBase
 {
     /// <summary>
     ///     Rota para enviar uma solicitação de amigo
@@ -33,6 +36,9 @@ public class FriendController : ControllerBase
         [FromBody] SendFriendRequestCommand requestCommand, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        SendFriendRequestCommandValidator validator = new(profileGraphRepository);
+        await validator.ValidateAndThrowAsync(requestCommand, cancellationToken);
 
         return Ok(await handler.HandleAsync(requestCommand, cancellationToken));
     }
@@ -73,6 +79,9 @@ public class FriendController : ControllerBase
         query.SetProfileId(profileId);
         query.SetPage(page);
         query.SetRows(rows);
+        
+        ListFriendsQueryValidator validator = new(profileGraphRepository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
@@ -87,6 +96,9 @@ public class FriendController : ControllerBase
         [FromBody] ManageFriendRequestsCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        ManageFriendRequestsCommandValidator validator = new(profileGraphRepository, repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -101,8 +113,13 @@ public class FriendController : ControllerBase
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        RemoveFriendCommand command = new(profileId);
+        
+        RemoveFriendCommandValidator validator = new(profileGraphRepository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(new RemoveFriendCommand(profileId), cancellationToken));
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
@@ -115,7 +132,15 @@ public class FriendController : ControllerBase
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        RemoveFriendRequestCommand command = new(profileId);
+        
+        RemoveFriendRequestCommandValidator validator = new(profileGraphRepository, repository);
+        var validationResult = await validator.ValidateAsync(command, cancellationToken);
+        
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
 
-        return Ok(await handler.HandleAsync(new RemoveFriendRequestCommand(profileId), cancellationToken));
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 }

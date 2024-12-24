@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,10 @@ public class RecommendationController : ControllerBase
     {
         GetFriendRecommendationQuery query = new();
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-
+        
+        GetFriendRecommendationQueryValidator validator = new();
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
+        
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 }

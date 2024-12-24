@@ -1,10 +1,12 @@
 ﻿using Asp.Versioning;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialService.Common;
 using SocialService.Common.Interfaces;
 using SocialService.Common.Utils;
+using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;
@@ -15,13 +17,13 @@ using SocialService.Profile.ViewProfile;
 namespace SocialService.Profile;
 
 /// <summary>
-///     Controller responsavel por gerenciar o perfil do usuario
+///     Controller responsavel por gerenciar funções relacionadas ao perfil do usuario
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("[Controller]/v{version:apiVersion}")]
-public class ProfileController : ControllerBase
+public class ProfileController(IProfileGraphRepository repository) : ControllerBase
 {
     /// <summary>
     ///     Rota para criar um perfil
@@ -40,6 +42,9 @@ public class ProfileController : ControllerBase
         command.SetCity(User.GetCity());
         command.SetState(User.GetState());
         command.SetCountry(User.GetCountry());
+        
+        CreateProfileCommandValidator validator = new();
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -57,8 +62,13 @@ public class ProfileController : ControllerBase
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        ViewProfileQuery query = new(profileId);
+        
+        ViewProfileQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
-        return Ok(await handler.HandleAsync(new ViewProfileQuery(profileId), cancellationToken));
+        return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 
     /// <summary>
@@ -70,6 +80,9 @@ public class ProfileController : ControllerBase
         [FromBody] EditProfileCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        EditProfileCommandValidator validator = new();
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -84,8 +97,13 @@ public class ProfileController : ControllerBase
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        DeleteProfileCommand command = new(profileId);
+        
+        DeleteProfileCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(new DeleteProfileCommand(profileId), cancellationToken));
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
@@ -121,7 +139,12 @@ public class ProfileController : ControllerBase
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
+        GetProfilePicturesQuery query = new(profileId, page, rows);
+        
+        GetProfilePicturesQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
-        return Ok(await handler.HandleAsync(new GetProfilePicturesQuery(profileId, page, rows), cancellationToken));
+        return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 }
