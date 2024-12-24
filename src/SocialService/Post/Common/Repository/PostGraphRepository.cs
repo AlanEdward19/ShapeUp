@@ -1,11 +1,4 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-using SocialService.Post.Comment.CommentOnPost;
-using SocialService.Post.Comment.EditCommentOnPost;
-using SocialService.Post.Common.Enums;
-using SocialService.Post.CreatePost;
-using SocialService.Post.EditPost;
-using SocialService.Post.React;
+﻿using SocialService.Post.React;
 
 namespace SocialService.Post.Common.Repository;
 
@@ -45,13 +38,12 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     ///     Método que verifica se um post existe
     /// </summary>
     /// <param name="postId"></param>
-    /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<bool> PostExistsAsync(Guid postId, Guid profileId)
+    public async Task<bool> PostExistsAsync(Guid postId)
     {
         var query = $@"
-        MATCH (p:Profile {{id: '{profileId}'}})-[:PUBLISHED_BY]->(post:Post {{id: '{postId}'}})
-        RETURN post";
+    MATCH (post:Post {{id: '{postId}'}})
+    RETURN post";
 
         var result = await graphContext.ExecuteQueryAsync(query);
         return (result ?? Array.Empty<IRecord>()).Any();
@@ -148,7 +140,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
-    /// Método que retorna um comentário de um post
+    ///     Método que retorna um comentário de um post
     /// </summary>
     /// <param name="commentId"></param>
     /// <returns></returns>
@@ -227,6 +219,22 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     DELETE comment, r";
 
         await graphContext.ExecuteQueryAsync(query);
+    }
+
+    /// <summary>
+    ///     Método que verifica se um comentário existe
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<bool> CommentExistsAsync(Guid commentId)
+    {
+        var query = $@"
+    MATCH (comment:Comment {{id: '{commentId}'}})
+    RETURN comment";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+        return (result ?? Array.Empty<IRecord>()).Any();
     }
 
     #endregion

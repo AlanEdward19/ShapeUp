@@ -3,12 +3,12 @@
 namespace SocialService.Recommendation.Common.Repository;
 
 /// <summary>
-/// Interface para o repositório de grafo de recomendações.
+///     Interface para o repositório de grafo de recomendações.
 /// </summary>
 public interface IRecommendationGraphRepository
 {
     /// <summary>
-    /// Método para obter recomendações de amigos.
+    ///     Método para obter recomendações de amigos.
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>

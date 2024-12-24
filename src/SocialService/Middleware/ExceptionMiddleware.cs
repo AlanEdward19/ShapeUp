@@ -37,23 +37,23 @@ public class ExceptionMiddleware(
             {
                 case KeyNotFoundException e:
                     // not found error
-                    response.StatusCode = (int) HttpStatusCode.NotFound;
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
                     logger.LogWarning($"[Resource not found request] {error.Message}");
                     break;
 
                 case NotFoundException e:
-                    response.StatusCode = (int) HttpStatusCode.NotFound;
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
                     logger.LogError($"[Not Found request]: {e.Message} {e.StackTrace}");
                     break;
 
                 case UnauthorizedAccessException e:
-                    response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                    response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     logger.LogWarning($"[Unauthorized request] {error.Message}");
                     break;
 
                 default:
                     // unhandled error
-                    response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     logger.LogError($"[Internal error request] {error.Message}");
                     break;
             }

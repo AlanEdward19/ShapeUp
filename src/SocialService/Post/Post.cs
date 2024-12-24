@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Entities;
-using SocialService.Post.Common.Enums;
+﻿using SocialService.Post.Common.Enums;
 using SocialService.Post.CreatePost;
 
 namespace SocialService.Post;
@@ -10,12 +9,14 @@ namespace SocialService.Post;
 public class Post : GraphEntity
 {
     /// <summary>
-    /// Construtor padrão
+    ///     Construtor padrão
     /// </summary>
-    public Post() { }
-    
+    public Post()
+    {
+    }
+
     /// <summary>
-    /// Construtor para criar um novo post.
+    ///     Construtor para criar um novo post.
     /// </summary>
     /// <param name="command"></param>
     public Post(CreatePostCommand command)
@@ -44,7 +45,7 @@ public class Post : GraphEntity
     public DateTime UpdatedAt { get; private set; }
 
     /// <summary>
-    /// Ids das imagens do post
+    ///     Ids das imagens do post
     /// </summary>
     public IEnumerable<Guid> Images { get; private set; }
 
@@ -59,7 +60,7 @@ public class Post : GraphEntity
     /// <param name="result"></param>
     public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
-        Visibility = (EPostVisibility) Enum.Parse(typeof(EPostVisibility), result["visibility"].ToString()!);
+        Visibility = (EPostVisibility)Enum.Parse(typeof(EPostVisibility), result["visibility"].ToString()!);
         CreatedAt = DateTime.Parse(result["createdAt"].ToString()!);
         UpdatedAt = DateTime.Parse(result["updatedAt"].ToString()!);
         Content = result["content"].ToString()!;
@@ -67,7 +68,7 @@ public class Post : GraphEntity
         if (result.ContainsKey("images"))
             Images = result["images"] == null
                 ? new List<Guid>()
-                : ((List<object>) result["images"]).Select(id => Guid.Parse(id.ToString()!)).ToList();
+                : ((List<object>)result["images"]).Select(id => Guid.Parse(id.ToString()!)).ToList();
 
         else
             Images = new List<Guid>();
@@ -76,27 +77,27 @@ public class Post : GraphEntity
     }
 
     /// <summary>
-    /// Método para atualizar a visibilidade do post.
+    ///     Método para atualizar a visibilidade do post.
     /// </summary>
     /// <param name="visibility"></param>
     /// <param name="isUpdate"></param>
     public void UpdateVisibility(EPostVisibility? visibility, bool isUpdate = true)
     {
-        if(visibility == null)
+        if (visibility == null)
             return;
-        
+
         if (!Enum.IsDefined(typeof(EPostVisibility), visibility))
             throw new ArgumentException("Valor de visibilidade inválido.");
-        
+
         if (Visibility != visibility)
             Visibility = visibility.Value;
-        
+
         if (isUpdate)
             UpdatedAt = DateTime.UtcNow;
     }
 
     /// <summary>
-    /// Método para atualizar o conteúdo do post.
+    ///     Método para atualizar o conteúdo do post.
     /// </summary>
     /// <param name="content"></param>
     /// <param name="isUpdate"></param>
@@ -104,10 +105,10 @@ public class Post : GraphEntity
     {
         if (string.IsNullOrWhiteSpace(content))
             return;
-        
+
         if (Content != content)
             Content = content;
-        
+
         if (isUpdate)
             UpdatedAt = DateTime.UtcNow;
     }

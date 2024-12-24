@@ -1,14 +1,8 @@
-﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Common.Utils;
-using SocialService.Post.Comment.CommentOnPost;
+﻿using SocialService.Post.Comment.CommentOnPost;
 using SocialService.Post.Comment.DeleteCommentOnPost;
 using SocialService.Post.Comment.EditCommentOnPost;
 using SocialService.Post.Comment.GetPostComments;
+using SocialService.Post.Common.Repository;
 using SocialService.Post.CreatePost;
 using SocialService.Post.DeletePost;
 using SocialService.Post.EditPost;
@@ -21,11 +15,15 @@ using SocialService.Post.UploadPostImages;
 
 namespace SocialService.Post;
 
+/// <summary>
+///     Controller responsavel por gerenciar funções relacionadas a posts, comentários e reações.
+/// </summary>
+/// <param name="repository"></param>
 [ApiVersion("1.0")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("[Controller]/v{version:apiVersion}")]
-public class PostController : ControllerBase
+public class PostController(IPostGraphRepository repository) : ControllerBase
 {
     #region Post
 
@@ -43,6 +41,9 @@ public class PostController : ControllerBase
         GetPostQuery query = new();
         query.SetPostId(id);
 
+        GetPostQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
+
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 
@@ -51,14 +52,16 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="handler"></param>
     /// <param name="command"></param>
-    /// <param name="files"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost("createPost")]
     public async Task<IActionResult> CreatePost([FromServices] IHandler<PostDto, CreatePostCommand> handler,
-        [FromBody] CreatePostCommand command, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)
+        [FromBody] CreatePostCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+
+        CreatePostCommandValidator validator = new();
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -78,9 +81,11 @@ public class PostController : ControllerBase
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
         var command = new UploadPostImageCommand();
-
         command.SetPostId(id);
         await command.SetImages(files, cancellationToken);
+
+        UploadPostImageCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -101,6 +106,9 @@ public class PostController : ControllerBase
         DeletePostCommand command = new();
         command.SetPostId(id);
 
+        DeletePostCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
@@ -118,6 +126,9 @@ public class PostController : ControllerBase
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
         command.SetPostId(id);
+
+        EditPostCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -141,6 +152,9 @@ public class PostController : ControllerBase
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
         command.SetPostId(id);
 
+        CommentOnPostCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
@@ -159,6 +173,9 @@ public class PostController : ControllerBase
         GetPostCommentsQuery query = new();
         query.SetPostId(id);
 
+        GetPostCommentsQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
+
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 
@@ -175,8 +192,10 @@ public class PostController : ControllerBase
         Guid id, [FromBody] EditCommentOnPostCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-
         command.SetCommentId(id);
+
+        EditCommentOnPostCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -198,6 +217,9 @@ public class PostController : ControllerBase
         DeleteCommentOnPostCommand command = new();
         command.SetCommentId(id);
 
+        DeleteCommentOnPostCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
@@ -218,8 +240,10 @@ public class PostController : ControllerBase
         Guid id, [FromBody] ReactToPostCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-
         command.SetPostId(id);
+
+        ReactToPostCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
@@ -238,6 +262,9 @@ public class PostController : ControllerBase
     {
         GetReactionsOnPostQuery query = new();
         query.SetPostId(id);
+
+        GetReactionsOnPostQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
@@ -258,6 +285,9 @@ public class PostController : ControllerBase
 
         DeleteReactionFromPostCommand command = new();
         command.SetPostId(id);
+
+        DeleteReactionFromPostCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }

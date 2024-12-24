@@ -18,25 +18,32 @@ public interface IProfileGraphRepository
     /// <param name="id"></param>
     /// <returns></returns>
     Task DeleteProfileAsync(Guid id);
-    
+
     /// <summary>
-    /// Método para obter um perfil do grafo.
+    ///     Método para obter um perfil do grafo.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     Task<Profile> GetProfileAsync(Guid id);
-    
+
     /// <summary>
-    /// Método para atualizar um perfil no grafo.
+    ///     Método para atualizar um perfil no grafo.
     /// </summary>
     /// <param name="profile"></param>
     /// <returns></returns>
     Task UpdateProfileAsync(Profile profile);
-    
+
     /// <summary>
-    /// Método para obter perfis do grafo.
+    ///     Método para obter perfis do grafo.
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
     Task<IEnumerable<Profile>> GetProfilesAsync(IEnumerable<Guid> ids);
+
+    /// <summary>
+    ///     Método para verificar se um perfil existe.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<bool> ProfileExistsAsync(Guid id);
 }

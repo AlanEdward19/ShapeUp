@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;

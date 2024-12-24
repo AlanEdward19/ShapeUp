@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Entities;
-using SocialService.Post.Comment.CommentOnPost;
+﻿using SocialService.Post.Comment.CommentOnPost;
 
 namespace SocialService.Post.Comment;
 
@@ -9,12 +8,14 @@ namespace SocialService.Post.Comment;
 public class Comment : GraphEntity
 {
     /// <summary>
-    /// Construtor padrão
+    ///     Construtor padrão
     /// </summary>
-    public Comment() { }
-    
+    public Comment()
+    {
+    }
+
     /// <summary>
-    /// Construtor para criar um novo comentário.
+    ///     Construtor para criar um novo comentário.
     /// </summary>
     /// <param name="command"></param>
     /// <param name="profileId"></param>
@@ -24,7 +25,7 @@ public class Comment : GraphEntity
         ProfileId = profileId;
         PostId = command.PostId;
         UpdateContent(command.Content);
-        
+
         CreatedAt = DateTime.UtcNow;
     }
 
@@ -32,9 +33,9 @@ public class Comment : GraphEntity
     ///     Id do perfil que fez o comentário
     /// </summary>
     public Guid ProfileId { get; private set; }
-    
+
     /// <summary>
-    /// Id do post
+    ///     Id do post
     /// </summary>
     public Guid PostId { get; private set; }
 
@@ -62,14 +63,14 @@ public class Comment : GraphEntity
     }
 
     /// <summary>
-    /// Método para atualizar o conteúdo do comentário.
+    ///     Método para atualizar o conteúdo do comentário.
     /// </summary>
     /// <param name="content"></param>
     public void UpdateContent(string content)
     {
         if (string.IsNullOrWhiteSpace(content))
             throw new ArgumentException("O conteúdo não pode ser vazio.");
-        
+
         if (Content != content)
             Content = content;
     }

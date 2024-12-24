@@ -3,12 +3,12 @@
 namespace SocialService.ActivityFeed.Common.Repository;
 
 /// <summary>
-/// Interface para o repositório de feed de atividades.
+///     Interface para o repositório de feed de atividades.
 /// </summary>
 public interface IActivityFeedGraphRepository
 {
     /// <summary>
-    /// Método para construir o feed de atividades.
+    ///     Método para construir o feed de atividades.
     /// </summary>
     /// <param name="query"></param>
     /// <param name="profileId"></param>

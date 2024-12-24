@@ -1,6 +1,5 @@
 ﻿using SocialService.ActivityFeed.Common.Repository;
 using SocialService.ActivityFeed.GetActivityFeed;
-using SocialService.Common.Interfaces;
 
 namespace SocialService.ActivityFeed;
 

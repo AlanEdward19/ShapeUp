@@ -1,7 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Connections.Storage;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.CreatePost;
 
@@ -28,6 +25,6 @@ public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageP
         await storageProvider.CreateFolderAsync(blobName, containerName);
         await repository.CreatePostAsync(ProfileContext.ProfileId, post);
 
-        return new(post);
+        return new PostDto(post);
     }
 }

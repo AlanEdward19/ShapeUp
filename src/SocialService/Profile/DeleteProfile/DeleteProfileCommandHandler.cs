@@ -1,13 +1,10 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Connections.Storage;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.DeleteProfile;
 
 /// <summary>
 ///     Handler para o comando de deletar um perfil
 /// </summary>
-/// <param name="context"></param>
 /// <param name="storageProvider"></param>
 /// <param name="graphRepository"></param>
 public class DeleteProfileCommandHandler(

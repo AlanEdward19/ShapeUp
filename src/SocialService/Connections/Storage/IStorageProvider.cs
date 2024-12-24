@@ -8,7 +8,7 @@ namespace SocialService.Connections.Storage;
 public interface IStorageProvider
 {
     /// <summary>
-    /// Método para obter fotos de perfil
+    ///     Método para obter fotos de perfil
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="page"></param>
@@ -65,7 +65,7 @@ public interface IStorageProvider
     Task DeleteFolderAsync(string folderName, string containerName);
 
     /// <summary>
-    /// Método para sanitizar um nome
+    ///     Método para sanitizar um nome
     /// </summary>
     /// <param name="name"></param>
     /// <param name="allowSlashes"></param>

@@ -1,6 +1,4 @@
-﻿using SocialService.Common.Entities;
-
-namespace SocialService.Friends.Friendship;
+﻿namespace SocialService.Friends.Friendship;
 
 /// <summary>
 ///     Classe que representa uma amizade entre dois perfis

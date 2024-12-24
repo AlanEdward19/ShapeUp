@@ -1,7 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Connections.Storage;
-using SocialService.Exceptions;
+﻿using SocialService.Exceptions;
 using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.DeletePost;
@@ -21,7 +18,7 @@ public class DeletePostCommandHandler(IPostGraphRepository repository, IStorageP
     /// <returns></returns>
     public async Task<bool> HandleAsync(DeletePostCommand command, CancellationToken cancellationToken)
     {
-        if (!await repository.PostExistsAsync(command.PostId, ProfileContext.ProfileId))
+        if (!await repository.PostExistsAsync(command.PostId))
             throw new NotFoundException($"Post with id: '{command.PostId}' not found.");
 
         await repository.DeletePostAsync(command.PostId);

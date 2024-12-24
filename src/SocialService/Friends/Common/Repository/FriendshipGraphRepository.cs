@@ -1,7 +1,4 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-
-namespace SocialService.Friends.Common.Repository;
+﻿namespace SocialService.Friends.Common.Repository;
 
 /// <summary>
 ///     Repositório de grafo sobre amizades.
@@ -19,9 +16,9 @@ public class FriendshipGraphRepository(
     /// <exception cref="InvalidOperationException"></exception>
     public async Task SendFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId, string message)
     {
-        var existingRequest = await GetFriendRequestAsync(senderProfileId, receiverProfileId);
+        var existingRequest = await FriendRequestExistsAsync(senderProfileId, receiverProfileId);
 
-        if (existingRequest != null)
+        if (existingRequest)
             throw new InvalidOperationException("There is already a pending request between these profiles.");
 
         var query = $@"""
@@ -37,12 +34,12 @@ public class FriendshipGraphRepository(
     }
 
     /// <summary>
-    ///     Método para obter um pedido de amizade
+    ///     Método para verificar se um pedido de amizade existe
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    public async Task<FriendRequest.FriendRequest?> GetFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
+    public async Task<bool> FriendRequestExistsAsync(Guid senderProfileId, Guid receiverProfileId)
     {
         var query = $@"""
     MATCH (sender:Profile {{id: '{senderProfileId}'}})-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})
@@ -51,23 +48,7 @@ public class FriendshipGraphRepository(
 
         var responseList = await graphContext.ExecuteQueryAsync(query);
 
-        if (responseList == null || !responseList.Any())
-            return null;
-
-        var response = responseList.First().First().Value;
-
-        if (response == null)
-            return null;
-
-        FriendRequest.FriendRequest result = new();
-        var parsedResponse = response.As<IRelationship>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
-        parsedResponse.Add("senderProfileId", senderProfileId);
-        parsedResponse.Add("receiverProfileId", receiverProfileId);
-
-        result.MapToEntityFromNeo4j(parsedResponse);
-
-        return result;
+        return responseList != null && responseList.Any();
     }
 
     /// <summary>
@@ -78,9 +59,9 @@ public class FriendshipGraphRepository(
     /// <exception cref="InvalidOperationException"></exception>
     public async Task AcceptFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
     {
-        var request = await GetFriendRequestAsync(senderProfileId, receiverProfileId);
+        var requestExists = await FriendRequestExistsAsync(senderProfileId, receiverProfileId);
 
-        if (request == null)
+        if (!requestExists)
             throw new InvalidOperationException("The friend request does not exist or has already been accepted.");
 
         #region Create Friendship
@@ -114,8 +95,9 @@ DELETE r";
     /// <exception cref="InvalidOperationException"></exception>
     public async Task RejectFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
     {
-        var request = await GetFriendRequestAsync(senderProfileId, receiverProfileId);
-        if (request == null)
+        var requestExists = await FriendRequestExistsAsync(senderProfileId, receiverProfileId);
+
+        if (!requestExists)
             throw new InvalidOperationException("The friend request does not exist or has already been rejected.");
 
         #region Delete Friend Request
@@ -134,7 +116,8 @@ DELETE r";
     /// </summary>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<FriendRequest.FriendRequest>> GetPendingRequestsForProfileAsync(Guid receiverProfileId)
+    public async Task<IEnumerable<FriendRequest.FriendRequest>> GetPendingRequestsForProfileAsync(
+        Guid receiverProfileId)
     {
         var query = $@"
     MATCH (sender:Profile)-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})

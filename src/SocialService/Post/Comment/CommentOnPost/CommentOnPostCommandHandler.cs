@@ -1,6 +1,4 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.Comment.CommentOnPost;
 
@@ -19,7 +17,7 @@ public class CommentOnPostCommandHandler(IPostGraphRepository repository) : IHan
     public async Task<bool> HandleAsync(CommentOnPostCommand command, CancellationToken cancellationToken)
     {
         Comment comment = new(command, ProfileContext.ProfileId);
-        
+
         await repository.CommentOnPostAsync(comment);
 
         return true;

@@ -1,12 +1,11 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.ViewProfile;
 
 /// <summary>
 ///     Handler para a query de visualização de perfil.
 /// </summary>
-/// <param name="context"></param>
+/// <param name="repository"></param>
 public class ViewProfileQueryHandler(IProfileGraphRepository repository) : IHandler<ProfileDto, ViewProfileQuery>
 {
     /// <summary>

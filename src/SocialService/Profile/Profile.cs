@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using SocialService.Common.Entities;
 using SocialService.Profile.Common.Enums;
 using SocialService.Profile.CreateProfile;
 
@@ -11,9 +10,11 @@ namespace SocialService.Profile;
 public class Profile : GraphEntity
 {
     /// <summary>
-    /// Construtor padrão.
+    ///     Construtor padrão.
     /// </summary>
-    public Profile() { }
+    public Profile()
+    {
+    }
 
     /// <summary>
     ///     Construtor para criação de um novo perfil através de um comando.
@@ -52,17 +53,17 @@ public class Profile : GraphEntity
     public string LastName { get; private set; }
 
     /// <summary>
-    /// Cidade do perfil
+    ///     Cidade do perfil
     /// </summary>
     public string City { get; private set; }
 
     /// <summary>
-    /// Estado do perfil
+    ///     Estado do perfil
     /// </summary>
     public string State { get; private set; }
 
     /// <summary>
-    /// País do perfil
+    ///     País do perfil
     /// </summary>
     public string Country { get; private set; }
 
@@ -97,7 +98,7 @@ public class Profile : GraphEntity
     public DateTime UpdatedAt { get; private set; }
 
     /// <summary>
-    /// Método para mapear os dados do neo4j para o perfil
+    ///     Método para mapear os dados do neo4j para o perfil
     /// </summary>
     /// <param name="result"></param>
     public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
@@ -118,7 +119,7 @@ public class Profile : GraphEntity
     }
 
     /// <summary>
-    /// Método para atualizar o primeiro nome do perfil.
+    ///     Método para atualizar o primeiro nome do perfil.
     /// </summary>
     /// <param name="firstName"></param>
     /// <param name="isUpdate"></param>
@@ -126,16 +127,16 @@ public class Profile : GraphEntity
     {
         if (string.IsNullOrWhiteSpace(firstName))
             throw new ArgumentException("First name cannot be empty.");
-        
+
         if (FirstName != firstName)
             FirstName = firstName;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
     /// <summary>
-    /// Método para atualizar o sobrenome do perfil.
+    ///     Método para atualizar o sobrenome do perfil.
     /// </summary>
     /// <param name="lastName"></param>
     /// <param name="isUpdate"></param>
@@ -143,16 +144,16 @@ public class Profile : GraphEntity
     {
         if (string.IsNullOrWhiteSpace(lastName))
             throw new ArgumentException("Last name cannot be empty.");
-        
+
         if (LastName != lastName)
             LastName = lastName;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
     /// <summary>
-    /// Método para atualizar o email do perfil.
+    ///     Método para atualizar o email do perfil.
     /// </summary>
     /// <param name="email"></param>
     /// <param name="isUpdate"></param>
@@ -162,11 +163,11 @@ public class Profile : GraphEntity
 
         if (string.IsNullOrWhiteSpace(email) || !regex.IsMatch(email))
             throw new ArgumentException("Invalid email format.");
-        
+
         if (Email != email)
             Email = email;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
@@ -179,8 +180,8 @@ public class Profile : GraphEntity
     {
         if (!string.IsNullOrWhiteSpace(imageUrl) && ImageUrl != imageUrl)
             ImageUrl = imageUrl;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
@@ -193,8 +194,8 @@ public class Profile : GraphEntity
     {
         if (!string.IsNullOrWhiteSpace(bio) && Bio != bio)
             Bio = bio;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
@@ -207,8 +208,8 @@ public class Profile : GraphEntity
     {
         if (gender != null && Gender != gender.Value)
             Gender = gender.Value;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
@@ -221,13 +222,13 @@ public class Profile : GraphEntity
     {
         if (birthDate != null && BirthDate != birthDate.Value)
             BirthDate = birthDate.Value;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
     /// <summary>
-    /// Método para atualizar o estado do perfil.
+    ///     Método para atualizar o estado do perfil.
     /// </summary>
     /// <param name="state"></param>
     /// <param name="isUpdate"></param>
@@ -235,13 +236,13 @@ public class Profile : GraphEntity
     {
         if (!string.IsNullOrWhiteSpace(state) && State != state)
             State = state;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
     /// <summary>
-    /// Método para atualizar a cidade do perfil.
+    ///     Método para atualizar a cidade do perfil.
     /// </summary>
     /// <param name="city"></param>
     /// <param name="isUpdate"></param>
@@ -249,13 +250,13 @@ public class Profile : GraphEntity
     {
         if (!string.IsNullOrWhiteSpace(city) && City != city)
             City = city;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 
     /// <summary>
-    /// Método para atualizar o país do perfil.
+    ///     Método para atualizar o país do perfil.
     /// </summary>
     /// <param name="country"></param>
     /// <param name="isUpdate"></param>
@@ -263,8 +264,8 @@ public class Profile : GraphEntity
     {
         if (!string.IsNullOrWhiteSpace(country) && Country != country)
             Country = country;
-        
-        if(isUpdate)
+
+        if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
 }

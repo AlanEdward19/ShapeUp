@@ -1,7 +1,4 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-
-namespace SocialService.Follow.Common.Repository;
+﻿namespace SocialService.Follow.Common.Repository;
 
 /// <summary>
 ///     Repositório de grafo sobre seguidores.

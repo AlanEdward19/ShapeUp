@@ -1,15 +1,8 @@
-﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
-using SocialService.Common.Utils;
-using SocialService.Follow.FollowUser;
+﻿using SocialService.Follow.FollowUser;
 using SocialService.Follow.GetFollowers;
 using SocialService.Follow.GetFollowing;
 using SocialService.Follow.UnfollowUser;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Follow;
 
@@ -20,7 +13,7 @@ namespace SocialService.Follow;
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("[Controller]/v{version:apiVersion}")]
-public class FollowController : ControllerBase
+public class FollowController(IProfileGraphRepository repository) : ControllerBase
 {
     /// <summary>
     ///     Rota para seguir um perfil
@@ -35,7 +28,12 @@ public class FollowController : ControllerBase
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
-        return Ok(await handler.HandleAsync(new FollowUserCommand(profileId), cancellationToken));
+        FollowUserCommand command = new(profileId);
+
+        FollowUserCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
@@ -51,7 +49,12 @@ public class FollowController : ControllerBase
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
-        return Ok(await handler.HandleAsync(new UnfollowUserCommand(profileId), cancellationToken));
+        UnfollowUserCommand command = new(profileId);
+
+        UnfollowUserCommandValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
@@ -74,6 +77,9 @@ public class FollowController : ControllerBase
         query.SetProfileId(profileId);
         query.SetPage(page);
         query.SetRows(rows);
+
+        GetFollowersQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
@@ -98,6 +104,9 @@ public class FollowController : ControllerBase
         query.SetProfileId(profileId);
         query.SetPage(page);
         query.SetRows(rows);
+
+        GetFollowingQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }

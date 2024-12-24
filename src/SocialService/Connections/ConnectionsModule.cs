@@ -1,8 +1,4 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-using SocialService.Connections.Storage;
-
-namespace SocialService.Connections;
+﻿namespace SocialService.Connections;
 
 /// <summary>
 ///     Modulo de conexões externas

@@ -1,6 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
-using SocialService.Friends.Common.Repository;
+﻿using SocialService.Friends.Common.Repository;
 using SocialService.Friends.FriendRequest.CheckFriendRequestStatus;
 using SocialService.Friends.FriendRequest.ManageFriendRequests;
 using SocialService.Friends.FriendRequest.RemoveFriendRequest;

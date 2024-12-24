@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Recommendation.Common.Repository;
+﻿using SocialService.Recommendation.Common.Repository;
 using SocialService.Recommendation.GetFriendRecommendations;
 
 namespace SocialService.Recommendation;
@@ -25,7 +24,9 @@ public static class RecomendationModule
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<IEnumerable<FriendRecommendation>, GetFriendRecommendationQuery>, GetFriendRecommendationQueryHandler>();
+        services
+            .AddScoped<IHandler<IEnumerable<FriendRecommendation>, GetFriendRecommendationQuery>,
+                GetFriendRecommendationQueryHandler>();
 
         return services;
     }

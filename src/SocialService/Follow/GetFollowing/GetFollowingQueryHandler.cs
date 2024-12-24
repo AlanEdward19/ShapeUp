@@ -1,6 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
-using SocialService.Follow.Common.Repository;
+﻿using SocialService.Follow.Common.Repository;
 using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Follow.GetFollowing;
@@ -10,7 +8,9 @@ namespace SocialService.Follow.GetFollowing;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="graphRepository"></param>
-public class GetFollowingQueryHandler(IProfileGraphRepository profileGraphRepository, IFollowerGraphRepository graphRepository)
+public class GetFollowingQueryHandler(
+    IProfileGraphRepository profileGraphRepository,
+    IFollowerGraphRepository graphRepository)
     : IHandler<IEnumerable<ProfileBasicInformation>, GetFollowingQuery>
 {
     /// <summary>
@@ -28,9 +28,9 @@ public class GetFollowingQueryHandler(IProfileGraphRepository profileGraphReposi
             .Take(query.Rows)
             .Select(Guid.Parse)
             .ToList();
-        
+
         var profiles = await profileGraphRepository.GetProfilesAsync(pagedFollowingIds);
-        
+
         return profiles
             .Select(x => new ProfileBasicInformation(x.FirstName, x.LastName, x.Id))
             .ToList();

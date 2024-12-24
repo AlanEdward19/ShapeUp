@@ -1,6 +1,4 @@
-﻿using SocialService.Common.Interfaces;
-using SocialService.Common.Models;
-using SocialService.Follow.Common.Repository;
+﻿using SocialService.Follow.Common.Repository;
 using SocialService.Follow.FollowUser;
 using SocialService.Follow.GetFollowers;
 using SocialService.Follow.GetFollowing;

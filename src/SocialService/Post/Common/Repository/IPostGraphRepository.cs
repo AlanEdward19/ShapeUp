@@ -1,9 +1,4 @@
-﻿using SocialService.Post.Comment.CommentOnPost;
-using SocialService.Post.Comment.EditCommentOnPost;
-using SocialService.Post.Common.Enums;
-using SocialService.Post.CreatePost;
-using SocialService.Post.EditPost;
-using SocialService.Post.React;
+﻿using SocialService.Post.React;
 
 namespace SocialService.Post.Common.Repository;
 
@@ -25,9 +20,8 @@ public interface IPostGraphRepository
     ///     Método que verifica se um post existe
     /// </summary>
     /// <param name="postId"></param>
-    /// <param name="profileId"></param>
     /// <returns></returns>
-    Task<bool> PostExistsAsync(Guid postId, Guid profileId);
+    Task<bool> PostExistsAsync(Guid postId);
 
     /// <summary>
     ///     Método que cria um post
@@ -77,7 +71,7 @@ public interface IPostGraphRepository
     /// <param name="commentId"></param>
     /// <returns></returns>
     Task<Comment.Comment> GetPostCommentsByCommentIdAsync(Guid commentId);
-    
+
     /// <summary>
     ///     Método que retorna os comentários de um post
     /// </summary>
@@ -98,6 +92,13 @@ public interface IPostGraphRepository
     /// <param name="commentId"></param>
     /// <returns></returns>
     Task DeleteCommentOnPostAsync(Guid commentId);
+
+    /// <summary>
+    ///     Método que verifica se um comentário existe
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <returns></returns>
+    Task<bool> CommentExistsAsync(Guid commentId);
 
     #endregion
 

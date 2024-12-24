@@ -3,7 +3,7 @@
 namespace SocialService.Post;
 
 /// <summary>
-/// Objeto de transferência de dados para post
+///     Objeto de transferência de dados para post
 /// </summary>
 /// <param name="post"></param>
 public class PostDto(Post post)
@@ -14,7 +14,7 @@ public class PostDto(Post post)
     public EPostVisibility Visibility { get; private set; } = post.Visibility;
 
     /// <summary>
-    /// Ids das imagens do post.
+    ///     Ids das imagens do post.
     /// </summary>
     public IEnumerable<Guid> Images { get; private set; } = post.Images;
 

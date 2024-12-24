@@ -3,7 +3,7 @@
 namespace SocialService.Profile;
 
 /// <summary>
-///  Objeto de transferência de dados do perfil
+///     Objeto de transferência de dados do perfil
 /// </summary>
 /// <param name="profile"></param>
 public class ProfileDto(Profile profile)
@@ -29,17 +29,17 @@ public class ProfileDto(Profile profile)
     public string LastName { get; private set; } = profile.LastName;
 
     /// <summary>
-    /// Cidade do perfil
+    ///     Cidade do perfil
     /// </summary>
     public string City { get; private set; } = profile.City;
 
     /// <summary>
-    /// Estado do perfil
+    ///     Estado do perfil
     /// </summary>
     public string State { get; private set; } = profile.State;
 
     /// <summary>
-    /// País do perfil
+    ///     País do perfil
     /// </summary>
     public string Country { get; private set; } = profile.Country;
 

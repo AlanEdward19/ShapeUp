@@ -1,7 +1,4 @@
-﻿using Neo4j.Driver;
-using SocialService.Connections.Graph;
-
-namespace SocialService.Profile.Common.Repository;
+﻿namespace SocialService.Profile.Common.Repository;
 
 /// <summary>
 ///     Repositório de grafo sobre perfis.
@@ -58,7 +55,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     }
 
     /// <summary>
-    /// Método para obter um perfil
+    ///     Método para obter um perfil
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -67,11 +64,11 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         var query = $@"
         MATCH (profile:Profile {{id: '{id}'}})
         RETURN profile;";
-        
+
         var result = await graphContext.ExecuteQueryAsync(query);
-        
+
         var record = result.FirstOrDefault();
-        
+
         if (record == null)
             return null;
 
@@ -83,7 +80,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     }
 
     /// <summary>
-    /// Método para atualizar um perfil
+    ///     Método para atualizar um perfil
     /// </summary>
     /// <param name="profile"></param>
     /// <exception cref="NotImplementedException"></exception>
@@ -108,7 +105,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     }
 
     /// <summary>
-    /// Método para obter perfis
+    ///     Método para obter perfis
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
@@ -125,11 +122,28 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         var profiles = result.Select(record =>
         {
             var profile = new Profile();
-            var parsedDictionary = record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var parsedDictionary =
+                record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             profile.MapToEntityFromNeo4j(parsedDictionary);
             return profile;
         }).ToList();
 
         return profiles;
+    }
+
+    /// <summary>
+    ///     Método para verificar se um perfil existe
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<bool> ProfileExistsAsync(Guid id)
+    {
+        var query = $@"
+    MATCH (p:Profile {{id: '{id}'}})
+    RETURN p";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+
+        return result.Any();
     }
 }

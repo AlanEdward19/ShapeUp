@@ -1,11 +1,4 @@
-﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialService.ActivityFeed.GetActivityFeed;
-using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Common.Utils;
+﻿using SocialService.ActivityFeed.GetActivityFeed;
 
 namespace SocialService.ActivityFeed;
 
@@ -26,10 +19,14 @@ public class ActivityFeedController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("BuildActivityFeed")]
-    public async Task<IActionResult> BuildActivityFeed([FromServices] IHandler<IEnumerable<Post.Post>, GetActivityFeedQuery> handler,
+    public async Task<IActionResult> BuildActivityFeed(
+        [FromServices] IHandler<IEnumerable<Post.Post>, GetActivityFeedQuery> handler,
         GetActivityFeedQuery query, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+
+        GetActivityFeedQueryValidator validator = new();
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }

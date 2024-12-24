@@ -1,13 +1,10 @@
-﻿using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Profile.Common.Repository;
+﻿using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.CreateProfile;
 
 /// <summary>
 ///     Handler para o comando de criação de perfil.
 /// </summary>
-/// <param name="context"></param>
 /// <param name="graphRepository"></param>
 public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository)
     : IHandler<ProfileDto, CreateProfileCommand>
@@ -29,7 +26,7 @@ public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository
         #endregion
 
         ProfileDto profileDto = new(profile);
-        
+
         return profileDto;
     }
 }

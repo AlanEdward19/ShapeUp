@@ -1,11 +1,4 @@
-﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialService.Common;
-using SocialService.Common.Interfaces;
-using SocialService.Common.Utils;
-using SocialService.Recommendation.GetFriendRecommendations;
+﻿using SocialService.Recommendation.GetFriendRecommendations;
 
 namespace SocialService.Recommendation;
 
@@ -29,6 +22,9 @@ public class RecommendationController : ControllerBase
     {
         GetFriendRecommendationQuery query = new();
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+
+        GetFriendRecommendationQueryValidator validator = new();
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }

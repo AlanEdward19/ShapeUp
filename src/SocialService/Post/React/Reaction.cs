@@ -1,5 +1,4 @@
-﻿using SocialService.Common.Entities;
-using SocialService.Post.Common.Enums;
+﻿using SocialService.Post.Common.Enums;
 using SocialService.Post.React.ReactToPost;
 
 namespace SocialService.Post.React;
@@ -10,12 +9,14 @@ namespace SocialService.Post.React;
 public class Reaction : GraphEntity
 {
     /// <summary>
-    /// Construtor padrão
+    ///     Construtor padrão
     /// </summary>
-    public Reaction() { }
-    
+    public Reaction()
+    {
+    }
+
     /// <summary>
-    /// Construtor para criar uma nova reação.
+    ///     Construtor para criar uma nova reação.
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="command"></param>
@@ -23,7 +24,7 @@ public class Reaction : GraphEntity
     {
         if (profileId == Guid.Empty)
             throw new ArgumentException("ProfileId cannot be empty.");
-        
+
         if (Enum.IsDefined(typeof(EReactionType), command.ReactionType) == false)
             throw new ArgumentException("ReactionType value is invalid.");
 
@@ -48,9 +49,9 @@ public class Reaction : GraphEntity
     ///     Tipo da reação
     /// </summary>
     public string ReactionType { get; private set; }
-    
+
     /// <summary>
-    /// Id do post
+    ///     Id do post
     /// </summary>
     public Guid PostId { get; private set; }
 
@@ -69,14 +70,14 @@ public class Reaction : GraphEntity
     }
 
     /// <summary>
-    /// Método para atualizar o tipo de reação.
+    ///     Método para atualizar o tipo de reação.
     /// </summary>
     /// <param name="reactionType"></param>
     public void UpdateReactionType(string reactionType)
     {
         if (string.IsNullOrWhiteSpace(reactionType))
             throw new ArgumentException("ReactionType cannot be empty.");
-        
+
         if (ReactionType != reactionType)
             ReactionType = reactionType;
     }
