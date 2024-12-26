@@ -28,6 +28,26 @@ public class Post : GraphEntity
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
+    
+    /// <summary>
+    /// Id do perfil que publicou o post.
+    /// </summary>
+    public Guid PublisherId { get; private set; }
+    
+    /// <summary>
+    /// Primeiro nome do perfil que publicou o post.
+    /// </summary>
+    public string PublisherFirstName { get; private set; }
+    
+    /// <summary>
+    /// Sobrenome do perfil que publicou o post.
+    /// </summary>
+    public string PublisherLastName { get; private set; }
+    
+    /// <summary>
+    /// Url da imagem do perfil que publicou o post.
+    /// </summary>
+    public string PublisherImageUrl { get; private set; }
 
     /// <summary>
     ///     Visibilidade do post.
@@ -64,6 +84,10 @@ public class Post : GraphEntity
         CreatedAt = DateTime.Parse(result["createdAt"].ToString()!);
         UpdatedAt = DateTime.Parse(result["updatedAt"].ToString()!);
         Content = result["content"].ToString()!;
+        PublisherId = Guid.Parse(result["publisherId"].ToString()!);
+        PublisherFirstName = result["publisherFirstName"].ToString()!;
+        PublisherLastName = result["publisherLastName"].ToString()!;
+        PublisherImageUrl = result["publisherImageUrl"].ToString()!;
 
         if (result.ContainsKey("images"))
             Images = result["images"] == null
