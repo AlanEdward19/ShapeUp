@@ -42,6 +42,16 @@ public class ProfileDto(Profile profile)
     ///     País do perfil
     /// </summary>
     public string Country { get; private set; } = profile.Country;
+    
+    /// <summary>
+    /// Quantidade de seguidores do perfil.
+    /// </summary>
+    public int Followers { get; private set; } = profile.Followers;
+    
+    /// <summary>
+    /// Quantidade de pessoas que o perfil segue.
+    /// </summary>
+    public int Following { get; private set; } = profile.Following;
 
     /// <summary>
     ///     Url da imagem do perfil no blob storage

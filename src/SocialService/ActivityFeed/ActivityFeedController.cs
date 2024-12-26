@@ -1,4 +1,5 @@
 ﻿using SocialService.ActivityFeed.GetActivityFeed;
+using SocialService.Post;
 
 namespace SocialService.ActivityFeed;
 
@@ -20,8 +21,8 @@ public class ActivityFeedController : ControllerBase
     /// <returns></returns>
     [HttpGet("BuildActivityFeed")]
     public async Task<IActionResult> BuildActivityFeed(
-        [FromServices] IHandler<IEnumerable<Post.Post>, GetActivityFeedQuery> handler,
-        GetActivityFeedQuery query, CancellationToken cancellationToken)
+        [FromServices] IHandler<IEnumerable<PostDto>, GetActivityFeedQuery> handler,
+        [FromQuery] GetActivityFeedQuery query, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 

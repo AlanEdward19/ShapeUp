@@ -66,6 +66,16 @@ public class Profile : GraphEntity
     ///     País do perfil
     /// </summary>
     public string Country { get; private set; }
+    
+    /// <summary>
+    /// Quantidade de seguidores do perfil.
+    /// </summary>
+    public int Followers { get; private set; }
+    
+    /// <summary>
+    /// Quantidade de pessoas que o perfil segue.
+    /// </summary>
+    public int Following { get; private set; }
 
     /// <summary>
     ///     Url da imagem do perfil no blob storage
@@ -114,6 +124,8 @@ public class Profile : GraphEntity
         UpdatedAt = DateTime.Parse(result["updatedAt"].ToString());
         BirthDate = DateTime.Parse(result["birthDate"].ToString());
         Bio = result["bio"].ToString();
+        Following = int.Parse(result["following"].ToString());
+        Followers = int.Parse(result["followers"].ToString());
 
         base.MapToEntityFromNeo4j(result);
     }

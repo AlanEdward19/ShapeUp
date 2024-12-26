@@ -1,4 +1,5 @@
 ﻿using SocialService.ActivityFeed.Common.Repository;
+using SocialService.Post;
 
 namespace SocialService.ActivityFeed.GetActivityFeed;
 
@@ -7,7 +8,7 @@ namespace SocialService.ActivityFeed.GetActivityFeed;
 /// </summary>
 /// <param name="graphRepository"></param>
 public class GetActivityFeedQueryHandler(IActivityFeedGraphRepository graphRepository)
-    : IHandler<IEnumerable<Post.Post>, GetActivityFeedQuery>
+    : IHandler<IEnumerable<PostDto>, GetActivityFeedQuery>
 {
     /// <summary>
     ///     Método para obter o feed de atividades.
@@ -15,9 +16,10 @@ public class GetActivityFeedQueryHandler(IActivityFeedGraphRepository graphRepos
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Post.Post>> HandleAsync(GetActivityFeedQuery query,
+    public async Task<IEnumerable<PostDto>> HandleAsync(GetActivityFeedQuery query,
         CancellationToken cancellationToken)
     {
-        return await graphRepository.BuildActivityFeed(query, ProfileContext.ProfileId);
+        return (await graphRepository.BuildActivityFeed(query, ProfileContext.ProfileId))
+            .Select(x => new PostDto(x));
     }
 }

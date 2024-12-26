@@ -62,8 +62,10 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     public async Task<Profile> GetProfileAsync(Guid id)
     {
         var query = $@"
-        MATCH (profile:Profile {{id: '{id}'}})
-        RETURN profile;";
+    MATCH (profile:Profile {{id: '{id}'}})
+    OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
+    OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
+    RETURN profile, COUNT(follower) AS followers, COUNT(following) AS following";
 
         var result = await graphContext.ExecuteQueryAsync(query);
 
@@ -74,6 +76,9 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
 
         Profile profile = new Profile();
         var parsedDictionary = record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        parsedDictionary["followers"] = record["followers"].As<int>();
+        parsedDictionary["following"] = record["following"].As<int>();
+        
         profile.MapToEntityFromNeo4j(parsedDictionary);
 
         return profile;
@@ -115,15 +120,18 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         var query = $@"
     MATCH (profile:Profile)
     WHERE profile.id IN ['{idsString}']
-    RETURN profile";
+    OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
+    OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
+    RETURN profile, COUNT(follower) AS followers, COUNT(following) AS following";
 
         var result = await graphContext.ExecuteQueryAsync(query);
 
         var profiles = result.Select(record =>
         {
             var profile = new Profile();
-            var parsedDictionary =
-                record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var parsedDictionary = record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            parsedDictionary["followers"] = record["followers"].As<int>();
+            parsedDictionary["following"] = record["following"].As<int>();
             profile.MapToEntityFromNeo4j(parsedDictionary);
             return profile;
         }).ToList();

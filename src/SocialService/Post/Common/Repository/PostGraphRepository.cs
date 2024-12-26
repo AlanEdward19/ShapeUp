@@ -18,8 +18,8 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     public async Task<Post> GetPostAsync(Guid postId)
     {
         var query = $@"
-    MATCH (post:Post {{id: '{postId}'}})
-    RETURN post";
+    MATCH (post:Post {{id: '{postId}'}})<-[:PUBLISHED_BY]-(profile:Profile)
+    RETURN post, profile.id AS publisherId, profile.firstName as publisherFirstName, profile.lastName as publisherLastName, profile.ImageUrl as publisherImageUrl";
 
         var result = await graphContext.ExecuteQueryAsync(query);
         var record = result.FirstOrDefault();
@@ -29,6 +29,10 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
 
         var post = new Post();
         var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        parsedDictionary.Add("publisherId", record["publisherId"].ToString());
+        parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
+        parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
+        parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
         post.MapToEntityFromNeo4j(parsedDictionary);
 
         return post;
@@ -174,7 +178,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         var comments = new List<Comment.Comment>();
         var cypherQuery = $@"
     MATCH (post:Post {{id: '{postId}'}})<-[:COMMENTED_ON]-(comment:Comment)<-[:COMMENTED]-(profile:Profile)
-    RETURN comment, profile.id AS profileId";
+    RETURN comment, profile.id AS profileId, profile.firstName as profileFirstName, profile.lastName as profileLastName, profile.imageUrl as profileImageUrl";
 
         var result = await graphContext.ExecuteQueryAsync(cypherQuery);
 
@@ -185,6 +189,10 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
             var parsedDictionary =
                 record["comment"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedDictionary.Add("profileId", record["profileId"].ToString()!);
+            parsedDictionary.Add("profileFirstName", record["profileFirstName"].ToString()!);
+            parsedDictionary.Add("profileLastName", record["profileLastName"].ToString()!);
+            parsedDictionary.Add("profileImageUrl", record["profileImageUrl"].ToString()!);
+            
             comment.MapToEntityFromNeo4j(parsedDictionary);
 
             comments.Add(comment);
@@ -251,7 +259,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     MATCH (p:Profile {{id: '{reaction.ProfileId}'}})
     MATCH (post:Post {{id: '{reaction.PostId}'}})
     MERGE (p)-[r:REACTED]->(post)
-    ON CREATE SET r.id = '{reaction.Id}', r.createdAt = datetime()
+    ON CREATE SET r.id = '{reaction.Id}', r.createdAt = datetime(), r.type = '{reaction.ReactionType}'
     ON MATCH SET r.type = '{reaction.ReactionType}', r.createdAt = datetime()
     RETURN r";
 

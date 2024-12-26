@@ -1,5 +1,6 @@
 ﻿using SocialService.ActivityFeed.Common.Repository;
 using SocialService.ActivityFeed.GetActivityFeed;
+using SocialService.Post;
 
 namespace SocialService.ActivityFeed;
 
@@ -24,7 +25,7 @@ public static class ActivityFeedModule
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<IEnumerable<Post.Post>, GetActivityFeedQuery>, GetActivityFeedQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<PostDto>, GetActivityFeedQuery>, GetActivityFeedQueryHandler>();
 
         return services;
     }

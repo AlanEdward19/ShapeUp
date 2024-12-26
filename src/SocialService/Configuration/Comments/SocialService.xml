@@ -9,7 +9,7 @@
                 Controller responsavel por gerenciar funções relacionadas ao feed de atividades
             </summary>
         </member>
-        <member name="M:SocialService.ActivityFeed.ActivityFeedController.BuildActivityFeed(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.Post},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Threading.CancellationToken)">
+        <member name="M:SocialService.ActivityFeed.ActivityFeedController.BuildActivityFeed(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.PostDto},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Threading.CancellationToken)">
             <summary>
                 Rota para seguir um perfil
             </summary>
@@ -98,6 +98,16 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryValidator">
+            <summary>
+                Validador para a query de obter o feed de atividades.
+            </summary>
+        </member>
+        <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryValidator.#ctor">
+            <summary>
+                Validações para a query de obter o feed de atividades.
+            </summary>
+        </member>
         <member name="T:SocialService.Common.Entities.GraphEntity">
             <summary>
                 Entidade base para entidades do grafo.
@@ -129,12 +139,12 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Common.Models.ProfileBasicInformationViewModel">
+        <member name="T:SocialService.Common.Models.ProfileBasicInformation">
             <summary>
                 ViewModel para informações básicas de um perfil.
             </summary>
         </member>
-        <member name="M:SocialService.Common.Models.ProfileBasicInformationViewModel.#ctor(System.String,System.String,System.Guid)">
+        <member name="M:SocialService.Common.Models.ProfileBasicInformation.#ctor(System.String,System.String,System.Guid)">
             <summary>
                 Construtor
             </summary>
@@ -142,17 +152,17 @@
             <param name="lastName"></param>
             <param name="profileId"></param>
         </member>
-        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.FirstName">
+        <member name="P:SocialService.Common.Models.ProfileBasicInformation.FirstName">
             <summary>
                 Primeiro nome do perfil.
             </summary>
         </member>
-        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.LastName">
+        <member name="P:SocialService.Common.Models.ProfileBasicInformation.LastName">
             <summary>
                 Sobrenome do perfil.
             </summary>
         </member>
-        <member name="P:SocialService.Common.Models.ProfileBasicInformationViewModel.ProfileId">
+        <member name="P:SocialService.Common.Models.ProfileBasicInformation.ProfileId">
             <summary>
                 Id do perfil.
             </summary>
@@ -492,6 +502,14 @@
             </summary>
             <param name="containerName"></param>
         </member>
+        <member name="M:SocialService.Connections.Storage.StorageProvider.SanitizeName(System.String,System.Boolean)">
+            <summary>
+                Método para sanitizar um nome
+            </summary>
+            <param name="name"></param>
+            <param name="allowSlashes"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Connections.Storage.StorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
             <summary>
                 Método para renomear um blob
@@ -500,14 +518,6 @@
             <param name="newBlobName"></param>
             <param name="containerName"></param>
             <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.SanitizeName(System.String,System.Boolean)">
-            <summary>
-                Método para sanitizar um nome
-            </summary>
-            <param name="name"></param>
-            <param name="allowSlashes"></param>
-            <returns></returns>
         </member>
         <member name="T:SocialService.Exceptions.NotFoundException">
             <summary>
@@ -560,8 +570,7 @@
         </member>
         <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowingAsync(System.Guid)">
             <summary>
-                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o
-                perfil dado
+                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
             </summary>
             <param name="profileId"></param>
             <returns></returns>
@@ -596,13 +605,17 @@
         </member>
         <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowingAsync(System.Guid)">
             <summary>
-                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o
-                perfil dado
+                Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Follow.FollowController">
+            <summary>
+                Controller responsavel por gerenciar funções de seguir e deixar de seguir de um perfil
+            </summary>
+        </member>
+        <member name="M:SocialService.Follow.FollowController.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
                 Controller responsavel por gerenciar funções de seguir e deixar de seguir de um perfil
             </summary>
@@ -625,7 +638,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.FollowController.GetFollowers(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformationViewModel},SocialService.Follow.GetFollowers.GetFollowersQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.GetFollowers(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowers.GetFollowersQuery},System.Threading.CancellationToken)">
             <summary>
                 Rotar para obter os seguidores de um perfil
             </summary>
@@ -636,7 +649,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.FollowController.GetFollowing(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformationViewModel},SocialService.Follow.GetFollowing.GetFollowingQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.GetFollowing(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowing.GetFollowingQuery},System.Threading.CancellationToken)">
             <summary>
                 Rotar para obter os perfis que um perfil segue
             </summary>
@@ -694,6 +707,17 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Follow.FollowUser.FollowUserCommandValidator">
+            <summary>
+                Validador para o comando de seguir um usuário.
+            </summary>
+        </member>
+        <member name="M:SocialService.Follow.FollowUser.FollowUserCommandValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para o comando de seguir um usuário.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Follow.GetFollowers.GetFollowersQuery">
             <summary>
@@ -755,6 +779,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Follow.GetFollowers.GetFollowersQueryValidator">
+            <summary>
+                Validador para a query de obter os seguidores de um usuário.
+            </summary>
+        </member>
+        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para a query de obter os seguidores de um usuário.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Follow.GetFollowing.GetFollowingQuery">
             <summary>
                 Query para obter os perfis que um perfil está seguindo.
@@ -815,6 +850,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Follow.GetFollowing.GetFollowingQueryValidator">
+            <summary>
+                Validador para a query de obter os seguidores de um usuário.
+            </summary>
+        </member>
+        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para a query de obter os seguidores de um usuário.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Follow.UnfollowUser.UnfollowUserCommand">
             <summary>
                 Comando para deixar de seguir um usuário.
@@ -850,6 +896,17 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Follow.UnfollowUser.UnfollowUserCommandValidator">
+            <summary>
+                Validador para o comando de parar de seguir um usuário.
+            </summary>
+        </member>
+        <member name="M:SocialService.Follow.UnfollowUser.UnfollowUserCommandValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para o comando de parar de seguir um usuário.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Friends.Common.Enums.EFriendStatus">
             <summary>
@@ -887,9 +944,9 @@
             <param name="message"></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetFriendRequestAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.FriendRequestExistsAsync(System.Guid,System.Guid)">
             <summary>
-                Método para obter um pedido de amizade
+                Método para verificar se um pedido de amizade existe
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -953,9 +1010,9 @@
             <param name="message"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetFriendRequestAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.FriendRequestExistsAsync(System.Guid,System.Guid)">
             <summary>
-                Método para obter uma solicitação de amizade.
+                Método para verificar se um pedido de amizade existe
             </summary>
             <param name="senderProfileId"></param>
             <param name="receiverProfileId"></param>
@@ -1011,6 +1068,11 @@
                 Controller responsavel por gerenciar o perfil do usuario
             </summary>
         </member>
+        <member name="M:SocialService.Friends.FriendController.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+            <summary>
+                Controller responsavel por gerenciar o perfil do usuario
+            </summary>
+        </member>
         <member name="M:SocialService.Friends.FriendController.SendFriendRequest(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommand},SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommand,System.Threading.CancellationToken)">
             <summary>
                 Rota para enviar uma solicitação de amigo
@@ -1025,7 +1087,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.FriendController.ViewProfile(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformationViewModel},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Friends.FriendController.ViewProfile(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
             <summary>
                 Rota para listar os amigos de um perfil
             </summary>
@@ -1190,6 +1252,18 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Friends.FriendRequest.ManageFriendRequests.ManageFriendRequestsCommandValidator">
+            <summary>
+                Validador para o comando de gerenciar solicitações de amizade.
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.FriendRequest.ManageFriendRequests.ManageFriendRequestsCommandValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+            <summary>
+                Validações para o comando de gerenciar solicitações de amizade.
+            </summary>
+            <param name="profileGraphRepository"></param>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Friends.FriendRequest.RemoveFriendRequest.RemoveFriendRequestCommand">
             <summary>
                 Comando para remover uma solicitação de amizade.
@@ -1226,6 +1300,18 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Friends.FriendRequest.RemoveFriendRequest.RemoveFriendRequestCommandValidator">
+            <summary>
+                Validador para o comando de remover solicitação de amizade.
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.FriendRequest.RemoveFriendRequest.RemoveFriendRequestCommandValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+            <summary>
+                Validações para o comando de remover solicitação de amizade..
+            </summary>
+            <param name="profileGraphRepository"></param>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommand">
             <summary>
                 Comando para adicionar um amigo.
@@ -1260,6 +1346,17 @@
             <param name="requestCommand"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandValidator">
+            <summary>
+                Validador para o comando de enviar solicitação de amizade.
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para o comando de enviar solicitação de amizade.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Friends.Friendship.Friendship">
             <summary>
@@ -1354,6 +1451,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Friends.Friendship.ListFriends.ListFriendsQueryValidator">
+            <summary>
+                Validador para a query de listar amigos de um perfil.
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.Friendship.ListFriends.ListFriendsQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para a query de listar amigos de um perfil.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Friends.Friendship.RemoveFriend.RemoveFriendCommand">
             <summary>
                 Comando para remover um amigo.
@@ -1389,6 +1497,17 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Friends.Friendship.RemoveFriend.RemoveFriendCommandValidator">
+            <summary>
+                Validador para o comando de remover um amigo.
+            </summary>
+        </member>
+        <member name="M:SocialService.Friends.Friendship.RemoveFriend.RemoveFriendCommandValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para o comando de remover um amigo.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Friends.FriendsModule">
             <summary>
@@ -1442,6 +1561,21 @@
         <member name="P:SocialService.Post.Comment.Comment.ProfileId">
             <summary>
                 Id do perfil que fez o comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Comment.Comment.ProfileFirstName">
+            <summary>
+            Primeiro nome do perfil que fez o comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Comment.Comment.ProfileLastName">
+            <summary>
+            Sobrenome do perfil que fez o comentário
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Comment.Comment.ProfileImageUrl">
+            <summary>
+            Url da imagem do perfil que fez o comentário
             </summary>
         </member>
         <member name="P:SocialService.Post.Comment.Comment.PostId">
@@ -1512,6 +1646,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandValidator">
+            <summary>
+                Validador para o comando de comentar em um post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de comentar em um post.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Post.Comment.DeleteCommentOnPost.DeleteCommentOnPostCommand">
             <summary>
                 Comando para deletar um comentário em um post
@@ -1547,6 +1692,17 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.Comment.DeleteCommentOnPost.DeleteCommentOnPostCommandValidator">
+            <summary>
+                Validador para o comando de deletar um comentário em um post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.Comment.DeleteCommentOnPost.DeleteCommentOnPostCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de deletar um comentário em um post.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Post.Comment.EditCommentOnPost.EditCommentOnPostCommand">
             <summary>
@@ -1589,6 +1745,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.Comment.EditCommentOnPost.EditCommentOnPostCommandValidator">
+            <summary>
+                Validador para o comando de editar um comentário em um post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.Comment.EditCommentOnPost.EditCommentOnPostCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de editar um comentário em um post.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Post.Comment.GetPostComments.GetPostCommentsQuery">
             <summary>
                 Query para obter os comentários de um post
@@ -1624,6 +1791,17 @@
             <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.Comment.GetPostComments.GetPostCommentsQueryValidator">
+            <summary>
+                Validador para a query de obter os comentários de um post
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.Comment.GetPostComments.GetPostCommentsQueryValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para a query de obter os comentários de um post
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Post.Common.Enums.EPostVisibility">
             <summary>
@@ -1712,12 +1890,11 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.PostExistsAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.PostExistsAsync(System.Guid)">
             <summary>
                 Método que verifica se um post existe
             </summary>
             <param name="postId"></param>
-            <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CreatePostAsync(System.Guid,SocialService.Post.Post)">
@@ -1786,6 +1963,13 @@
             <param name="commentId"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CommentExistsAsync(System.Guid)">
+            <summary>
+                Método que verifica se um comentário existe
+            </summary>
+            <param name="commentId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.ReactToPostAsync(SocialService.Post.React.Reaction)">
             <summary>
                 Método que adiciona uma reação a um post
@@ -1827,12 +2011,11 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.PostExistsAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.PostExistsAsync(System.Guid)">
             <summary>
                 Método que verifica se um post existe
             </summary>
             <param name="postId"></param>
-            <param name="profileId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CreatePostAsync(System.Guid,SocialService.Post.Post)">
@@ -1894,6 +2077,14 @@
             </summary>
             <param name="commentId"></param>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CommentExistsAsync(System.Guid)">
+            <summary>
+                Método que verifica se um comentário existe
+            </summary>
+            <param name="commentId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.ReactToPostAsync(SocialService.Post.React.Reaction)">
             <summary>
                 Método que cria/atualiza se ja existir uma reação em um post
@@ -1949,6 +2140,16 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.CreatePost.CreatePostCommandValidator">
+            <summary>
+                Validador para o comando de criação de post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.CreatePost.CreatePostCommandValidator.#ctor">
+            <summary>
+                Validações para o comando de criação de post.
+            </summary>
+        </member>
         <member name="T:SocialService.Post.DeletePost.DeletePostCommand">
             <summary>
                 Comando para deletar um post
@@ -1984,6 +2185,17 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.DeletePost.DeletePostCommandValidator">
+            <summary>
+                Validador para o comando de deletar um post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.DeletePost.DeletePostCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de deletar um post.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Post.EditPost.EditPostCommand">
             <summary>
@@ -2031,6 +2243,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.EditPost.EditPostCommandValidator">
+            <summary>
+                Validador para o comando de edição de post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.EditPost.EditPostCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de edição de post.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Post.GetPost.GetPostQuery">
             <summary>
                 Query para buscar um post
@@ -2067,6 +2290,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.GetPost.GetPostQueryValidator">
+            <summary>
+                Validador para a query de busca de post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.GetPost.GetPostQueryValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para a query de busca de post.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Post.Post">
             <summary>
                 Classe que representa um post.
@@ -2082,6 +2316,26 @@
                 Construtor para criar um novo post.
             </summary>
             <param name="command"></param>
+        </member>
+        <member name="P:SocialService.Post.Post.PublisherId">
+            <summary>
+            Id do perfil que publicou o post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.PublisherFirstName">
+            <summary>
+            Primeiro nome do perfil que publicou o post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.PublisherLastName">
+            <summary>
+            Sobrenome do perfil que publicou o post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.PublisherImageUrl">
+            <summary>
+            Url da imagem do perfil que publicou o post.
+            </summary>
         </member>
         <member name="P:SocialService.Post.Post.Visibility">
             <summary>
@@ -2128,6 +2382,18 @@
             <param name="content"></param>
             <param name="isUpdate"></param>
         </member>
+        <member name="T:SocialService.Post.PostController">
+            <summary>
+                Controller responsavel por gerenciar funções relacionadas a posts, comentários e reações.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.PostController.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Controller responsavel por gerenciar funções relacionadas a posts, comentários e reações.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="M:SocialService.Post.PostController.GetPost(SocialService.Common.Interfaces.IHandler{SocialService.Post.PostDto,SocialService.Post.GetPost.GetPostQuery},System.Guid,System.Threading.CancellationToken)">
             <summary>
                 Rota para pegar as informações de um post
@@ -2137,13 +2403,12 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.PostController.CreatePost(SocialService.Common.Interfaces.IHandler{SocialService.Post.PostDto,SocialService.Post.CreatePost.CreatePostCommand},SocialService.Post.CreatePost.CreatePostCommand,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.PostController.CreatePost(SocialService.Common.Interfaces.IHandler{SocialService.Post.PostDto,SocialService.Post.CreatePost.CreatePostCommand},SocialService.Post.CreatePost.CreatePostCommand,System.Threading.CancellationToken)">
             <summary>
                 Rota para criar um post
             </summary>
             <param name="handler"></param>
             <param name="command"></param>
-            <param name="files"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -2254,6 +2519,31 @@
             </summary>
             <param name="post"></param>
         </member>
+        <member name="P:SocialService.Post.PostDto.Id">
+            <summary>
+            Id do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.PublisherId">
+            <summary>
+            Id do perfil que publicou o post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.PublisherFirstName">
+            <summary>
+            Primeiro nome do perfil que publicou o post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.PublisherLastName">
+            <summary>
+            Sobrenome do perfil que publicou o post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.PublisherImageUrl">
+            <summary>
+            Url da imagem do perfil que publicou o post.
+            </summary>
+        </member>
         <member name="P:SocialService.Post.PostDto.Visibility">
             <summary>
                 Visibilidade do post.
@@ -2317,6 +2607,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.React.DeleteReactionFromPost.DeleteReactionFromPostCommandValidator">
+            <summary>
+                Validador para o comando de deletar uma reação de um post
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.React.DeleteReactionFromPost.DeleteReactionFromPostCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de deletar uma reação de um post
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Post.React.GetReactionsOnPost.GetReactionsOnPostQuery">
             <summary>
                 Query para pegar reações em um post.
@@ -2352,6 +2653,17 @@
             <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.React.GetReactionsOnPost.GetReactionsOnPostQueryValidator">
+            <summary>
+                Validador para a query de buscar reações em um post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.React.GetReactionsOnPost.GetReactionsOnPostQueryValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para a query de buscar reações em um post.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Post.React.Reaction">
             <summary>
@@ -2443,6 +2755,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Post.React.ReactToPost.ReactToPostCommandValidator">
+            <summary>
+                Validador para o comando de reação a um post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.React.ReactToPost.ReactToPostCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de reação a um post.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommand">
             <summary>
                 Comando para criação de post.
@@ -2493,6 +2816,17 @@
             <param name="cancellationToken"></param>
             <returns></returns>
             <exception cref="T:SocialService.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandValidator">
+            <summary>
+                Validador para o comando de upload de imagem de post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommandValidator.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+            <summary>
+                Validações para o comando de upload de imagem de post.
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Profile.Common.Enums.EGender">
             <summary>
@@ -2549,6 +2883,13 @@
             <param name="ids"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.ProfileExistsAsync(System.Guid)">
+            <summary>
+                Método para verificar se um perfil existe.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Profile.Common.Repository.ProfileGraphRepository">
             <summary>
                 Repositório de grafo sobre perfis.
@@ -2592,6 +2933,13 @@
                 Método para obter perfis
             </summary>
             <param name="ids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.ProfileExistsAsync(System.Guid)">
+            <summary>
+                Método para verificar se um perfil existe
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommand">
@@ -2700,14 +3048,12 @@
             <summary>
                 Handler para o comando de criação de perfil.
             </summary>
-            <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
                 Handler para o comando de criação de perfil.
             </summary>
-            <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.HandleAsync(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Threading.CancellationToken)">
@@ -2717,6 +3063,16 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Profile.CreateProfile.CreateProfileCommandValidator">
+            <summary>
+                Validador para o comando de criação de perfil
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandValidator.#ctor">
+            <summary>
+                Validação para o comando de criação de perfil
+            </summary>
         </member>
         <member name="T:SocialService.Profile.DeleteProfile.DeleteProfileCommand">
             <summary>
@@ -2737,7 +3093,6 @@
             <summary>
                 Handler para o comando de deletar um perfil
             </summary>
-            <param name="context"></param>
             <param name="storageProvider"></param>
             <param name="graphRepository"></param>
         </member>
@@ -2745,7 +3100,6 @@
             <summary>
                 Handler para o comando de deletar um perfil
             </summary>
-            <param name="context"></param>
             <param name="storageProvider"></param>
             <param name="graphRepository"></param>
         </member>
@@ -2756,6 +3110,17 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
         </member>
+        <member name="T:SocialService.Profile.DeleteProfile.DeleteProfileCommandValidator">
+            <summary>
+                Validador para o comando de deletar um perfil.
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para o comando de deletar um perfil.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Profile.EditProfile.EditProfileCommand">
             <summary>
                 Comando para editar um perfil
@@ -2764,7 +3129,7 @@
             <param name="birthDate"></param>
             <param name="bio"></param>
         </member>
-        <member name="M:SocialService.Profile.EditProfile.EditProfileCommand.#ctor(System.Nullable{SocialService.Profile.Common.Enums.EGender},System.Nullable{System.DateTime},System.String,System.String,System.String,System.String)">
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommand.#ctor(System.Nullable{SocialService.Profile.Common.Enums.EGender},System.Nullable{System.DateTime},System.String)">
             <summary>
                 Comando para editar um perfil
             </summary>
@@ -2780,21 +3145,6 @@
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.BirthDate">
             <summary>
                 Data de nascimento do perfil
-            </summary>
-        </member>
-        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.City">
-            <summary>
-                Cidade do perfil
-            </summary>
-        </member>
-        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.State">
-            <summary>
-                Estado do perfil
-            </summary>
-        </member>
-        <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Country">
-            <summary>
-                País do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.EditProfile.EditProfileCommand.Bio">
@@ -2820,6 +3170,16 @@
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
+        </member>
+        <member name="T:SocialService.Profile.EditProfile.EditProfileCommandValidator">
+            <summary>
+                Validador para o comando de editar um perfil
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandValidator.#ctor">
+            <summary>
+                Validação para o comando de editar um perfil
+            </summary>
         </member>
         <member name="T:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery">
             <summary>
@@ -2868,10 +3228,20 @@
             <summary>
                 Método para lidar com a query de obter fotos de perfil.
             </summary>
-            <param name="item"></param>
+            <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryValidator">
+            <summary>
+                Validador para a query de obter fotos de perfil.
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para a query de obter fotos de perfil.
+            </summary>
         </member>
         <member name="T:SocialService.Profile.GetProfilePictures.ProfilePicture">
             <summary>
@@ -2938,6 +3308,16 @@
         <member name="P:SocialService.Profile.Profile.Country">
             <summary>
                 País do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.Followers">
+            <summary>
+            Quantidade de seguidores do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.Following">
+            <summary>
+            Quantidade de pessoas que o perfil segue.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.ImageUrl">
@@ -3048,7 +3428,12 @@
         </member>
         <member name="T:SocialService.Profile.ProfileController">
             <summary>
-                Controller responsavel por gerenciar o perfil do usuario
+                Controller responsavel por gerenciar funções relacionadas ao perfil do usuario
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ProfileController.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Controller responsavel por gerenciar funções relacionadas ao perfil do usuario
             </summary>
         </member>
         <member name="M:SocialService.Profile.ProfileController.CreateProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},SocialService.Profile.CreateProfile.CreateProfileCommand,System.Threading.CancellationToken)">
@@ -3140,6 +3525,16 @@
         <member name="P:SocialService.Profile.ProfileDto.Country">
             <summary>
                 País do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileDto.Followers">
+            <summary>
+            Quantidade de seguidores do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileDto.Following">
+            <summary>
+            Quantidade de pessoas que o perfil segue.
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileDto.ImageUrl">
@@ -3237,13 +3632,13 @@
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
-            <param name="context"></param>
+            <param name="repository"></param>
         </member>
         <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
-            <param name="context"></param>
+            <param name="repository"></param>
         </member>
         <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.HandleAsync(SocialService.Profile.ViewProfile.ViewProfileQuery,System.Threading.CancellationToken)">
             <summary>
@@ -3252,6 +3647,17 @@
             <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Profile.ViewProfile.ViewProfileQueryValidator">
+            <summary>
+                Validador para a query de visualização de perfil
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para a query de visualização de perfil
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository">
             <summary>
@@ -3342,6 +3748,16 @@
             <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryValidator">
+            <summary>
+                Validador para a query de obter recomendações de amigos.
+            </summary>
+        </member>
+        <member name="M:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryValidator.#ctor">
+            <summary>
+                Validações para a query de obter recomendações de amigos.
+            </summary>
         </member>
         <member name="T:SocialService.Recommendation.RecomendationModule">
             <summary>

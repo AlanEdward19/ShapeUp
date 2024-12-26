@@ -33,6 +33,21 @@ public class Comment : GraphEntity
     ///     Id do perfil que fez o comentário
     /// </summary>
     public Guid ProfileId { get; private set; }
+    
+    /// <summary>
+    /// Primeiro nome do perfil que fez o comentário
+    /// </summary>
+    public string ProfileFirstName { get; private set; }
+    
+    /// <summary>
+    /// Sobrenome do perfil que fez o comentário
+    /// </summary>
+    public string ProfileLastName { get; private set; }
+    
+    /// <summary>
+    /// Url da imagem do perfil que fez o comentário
+    /// </summary>
+    public string ProfileImageUrl { get; private set; }
 
     /// <summary>
     ///     Id do post
@@ -58,6 +73,9 @@ public class Comment : GraphEntity
         ProfileId = Guid.Parse(result["profileId"].ToString());
         Content = result["content"].ToString();
         CreatedAt = DateTime.Parse(result["createdAt"].ToString());
+        ProfileFirstName = result["profileFirstName"].ToString();
+        ProfileLastName = result["profileLastName"].ToString();
+        ProfileImageUrl = result["profileImageUrl"].ToString();
 
         base.MapToEntityFromNeo4j(result);
     }
