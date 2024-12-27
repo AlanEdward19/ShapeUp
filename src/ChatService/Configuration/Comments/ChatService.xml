@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChatService</name>
+    </assembly>
+    <members>
+        <member name="T:ChatService.Chat.ChatModule">
+            <summary>
+                Modulo para resolver as dependências relacionadas a chats
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.ChatModule.ConfigureChatRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Método para resolver as dependências relacionadas a chats
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Common.Interfaces.IHandler`2">
+            <summary>
+                Interface para padronizar handlers.
+            </summary>
+            <typeparam name="TResponse"></typeparam>
+            <typeparam name="TItem"></typeparam>
+        </member>
+        <member name="M:ChatService.Common.Interfaces.IHandler`2.HandleAsync(`1,System.Threading.CancellationToken)">
+            <summary>
+                Método para lidar com operações.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.Authentication">
+            <summary>
+                Classe responsavel por configurar a autenticacao
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Metodo responsavel por configurar a autenticacao
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.EndpointsConfiguration">
+            <summary>
+                Configuração dos Endpoints
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.EndpointsConfiguration.MapEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Mapeia os endpoint.
+            </summary>
+            <param name="app">The app.</param>
+            <param name="configuration">The configuration.</param>
+            <returns>An IEndpointRouteBuilder.</returns>
+        </member>
+        <member name="M:ChatService.Configuration.EndpointsConfiguration.ConfigureEndpoints(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Configura os endpoints.
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter">
+            <summary>
+                Filtro para substituir a versão pela versão exata no path
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:ChatService.Configuration.Filters.VersionHeaderFilter">
+            <summary>
+                Filtro para remover o parâmetro de versão da documentação
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.Filters.VersionHeaderFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:ChatService.Configuration.MiddlewareConfiguration">
+            <summary>
+                Classe para configuração de middlewares
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.MiddlewareConfiguration.ConfigureMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar os middlewares
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.ServiceDependencies">
+            <summary>
+                Classe para resolver as dependências de serviços
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.ServiceDependencies.SolveServiceDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Método para resolver as dependências de serviços
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.SwaggerConfiguration">
+            <summary>
+                Classe para configuração do Swagger
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.SwaggerConfiguration.ConfigureSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar o Swagger
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Connections.ConnectionsModule">
+            <summary>
+                Modulo de conexões externas
+            </summary>
+        </member>
+        <member name="M:ChatService.Connections.ConnectionsModule.ConfigureConnections(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Método para configurar as conexões
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Middleware.ExceptionMiddleware">
+            <summary>
+                Middleware para tratamento de exceções
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ChatService.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{ChatService.Middleware.ExceptionMiddleware})">
+            <summary>
+                Middleware para tratamento de exceções
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ChatService.Middleware.ExceptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+                Método para invocar o middleware
+            </summary>
+            <param name="context"></param>
+        </member>
+    </members>
+</doc>
