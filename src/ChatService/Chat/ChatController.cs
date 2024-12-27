@@ -10,12 +10,12 @@ namespace ChatService.Chat;
 
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+// [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("[Controller]/v{version:apiVersion}")]
 public class ChatController : ControllerBase
 {
-    [HttpGet("messages/{profileId}")]
-    public async Task<IActionResult> GetMessages(Guid profileId,
+    [HttpGet("messages/getRecentMessages/{profileId}")]
+    public async Task<IActionResult> GetRecentMessages(Guid profileId,
         [FromServices] IHandler<IEnumerable<ChatMessage>, GetRecentMessagesQuery> handler,
         CancellationToken cancellationToken,
         [FromQuery] int page = 1)

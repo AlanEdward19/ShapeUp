@@ -93,7 +93,7 @@ public static class EndpointsConfiguration
 
             c.AddServer(new OpenApiServer
             {
-                Url = "http://localhost:5002",
+                Url = "http://localhost:5003",
                 Description = "Local"
             });
 
