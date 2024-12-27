@@ -30,7 +30,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Chat\Common\" />
       <Folder Include="Common\" />
       <Folder Include="Exceptions\" />
     </ItemGroup>

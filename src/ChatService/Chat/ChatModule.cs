@@ -1,4 +1,6 @@
-﻿using ChatService.Chat.Common.Repository;
+﻿using ChatService.Chat.Common;
+using ChatService.Chat.Common.Repository;
+using ChatService.Chat.GetMessages;
 using ChatService.Chat.GetRecentMessages;
 using ChatService.Chat.SendMessage;
 using ChatService.Common.Interfaces;
@@ -27,6 +29,7 @@ public static class ChatModule
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddScoped<IHandler<IEnumerable<ChatMessage>, GetRecentMessagesQuery>, GetRecentMessagesQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<ChatMessage>, GetMessagesQuery>, GetMessagesQueryHandler>();
         services.AddScoped<IHandler<bool, SendMessageCommand>, SendMessageCommandHandler>();
 
         return services;
