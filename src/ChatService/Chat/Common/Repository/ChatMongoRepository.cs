@@ -53,7 +53,7 @@ public class ChatMongoRepository(IMongoDatabase database, IConfiguration configu
     {
         return await _chatMessages
             .Find(message => (message.ReceiverId == userId && message.SenderId == otherUserId) || (message.ReceiverId == otherUserId && message.SenderId == userId))
-            .SortByDescending(message => message.Timestamp)
+            .SortBy(message => message.Timestamp)
             .Skip((page - 1) * 100)
             .Limit(100)
             .ToListAsync();

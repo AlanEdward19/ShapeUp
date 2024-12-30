@@ -1,5 +1,6 @@
 ﻿using ChatService.Chat.Common;
 using ChatService.Chat.Common.Repository;
+using ChatService.Chat.Common.Service;
 using ChatService.Chat.GetMessages;
 using ChatService.Chat.GetRecentMessages;
 using ChatService.Chat.SendMessage;
@@ -21,7 +22,8 @@ public static class ChatModule
     {
         services
             .AddRepositories()
-            .AddHandlers();
+            .AddHandlers()
+            .AddPublishers();
 
         return services;
     }
@@ -38,6 +40,13 @@ public static class ChatModule
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IChatMongoRepository, ChatMongoRepository>();
+
+        return services;
+    }
+    
+    private static IServiceCollection AddPublishers(this IServiceCollection services)
+    {
+        services.AddScoped<INotificationPublisher, NotificationPublisher>();
 
         return services;
     }

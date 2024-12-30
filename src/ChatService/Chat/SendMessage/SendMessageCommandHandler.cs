@@ -1,4 +1,7 @@
-﻿using ChatService.Chat.Common.Repository;
+﻿using ChatService.Chat.Common.Enum;
+using ChatService.Chat.Common.Event;
+using ChatService.Chat.Common.Repository;
+using ChatService.Chat.Common.Service;
 using ChatService.Common.Interfaces;
 
 namespace ChatService.Chat.SendMessage;
@@ -7,7 +10,8 @@ namespace ChatService.Chat.SendMessage;
 /// Handler para o comando de envio de mensagem
 /// </summary>
 /// <param name="repository"></param>
-public class SendMessageCommandHandler(IChatMongoRepository repository) : IHandler<bool, SendMessageCommand>
+public class SendMessageCommandHandler(IChatMongoRepository repository, INotificationPublisher notificationPublisher)
+    : IHandler<bool, SendMessageCommand>
 {
     /// <summary>
     /// Método para enviar uma mensagem
@@ -18,6 +22,15 @@ public class SendMessageCommandHandler(IChatMongoRepository repository) : IHandl
     public async Task<bool> HandleAsync(SendMessageCommand command, CancellationToken cancellationToken)
     {
         await repository.SendMessageAsync(command.SenderId, command.ReceiverId, command.Message);
+
+        NotificationEvent @event = new()
+        {
+            RecipientId = command.ReceiverId,
+            Topic = ENotificationTopic.Message,
+            Content = $"Você recebeu uma mensagem de {command.SenderId}"
+        };
+        
+        await notificationPublisher.PublishNotificationEventAsync(@event);
 
         return true;
     }

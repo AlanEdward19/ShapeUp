@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using StackExchange.Redis;
 
 namespace ChatService.Connections;
 
@@ -17,7 +18,8 @@ public static class ConnectionsModule
         IConfiguration configuration)
     {
         services
-            .ConfigureMongoDb(configuration);
+            .ConfigureMongoDb(configuration)
+            .ConfigureRedis(configuration);
 
         return services;
     }
@@ -31,6 +33,16 @@ public static class ConnectionsModule
             var client = new MongoClient(connectionString);
             return client.GetDatabase("chatMessages");
         });
+
+        return services;
+    }
+    
+    private static IServiceCollection ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
+    {
+        string connectionString = configuration.GetConnectionString("Redis")!;
+        
+        services.AddSingleton<IConnectionMultiplexer>(_ =>
+            ConnectionMultiplexer.Connect(connectionString));
 
         return services;
     }

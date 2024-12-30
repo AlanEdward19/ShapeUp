@@ -88,6 +88,31 @@
             <param name="encryptionKey"></param>
             <param name="message"></param>
         </member>
+        <member name="T:ChatService.Chat.Common.Event.NotificationEvent">
+            <summary>
+            Evento de notificação
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.RecipientId">
+            <summary>
+            Id do destinatário da notificação
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.Topic">
+            <summary>
+            Enum para tipos de notificações
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.Content">
+            <summary>
+            Breve descrição da notificação
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.Metadata">
+            <summary>
+            Dados adicionais relacionados à notificação
+            </summary>
+        </member>
         <member name="T:ChatService.Chat.Common.Repository.ChatMongoRepository">
             <summary>
             Repositório para mensagens de chat
@@ -305,7 +330,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:ChatService.Chat.SendMessage.SendMessageCommandHandler.#ctor(ChatService.Chat.Common.Repository.IChatMongoRepository)">
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommandHandler.#ctor(ChatService.Chat.Common.Repository.IChatMongoRepository,ChatService.Chat.Common.Service.INotificationPublisher)">
             <summary>
             Handler para o comando de envio de mensagem
             </summary>
