@@ -1,0 +1,491 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChatService</name>
+    </assembly>
+    <members>
+        <member name="T:ChatService.Chat.ChatController">
+            <summary>
+            Controlador para lidar com as requisições relacionadas a chat
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.ChatController.GetRecentMessages(ChatService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{ChatService.Chat.Common.ChatMessage},ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery},System.Threading.CancellationToken,System.Int32)">
+            <summary>
+            Rota para obter as mensagens recentes
+            </summary>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.ChatController.GetMessages(System.Guid,ChatService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{ChatService.Chat.Common.ChatMessage},ChatService.Chat.GetMessages.GetMessagesQuery},System.Threading.CancellationToken,System.Int32)">
+            <summary>
+            Rota para obter as mensagens entre dois perfis
+            </summary>
+            <param name="profileBId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.ChatController.SendMessage(ChatService.Chat.SendMessage.SendMessageCommand,ChatService.Common.Interfaces.IHandler{System.Boolean,ChatService.Chat.SendMessage.SendMessageCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para enviar uma mensagem
+            </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Chat.ChatModule">
+            <summary>
+                Modulo para resolver as dependências relacionadas a chats
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.ChatModule.ConfigureChatRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Método para resolver as dependências relacionadas a chats
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Chat.Common.ChatMessage">
+            <summary>
+            Classe para representar uma mensagem de chat
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.ChatMessage.Id">
+            <summary>
+            Id da mensagem
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.ChatMessage.SenderId">
+            <summary>
+            Id do perfil que enviou a mensagem
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.ChatMessage.ReceiverId">
+            <summary>
+            Id do perfil que recebeu a mensagem
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.ChatMessage.EncryptedMessage">
+            <summary>
+            Mensagem criptografada
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.Common.ChatMessage.Timestamp">
+            <summary>
+            Timestamp da mensagem
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.Common.ChatMessage.#ctor(System.Guid,System.Guid,System.String,System.String)">
+            <summary>
+            Construtor da classe
+            </summary>
+            <param name="senderId"></param>
+            <param name="receiverId"></param>
+            <param name="encryptionKey"></param>
+            <param name="message"></param>
+        </member>
+        <member name="T:ChatService.Chat.Common.Repository.ChatMongoRepository">
+            <summary>
+            Repositório para mensagens de chat
+            </summary>
+            <param name="database"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.#ctor(MongoDB.Driver.IMongoDatabase,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Repositório para mensagens de chat
+            </summary>
+            <param name="database"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.GetRecentMessagesAsync(System.String,System.Int32)">
+            <summary>
+            Método para obter mensagens recentes
+            </summary>
+            <param name="userId"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.GetMessagesAsync(System.String,System.String,System.Int32)">
+            <summary>
+            Método para obter mensagens entre dois perfis
+            </summary>
+            <param name="userId"></param>
+            <param name="otherUserId"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.SendMessageAsync(System.Guid,System.Guid,System.String)">
+            <summary>
+            Método para enviar uma mensagem
+            </summary>
+            <param name="senderId"></param>
+            <param name="receiverId"></param>
+            <param name="message"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:ChatService.Chat.Common.Repository.IChatMongoRepository">
+            <summary>
+            Interface para o repositório de chat
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.GetRecentMessagesAsync(System.String,System.Int32)">
+            <summary>
+            Método para obter mensagens recentes
+            </summary>
+            <param name="userId"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.GetMessagesAsync(System.String,System.String,System.Int32)">
+            <summary>
+            Método para obter mensagens entre dois perfis
+            </summary>
+            <param name="userId"></param>
+            <param name="otherUserId"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.SendMessageAsync(System.Guid,System.Guid,System.String)">
+            <summary>
+            Método para enviar mensagem
+            </summary>
+            <param name="senderId"></param>
+            <param name="receiverId"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Chat.GetMessages.GetMessagesQuery">
+            <summary>
+            Query para obter as mensagens
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.GetMessages.GetMessagesQuery.ProfileAId">
+            <summary>
+            Id do perfil A
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.GetMessages.GetMessagesQuery.ProfileBId">
+            <summary>
+            Id do perfil B
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.GetMessages.GetMessagesQuery.Page">
+            <summary>
+            Número da página
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetProfileAId(System.Guid)">
+            <summary>
+            Método para definir o Id do perfil A
+            </summary>
+            <param name="profileId"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetProfileBId(System.Guid)">
+            <summary>
+            Método para definir o Id do perfil B
+            </summary>
+            <param name="profileId"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetPage(System.Int32)">
+            <summary>
+            Método para definir a página
+            </summary>
+            <param name="page"></param>
+        </member>
+        <member name="T:ChatService.Chat.GetMessages.GetMessagesQueryHandler">
+            <summary>
+            Handler para a query de mensagens
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQueryHandler.#ctor(ChatService.Chat.Common.Repository.IChatMongoRepository)">
+            <summary>
+            Handler para a query de mensagens
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQueryHandler.HandleAsync(ChatService.Chat.GetMessages.GetMessagesQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter mensagens
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery">
+            <summary>
+            Query para obter as mensagens recentes
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.ProfileId">
+            <summary>
+            Id do perfil que deseja obter as mensagens
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.Page">
+            <summary>
+            Página que deseja obter as mensagens
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.SetProfileId(System.Guid)">
+            <summary>
+            Método para definir o Id do perfil que deseja obter as mensagens
+            </summary>
+            <param name="profileId"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.SetPage(System.Int32)">
+            <summary>
+            Método para definir a página que deseja obter as mensagens
+            </summary>
+            <param name="page"></param>
+        </member>
+        <member name="T:ChatService.Chat.GetRecentMessages.GetRecentMessagesQueryHandler">
+            <summary>
+            Handler para a query de mensagens recentes
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetRecentMessages.GetRecentMessagesQueryHandler.#ctor(ChatService.Chat.Common.Repository.IChatMongoRepository)">
+            <summary>
+            Handler para a query de mensagens recentes
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetRecentMessages.GetRecentMessagesQueryHandler.HandleAsync(ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter mensagens recentes
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Chat.SendMessage.SendMessageCommand">
+            <summary>
+            Comando para enviar uma mensagem
+            </summary>
+            <param name="receiverId"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.#ctor(System.Guid,System.String)">
+            <summary>
+            Comando para enviar uma mensagem
+            </summary>
+            <param name="receiverId"></param>
+            <param name="message"></param>
+        </member>
+        <member name="P:ChatService.Chat.SendMessage.SendMessageCommand.SenderId">
+            <summary>
+            Id do perfil que enviou a mensagem
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.SendMessage.SendMessageCommand.ReceiverId">
+            <summary>
+            Id do perfil que recebeu a mensagem
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.SendMessage.SendMessageCommand.Message">
+            <summary>
+            Mensagem a ser enviada
+            </summary>
+        </member>
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.SetSenderId(System.Guid)">
+            <summary>
+            Método para definir o Id do perfil que enviou a mensagem
+            </summary>
+            <param name="senderId"></param>
+        </member>
+        <member name="T:ChatService.Chat.SendMessage.SendMessageCommandHandler">
+            <summary>
+            Handler para o comando de envio de mensagem
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommandHandler.#ctor(ChatService.Chat.Common.Repository.IChatMongoRepository)">
+            <summary>
+            Handler para o comando de envio de mensagem
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommandHandler.HandleAsync(ChatService.Chat.SendMessage.SendMessageCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para enviar uma mensagem
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Common.Interfaces.IHandler`2">
+            <summary>
+                Interface para padronizar handlers.
+            </summary>
+            <typeparam name="TResponse"></typeparam>
+            <typeparam name="TItem"></typeparam>
+        </member>
+        <member name="M:ChatService.Common.Interfaces.IHandler`2.HandleAsync(`1,System.Threading.CancellationToken)">
+            <summary>
+                Método para lidar com operações.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.Authentication">
+            <summary>
+                Classe responsavel por configurar a autenticacao
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Metodo responsavel por configurar a autenticacao
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.EndpointsConfiguration">
+            <summary>
+                Configuração dos Endpoints
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.EndpointsConfiguration.MapEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Mapeia os endpoint.
+            </summary>
+            <param name="app">The app.</param>
+            <param name="configuration">The configuration.</param>
+            <returns>An IEndpointRouteBuilder.</returns>
+        </member>
+        <member name="M:ChatService.Configuration.EndpointsConfiguration.ConfigureEndpoints(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Configura os endpoints.
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter">
+            <summary>
+                Filtro para substituir a versão pela versão exata no path
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:ChatService.Configuration.Filters.VersionHeaderFilter">
+            <summary>
+                Filtro para remover o parâmetro de versão da documentação
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.Filters.VersionHeaderFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:ChatService.Configuration.MiddlewareConfiguration">
+            <summary>
+                Classe para configuração de middlewares
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.MiddlewareConfiguration.ConfigureMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar os middlewares
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.ServiceDependencies">
+            <summary>
+                Classe para resolver as dependências de serviços
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.ServiceDependencies.SolveServiceDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Método para resolver as dependências de serviços
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Configuration.SwaggerConfiguration">
+            <summary>
+                Classe para configuração do Swagger
+            </summary>
+        </member>
+        <member name="M:ChatService.Configuration.SwaggerConfiguration.ConfigureSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar o Swagger
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Connections.ConnectionsModule">
+            <summary>
+                Modulo de conexões externas
+            </summary>
+        </member>
+        <member name="M:ChatService.Connections.ConnectionsModule.ConfigureConnections(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Método para configurar as conexões
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Encryption.EncryptionService">
+            <summary>
+            Serviço de criptografia para criptografar e descriptografar textos.
+            </summary>
+        </member>
+        <member name="F:ChatService.Encryption.EncryptionService.InitializationVector">
+            <summary>
+            Vetor de inicialização para o algoritmo de criptografia.
+            </summary>
+        </member>
+        <member name="M:ChatService.Encryption.EncryptionService.Encrypt(System.String,System.Byte[])">
+            <summary>
+            Método para criptografar um texto.
+            </summary>
+            <param name="plainText"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Encryption.EncryptionService.Decrypt(System.String,System.Byte[])">
+            <summary>
+            Método para descriptografar um texto.
+            </summary>
+            <param name="encryptedText"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatService.Middleware.ExceptionMiddleware">
+            <summary>
+                Middleware para tratamento de exceções
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ChatService.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{ChatService.Middleware.ExceptionMiddleware})">
+            <summary>
+                Middleware para tratamento de exceções
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ChatService.Middleware.ExceptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+                Método para invocar o middleware
+            </summary>
+            <param name="context"></param>
+        </member>
+    </members>
+</doc>
