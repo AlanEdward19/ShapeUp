@@ -3451,6 +3451,15 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Profile.ProfileController.ViewProfileSimplified(System.Guid,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileSimplifiedDto,SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery},System.Threading.CancellationToken)">
+            <summary>
+                Rota para visualizar um perfil simplificado
+            </summary>
+            <param name="profileId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Profile.ProfileController.EditProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.EditProfile.EditProfileCommand},SocialService.Profile.EditProfile.EditProfileCommand,System.Threading.CancellationToken)">
             <summary>
                 Rota para editar um perfil
@@ -3569,6 +3578,33 @@
             <param name="services"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Profile.ProfileSimplifiedDto">
+            <summary>
+                Objeto de transferência de dados do perfil
+            </summary>
+            <param name="profile"></param>
+        </member>
+        <member name="M:SocialService.Profile.ProfileSimplifiedDto.#ctor(SocialService.Profile.Profile)">
+            <summary>
+                Objeto de transferência de dados do perfil
+            </summary>
+            <param name="profile"></param>
+        </member>
+        <member name="P:SocialService.Profile.ProfileSimplifiedDto.Id">
+            <summary>
+                Id do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileSimplifiedDto.FirstName">
+            <summary>
+                Primeiro nome do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileSimplifiedDto.LastName">
+            <summary>
+                Sobrenome do perfil
+            </summary>
+        </member>
         <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand">
             <summary>
                 Comando para upload de foto de perfil.
@@ -3612,6 +3648,52 @@
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
+        </member>
+        <member name="T:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery">
+            <summary>
+                Query para visualização de perfil.
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery.#ctor(System.Guid)">
+            <summary>
+                Query para visualização de perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery.ProfileId">
+            <summary>
+                Id do perfil.
+            </summary>
+        </member>
+        <member name="T:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryHandler">
+            <summary>
+                Handler para a query de visualização de perfil.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Handler para a query de visualização de perfil.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryHandler.HandleAsync(SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery,System.Threading.CancellationToken)">
+            <summary>
+                Método para lidar com a query de visualização de perfil.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryValidator">
+            <summary>
+                Validador para a query de visualização de perfil
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para a query de visualização de perfil
+            </summary>
+            <param name="repository"></param>
         </member>
         <member name="T:SocialService.Profile.ViewProfile.ViewProfileQuery">
             <summary>

@@ -5,6 +5,7 @@ using SocialService.Profile.EditProfile;
 using SocialService.Profile.GetProfilePictures;
 using SocialService.Profile.UploadProfilePicture;
 using SocialService.Profile.ViewProfile;
+using SocialService.Profile.ViewProfileSimplified;
 
 namespace SocialService.Profile;
 
@@ -58,6 +59,28 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         ViewProfileQuery query = new(profileId);
 
         ViewProfileQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
+    /// <summary>
+    ///     Rota para visualizar um perfil simplificado
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("viewProfile/{profileId:guid}/simplified")]
+    public async Task<IActionResult> ViewProfileSimplified(Guid profileId,
+        [FromServices] IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+
+        ViewProfileSimplifiedQuery query = new(profileId);
+
+        ViewProfileSimplifiedQueryValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
