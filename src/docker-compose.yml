@@ -8,13 +8,13 @@ services:
     build:
       context: .
       dockerfile: SocialService/Dockerfile
-    
+
     networks:
       - internal-network
-    
+
     environment:
       ASPNETCORE_URLS: "https://+:5000"
-    
+
     ports:
       - "5000:5000"
 
@@ -31,7 +31,7 @@ services:
       - "27017:27017"
     volumes:
       - ../volumes/mongo_data:/data/db
-      
+
   storage:
     container_name: 'Storage'
     image: mcr.microsoft.com/azure-storage/azurite:latest
@@ -45,6 +45,14 @@ services:
       - ../volumes/azure_data:/data
     networks:
       - internal-network
+
+  redis:
+    image: redis:latest
+    container_name: Redis
+    networks:
+      - internal-network
+    ports:
+      - "6379:6379"
 
 networks:
   internal-network:
