@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.AspNetCore.SignalR;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
@@ -9,10 +10,11 @@ namespace ChatService.Chat.Common.Repository;
 /// </summary>
 /// <param name="database"></param>
 /// <param name="configuration"></param>
-public class ChatMongoRepository(IMongoDatabase database, IConfiguration configuration) : IChatMongoRepository
+public class ChatMongoRepository(IMongoDatabase database, IHubContext<ChatHub> hubContext, IConfiguration configuration)
+    : IChatMongoRepository
 {
     private readonly IMongoCollection<ChatMessage> _chatMessages = database.GetCollection<ChatMessage>("chatMessages");
-    
+
     /// <summary>
     /// Método para obter mensagens recentes
     /// </summary>
@@ -24,15 +26,25 @@ public class ChatMongoRepository(IMongoDatabase database, IConfiguration configu
         var result = await _chatMessages
             .Aggregate()
             .Match(message => message.ReceiverId == userId || message.SenderId == userId)
+            .Sort(new BsonDocument("Timestamp", -1))
             .Group(
                 new BsonDocument
                 {
                     { "_id", new BsonDocument
                         {
-                            { "Participants", new BsonArray { "$SenderId", "$ReceiverId" } }
+                            { "Participants", new BsonArray 
+                                { 
+                                    new BsonDocument("$cond", new BsonArray 
+                                    { 
+                                        new BsonDocument("$lt", new BsonArray { "$SenderId", "$ReceiverId" }), 
+                                        new BsonArray { "$SenderId", "$ReceiverId" }, 
+                                        new BsonArray { "$ReceiverId", "$SenderId" } 
+                                    }) 
+                                } 
+                            }
                         }
                     },
-                    { "LastMessage", new BsonDocument("$last", "$$ROOT") }
+                    { "LastMessage", new BsonDocument("$first", "$$ROOT") }
                 })
             .Sort(new BsonDocument("LastMessage.Timestamp", -1))
             .Skip((page - 1) * 20)
@@ -41,7 +53,7 @@ public class ChatMongoRepository(IMongoDatabase database, IConfiguration configu
 
         return result.Select(group => BsonSerializer.Deserialize<ChatMessage>(group["LastMessage"].AsBsonDocument));
     }
-    
+
     /// <summary>
     /// Método para obter mensagens entre dois perfis
     /// </summary>
@@ -52,8 +64,9 @@ public class ChatMongoRepository(IMongoDatabase database, IConfiguration configu
     public async Task<IEnumerable<ChatMessage>> GetMessagesAsync(string userId, string otherUserId, int page)
     {
         return await _chatMessages
-            .Find(message => (message.ReceiverId == userId && message.SenderId == otherUserId) || (message.ReceiverId == otherUserId && message.SenderId == userId))
-            .SortBy(message => message.Timestamp)
+            .Find(message => (message.ReceiverId == userId && message.SenderId == otherUserId) ||
+                             (message.ReceiverId == otherUserId && message.SenderId == userId))
+            .SortByDescending(message => message.Timestamp)
             .Skip((page - 1) * 100)
             .Limit(100)
             .ToListAsync();
@@ -70,7 +83,9 @@ public class ChatMongoRepository(IMongoDatabase database, IConfiguration configu
     {
         string encryptionKey = configuration["EncryptionKey"] ?? throw new ArgumentNullException("EncryptionKey");
         ChatMessage chatMessage = new(senderId, receiverId, encryptionKey, message);
-        
+
         await _chatMessages.InsertOneAsync(chatMessage);
+        
+        await hubContext.Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", chatMessage);
     }
 }

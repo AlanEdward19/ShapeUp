@@ -1,4 +1,5 @@
 using System.Globalization;
+using ChatService.Chat;
 using ChatService.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,9 +28,14 @@ var app = builder.Build();
 // Use CORS policy
 app.UseCors("AllowSpecificOrigins");
 
+app.MapHub<ChatHub>("/chat");
+
 app.ConfigureSwagger();
 app.MapEndpoints(configuration);
 app.ConfigureMiddleware();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 app.Logger.LogInformation("Application instance is ready to handle incoming requests");

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using System.Collections.Concurrent;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Identity.Web;
 using NotificationService.Notification.Common.Service;
 
@@ -6,13 +7,15 @@ namespace NotificationService.Notification.Common;
 
 public class NotificationHub(INotificationService notificationService) : Hub
 {
+    private static readonly ConcurrentDictionary<string, string> ConnectedUsers = new();
+    
     public override async Task OnConnectedAsync()
     {
         var userId = Context.GetHttpContext().Request.Query["userId"].ToString();
         
         if (!string.IsNullOrEmpty(userId))
         {
-            // Adicionar conexão do usuário ao grupo
+            ConnectedUsers[Context.ConnectionId] = userId;
             await Groups.AddToGroupAsync(Context.ConnectionId, userId);
 
             // Recuperar notificações pendentes e enviar
@@ -26,11 +29,14 @@ public class NotificationHub(INotificationService notificationService) : Hub
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        var userId = Context.User!.GetObjectId();
-        
-        if (!string.IsNullOrEmpty(userId))
+        if (ConnectedUsers.TryRemove(Context.ConnectionId, out var userId))
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, userId);
 
         await base.OnDisconnectedAsync(exception);
+    }
+    
+    public static bool IsUserConnected(string userId)
+    {
+        return ConnectedUsers.Values.Contains(userId);
     }
 }

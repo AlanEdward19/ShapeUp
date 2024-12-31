@@ -120,7 +120,7 @@
             <param name="database"></param>
             <param name="configuration"></param>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.#ctor(MongoDB.Driver.IMongoDatabase,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.#ctor(MongoDB.Driver.IMongoDatabase,Microsoft.AspNetCore.SignalR.IHubContext{ChatService.Chat.ChatHub},Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Repositório para mensagens de chat
             </summary>

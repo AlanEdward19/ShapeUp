@@ -19,7 +19,8 @@ public static class ConnectionsModule
     {
         services
             .ConfigureMongoDb(configuration)
-            .ConfigureRedis(configuration);
+            .ConfigureRedis(configuration)
+            .AddSignalR();
 
         return services;
     }

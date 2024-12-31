@@ -10,12 +10,14 @@ public class NotificationService(IHubContext<NotificationHub> hubContext, IConne
     
     public async Task PublishNotificationAsync(Guid userId, string message)
     {
-        // Enviar para usuários online
-        await hubContext.Clients.Group(userId.ToString()).SendAsync("ReceiveNotification", message);
-
-        // Salvar no Redis para usuários offline
-        var db = redis.GetDatabase();
-        await db.ListRightPushAsync($"notifications:{userId}", JsonSerializer.Serialize(message));
+        if (NotificationHub.IsUserConnected(userId.ToString()))
+            await hubContext.Clients.Group(userId.ToString()).SendAsync("ReceiveNotification", message);
+        
+        else
+        {
+            var db = redis.GetDatabase();
+            await db.ListRightPushAsync($"notifications:{userId}", JsonSerializer.Serialize(message));
+        }
     }
     
     public async Task<List<string>> GetPendingNotificationsAsync(Guid userId)
