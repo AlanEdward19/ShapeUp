@@ -17,9 +17,14 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
     public async Task<IEnumerable<Post.Post>> BuildActivityFeed(GetActivityFeedQuery query, Guid profileId)
     {
         var cypherQuery = $@"
-    MATCH (profile:Profile {{id: '{profileId}'}})-[:FOLLOWING|FRIEND]->(friend:Profile)-[:PUBLISHED_BY]->(post:Post)
+    MATCH (profile:Profile {{id: '{profileId}'}})
+    MATCH (friend:Profile)-[:PUBLISHED_BY]->(post:Post)
+    WHERE ((post.visibility = 'Public' AND (profile)-[:FOLLOWING|FRIEND]->(friend)) OR
+           (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(friend)) OR
+           (post.visibility = 'Private' AND friend.id = '{profileId}') OR
+           ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND friend.id = '{profileId}'))
     RETURN post, friend.id AS publisherId, friend.firstName as publisherFirstName, friend.lastName as publisherLastName, friend.imageUrl as publisherImageUrl
-    ORDER BY rand()
+    ORDER BY post.creationDate DESC, rand()
     SKIP {(query.Page - 1) * query.Rows}
     LIMIT {query.Rows}";
 
