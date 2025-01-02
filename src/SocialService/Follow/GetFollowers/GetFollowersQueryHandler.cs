@@ -10,7 +10,8 @@ namespace SocialService.Follow.GetFollowers;
 /// <param name="graphRepository"></param>
 public class GetFollowersQueryHandler(
     IProfileGraphRepository profileGraphRepository,
-    IFollowerGraphRepository graphRepository)
+    IFollowerGraphRepository graphRepository,
+    IStorageProvider storageProvider)
     : IHandler<IEnumerable<ProfileBasicInformation>, GetFollowersQuery>
 {
     /// <summary>
@@ -30,9 +31,17 @@ public class GetFollowersQueryHandler(
             .ToList();
 
         var profiles = await profileGraphRepository.GetProfilesAsync(pagedFollowersIds);
+        List<ProfileBasicInformation> result = new(profiles.Count());
 
-        return profiles
-            .Select(x => new ProfileBasicInformation(x.FirstName, x.LastName, x.Id))
-            .ToList();
+        foreach (var profile in profiles)
+        {
+            string imageUrl = string.IsNullOrWhiteSpace(profile.ImageUrl)
+                ? string.Empty
+                : storageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}");
+
+            result.Add(new ProfileBasicInformation(profile.FirstName, profile.LastName, profile.Id, imageUrl));
+        }
+
+        return result;
     }
 }

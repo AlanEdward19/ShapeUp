@@ -32,6 +32,14 @@ public interface IStorageProvider
     /// <param name="containerName"></param>
     /// <returns></returns>
     Task WriteBlobAsync(MemoryStream data, string blobName, string containerName);
+    
+    /// <summary>
+    /// Método para gerar uma URL autenticada
+    /// </summary>
+    /// <param name="blobName"></param>
+    /// <param name="containerName"></param>
+    /// <returns></returns>
+    string GenerateAuthenticatedUrl(string blobName, string containerName);
 
     /// <summary>
     ///     Método para criar uma pasta

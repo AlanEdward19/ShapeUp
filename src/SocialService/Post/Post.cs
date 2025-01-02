@@ -24,7 +24,7 @@ public class Post : GraphEntity
         Id = Guid.NewGuid();
         UpdateVisibility(command.Visibility);
         UpdateContent(command.Content);
-        Images = new List<Guid>();
+        Images = new List<string>();
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
@@ -67,7 +67,7 @@ public class Post : GraphEntity
     /// <summary>
     ///     Ids das imagens do post
     /// </summary>
-    public IEnumerable<Guid> Images { get; private set; }
+    public IEnumerable<string> Images { get; private set; }
 
     /// <summary>
     ///     Conteúdo do post.
@@ -91,11 +91,11 @@ public class Post : GraphEntity
 
         if (result.ContainsKey("images"))
             Images = result["images"] == null
-                ? new List<Guid>()
-                : ((List<object>)result["images"]).Select(id => Guid.Parse(id.ToString()!)).ToList();
+                ? new List<string>()
+                : ((List<object>)result["images"]).Select(id => id.ToString()!).ToList();
 
         else
-            Images = new List<Guid>();
+            Images = new List<string>();
 
         base.MapToEntityFromNeo4j(result);
     }

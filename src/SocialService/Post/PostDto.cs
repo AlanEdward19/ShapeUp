@@ -39,12 +39,24 @@ public class PostDto(Post post)
     public EPostVisibility Visibility { get; private set; } = post.Visibility;
 
     /// <summary>
-    ///     Ids das imagens do post.
+    ///     Urls das imagens do post.
     /// </summary>
-    public IEnumerable<Guid> Images { get; private set; } = post.Images;
+    public List<string> Images { get; private set; } = post.Images.ToList();
 
     /// <summary>
     ///     Conteúdo do post.
     /// </summary>
     public string Content { get; private set; } = post.Content;
+    
+    /// <summary>
+    /// Método para setar as imagens do post.
+    /// </summary>
+    /// <param name="images"></param>
+    public void SetImages(IEnumerable<string> images) =>Images = images.ToList();
+    
+    /// <summary>
+    /// Método para setar a url da imagem do perfil que publicou o post.
+    /// </summary>
+    /// <param name="imageUrl"></param>
+    public void SetPublisherImageUrl(string imageUrl) => PublisherImageUrl = imageUrl;
 }

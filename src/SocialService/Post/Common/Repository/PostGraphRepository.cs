@@ -29,10 +29,10 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
 
         var post = new Post();
         var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        parsedDictionary.Add("publisherId", record["publisherId"].ToString());
-        parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
-        parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
-        parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
+        parsedDictionary.Add("publisherId", record["publisherId"].ToString()!);
+        parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString()!);
+        parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString()!);
+        parsedDictionary.Add("publisherImageUrl", (record["publisherImageUrl"] ?? "").ToString()!);
         post.MapToEntityFromNeo4j(parsedDictionary);
 
         return post;
@@ -95,9 +95,9 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="images"></param>
-    public async Task UploadPostImagesAsync(Guid postId, List<Guid> images)
+    public async Task UploadPostImagesAsync(Guid postId, List<string> images)
     {
-        var imagesString = string.Join(",", images.Select(id => $"'{id}'"));
+        var imagesString = string.Join(",", images.Select(url => $"'{url}'"));
         var query = $@"
     MATCH (post:Post {{id: '{postId}'}})
     SET post.images = [{imagesString}]

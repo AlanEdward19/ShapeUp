@@ -41,8 +41,10 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
                     await foreach (var fileItem in containerClient.GetBlobsByHierarchyAsync(prefix: folderName + "/"))
                         if (fileItem.IsBlob)
                         {
-                            var imagePath = fileItem.Blob.Name;
-                            profilePictures.Add(new ProfilePicture(imagePath, createdAt));
+                            var blobClient = containerClient.GetBlobClient(fileItem.Blob.Name);
+                            var imageUrl = blobClient.Uri.ToString();
+                            
+                            profilePictures.Add(new ProfilePicture(imageUrl, createdAt));
                         }
             }
 
@@ -98,6 +100,26 @@ public class StorageProvider(string connectionString, ILogger<StorageProvider> l
         data.Position = 0;
 
         await blobClient.UploadAsync(data, true);
+    }
+
+    /// <summary>
+    /// Método para gerar uma URL autenticada
+    /// </summary>
+    /// <param name="blobName"></param>
+    /// <param name="containerName"></param>
+    /// <returns></returns>
+    public string GenerateAuthenticatedUrl(string blobName, string containerName)
+    {
+        blobName = SanitizeName(blobName, true);
+        containerName = SanitizeName(containerName);
+        
+        var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+        
+        var blobClient = containerClient.GetBlobClient(blobName);
+        
+        var sasToken = blobClient.GenerateSasUri(Azure.Storage.Sas.BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddMinutes(10));
+        
+        return sasToken.ToString();
     }
 
     /// <summary>

@@ -20,17 +20,17 @@ public class UploadPostImageCommandHandler(IPostGraphRepository repository, ISto
     /// <exception cref="NotFoundException"></exception>
     public async Task<bool> HandleAsync(UploadPostImageCommand command, CancellationToken cancellationToken)
     {
-        List<Guid> images = new();
+        List<string> images = new();
 
         var containerName = $"{ProfileContext.ProfileId}";
 
         foreach (var image in command.Images)
         {
-            Guid id = Guid.NewGuid();
-            var blobName = $"post-images/{command.PostId}/{id}.{image.imageName.Split('.').Last()}";
+            var blobName = $"post-images/{command.PostId}/{Guid.NewGuid()}.{image.imageName.Split('.').Last()}";
 
             await storageProvider.WriteBlobAsync(image.fileContent, blobName, containerName);
-            images.Add(id);
+            
+            images.Add(blobName);
         }
 
         await repository.UploadPostImagesAsync(command.PostId, images);

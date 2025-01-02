@@ -22,4 +22,15 @@ public class ProfileSimplifiedDto(Profile profile)
     ///     Sobrenome do perfil
     /// </summary>
     public string LastName { get; private set; } = profile.LastName;
+    
+    /// <summary>
+    /// Url da imagem do perfil.
+    /// </summary>
+    public string ImageUrl { get; private set; } = profile.ImageUrl;
+    
+    /// <summary>
+    /// Método para setar a url da imagem do perfil.
+    /// </summary>
+    /// <param name="imageUrl"></param>
+    public void SetImageUrl(string imageUrl) => ImageUrl = imageUrl;
 }

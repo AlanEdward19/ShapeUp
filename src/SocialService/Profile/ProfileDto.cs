@@ -72,4 +72,10 @@ public class ProfileDto(Profile profile)
     ///     Gênero do perfil
     /// </summary>
     public EGender Gender { get; private set; } = profile.Gender;
+    
+    /// <summary>
+    /// Método para setar a url da imagem do perfil.
+    /// </summary>
+    /// <param name="imageUrl"></param>
+    public void SetImageUrl(string imageUrl) => ImageUrl = imageUrl;
 }

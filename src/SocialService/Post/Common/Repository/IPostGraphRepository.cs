@@ -45,7 +45,7 @@ public interface IPostGraphRepository
     /// <param name="postId"></param>
     /// <param name="images"></param>
     /// <returns></returns>
-    Task UploadPostImagesAsync(Guid postId, List<Guid> images);
+    Task UploadPostImagesAsync(Guid postId, List<string> images);
 
     /// <summary>
     ///     Método que deleta um post

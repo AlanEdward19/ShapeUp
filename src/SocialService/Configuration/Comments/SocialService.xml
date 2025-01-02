@@ -84,7 +84,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.#ctor(SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository)">
+        <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.#ctor(SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para obter o feed de atividades.
             </summary>
@@ -144,13 +144,14 @@
                 ViewModel para informações básicas de um perfil.
             </summary>
         </member>
-        <member name="M:SocialService.Common.Models.ProfileBasicInformation.#ctor(System.String,System.String,System.Guid)">
+        <member name="M:SocialService.Common.Models.ProfileBasicInformation.#ctor(System.String,System.String,System.Guid,System.String)">
             <summary>
                 Construtor
             </summary>
             <param name="firstName"></param>
             <param name="lastName"></param>
             <param name="profileId"></param>
+            <param name="imageUrl"></param>
         </member>
         <member name="P:SocialService.Common.Models.ProfileBasicInformation.FirstName">
             <summary>
@@ -165,6 +166,11 @@
         <member name="P:SocialService.Common.Models.ProfileBasicInformation.ProfileId">
             <summary>
                 Id do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.Models.ProfileBasicInformation.ImageUrl">
+            <summary>
+            Url da imagem do perfil.
             </summary>
         </member>
         <member name="T:SocialService.Common.ProfileContext">
@@ -393,6 +399,14 @@
             <param name="containerName"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Connections.Storage.IStorageProvider.GenerateAuthenticatedUrl(System.String,System.String)">
+            <summary>
+            Método para gerar uma URL autenticada
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Connections.Storage.IStorageProvider.CreateFolderAsync(System.String,System.String)">
             <summary>
                 Método para criar uma pasta
@@ -472,6 +486,14 @@
             <param name="data"></param>
             <param name="blobName"></param>
             <param name="containerName"></param>
+        </member>
+        <member name="M:SocialService.Connections.Storage.StorageProvider.GenerateAuthenticatedUrl(System.String,System.String)">
+            <summary>
+            Método para gerar uma URL autenticada
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
         </member>
         <member name="M:SocialService.Connections.Storage.StorageProvider.CreateFolderAsync(System.String,System.String)">
             <summary>
@@ -764,7 +786,7 @@
             <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
+        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para obter os seguidores de um perfil.
             </summary>
@@ -835,7 +857,7 @@
             <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
+        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para obter os perfis seguidos de um perfil
             </summary>
@@ -1436,7 +1458,7 @@
             <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.Friendship.ListFriends.ListFriendsQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+        <member name="M:SocialService.Friends.Friendship.ListFriends.ListFriendsQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para a query de listagem de amigos.
             </summary>
@@ -1913,7 +1935,7 @@
             <param name="post"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.Guid})">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.String})">
             <summary>
                 Método que adiciona imagens a um post
             </summary>
@@ -2031,7 +2053,7 @@
             </summary>
             <param name="post"></param>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.Guid})">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.UploadPostImagesAsync(System.Guid,System.Collections.Generic.List{System.String})">
             <summary>
                 Método que adiciona imagens a um post
             </summary>
@@ -2276,7 +2298,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.GetPost.GetPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.GetPost.GetPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para a query de informações de um post
             </summary>
@@ -2551,13 +2573,25 @@
         </member>
         <member name="P:SocialService.Post.PostDto.Images">
             <summary>
-                Ids das imagens do post.
+                Urls das imagens do post.
             </summary>
         </member>
         <member name="P:SocialService.Post.PostDto.Content">
             <summary>
                 Conteúdo do post.
             </summary>
+        </member>
+        <member name="M:SocialService.Post.PostDto.SetImages(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Método para setar as imagens do post.
+            </summary>
+            <param name="images"></param>
+        </member>
+        <member name="M:SocialService.Post.PostDto.SetPublisherImageUrl(System.String)">
+            <summary>
+            Método para setar a url da imagem do perfil que publicou o post.
+            </summary>
+            <param name="imageUrl"></param>
         </member>
         <member name="T:SocialService.Post.PostModule">
             <summary>
@@ -3253,7 +3287,7 @@
                 Classe para representar uma foto de perfil.
             </summary>
         </member>
-        <member name="P:SocialService.Profile.GetProfilePictures.ProfilePicture.ImagePath">
+        <member name="P:SocialService.Profile.GetProfilePictures.ProfilePicture.ImageUrl">
             <summary>
                 Caminho da imagem.
             </summary>
@@ -3566,6 +3600,12 @@
                 Gênero do perfil
             </summary>
         </member>
+        <member name="M:SocialService.Profile.ProfileDto.SetImageUrl(System.String)">
+            <summary>
+            Método para setar a url da imagem do perfil.
+            </summary>
+            <param name="imageUrl"></param>
+        </member>
         <member name="T:SocialService.Profile.ProfileModule">
             <summary>
                 Modulo para resolver as dependências relacionadas a perfil
@@ -3604,6 +3644,17 @@
             <summary>
                 Sobrenome do perfil
             </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileSimplifiedDto.ImageUrl">
+            <summary>
+            Url da imagem do perfil.
+            </summary>
+        </member>
+        <member name="M:SocialService.Profile.ProfileSimplifiedDto.SetImageUrl(System.String)">
+            <summary>
+            Método para setar a url da imagem do perfil.
+            </summary>
+            <param name="imageUrl"></param>
         </member>
         <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand">
             <summary>
@@ -3670,7 +3721,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
@@ -3716,7 +3767,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
