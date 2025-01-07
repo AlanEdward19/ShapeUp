@@ -17,6 +17,16 @@ public interface IPostGraphRepository
     Task<Post> GetPostAsync(Guid postId);
 
     /// <summary>
+    /// Método que retorna os posts de um perfil
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="requesterId"></param>
+    /// <param name="page"></param>
+    /// <param name="rows"></param>
+    /// <returns></returns>
+    Task<IEnumerable<Post>> GetPostsByProfileIdAsync(Guid profileId, Guid requesterId, int page, int rows);
+
+    /// <summary>
     ///     Método que verifica se um post existe
     /// </summary>
     /// <param name="postId"></param>

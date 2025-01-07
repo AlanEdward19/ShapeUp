@@ -1912,6 +1912,16 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostsByProfileIdAsync(System.Guid,System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Método que retorna os posts de um perfil
+            </summary>
+            <param name="profileId"></param>
+            <param name="requesterId"></param>
+            <param name="page"></param>
+            <param name="rows"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.PostExistsAsync(System.Guid)">
             <summary>
                 Método que verifica se um post existe
@@ -2031,6 +2041,16 @@
                 Método que retorna um post
             </summary>
             <param name="postId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostsByProfileIdAsync(System.Guid,System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Método que retorna os posts de um perfil
+            </summary>
+            <param name="profileId"></param>
+            <param name="requesterId"></param>
+            <param name="page"></param>
+            <param name="rows"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.PostExistsAsync(System.Guid)">
@@ -2276,6 +2296,70 @@
             </summary>
             <param name="repository"></param>
         </member>
+        <member name="T:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery">
+            <summary>
+            Query para obter os posts de um perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery.ProfileId">
+            <summary>
+            Id do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery.Page">
+            <summary>
+            Número da página
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery.Rows">
+            <summary>
+            Quantidade de linhas
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Construtor da query de busca de post
+            </summary>
+            <param name="page"></param>
+            <param name="rows"></param>
+        </member>
+        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery.SetProfileId(System.Guid)">
+            <summary>
+            Método para setar o id do perfil
+            </summary>
+            <param name="profileId"></param>
+        </member>
+        <member name="T:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQueryHandler">
+            <summary>
+                Handler para a query de obter posts pelo id do perfil
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+            <summary>
+                Handler para a query de obter posts pelo id do perfil
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQueryHandler.HandleAsync(SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery,System.Threading.CancellationToken)">
+            <summary>
+                Método para obter os posts de um perfil
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQueryValidator">
+            <summary>
+                Validador para a query de busca de post.
+            </summary>
+        </member>
+        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+            <summary>
+                Validações para a query de busca de post.
+            </summary>
+            <param name="repository"></param>
+        </member>
         <member name="T:SocialService.Post.GetPost.GetPostQuery">
             <summary>
                 Query para buscar um post
@@ -2423,6 +2507,18 @@
             <param name="handler"></param>
             <param name="id"></param>
             <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.PostController.GetPostsByProfileId(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.PostDto},SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery},SocialService.Profile.Common.Repository.IProfileGraphRepository,System.Guid,System.Threading.CancellationToken,System.Int32,System.Int32)">
+            <summary>
+                Rota para pegar informações dos posts feitos por um perfil
+            </summary>
+            <param name="handler"></param>
+            <param name="profileGraphRepository"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <param name="page"></param>
+            <param name="rows"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.PostController.CreatePost(SocialService.Common.Interfaces.IHandler{SocialService.Post.PostDto,SocialService.Post.CreatePost.CreatePostCommand},SocialService.Post.CreatePost.CreatePostCommand,System.Threading.CancellationToken)">

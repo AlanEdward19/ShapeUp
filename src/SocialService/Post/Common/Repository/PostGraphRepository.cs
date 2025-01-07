@@ -39,6 +39,47 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     }
 
     /// <summary>
+    /// Método que retorna os posts de um perfil
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="requesterId"></param>
+    /// <param name="page"></param>
+    /// <param name="rows"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(Guid profileId, Guid requesterId, int page, int rows)
+    {
+        var skip = (page - 1) * rows;
+        var cypherQuery = $@"
+    MATCH (profile:Profile {{id: '{profileId}'}})
+    MATCH (post:Post)<-[:PUBLISHED_BY]-(publisher:Profile)
+    WHERE publisher.id = '{profileId}' AND
+          ((post.visibility = 'Public') OR
+           (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(publisher)) OR
+           (post.visibility = 'Private' AND publisher.id = '{requesterId}') OR
+           ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND publisher.id = '{requesterId}'))
+    RETURN post, publisher.id AS publisherId, publisher.firstName as publisherFirstName, publisher.lastName as publisherLastName, publisher.imageUrl as publisherImageUrl
+    ORDER BY post.creationDate DESC
+    SKIP {skip}
+    LIMIT {rows}";
+
+        var result = await graphContext.ExecuteQueryAsync(cypherQuery);
+
+        var posts = result.Select(record =>
+        {
+            var post = new Post();
+            var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            parsedDictionary.Add("publisherId", record["publisherId"].ToString());
+            parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
+            parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
+            parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
+            post.MapToEntityFromNeo4j(parsedDictionary);
+            return post;
+        }).ToList();
+
+        return posts;
+    }
+
+    /// <summary>
     ///     Método que verifica se um post existe
     /// </summary>
     /// <param name="postId"></param>
@@ -192,7 +233,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
             parsedDictionary.Add("profileFirstName", record["profileFirstName"].ToString()!);
             parsedDictionary.Add("profileLastName", record["profileLastName"].ToString()!);
             parsedDictionary.Add("profileImageUrl", record["profileImageUrl"].ToString()!);
-            
+
             comment.MapToEntityFromNeo4j(parsedDictionary);
 
             comments.Add(comment);

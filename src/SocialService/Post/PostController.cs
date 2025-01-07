@@ -7,11 +7,13 @@ using SocialService.Post.CreatePost;
 using SocialService.Post.DeletePost;
 using SocialService.Post.EditPost;
 using SocialService.Post.GetPost;
+using SocialService.Post.GetPostsByProfileId;
 using SocialService.Post.React;
 using SocialService.Post.React.DeleteReactionFromPost;
 using SocialService.Post.React.GetReactionsOnPost;
 using SocialService.Post.React.ReactToPost;
 using SocialService.Post.UploadPostImages;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Post;
 
@@ -42,6 +44,32 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         query.SetPostId(id);
 
         GetPostQueryValidator validator = new(repository);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+
+    /// <summary>
+    ///     Rota para pegar informações dos posts feitos por um perfil
+    /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="profileGraphRepository"></param>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <param name="page"></param>
+    /// <param name="rows"></param>
+    /// <returns></returns>
+    [HttpGet("/Profile/{id:guid}/getPosts")]
+    public async Task<IActionResult> GetPostsByProfileId(
+        [FromServices] IHandler<IEnumerable<PostDto>, GetPostsByProfileIdQuery> handler,
+        [FromServices] IProfileGraphRepository profileGraphRepository,
+        Guid id, CancellationToken cancellationToken,
+        [FromQuery] int page = 1, [FromQuery]int rows = 10)
+    {
+        GetPostsByProfileIdQuery query = new(page, rows);
+        query.SetProfileId(id);
+
+        GetPostsByProfileIdQueryValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));

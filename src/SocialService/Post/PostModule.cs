@@ -7,6 +7,7 @@ using SocialService.Post.CreatePost;
 using SocialService.Post.DeletePost;
 using SocialService.Post.EditPost;
 using SocialService.Post.GetPost;
+using SocialService.Post.GetPostsByProfileId;
 using SocialService.Post.React;
 using SocialService.Post.React.DeleteReactionFromPost;
 using SocialService.Post.React.GetReactionsOnPost;
@@ -39,6 +40,7 @@ public static class PostModule
         #region Post
 
         services.AddScoped<IHandler<PostDto, GetPostQuery>, GetPostQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<PostDto>, GetPostsByProfileIdQuery>, GetPostsByProfileIdQueryHandler>();
         services.AddScoped<IHandler<PostDto, CreatePostCommand>, CreatePostCommandHandler>();
         services.AddScoped<IHandler<bool, UploadPostImageCommand>, UploadPostImageCommandHandler>();
         services.AddScoped<IHandler<bool, DeletePostCommand>, DeletePostCommandHandler>();
