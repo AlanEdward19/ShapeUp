@@ -192,7 +192,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     public async Task<Comment.Comment> GetPostCommentsByCommentIdAsync(Guid commentId)
     {
         var cypherQuery = $@"
-    MATCH (comment:Comment {{id: '{commentId}'}})<-[:COMMENTED_ON]-(post:Post)
+    MATCH (comment:Comment {{id: '{commentId}'}})-[:COMMENTED_ON]->(post:Post)
     RETURN comment, post.id AS postId";
 
         var result = await graphContext.ExecuteQueryAsync(cypherQuery);
@@ -203,7 +203,11 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
 
         var comment = new Comment.Comment();
         var parsedDictionary = record["comment"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        parsedDictionary.Add("postId", record["postId"].ToString()!);
+        parsedDictionary.Add("postId", record["postId"].ToString());
+        parsedDictionary.Add("profileId", Guid.Empty);
+        parsedDictionary.Add("profileFirstName", "");
+        parsedDictionary.Add("profileLastName","");
+        parsedDictionary.Add("profileImageUrl", "");
         comment.MapToEntityFromNeo4j(parsedDictionary);
 
         return comment;

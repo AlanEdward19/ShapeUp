@@ -76,6 +76,11 @@ public class Profile : GraphEntity
     /// Quantidade de pessoas que o perfil segue.
     /// </summary>
     public int Following { get; private set; }
+    
+    /// <summary>
+    /// Quantidade de posts do perfil.
+    /// </summary>
+    public int Posts { get; private set; }
 
     /// <summary>
     ///     Url da imagem do perfil no blob storage
@@ -126,6 +131,7 @@ public class Profile : GraphEntity
         Bio = result["bio"].ToString();
         Following = int.Parse(result["following"].ToString());
         Followers = int.Parse(result["followers"].ToString());
+        Posts = int.Parse(result["posts"].ToString());
 
         base.MapToEntityFromNeo4j(result);
     }

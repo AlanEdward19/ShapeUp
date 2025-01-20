@@ -6,7 +6,7 @@ namespace SocialService.Post.Comment.GetPostComments;
 ///     Handler para obter os comentários de um post
 /// </summary>
 /// <param name="repository"></param>
-public class GetPostCommentsQueryHandler(IPostGraphRepository repository)
+public class GetPostCommentsQueryHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
     : IHandler<IEnumerable<Comment>, GetPostCommentsQuery>
 {
     /// <summary>
@@ -17,6 +17,12 @@ public class GetPostCommentsQueryHandler(IPostGraphRepository repository)
     /// <returns></returns>
     public async Task<IEnumerable<Comment>> HandleAsync(GetPostCommentsQuery query, CancellationToken cancellationToken)
     {
-        return await repository.GetPostCommentsByPostIdAsync(query.PostId);
+        var comments = await repository.GetPostCommentsByPostIdAsync(query.PostId);
+
+        foreach (var comment in comments)
+            if (!string.IsNullOrWhiteSpace(comment.ProfileImageUrl))
+                comment.SetProfileImageUrl(storageProvider.GenerateAuthenticatedUrl(comment.ProfileImageUrl, $"{comment.ProfileId}"));
+        
+        return comments;
     }
 }

@@ -65,7 +65,8 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     MATCH (profile:Profile {{id: '{id}'}})
     OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
     OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
-    RETURN profile, COUNT(follower) AS followers, COUNT(following) AS following";
+    OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
+    RETURN profile, COUNT(follower) AS followers, COUNT(following) AS following, COUNT(post) AS posts";
 
         var result = await graphContext.ExecuteQueryAsync(query);
 
@@ -78,7 +79,8 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         var parsedDictionary = record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         parsedDictionary["followers"] = record["followers"].As<int>();
         parsedDictionary["following"] = record["following"].As<int>();
-        
+        parsedDictionary["posts"] = record["posts"].As<int>();
+
         profile.MapToEntityFromNeo4j(parsedDictionary);
 
         return profile;

@@ -59,7 +59,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="page"></param>
     /// <param name="rows"></param>
     /// <returns></returns>
-    [HttpGet("/Profile/{id:guid}/getPosts")]
+    [HttpGet("/Profile/v{version:apiVersion}/{id:guid}/getPosts")]
     public async Task<IActionResult> GetPostsByProfileId(
         [FromServices] IHandler<IEnumerable<PostDto>, GetPostsByProfileIdQuery> handler,
         [FromServices] IProfileGraphRepository profileGraphRepository,

@@ -54,6 +54,11 @@ public class ProfileDto(Profile profile)
     public int Following { get; private set; } = profile.Following;
 
     /// <summary>
+    /// Quantidade de posts do perfil.
+    /// </summary>
+    public int Posts { get; private set; } = profile.Posts;
+
+    /// <summary>
     ///     Url da imagem do perfil no blob storage
     /// </summary>
     public string? ImageUrl { get; private set; } = profile.ImageUrl;

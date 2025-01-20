@@ -92,4 +92,13 @@ public class Comment : GraphEntity
         if (Content != content)
             Content = content;
     }
+    
+    /// <summary>
+    /// Método para setar a url da imagem do perfil.
+    /// </summary>
+    /// <param name="profileImageUrl"></param>
+    public void SetProfileImageUrl(string profileImageUrl)
+    {
+        ProfileImageUrl = profileImageUrl;
+    }
 }
