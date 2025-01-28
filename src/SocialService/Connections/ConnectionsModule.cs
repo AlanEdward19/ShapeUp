@@ -1,4 +1,6 @@
-﻿namespace SocialService.Connections;
+﻿using StackExchange.Redis;
+
+namespace SocialService.Connections;
 
 /// <summary>
 ///     Modulo de conexões externas
@@ -16,6 +18,7 @@ public static class ConnectionsModule
     {
         services
             .ConfigureNeo4J(configuration)
+            .ConfigureRedis(configuration)
             .ConfigureStorageProvider(configuration);
 
         return services;
@@ -45,6 +48,16 @@ public static class ConnectionsModule
 
             return new StorageProvider(connectionString, provider.GetService<ILogger<StorageProvider>>()!);
         });
+
+        return services;
+    }
+    
+    private static IServiceCollection ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
+    {
+        string connectionString = configuration.GetConnectionString("Redis")!;
+        
+        services.AddSingleton<IConnectionMultiplexer>(_ =>
+            ConnectionMultiplexer.Connect(connectionString));
 
         return services;
     }
