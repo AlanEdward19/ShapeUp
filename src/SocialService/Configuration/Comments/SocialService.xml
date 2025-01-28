@@ -124,6 +124,31 @@
             </summary>
             <param name="result"></param>
         </member>
+        <member name="T:SocialService.Common.Events.NotificationEvent">
+            <summary>
+            Evento de notificação
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.Events.NotificationEvent.RecipientId">
+            <summary>
+            Id do destinatário da notificação
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.Events.NotificationEvent.Topic">
+            <summary>
+            Enum para tipos de notificações
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.Events.NotificationEvent.Content">
+            <summary>
+            Breve descrição da notificação
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.Events.NotificationEvent.Metadata">
+            <summary>
+            Dados adicionais relacionados à notificação
+            </summary>
+        </member>
         <member name="T:SocialService.Common.Interfaces.IHandler`2">
             <summary>
                 Interface para padronizar handlers.
@@ -716,7 +741,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository)">
+        <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
             <summary>
                 Handler para seguir um usuário.
             </summary>
@@ -1627,6 +1652,12 @@
             </summary>
             <param name="content"></param>
         </member>
+        <member name="M:SocialService.Post.Comment.Comment.SetProfileImageUrl(System.String)">
+            <summary>
+            Método para setar a url da imagem do perfil.
+            </summary>
+            <param name="profileImageUrl"></param>
+        </member>
         <member name="T:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommand">
             <summary>
                 Comando para comentar em um post
@@ -1654,7 +1685,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
             <summary>
                 Handler para comentar em um post
             </summary>
@@ -1800,7 +1831,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.Comment.GetPostComments.GetPostCommentsQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.Comment.GetPostComments.GetPostCommentsQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para obter os comentários de um post
             </summary>
@@ -1904,6 +1935,13 @@
             <summary>
                 Interface do repositório de grafo para post
             </summary>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetProfileIdByPostIdAsync(System.Guid)">
+            <summary>
+            Método que retorna o id do perfil de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid)">
             <summary>
@@ -2035,6 +2073,13 @@
                 Repositorio de grafo para post
             </summary>
             <param name="graphContext"></param>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetProfileIdByPostIdAsync(System.Guid)">
+            <summary>
+            Método que retorna o id do perfil de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid)">
             <summary>
@@ -2871,7 +2916,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.React.ReactToPost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository)">
+        <member name="M:SocialService.Post.React.ReactToPost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Common.Services.INotificationPublisher)">
             <summary>
                 Handler para o comando de like em um post.
             </summary>
@@ -3450,6 +3495,11 @@
             Quantidade de pessoas que o perfil segue.
             </summary>
         </member>
+        <member name="P:SocialService.Profile.Profile.Posts">
+            <summary>
+            Quantidade de posts do perfil.
+            </summary>
+        </member>
         <member name="P:SocialService.Profile.Profile.ImageUrl">
             <summary>
                 Url da imagem do perfil no blob storage
@@ -3674,6 +3724,11 @@
         <member name="P:SocialService.Profile.ProfileDto.Following">
             <summary>
             Quantidade de pessoas que o perfil segue.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileDto.Posts">
+            <summary>
+            Quantidade de posts do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileDto.ImageUrl">
