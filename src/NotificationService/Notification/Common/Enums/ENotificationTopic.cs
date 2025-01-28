@@ -4,6 +4,7 @@ public enum ENotificationTopic
 {
     Message,
     FriendRequest,
+    Reaction,
     NewFollower,
     Comment,
 }
