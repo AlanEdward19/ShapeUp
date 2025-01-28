@@ -1,38 +1,42 @@
-using ChatService.Chat.Common;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatService.Chat;
 
 public class ChatHub(IConfiguration configuration) : Hub
 {
-    public async Task SendMessage(string senderId, string receiverId, string message)
-    {
-        string encryptionKey = configuration["EncryptionKey"] ?? throw new ArgumentNullException("EncryptionKey");
-        ChatMessage chatMessage = new(Guid.Parse(senderId), Guid.Parse(receiverId), encryptionKey, message);
-
-        await Clients.User(receiverId).SendAsync("ReceiveMessage", chatMessage);
-    }
-    
     public override async Task OnConnectedAsync()
     {
         var userId = Context.UserIdentifier;
+        var profileId = Context.GetHttpContext()?.Request.Query["profileId"].ToString();
         
-        if (userId != null)
+        
+        if (userId != null && profileId != null)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, userId);
+            string groupName = GetGroupName(userId, profileId);
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
+        
         await base.OnConnectedAsync();
     }
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var userId = Context.UserIdentifier;
+        var profileId = Context.GetHttpContext()?.Request.Query["profileId"].ToString();
         
-        if (userId != null)
+        
+        if (userId != null && profileId != null)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, userId);
+            string groupName = GetGroupName(userId, profileId);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
+        
         await base.OnDisconnectedAsync(exception);
+    }
+    
+    private string GetGroupName(string userId1, string userId2)
+    {
+        var orderedIds = new[] { userId1, userId2 }.OrderBy(id => id);
+        return string.Join("-", orderedIds);
     }
 }

@@ -86,6 +86,14 @@ public class ChatMongoRepository(IMongoDatabase database, IHubContext<ChatHub> h
 
         await _chatMessages.InsertOneAsync(chatMessage);
         
-        await hubContext.Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", chatMessage);
+        string groupName = GetGroupName(senderId.ToString(), receiverId.ToString());
+        
+        await hubContext.Clients.Group(groupName).SendAsync("ReceiveMessage", chatMessage);
+    }
+    
+    private string GetGroupName(string userId1, string userId2)
+    {
+        var orderedIds = new[] { userId1, userId2 }.OrderBy(id => id);
+        return string.Join("-", orderedIds);
     }
 }
