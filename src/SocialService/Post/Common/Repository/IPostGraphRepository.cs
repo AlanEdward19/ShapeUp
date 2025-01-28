@@ -10,6 +10,13 @@ public interface IPostGraphRepository
     #region Post
 
     /// <summary>
+    /// Método que retorna o id do perfil de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    Task<Guid> GetProfileIdByPostIdAsync(Guid postId);
+    
+    /// <summary>
     ///     Método que retorna um post
     /// </summary>
     /// <param name="postId"></param>
