@@ -1,4 +1,5 @@
 ﻿using SocialService.ActivityFeed;
+using SocialService.Common.Services;
 using SocialService.Connections;
 using SocialService.Follow;
 using SocialService.Friends;
@@ -22,6 +23,9 @@ public static class ServiceDependencies
     public static IServiceCollection SolveServiceDependencies(this IServiceCollection services,
         IConfiguration configuration)
     {
+        //É um comum, tem que ver onde vai colocar posteriormente
+        services.AddScoped<INotificationPublisher, NotificationPublisher>();
+        
         services
             .ConfigureConnections(configuration)
             .ConfigureActivityFeedRelatedDependencies()
