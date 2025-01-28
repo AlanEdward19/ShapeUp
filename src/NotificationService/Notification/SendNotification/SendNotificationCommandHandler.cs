@@ -8,8 +8,8 @@ public class SendNotificationCommandHandler(INotificationService service) : IHan
 {
     public async Task<bool> HandleAsync(SendNotificationCommand command, CancellationToken cancellationToken)
     {
-        await service.PublishNotificationAsync(command.ProfileId, command.Message);
-        
+        await service.PublishNotificationAsync(command.ProfileId, command.Topic.ToString(), command.Message);
+
         return true;
     }
 }
