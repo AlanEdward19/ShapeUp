@@ -1,5 +1,4 @@
 ﻿using SocialService.Profile.Common.Repository;
-using SocialService.Profile.ViewProfile;
 
 namespace SocialService.Profile.ViewProfileSimplified;
 

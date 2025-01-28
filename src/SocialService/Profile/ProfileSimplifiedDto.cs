@@ -1,6 +1,4 @@
-﻿using SocialService.Profile.Common.Enums;
-
-namespace SocialService.Profile;
+﻿namespace SocialService.Profile;
 
 /// <summary>
 ///     Objeto de transferência de dados do perfil
