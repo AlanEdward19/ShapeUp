@@ -24,6 +24,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Neo4j.Driver" Version="5.26.1"/>
+        <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0"/>
     </ItemGroup>
 
