@@ -1,4 +1,8 @@
-﻿using SocialService.Post.Common.Repository;
+﻿using SocialService.Common.Enums;
+using SocialService.Common.Events;
+using SocialService.Common.Services;
+using SocialService.Post.Common.Repository;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Post.Comment.CommentOnPost;
 
@@ -6,7 +10,8 @@ namespace SocialService.Post.Comment.CommentOnPost;
 ///     Handler para comentar em um post
 /// </summary>
 /// <param name="repository"></param>
-public class CommentOnPostCommandHandler(IPostGraphRepository repository) : IHandler<bool, CommentOnPostCommand>
+public class CommentOnPostCommandHandler(IPostGraphRepository repository, IProfileGraphRepository profileGraphRepository, INotificationPublisher notificationPublisher)
+    : IHandler<bool, CommentOnPostCommand>
 {
     /// <summary>
     ///     Método para comentar em um post
@@ -17,8 +22,22 @@ public class CommentOnPostCommandHandler(IPostGraphRepository repository) : IHan
     public async Task<bool> HandleAsync(CommentOnPostCommand command, CancellationToken cancellationToken)
     {
         Comment comment = new(command, ProfileContext.ProfileId);
+        Guid profileId = await repository.GetProfileIdByPostIdAsync(command.PostId);
+        Profile.Profile profile = await profileGraphRepository.GetProfileAsync(profileId);
 
         await repository.CommentOnPostAsync(comment);
+
+        if (profileId != ProfileContext.ProfileId)
+        {
+            NotificationEvent @event = new()
+            {
+                RecipientId = profileId,
+                Topic = ENotificationTopic.Comment,
+                Content = $"{profile.FirstName} {profile.LastName} comentou em seu post: {command.PostId}",
+            };
+
+            await notificationPublisher.PublishNotificationEventAsync(@event);
+        }
 
         return true;
     }
