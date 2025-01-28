@@ -8,10 +8,10 @@ public class NotificationService(IHubContext<NotificationHub> hubContext, IConne
     : INotificationService
 {
     
-    public async Task PublishNotificationAsync(Guid userId, string message)
+    public async Task PublishNotificationAsync(Guid userId, string topic, string message)
     {
         if (NotificationHub.IsUserConnected(userId.ToString()))
-            await hubContext.Clients.Group(userId.ToString()).SendAsync("ReceiveNotification", message);
+            await hubContext.Clients.Group(userId.ToString()).SendAsync("ReceiveNotification", $"Topic: {topic}\nMessage: {message}");
         
         else
         {

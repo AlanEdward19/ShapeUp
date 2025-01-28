@@ -6,6 +6,6 @@ public class NotificationProcessor(INotificationService service) : INotification
 {
     public async Task ProcessNotificationAsync(NotificationEvent notificationEvent)
     {
-        await service.PublishNotificationAsync(notificationEvent.RecipientId, notificationEvent.Topic.ToString());
+        await service.PublishNotificationAsync(notificationEvent.RecipientId, notificationEvent.Topic.ToString(), notificationEvent.Content);
     }
 }

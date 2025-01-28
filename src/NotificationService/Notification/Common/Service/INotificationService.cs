@@ -2,6 +2,6 @@
 
 public interface INotificationService
 {
-    Task PublishNotificationAsync(Guid userId, string message);
+    Task PublishNotificationAsync(Guid userId, string topic, string message);
     Task<List<string>> GetPendingNotificationsAsync(Guid userId);
 }
