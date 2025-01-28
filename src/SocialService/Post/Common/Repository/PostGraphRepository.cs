@@ -11,6 +11,26 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     #region Post
 
     /// <summary>
+    /// Método que retorna o id do perfil de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    public async Task<Guid> GetProfileIdByPostIdAsync(Guid postId)
+    {
+        var query = $@"
+    MATCH (post:Post {{id: '{postId}'}})<-[:PUBLISHED_BY]-(profile:Profile)
+    RETURN profile.id AS profileId";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+        var record = result.FirstOrDefault();
+
+        if (record == null)
+            return Guid.Empty;
+
+        return Guid.Parse(record["profileId"].ToString());
+    }
+
+    /// <summary>
     ///     Método que retorna um post
     /// </summary>
     /// <param name="postId"></param>
@@ -206,7 +226,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         parsedDictionary.Add("postId", record["postId"].ToString());
         parsedDictionary.Add("profileId", Guid.Empty);
         parsedDictionary.Add("profileFirstName", "");
-        parsedDictionary.Add("profileLastName","");
+        parsedDictionary.Add("profileLastName", "");
         parsedDictionary.Add("profileImageUrl", "");
         comment.MapToEntityFromNeo4j(parsedDictionary);
 
