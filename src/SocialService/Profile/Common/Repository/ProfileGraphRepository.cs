@@ -134,6 +134,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
             var parsedDictionary = record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedDictionary["followers"] = record["followers"].As<int>();
             parsedDictionary["following"] = record["following"].As<int>();
+            parsedDictionary["posts"] = 0;
             profile.MapToEntityFromNeo4j(parsedDictionary);
             return profile;
         }).ToList();
