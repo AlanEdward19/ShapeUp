@@ -21,14 +21,14 @@ public class FriendshipGraphRepository(
         if (existingRequest)
             throw new InvalidOperationException("There is already a pending request between these profiles.");
 
-        var query = $@"""
+        var query = $@"
     MATCH (sender:Profile {{id: '{senderProfileId}'}}), (receiver:Profile {{id: '{receiverProfileId}'}})
     CREATE (sender)-[:FRIEND_REQUEST {{
         id: '{Guid.NewGuid()}',
         message: '{message}',
         createdAt: datetime()
     }}]->(receiver)
-            """;
+            ";
 
         await graphContext.ExecuteQueryAsync(query);
     }
@@ -41,10 +41,8 @@ public class FriendshipGraphRepository(
     /// <returns></returns>
     public async Task<bool> FriendRequestExistsAsync(Guid senderProfileId, Guid receiverProfileId)
     {
-        var query = $@"""
-    MATCH (sender:Profile {{id: '{senderProfileId}'}})-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})
-    RETURN r
-        """;
+        var query =
+            $"MATCH (sender:Profile {{id: '{senderProfileId}'}})-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})\nRETURN r";
 
         var responseList = await graphContext.ExecuteQueryAsync(query);
 
@@ -66,12 +64,12 @@ public class FriendshipGraphRepository(
 
         #region Create Friendship
 
-        var query = $@"""
+        var query = $@"
 MATCH (profileA:Profile {{id: '{senderProfileId}'}}), (profileB:Profile {{id: '{receiverProfileId}'}})
 CREATE (profileA)-[:FRIEND {{
     createdAt: datetime()
 }}]->(profileB)
-""";
+";
         await graphContext.ExecuteQueryAsync(query);
 
         #endregion
