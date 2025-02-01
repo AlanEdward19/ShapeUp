@@ -1392,7 +1392,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository)">
+        <member name="M:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
             <summary>
                 Handler para adicionar um amigo.
             </summary>
