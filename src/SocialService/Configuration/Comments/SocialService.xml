@@ -4046,7 +4046,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryHandler.#ctor(SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository)">
+        <member name="M:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryHandler.#ctor(SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para a query de recomendações de amigos.
             </summary>

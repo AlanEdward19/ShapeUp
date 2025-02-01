@@ -39,12 +39,22 @@ public class RecommendationGraphRepository(GraphContext graphContext) : IRecomme
         return recommendations;
     }
 
+    /// <summary>
+    ///    Método para obter recomendações de amigos dentro de uma distância.
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="distanceInKm"></param>
+    /// <returns></returns>
     public async Task<IEnumerable<Profile.Profile>> GetFriendRecommendationsWithinDistanceAsync(Guid profileId, double distanceInKm)
     {
         var cypherQuery = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})
     MATCH (fof:Profile)
-    WHERE profile <> fof AND NOT (profile)-[:FRIEND]->(fof)
+    WHERE NOT (profile)-[:FRIEND]->(fof) 
+      AND NOT (fof)-[:FRIEND]->(profile) 
+      AND NOT (profile)-[:FRIEND_REQUEST]->(fof) 
+      AND NOT (fof)-[:FRIEND_REQUEST]->(profile) 
+      AND profile <> fof
     WITH profile, fof,
          point({{latitude: profile.latitude, longitude: profile.longitude}}) AS profilePoint,
          point({{latitude: fof.latitude, longitude: fof.longitude}}) AS fofPoint

@@ -25,9 +25,6 @@ public class ExceptionMiddleware(
         }
         catch (Exception error)
         {
-            // if (databaseContext.Database.CurrentTransaction != null)
-            //     await databaseContext.Database.RollbackTransactionAsync();
-
             var response = context.Response;
             response.ContentType = "application/json";
 
