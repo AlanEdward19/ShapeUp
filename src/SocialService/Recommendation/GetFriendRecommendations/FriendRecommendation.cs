@@ -7,12 +7,12 @@ namespace SocialService.Recommendation.GetFriendRecommendations;
 ///     <param name="profile"></param>
 ///     <param name="mutualFriends"></param>
 /// </summary>
-public class FriendRecommendation(ProfileDto profile, int mutualFriends)
+public class FriendRecommendation(ProfileSimplifiedDto profile, int mutualFriends)
 {
     /// <summary>
     ///     Informações do perfil
     /// </summary>
-    public ProfileDto Profile { get; private set; } = profile;
+    public ProfileSimplifiedDto Profile { get; private set; } = profile;
 
     /// <summary>
     ///     Quantidade de amigos em comum

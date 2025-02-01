@@ -18,6 +18,20 @@ public class GetFriendRecommendationQueryHandler(IRecommendationGraphRepository 
     public async Task<IEnumerable<FriendRecommendation>> HandleAsync(GetFriendRecommendationQuery query,
         CancellationToken cancellationToken)
     {
-        return await repository.GetFriendRecommendationsAsync(ProfileContext.ProfileId);
+        IEnumerable<(Profile.Profile, int)> recommendationsWithMutualFriends =
+            await repository.GetFriendRecommendationsAsync(ProfileContext.ProfileId);
+
+        IEnumerable<Profile.Profile> recommendationsBaseadOnDistance =
+            await repository.GetFriendRecommendationsWithinDistanceAsync(ProfileContext.ProfileId, 15);
+        
+        List<FriendRecommendation> result = new(recommendationsBaseadOnDistance.Count() + recommendationsWithMutualFriends.Count());
+        
+        foreach (var (profile, mutualFriends) in recommendationsWithMutualFriends)
+            result.Add(new FriendRecommendation(new(profile), mutualFriends));
+        
+        foreach (var profile in recommendationsBaseadOnDistance)
+            result.Add(new FriendRecommendation(new(profile), 0));
+
+        return result;
     }
 }

@@ -14,7 +14,7 @@ public class ViewProfileSimplifiedQueryValidator : AbstractValidator<ViewProfile
     public ViewProfileSimplifiedQueryValidator(IProfileGraphRepository repository)
     {
         RuleFor(x => x.ProfileId)
-            .MustAsync(async (id, cancellationToken) => await repository.ProfileExistsAsync(id))
+            .MustAsync(async (id, _) => await repository.ProfileExistsAsync(id))
             .WithMessage("ProfileId: '{PropertyValue}' doesn't exist.");
     }
 }

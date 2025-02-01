@@ -1,4 +1,5 @@
-﻿using SocialService.Profile.Common.Repository;
+﻿using SocialService.Common.Services.BrasilApi;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.CreateProfile;
 
@@ -6,7 +7,7 @@ namespace SocialService.Profile.CreateProfile;
 ///     Handler para o comando de criação de perfil.
 /// </summary>
 /// <param name="graphRepository"></param>
-public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository)
+public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository, IBrasilApi brasilApi)
     : IHandler<ProfileDto, CreateProfileCommand>
 {
     /// <summary>
@@ -17,15 +18,17 @@ public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository
     /// <returns></returns>
     public async Task<ProfileDto> HandleAsync(CreateProfileCommand command, CancellationToken cancellationToken)
     {
-        Profile profile = new(command, ProfileContext.ProfileId);
+        var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(command.PostalCode);
+        
+        Profile profile = new(command, ProfileContext.ProfileId, locationInfo);
 
         #region Create Profile Graph
 
         await graphRepository.CreateProfileAsync(profile);
 
         #endregion
-
-        ProfileDto profileDto = new(profile);
+        
+        ProfileDto profileDto = new(profile, locationInfo.State, locationInfo.City);
 
         return profileDto;
     }

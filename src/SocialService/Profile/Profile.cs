@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using SocialService.Common.Services.BrasilApi;
 using SocialService.Profile.Common.Enums;
 using SocialService.Profile.CreateProfile;
 
@@ -21,18 +22,21 @@ public class Profile : GraphEntity
     /// </summary>
     /// <param name="command"></param>
     /// <param name="id"></param>
-    public Profile(CreateProfileCommand command, Guid id)
+    /// <param name="locationInfo"></param>
+    public Profile(CreateProfileCommand command, Guid id, LocationInfoDto locationInfo)
     {
         Id = id;
         UpdateFirstName(command.FirstName, false);
         UpdateLastName(command.LastName, false);
+        UpdateDisplayName(command.DisplayName, false);
         UpdateCountry(command.Country, false);
-        UpdateState(command.State, false);
-        UpdateCity(command.City, false);
+        UpdatePostalCode(command.PostalCode, false);
         UpdateGender(command.Gender, false);
         UpdateBirthDate(command.BirthDate, false);
         UpdateBio(command.Bio, false);
         UpdateEmail(command.Email, false);
+        UpdateLatitude(double.Parse(locationInfo.Location.Coordinates.Latitude), false);
+        UpdateLongitude(double.Parse(locationInfo.Location.Coordinates.Longitude), false);
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -51,32 +55,42 @@ public class Profile : GraphEntity
     ///     Sobrenome do perfil.
     /// </summary>
     public string LastName { get; private set; }
-
+    
     /// <summary>
-    ///     Cidade do perfil
-    /// </summary>
-    public string City { get; private set; }
-
-    /// <summary>
-    ///     Estado do perfil
-    /// </summary>
-    public string State { get; private set; }
-
-    /// <summary>
-    ///     País do perfil
+    /// Pais do perfil.
     /// </summary>
     public string Country { get; private set; }
+
+    /// <summary>
+    ///     CEP do perfil.
+    /// </summary>
+    public string PostalCode { get; private set; }
     
+    /// <summary>
+    /// Latitude do perfil.
+    /// </summary>
+    public double Latitude { get; private set; }
+    
+    /// <summary>
+    ///    Longitude do perfil.
+    /// </summary>
+    public double Longitude { get; private set; }
+
+    /// <summary>
+    ///     Nome de exibição do perfil.
+    /// </summary>
+    public string DisplayName { get; private set; }
+
     /// <summary>
     /// Quantidade de seguidores do perfil.
     /// </summary>
     public int Followers { get; private set; }
-    
+
     /// <summary>
     /// Quantidade de pessoas que o perfil segue.
     /// </summary>
     public int Following { get; private set; }
-    
+
     /// <summary>
     /// Quantidade de posts do perfil.
     /// </summary>
@@ -95,12 +109,12 @@ public class Profile : GraphEntity
     /// <summary>
     ///     Data de nascimento do perfil.
     /// </summary>
-    public DateTime BirthDate { get; private set; }
+    public DateTime? BirthDate { get; private set; }
 
     /// <summary>
     ///     Gênero do perfil.
     /// </summary>
-    public EGender Gender { get; private set; }
+    public EGender? Gender { get; private set; }
 
     /// <summary>
     ///     Data de criação do perfil.
@@ -121,18 +135,25 @@ public class Profile : GraphEntity
         Email = result["email"].ToString();
         FirstName = result["firstName"].ToString();
         LastName = result["lastName"].ToString();
-        City = result["city"].ToString();
-        State = result["state"].ToString();
+        Gender = string.IsNullOrWhiteSpace(result["gender"].ToString())
+            ? null
+            : Enum.Parse<EGender>(result["gender"].ToString()!);
+        DisplayName = result["displayName"].ToString();
         Country = result["country"].ToString();
+        PostalCode = result["postalCode"].ToString();
         ImageUrl = result["imageUrl"].ToString();
         CreatedAt = DateTime.Parse(result["createdAt"].ToString());
         UpdatedAt = DateTime.Parse(result["updatedAt"].ToString());
-        BirthDate = DateTime.Parse(result["birthDate"].ToString());
+        BirthDate = string.IsNullOrWhiteSpace(result["birthDate"].ToString())
+            ? null
+            : DateTime.Parse(result["birthDate"].ToString());
         Bio = result["bio"].ToString();
-        Following = int.Parse(result["following"].ToString());
-        Followers = int.Parse(result["followers"].ToString());
-        Posts = int.Parse(result["posts"].ToString());
-
+        Latitude = double.Parse(result["latitude"].ToString());
+        Longitude = double.Parse(result["longitude"].ToString());
+        Following = result.TryGetValue("following", out var followingCount) ? int.Parse(followingCount.ToString()!) : 0;
+        Followers = result.TryGetValue("followers", out var followerCount) ? int.Parse(followerCount.ToString()!) : 0;
+        Posts = result.TryGetValue("posts", out var postCount) ? int.Parse(postCount.ToString()!) : 0;
+        
         base.MapToEntityFromNeo4j(result);
     }
 
@@ -246,35 +267,21 @@ public class Profile : GraphEntity
     }
 
     /// <summary>
-    ///     Método para atualizar o estado do perfil.
-    /// </summary>
-    /// <param name="state"></param>
-    /// <param name="isUpdate"></param>
-    public void UpdateState(string? state, bool isUpdate = true)
-    {
-        if (!string.IsNullOrWhiteSpace(state) && State != state)
-            State = state;
-
-        if (isUpdate)
-            UpdatedAt = DateTime.Now;
-    }
-
-    /// <summary>
     ///     Método para atualizar a cidade do perfil.
     /// </summary>
-    /// <param name="city"></param>
+    /// <param name="displayName"></param>
     /// <param name="isUpdate"></param>
-    public void UpdateCity(string? city, bool isUpdate = true)
+    public void UpdateDisplayName(string? displayName, bool isUpdate = true)
     {
-        if (!string.IsNullOrWhiteSpace(city) && City != city)
-            City = city;
+        if (!string.IsNullOrWhiteSpace(displayName) && DisplayName != displayName)
+            DisplayName = displayName;
 
         if (isUpdate)
             UpdatedAt = DateTime.Now;
     }
-
+    
     /// <summary>
-    ///     Método para atualizar o país do perfil.
+    /// Método para atualizar o país do perfil.
     /// </summary>
     /// <param name="country"></param>
     /// <param name="isUpdate"></param>
@@ -282,6 +289,48 @@ public class Profile : GraphEntity
     {
         if (!string.IsNullOrWhiteSpace(country) && Country != country)
             Country = country;
+
+        if (isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    ///     Método para atualizar o CEP do perfil.
+    /// </summary>
+    /// <param name="postalCode"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdatePostalCode(string? postalCode, bool isUpdate = true)
+    {
+        if (!string.IsNullOrWhiteSpace(postalCode) && PostalCode != postalCode)
+            PostalCode = postalCode;
+
+        if (isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+    
+    /// <summary>
+    /// Método para atualizar a latitude do perfil.
+    /// </summary>
+    /// <param name="latitude"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateLatitude(double latitude, bool isUpdate = true)
+    {
+        if (Latitude != latitude)
+            Latitude = latitude;
+
+        if (isUpdate)
+            UpdatedAt = DateTime.Now;
+    }
+    
+    /// <summary>
+    /// Método para atualizar a longitude do perfil.
+    /// </summary>
+    /// <param name="longitude"></param>
+    /// <param name="isUpdate"></param>
+    public void UpdateLongitude(double longitude, bool isUpdate = true)
+    {
+        if (Longitude != longitude)
+            Longitude = longitude;
 
         if (isUpdate)
             UpdatedAt = DateTime.Now;

@@ -108,6 +108,18 @@
                 Validações para a query de obter o feed de atividades.
             </summary>
         </member>
+        <member name="T:SocialService.Common.CommonModule">
+            <summary>
+               Módulo para configuração de dependências comuns.
+            </summary>
+        </member>
+        <member name="M:SocialService.Common.CommonModule.ConfigureCommonRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências comuns.
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Common.Entities.GraphEntity">
             <summary>
                 Entidade base para entidades do grafo.
@@ -246,9 +258,9 @@
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetCity(System.Security.Claims.ClaimsPrincipal)">
+        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetDisplayName(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-                Método para obter a cidade do usuário
+            Método para obter o nome de exibição do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
@@ -260,9 +272,9 @@
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetState(System.Security.Claims.ClaimsPrincipal)">
+        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetPostalCode(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-                Método para obter o estado do usuário
+                Método para obter o CEP do usuário
             </summary>
             <param name="user"></param>
             <returns></returns>
@@ -3121,17 +3133,6 @@
             <summary>
                 Comando para criar um perfil
             </summary>
-            <param name="gender"></param>
-            <param name="birthDate"></param>
-            <param name="bio"></param>
-        </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.#ctor(SocialService.Profile.Common.Enums.EGender,System.DateTime,System.String)">
-            <summary>
-                Comando para criar um perfil
-            </summary>
-            <param name="gender"></param>
-            <param name="birthDate"></param>
-            <param name="bio"></param>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Email">
             <summary>
@@ -3148,19 +3149,19 @@
                 Sobrenome do perfil
             </summary>
         </member>
-        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.City">
-            <summary>
-                Cidade do perfil
-            </summary>
-        </member>
-        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.State">
-            <summary>
-                Estado do perfil
-            </summary>
-        </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Country">
             <summary>
-                País do perfil
+               País do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.PostalCode">
+            <summary>
+               CEP do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.DisplayName">
+            <summary>
+               Nome de exibição do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.CreateProfile.CreateProfileCommand.Gender">
@@ -3201,21 +3202,21 @@
             </summary>
             <param name="email"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetCity(System.String)">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetPostalCode(System.String)">
             <summary>
-                Método para setar a cidade do perfil
+                Método para setar o CEP do perfil
             </summary>
-            <param name="city"></param>
+            <param name="postalCode"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetState(System.String)">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetDisplayName(System.String)">
             <summary>
-                Método para setar o estado do perfil
+            Método para setar o nome de exibição do perfil
             </summary>
-            <param name="state"></param>
+            <param name="displayName"></param>
         </member>
         <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommand.SetCountry(System.String)">
             <summary>
-                Método para setar o país do perfil
+            Método para setar o país do perfil
             </summary>
             <param name="country"></param>
         </member>
@@ -3225,7 +3226,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi)">
             <summary>
                 Handler para o comando de criação de perfil.
             </summary>
@@ -3333,7 +3334,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi)">
             <summary>
                 Handler para o comando de edição de perfil
             </summary>
@@ -3448,12 +3449,13 @@
                 Construtor padrão.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Guid)">
+        <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Guid,SocialService.Common.Services.BrasilApi.LocationInfoDto)">
             <summary>
                 Construtor para criação de um novo perfil através de um comando.
             </summary>
             <param name="command"></param>
             <param name="id"></param>
+            <param name="locationInfo"></param>
         </member>
         <member name="P:SocialService.Profile.Profile.Email">
             <summary>
@@ -3470,19 +3472,29 @@
                 Sobrenome do perfil.
             </summary>
         </member>
-        <member name="P:SocialService.Profile.Profile.City">
-            <summary>
-                Cidade do perfil
-            </summary>
-        </member>
-        <member name="P:SocialService.Profile.Profile.State">
-            <summary>
-                Estado do perfil
-            </summary>
-        </member>
         <member name="P:SocialService.Profile.Profile.Country">
             <summary>
-                País do perfil
+            Pais do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.PostalCode">
+            <summary>
+                CEP do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.Latitude">
+            <summary>
+            Latitude do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.Longitude">
+            <summary>
+               Longitude do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.DisplayName">
+            <summary>
+                Nome de exibição do perfil.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.Followers">
@@ -3585,25 +3597,39 @@
             <param name="birthDate"></param>
             <param name="isUpdate"></param>
         </member>
-        <member name="M:SocialService.Profile.Profile.UpdateState(System.String,System.Boolean)">
-            <summary>
-                Método para atualizar o estado do perfil.
-            </summary>
-            <param name="state"></param>
-            <param name="isUpdate"></param>
-        </member>
-        <member name="M:SocialService.Profile.Profile.UpdateCity(System.String,System.Boolean)">
+        <member name="M:SocialService.Profile.Profile.UpdateDisplayName(System.String,System.Boolean)">
             <summary>
                 Método para atualizar a cidade do perfil.
             </summary>
-            <param name="city"></param>
+            <param name="displayName"></param>
             <param name="isUpdate"></param>
         </member>
         <member name="M:SocialService.Profile.Profile.UpdateCountry(System.String,System.Boolean)">
             <summary>
-                Método para atualizar o país do perfil.
+            Método para atualizar o país do perfil.
             </summary>
             <param name="country"></param>
+            <param name="isUpdate"></param>
+        </member>
+        <member name="M:SocialService.Profile.Profile.UpdatePostalCode(System.String,System.Boolean)">
+            <summary>
+                Método para atualizar o CEP do perfil.
+            </summary>
+            <param name="postalCode"></param>
+            <param name="isUpdate"></param>
+        </member>
+        <member name="M:SocialService.Profile.Profile.UpdateLatitude(System.Double,System.Boolean)">
+            <summary>
+            Método para atualizar a latitude do perfil.
+            </summary>
+            <param name="latitude"></param>
+            <param name="isUpdate"></param>
+        </member>
+        <member name="M:SocialService.Profile.Profile.UpdateLongitude(System.Double,System.Boolean)">
+            <summary>
+            Método para atualizar a longitude do perfil.
+            </summary>
+            <param name="longitude"></param>
             <param name="isUpdate"></param>
         </member>
         <member name="T:SocialService.Profile.ProfileController">
@@ -3616,18 +3642,13 @@
                 Controller responsavel por gerenciar funções relacionadas ao perfil do usuario
             </summary>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.CreateProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},SocialService.Profile.CreateProfile.CreateProfileCommand,System.Threading.CancellationToken)">
-            <summary>
-                Rota para criar um perfil
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.Guid,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.Guid,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},System.Threading.CancellationToken)">
             <summary>
                 Rota para visualizar um perfil
             </summary>
             <param name="profileId"></param>
-            <param name="handler"></param>
+            <param name="viewProfilehandler"></param>
+            <param name="createProfileHandler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -3674,12 +3695,16 @@
                 Objeto de transferência de dados do perfil
             </summary>
             <param name="profile"></param>
+            <param name="state"></param>
+            <param name="city"></param>
         </member>
-        <member name="M:SocialService.Profile.ProfileDto.#ctor(SocialService.Profile.Profile)">
+        <member name="M:SocialService.Profile.ProfileDto.#ctor(SocialService.Profile.Profile,System.String,System.String)">
             <summary>
                 Objeto de transferência de dados do perfil
             </summary>
             <param name="profile"></param>
+            <param name="state"></param>
+            <param name="city"></param>
         </member>
         <member name="P:SocialService.Profile.ProfileDto.Id">
             <summary>
@@ -3701,6 +3726,11 @@
                 Sobrenome do perfil
             </summary>
         </member>
+        <member name="P:SocialService.Profile.ProfileDto.Country">
+            <summary>
+            Pais do perfil
+            </summary>
+        </member>
         <member name="P:SocialService.Profile.ProfileDto.City">
             <summary>
                 Cidade do perfil
@@ -3708,12 +3738,12 @@
         </member>
         <member name="P:SocialService.Profile.ProfileDto.State">
             <summary>
-                Estado do perfil
+            Estado do perfil
             </summary>
         </member>
-        <member name="P:SocialService.Profile.ProfileDto.Country">
+        <member name="P:SocialService.Profile.ProfileDto.DisplayName">
             <summary>
-                País do perfil
+                Nome de exibição do perfil
             </summary>
         </member>
         <member name="P:SocialService.Profile.ProfileDto.Followers">
@@ -3918,7 +3948,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi,SocialService.Connections.Storage.IStorageProvider)">
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
@@ -3932,17 +3962,6 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Profile.ViewProfile.ViewProfileQueryValidator">
-            <summary>
-                Validador para a query de visualização de perfil
-            </summary>
-        </member>
-        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryValidator.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository)">
-            <summary>
-                Validações para a query de visualização de perfil
-            </summary>
-            <param name="repository"></param>
-        </member>
         <member name="T:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository">
             <summary>
                 Interface para o repositório de grafo de recomendações.
@@ -3953,6 +3972,14 @@
                 Método para obter recomendações de amigos.
             </summary>
             <param name="profileId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository.GetFriendRecommendationsWithinDistanceAsync(System.Guid,System.Double)">
+            <summary>
+               Método para obter recomendações de amigos dentro de uma distância.
+            </summary>
+            <param name="profileId"></param>
+            <param name="distanceInKm"></param>
             <returns></returns>
         </member>
         <member name="T:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository">
@@ -3981,7 +4008,7 @@
                 <param name="mutualFriends"></param>
             </summary>
         </member>
-        <member name="M:SocialService.Recommendation.GetFriendRecommendations.FriendRecommendation.#ctor(SocialService.Profile.ProfileDto,System.Int32)">
+        <member name="M:SocialService.Recommendation.GetFriendRecommendations.FriendRecommendation.#ctor(SocialService.Profile.ProfileSimplifiedDto,System.Int32)">
             <summary>
                 Classe de recomendação de amigos
                 <param name="profile"></param>
@@ -4065,6 +4092,24 @@
                 Rota para receber recomendações de amigos
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Refit.Implementation.Generated">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.GetLocationInfoByPostalCodeAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.SocialService#Common#Services#BrasilApi#IBrasilApi#GetLocationInfoByPostalCodeAsync(System.String)">
+            <inheritdoc />
         </member>
     </members>
 </doc>

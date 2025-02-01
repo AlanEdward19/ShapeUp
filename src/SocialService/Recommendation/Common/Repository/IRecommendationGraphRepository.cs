@@ -12,5 +12,13 @@ public interface IRecommendationGraphRepository
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    Task<IEnumerable<FriendRecommendation>> GetFriendRecommendationsAsync(Guid profileId);
+    Task<IEnumerable<(Profile.Profile profile, int mutualFriends)>> GetFriendRecommendationsAsync(Guid profileId);
+    
+    /// <summary>
+    ///    Método para obter recomendações de amigos dentro de uma distância.
+    /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="distanceInKm"></param>
+    /// <returns></returns>
+    Task<IEnumerable<Profile.Profile>> GetFriendRecommendationsWithinDistanceAsync(Guid profileId, double distanceInKm);
 }

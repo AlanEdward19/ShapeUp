@@ -46,17 +46,17 @@ public static class ClaimsPrincipalUtils
     {
         return user.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname")!.Value;
     }
-
+    
     /// <summary>
-    ///     Método para obter a cidade do usuário
+    /// Método para obter o nome de exibição do usuário
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public static string GetCity(this ClaimsPrincipal user)
+    public static string GetDisplayName(this ClaimsPrincipal user)
     {
-        return user.FindFirst("city")!.Value;
+        return user.FindFirst("name")!.Value;
     }
-
+    
     /// <summary>
     ///     Método para obter o país do usuário
     /// </summary>
@@ -68,12 +68,12 @@ public static class ClaimsPrincipalUtils
     }
 
     /// <summary>
-    ///     Método para obter o estado do usuário
+    ///     Método para obter o CEP do usuário
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public static string GetState(this ClaimsPrincipal user)
+    public static string GetPostalCode(this ClaimsPrincipal user)
     {
-        return user.FindFirst("state")!.Value;
+        return user.FindFirst("postalCode")!.Value;
     }
 }

@@ -12,22 +12,27 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     /// <param name="profile"></param>
     public async Task CreateProfileAsync(Profile profile)
     {
+        var birthDateValue = profile.BirthDate.HasValue
+            ? $"date('{profile.BirthDate:yyyy-MM-dd}')"
+            : $"'{profile.BirthDate}'";
         var query = $@"
-        CREATE (p:Profile {{
-            id: '{profile.Id}',
-            email: '{profile.Email}',
-            firstName: '{profile.FirstName}',
-            lastName: '{profile.LastName}',
-            country: '{profile.Country}',
-            city: '{profile.City}',
-            state: '{profile.State}',
-            imageUrl: '{profile.ImageUrl}',
-            createdAt: datetime('{profile.CreatedAt:yyyy-MM-ddTHH:mm:ss}'),
-            updatedAt: datetime('{profile.UpdatedAt:yyyy-MM-ddTHH:mm:ss}'),
-            gender: '{profile.Gender}',
-            birthDate: date('{profile.BirthDate:yyyy-MM-dd}'),
-            bio: '{profile.Bio}'
-        }})";
+    CREATE (p:Profile {{
+        id: '{profile.Id}',
+        email: '{profile.Email}',
+        firstName: '{profile.FirstName}',
+        lastName: '{profile.LastName}',
+        displayName: '{profile.DisplayName}',
+        country: '{profile.Country}',
+        postalCode: '{profile.PostalCode}',
+        imageUrl: '{profile.ImageUrl}',
+        createdAt: datetime('{profile.CreatedAt:yyyy-MM-ddTHH:mm:ss}'),
+        updatedAt: datetime('{profile.UpdatedAt:yyyy-MM-ddTHH:mm:ss}'),
+        gender: '{profile.Gender}',
+        birthDate: {birthDateValue},
+        bio: '{profile.Bio}',
+        latitude: {profile.Latitude},
+        longitude: {profile.Longitude}
+    }})";
 
         await graphContext.ExecuteQueryAsync(query);
     }
@@ -59,7 +64,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<Profile> GetProfileAsync(Guid id)
+    public async Task<Profile?> GetProfileAsync(Guid id)
     {
         var query = $@"
     MATCH (profile:Profile {{id: '{id}'}})
@@ -93,19 +98,25 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     /// <exception cref="NotImplementedException"></exception>
     public async Task UpdateProfileAsync(Profile profile)
     {
+        var birthDateValue = profile.BirthDate.HasValue
+            ? $"date('{profile.BirthDate:yyyy-MM-dd}')"
+            : $"'{profile.BirthDate}'";
+
         var query = $@"
     MATCH (p:Profile {{id: '{profile.Id}'}})
     SET p.email = '{profile.Email}',
         p.firstName = '{profile.FirstName}',
         p.lastName = '{profile.LastName}',
+        p.postalCode = '{profile.PostalCode}',
         p.country = '{profile.Country}',
-        p.city = '{profile.City}',
-        p.state = '{profile.State}',
+        p.displayName = '{profile.DisplayName}',
         p.imageUrl = '{profile.ImageUrl}',
         p.updatedAt = datetime('{profile.UpdatedAt:yyyy-MM-ddTHH:mm:ss}'),
         p.gender = '{profile.Gender}',
-        p.birthDate = date('{profile.BirthDate:yyyy-MM-dd}'),
-        p.bio = '{profile.Bio}'
+        p.birthDate = {birthDateValue},
+        p.bio = '{profile.Bio}',
+        p.latitude = {profile.Latitude},
+        p.longitude = {profile.Longitude}
     RETURN p";
 
         await graphContext.ExecuteQueryAsync(query);
@@ -131,7 +142,8 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         var profiles = result.Select(record =>
         {
             var profile = new Profile();
-            var parsedDictionary = record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var parsedDictionary =
+                record["profile"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             parsedDictionary["followers"] = record["followers"].As<int>();
             parsedDictionary["following"] = record["following"].As<int>();
             parsedDictionary["posts"] = 0;

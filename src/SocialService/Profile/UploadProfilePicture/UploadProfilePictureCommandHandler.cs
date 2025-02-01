@@ -19,9 +19,7 @@ public class UploadProfilePictureCommandHandler(IProfileGraphRepository reposito
     {
         Profile profile = await repository.GetProfileAsync(ProfileContext.ProfileId);
 
-        ProfileDto profileDto = new(profile);
-
-        var containerName = $"{profileDto.Id}";
+        var containerName = $"{profile.Id}";
 
         var blobName = storageProvider.SanitizeName(
             $"profile-pictures/{DateTime.Today:yyyy-MM-dd}/{command.ImageHash}.{command.ImageFileName.Split('.').Last()}",

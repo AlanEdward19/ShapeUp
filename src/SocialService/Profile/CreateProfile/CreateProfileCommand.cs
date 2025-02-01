@@ -5,13 +5,7 @@ namespace SocialService.Profile.CreateProfile;
 /// <summary>
 ///     Comando para criar um perfil
 /// </summary>
-/// <param name="gender"></param>
-/// <param name="birthDate"></param>
-/// <param name="bio"></param>
-public class CreateProfileCommand(
-    EGender gender,
-    DateTime birthDate,
-    string? bio)
+public class CreateProfileCommand
 {
     /// <summary>
     ///     Email do perfil
@@ -27,36 +21,36 @@ public class CreateProfileCommand(
     ///     Sobrenome do perfil
     /// </summary>
     public string LastName { get; private set; } = "";
-
+    
     /// <summary>
-    ///     Cidade do perfil
-    /// </summary>
-    public string City { get; private set; } = "";
-
-    /// <summary>
-    ///     Estado do perfil
-    /// </summary>
-    public string State { get; private set; } = "";
-
-    /// <summary>
-    ///     País do perfil
+    ///    País do perfil
     /// </summary>
     public string Country { get; private set; } = "";
+    
+    /// <summary>
+    ///    CEP do perfil
+    /// </summary>
+    public string PostalCode { get; private set; } = "";
+
+    /// <summary>
+    ///    Nome de exibição do perfil
+    /// </summary>
+    public string DisplayName { get; private set; } = "";
 
     /// <summary>
     ///     Gênero do perfil
     /// </summary>
-    public EGender Gender { get; set; } = gender;
+    public EGender? Gender { get; private set; } = null;
 
     /// <summary>
     ///     Data de nascimento do perfil
     /// </summary>
-    public DateTime BirthDate { get; set; } = birthDate;
+    public DateTime? BirthDate { get; private set; } = null;
 
     /// <summary>
     ///     Biografia do perfil
     /// </summary>
-    public string? Bio { get; set; } = bio;
+    public string? Bio { get; private set; } = "";
 
     /// <summary>
     ///     Data de criação do perfil
@@ -91,25 +85,25 @@ public class CreateProfileCommand(
     }
 
     /// <summary>
-    ///     Método para setar a cidade do perfil
+    ///     Método para setar o CEP do perfil
     /// </summary>
-    /// <param name="city"></param>
-    public void SetCity(string city)
+    /// <param name="postalCode"></param>
+    public void SetPostalCode(string postalCode)
     {
-        City = city;
+        PostalCode = postalCode;
     }
-
+    
     /// <summary>
-    ///     Método para setar o estado do perfil
+    /// Método para setar o nome de exibição do perfil
     /// </summary>
-    /// <param name="state"></param>
-    public void SetState(string state)
+    /// <param name="displayName"></param>
+    public void SetDisplayName(string displayName)
     {
-        State = state;
+        DisplayName = displayName;
     }
-
+    
     /// <summary>
-    ///     Método para setar o país do perfil
+    /// Método para setar o país do perfil
     /// </summary>
     /// <param name="country"></param>
     public void SetCountry(string country)

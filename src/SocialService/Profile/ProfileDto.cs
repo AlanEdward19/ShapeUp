@@ -6,7 +6,9 @@ namespace SocialService.Profile;
 ///     Objeto de transferência de dados do perfil
 /// </summary>
 /// <param name="profile"></param>
-public class ProfileDto(Profile profile)
+/// <param name="state"></param>
+/// <param name="city"></param>
+public class ProfileDto(Profile profile, string state, string city)
 {
     /// <summary>
     ///     Id do perfil
@@ -29,19 +31,24 @@ public class ProfileDto(Profile profile)
     public string LastName { get; private set; } = profile.LastName;
 
     /// <summary>
-    ///     Cidade do perfil
-    /// </summary>
-    public string City { get; private set; } = profile.City;
-
-    /// <summary>
-    ///     Estado do perfil
-    /// </summary>
-    public string State { get; private set; } = profile.State;
-
-    /// <summary>
-    ///     País do perfil
+    /// Pais do perfil
     /// </summary>
     public string Country { get; private set; } = profile.Country;
+    
+    /// <summary>
+    ///     Cidade do perfil
+    /// </summary>
+    public string City { get; private set; } = city;
+    
+    /// <summary>
+    /// Estado do perfil
+    /// </summary>
+    public string State { get; private set; } = state;
+
+    /// <summary>
+    ///     Nome de exibição do perfil
+    /// </summary>
+    public string DisplayName { get; private set; } = profile.DisplayName;
     
     /// <summary>
     /// Quantidade de seguidores do perfil.
@@ -71,12 +78,12 @@ public class ProfileDto(Profile profile)
     /// <summary>
     ///     Data de nascimento do perfil
     /// </summary>
-    public DateTime BirthDate { get; private set; } = profile.BirthDate;
+    public DateTime? BirthDate { get; private set; } = profile.BirthDate;
 
     /// <summary>
     ///     Gênero do perfil
     /// </summary>
-    public EGender Gender { get; private set; } = profile.Gender;
+    public EGender? Gender { get; private set; } = profile.Gender;
     
     /// <summary>
     /// Método para setar a url da imagem do perfil.

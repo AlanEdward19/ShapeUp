@@ -17,7 +17,7 @@ builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();
 
-var cultureInfo = new CultureInfo("pt-BR");
+var cultureInfo = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 

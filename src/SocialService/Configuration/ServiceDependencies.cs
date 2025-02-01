@@ -23,10 +23,8 @@ public static class ServiceDependencies
     public static IServiceCollection SolveServiceDependencies(this IServiceCollection services,
         IConfiguration configuration)
     {
-        //É um comum, tem que ver onde vai colocar posteriormente
-        services.AddScoped<INotificationPublisher, NotificationPublisher>();
-        
         services
+            .ConfigureCommonRelatedDependencies()
             .ConfigureConnections(configuration)
             .ConfigureActivityFeedRelatedDependencies()
             .ConfigureProfileRelatedDependencies()

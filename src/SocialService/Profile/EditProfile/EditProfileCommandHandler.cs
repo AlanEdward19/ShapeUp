@@ -1,4 +1,5 @@
-﻿using SocialService.Profile.Common.Repository;
+﻿using SocialService.Common.Services.BrasilApi;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.EditProfile;
 
@@ -6,7 +7,7 @@ namespace SocialService.Profile.EditProfile;
 ///     Handler para o comando de edição de perfil
 /// </summary>
 /// <param name="graphRepository"></param>
-public class EditProfileCommandHandler(IProfileGraphRepository graphRepository)
+public class EditProfileCommandHandler(IProfileGraphRepository graphRepository, IBrasilApi brasilApi)
     : IHandler<ProfileDto, EditProfileCommand>
 {
     /// <summary>
@@ -16,14 +17,16 @@ public class EditProfileCommandHandler(IProfileGraphRepository graphRepository)
     /// <param name="cancellationToken"></param>
     public async Task<ProfileDto> HandleAsync(EditProfileCommand command, CancellationToken cancellationToken)
     {
-        Profile profile = await graphRepository.GetProfileAsync(ProfileContext.ProfileId);
+        Profile profile = (await graphRepository.GetProfileAsync(ProfileContext.ProfileId))!;
 
         profile.UpdateBio(command.Bio);
         profile.UpdateBirthDate(command.BirthDate);
         profile.UpdateGender(command.Gender);
 
         await graphRepository.UpdateProfileAsync(profile);
+        
+        var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
 
-        return new ProfileDto(profile);
+        return new(profile, locationInfo.State, locationInfo.City);
     }
 }

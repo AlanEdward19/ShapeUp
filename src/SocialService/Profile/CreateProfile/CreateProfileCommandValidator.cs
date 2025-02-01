@@ -10,14 +10,6 @@ public class CreateProfileCommandValidator : AbstractValidator<CreateProfileComm
     /// </summary>
     public CreateProfileCommandValidator()
     {
-        RuleFor(x => x.Gender)
-            .IsInEnum()
-            .WithMessage("Gender: '{PropertyValue}' isn't a valid value");
-
-        RuleFor(x => x.BirthDate)
-            .NotNull()
-            .WithMessage("BirthDate is required");
-
         RuleFor(x => x.Bio)
             .MaximumLength(500)
             .WithMessage("Bio must have a maximum of 500 characters")

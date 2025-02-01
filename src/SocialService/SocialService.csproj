@@ -23,7 +23,10 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.1" />
         <PackageReference Include="Neo4j.Driver" Version="5.26.1"/>
+        <PackageReference Include="Refit" Version="8.0.0" />
+        <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
         <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0"/>
     </ItemGroup>

@@ -19,49 +19,43 @@ namespace SocialService.Profile;
 public class ProfileController(IProfileGraphRepository repository) : ControllerBase
 {
     /// <summary>
-    ///     Rota para criar um perfil
-    /// </summary>
-    /// <returns></returns>
-    [HttpPost("createProfile")]
-    public async Task<IActionResult> CreateProfile(
-        [FromServices] IHandler<ProfileDto, CreateProfileCommand> handler,
-        [FromBody] CreateProfileCommand command, CancellationToken cancellationToken)
-    {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-
-        command.SetEmail(User.GetEmail());
-        command.SetFirstName(User.GetFirstName());
-        command.SetLastName(User.GetLastName());
-        command.SetCity(User.GetCity());
-        command.SetState(User.GetState());
-        command.SetCountry(User.GetCountry());
-
-        CreateProfileCommandValidator validator = new();
-        await validator.ValidateAndThrowAsync(command, cancellationToken);
-
-        return Ok(await handler.HandleAsync(command, cancellationToken));
-    }
-
-    /// <summary>
     ///     Rota para visualizar um perfil
     /// </summary>
     /// <param name="profileId"></param>
-    /// <param name="handler"></param>
+    /// <param name="viewProfilehandler"></param>
+    /// <param name="createProfileHandler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("viewProfile/{profileId:guid}")]
     public async Task<IActionResult> ViewProfile(Guid profileId,
-        [FromServices] IHandler<ProfileDto, ViewProfileQuery> handler,
+        [FromServices] IHandler<ProfileDto?, ViewProfileQuery> viewProfilehandler,
+        [FromServices] IHandler<ProfileDto, CreateProfileCommand> createProfileHandler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
         ViewProfileQuery query = new(profileId);
+        
+        ProfileDto? profile = await viewProfilehandler.HandleAsync(query, cancellationToken);
 
-        ViewProfileQueryValidator validator = new(repository);
-        await validator.ValidateAndThrowAsync(query, cancellationToken);
+        if (profile is null)
+        {
+            CreateProfileCommand command = new();
+            
+            command.SetEmail(User.GetEmail());
+            command.SetFirstName(User.GetFirstName());
+            command.SetLastName(User.GetLastName());
+            command.SetCountry(User.GetCountry());
+            command.SetPostalCode(User.GetPostalCode());
+            command.SetDisplayName(User.GetDisplayName());
+            
+            CreateProfileCommandValidator createProfileValidator = new();
+            await createProfileValidator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(query, cancellationToken));
+            profile = await createProfileHandler.HandleAsync(command, cancellationToken);
+        }
+        
+        return Ok(profile);
     }
     
     /// <summary>
