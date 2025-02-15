@@ -10,7 +10,7 @@ namespace SocialService.Friends.Friendship.ListFriends;
 /// <param name="graphRepository"></param>
 public class ListFriendsQueryHandler(
     IProfileGraphRepository profileGraphRepository,
-    IFriendshipGraphRepository graphRepository, IStorageProvider storageProvider)
+    IFriendshipGraphRepository graphRepository, IBlobStorageProvider blobStorageProvider)
     : IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery>
 {
     /// <summary>
@@ -41,7 +41,7 @@ public class ListFriendsQueryHandler(
         {
             string imageUrl = string.IsNullOrWhiteSpace(profile.ImageUrl)
                 ? string.Empty
-                : storageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}");
+                : blobStorageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}");
 
             result.Add(new ProfileBasicInformation(profile.FirstName, profile.LastName, profile.Id, imageUrl));
         }

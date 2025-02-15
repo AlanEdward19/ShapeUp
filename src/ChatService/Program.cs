@@ -1,6 +1,7 @@
 using System.Globalization;
 using ChatService.Chat;
 using ChatService.Configuration;
+using ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -15,6 +16,7 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
+builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();

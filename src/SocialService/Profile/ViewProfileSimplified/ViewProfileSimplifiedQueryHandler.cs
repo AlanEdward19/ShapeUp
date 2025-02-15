@@ -6,7 +6,7 @@ namespace SocialService.Profile.ViewProfileSimplified;
 ///     Handler para a query de visualização de perfil.
 /// </summary>
 /// <param name="repository"></param>
-public class ViewProfileSimplifiedQueryHandler(IProfileGraphRepository repository, IStorageProvider storageProvider) : IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery>
+public class ViewProfileSimplifiedQueryHandler(IProfileGraphRepository repository, IBlobStorageProvider blobStorageProvider) : IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery>
 {
     /// <summary>
     ///     Método para lidar com a query de visualização de perfil.
@@ -20,7 +20,7 @@ public class ViewProfileSimplifiedQueryHandler(IProfileGraphRepository repositor
         ProfileSimplifiedDto profileDto = new(profile);
 
         if (!string.IsNullOrWhiteSpace(profile.ImageUrl))
-            profileDto.SetImageUrl(storageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}"));
+            profileDto.SetImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}"));
 
         return profileDto;
     }

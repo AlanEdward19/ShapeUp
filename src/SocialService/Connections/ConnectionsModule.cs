@@ -42,11 +42,11 @@ public static class ConnectionsModule
     private static IServiceCollection ConfigureStorageProvider(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<IStorageProvider>(provider =>
+        services.AddScoped<IBlobStorageProvider>(provider =>
         {
-            var connectionString = configuration.GetConnectionString("StorageConnection")!;
+            var connectionString = configuration.GetConnectionString("BlobStorage")!;
 
-            return new StorageProvider(connectionString, provider.GetService<ILogger<StorageProvider>>()!);
+            return new BlobStorageProvider(connectionString, provider.GetService<ILogger<BlobStorageProvider>>()!);
         });
 
         return services;

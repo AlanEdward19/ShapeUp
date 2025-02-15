@@ -84,7 +84,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.#ctor(SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQueryHandler.#ctor(SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para obter o feed de atividades.
             </summary>
@@ -405,99 +405,21 @@
             <param name="query"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Connections.Storage.IStorageProvider">
-            <summary>
-                Interface para prover armazenamento de arquivos
-            </summary>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
-            <summary>
-                Método para obter fotos de perfil
-            </summary>
-            <param name="profileId"></param>
-            <param name="page"></param>
-            <param name="rows"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.ReadBlobAsync(System.String,System.String)">
-            <summary>
-                Método para ler um blob
-            </summary>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
-            <summary>
-                Método para escrever um blob
-            </summary>
-            <param name="data"></param>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.GenerateAuthenticatedUrl(System.String,System.String)">
-            <summary>
-            Método para gerar uma URL autenticada
-            </summary>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.CreateFolderAsync(System.String,System.String)">
-            <summary>
-                Método para criar uma pasta
-            </summary>
-            <param name="folderName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.DeleteBlobAsync(System.String,System.String)">
-            <summary>
-                Método para deletar um blob
-            </summary>
-            <param name="blobName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.DeleteContainerAsync(System.String)">
-            <summary>
-                Método para deletar um container
-            </summary>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.DeleteFolderAsync(System.String,System.String)">
-            <summary>
-                Método para deletar uma pasta
-            </summary>
-            <param name="folderName"></param>
-            <param name="containerName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Connections.Storage.IStorageProvider.SanitizeName(System.String,System.Boolean)">
-            <summary>
-                Método para sanitizar um nome
-            </summary>
-            <param name="name"></param>
-            <param name="allowSlashes"></param>
-            <returns></returns>
-        </member>
-        <member name="T:SocialService.Connections.Storage.StorageProvider">
+        <member name="T:SocialService.Connections.Storage.BlobStorageProvider">
             <summary>
                 Provedor de armazenamento de arquivos
             </summary>
             <param name="connectionString"></param>
             <param name="logger"></param>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{SocialService.Connections.Storage.StorageProvider})">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{SocialService.Connections.Storage.BlobStorageProvider})">
             <summary>
                 Provedor de armazenamento de arquivos
             </summary>
             <param name="connectionString"></param>
             <param name="logger"></param>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
             <summary>
                 Método para obter fotos de perfil
             </summary>
@@ -507,7 +429,7 @@
             <returns></returns>
             <exception cref="T:System.Exception"></exception>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.ReadBlobAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.ReadBlobAsync(System.String,System.String)">
             <summary>
                 Método para ler o conteúdo de um blob
             </summary>
@@ -516,7 +438,7 @@
             <returns></returns>
             <exception cref="T:System.Exception"></exception>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
             <summary>
                 Método para escrever o conteúdo em um blob
             </summary>
@@ -524,7 +446,7 @@
             <param name="blobName"></param>
             <param name="containerName"></param>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.GenerateAuthenticatedUrl(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.GenerateAuthenticatedUrl(System.String,System.String)">
             <summary>
             Método para gerar uma URL autenticada
             </summary>
@@ -532,14 +454,14 @@
             <param name="containerName"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.CreateFolderAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.CreateFolderAsync(System.String,System.String)">
             <summary>
                 Método para criar uma pasta
             </summary>
             <param name="folderName"></param>
             <param name="containerName"></param>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.DeleteBlobAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.DeleteBlobAsync(System.String,System.String)">
             <summary>
                 Método para deletar um blob
             </summary>
@@ -547,7 +469,7 @@
             <param name="containerName"></param>
             <exception cref="T:System.Exception"></exception>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.DeleteFolderAsync(System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.DeleteFolderAsync(System.String,System.String)">
             <summary>
                 Método para deletar uma pasta
             </summary>
@@ -555,13 +477,13 @@
             <param name="containerName"></param>
             <exception cref="T:System.Exception"></exception>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.DeleteContainerAsync(System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.DeleteContainerAsync(System.String)">
             <summary>
                 Método para deletar um container
             </summary>
             <param name="containerName"></param>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.SanitizeName(System.String,System.Boolean)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.SanitizeName(System.String,System.Boolean)">
             <summary>
                 Método para sanitizar um nome
             </summary>
@@ -569,7 +491,7 @@
             <param name="allowSlashes"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Connections.Storage.StorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.RenameBlobAsync(System.String,System.String,System.String)">
             <summary>
                 Método para renomear um blob
             </summary>
@@ -577,6 +499,84 @@
             <param name="newBlobName"></param>
             <param name="containerName"></param>
             <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:SocialService.Connections.Storage.IBlobStorageProvider">
+            <summary>
+                Interface para prover armazenamento de arquivos
+            </summary>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
+            <summary>
+                Método para obter fotos de perfil
+            </summary>
+            <param name="profileId"></param>
+            <param name="page"></param>
+            <param name="rows"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.ReadBlobAsync(System.String,System.String)">
+            <summary>
+                Método para ler um blob
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.WriteBlobAsync(System.IO.MemoryStream,System.String,System.String)">
+            <summary>
+                Método para escrever um blob
+            </summary>
+            <param name="data"></param>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.GenerateAuthenticatedUrl(System.String,System.String)">
+            <summary>
+            Método para gerar uma URL autenticada
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.CreateFolderAsync(System.String,System.String)">
+            <summary>
+                Método para criar uma pasta
+            </summary>
+            <param name="folderName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.DeleteBlobAsync(System.String,System.String)">
+            <summary>
+                Método para deletar um blob
+            </summary>
+            <param name="blobName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.DeleteContainerAsync(System.String)">
+            <summary>
+                Método para deletar um container
+            </summary>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.DeleteFolderAsync(System.String,System.String)">
+            <summary>
+                Método para deletar uma pasta
+            </summary>
+            <param name="folderName"></param>
+            <param name="containerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.SanitizeName(System.String,System.Boolean)">
+            <summary>
+                Método para sanitizar um nome
+            </summary>
+            <param name="name"></param>
+            <param name="allowSlashes"></param>
+            <returns></returns>
         </member>
         <member name="T:SocialService.Exceptions.NotFoundException">
             <summary>
@@ -823,7 +823,7 @@
             <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para obter os seguidores de um perfil.
             </summary>
@@ -894,7 +894,7 @@
             <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para obter os perfis seguidos de um perfil
             </summary>
@@ -1495,7 +1495,7 @@
             <param name="context"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.Friendship.ListFriends.ListFriendsQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Friends.Friendship.ListFriends.ListFriendsQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de listagem de amigos.
             </summary>
@@ -1843,7 +1843,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.Comment.GetPostComments.GetPostCommentsQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.Comment.GetPostComments.GetPostCommentsQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para obter os comentários de um post
             </summary>
@@ -2225,7 +2225,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.CreatePost.CreatePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.CreatePost.CreatePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para criação de post.
             </summary>
@@ -2271,7 +2271,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.DeletePost.DeletePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.DeletePost.DeletePostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para o comando de deletar um post.
             </summary>
@@ -2392,7 +2392,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de obter posts pelo id do perfil
             </summary>
@@ -2439,7 +2439,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.GetPost.GetPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.GetPost.GetPostQueryHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de informações de um post
             </summary>
@@ -2986,14 +2986,14 @@
                 Handler para o comando de upload de imagens de um post.
             </summary>
             <param name="repository"></param>
-            <param name="storageProvider"></param>
+            <param name="blobStorageProvider"></param>
         </member>
-        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para o comando de upload de imagens de um post.
             </summary>
             <param name="repository"></param>
-            <param name="storageProvider"></param>
+            <param name="blobStorageProvider"></param>
         </member>
         <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler.HandleAsync(SocialService.Post.UploadPostImages.UploadPostImageCommand,System.Threading.CancellationToken)">
             <summary>
@@ -3269,14 +3269,14 @@
             <summary>
                 Handler para o comando de deletar um perfil
             </summary>
-            <param name="storageProvider"></param>
+            <param name="blobStorageProvider"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Connections.Storage.IStorageProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Connections.Storage.IBlobStorageProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
                 Handler para o comando de deletar um perfil
             </summary>
-            <param name="storageProvider"></param>
+            <param name="blobStorageProvider"></param>
             <param name="graphRepository"></param>
         </member>
         <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.HandleAsync(SocialService.Profile.DeleteProfile.DeleteProfileCommand,System.Threading.CancellationToken)">
@@ -3391,13 +3391,13 @@
         <member name="T:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryHandler">
             <summary>
                 Handler para a query de obter fotos de perfil.
-                <param name="storageProvider"></param>
+                <param name="blobStorageProvider"></param>
             </summary>
         </member>
-        <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryHandler.#ctor(SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryHandler.#ctor(SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de obter fotos de perfil.
-                <param name="storageProvider"></param>
+                <param name="blobStorageProvider"></param>
             </summary>
         </member>
         <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQueryHandler.HandleAsync(SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery,System.Threading.CancellationToken)">
@@ -3865,14 +3865,14 @@
                 Handler para o comando de upload de foto de perfil.
             </summary>
             <param name="repository"></param>
-            <param name="storageProvider"></param>
+            <param name="blobStorageProvider"></param>
         </member>
-        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para o comando de upload de foto de perfil.
             </summary>
             <param name="repository"></param>
-            <param name="storageProvider"></param>
+            <param name="blobStorageProvider"></param>
         </member>
         <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.HandleAsync(SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand,System.Threading.CancellationToken)">
             <summary>
@@ -3902,7 +3902,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
@@ -3948,7 +3948,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
@@ -4001,6 +4001,14 @@
             <param name="profileId"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository.GetFriendRecommendationsWithinDistanceAsync(System.Guid,System.Double)">
+            <summary>
+               Método para obter recomendações de amigos dentro de uma distância.
+            </summary>
+            <param name="profileId"></param>
+            <param name="distanceInKm"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Recommendation.GetFriendRecommendations.FriendRecommendation">
             <summary>
                 Classe de recomendação de amigos
@@ -4046,7 +4054,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryHandler.#ctor(SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository,SocialService.Connections.Storage.IStorageProvider)">
+        <member name="M:SocialService.Recommendation.GetFriendRecommendations.GetFriendRecommendationQueryHandler.#ctor(SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de recomendações de amigos.
             </summary>

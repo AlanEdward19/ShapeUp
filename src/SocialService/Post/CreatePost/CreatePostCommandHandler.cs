@@ -6,7 +6,7 @@ namespace SocialService.Post.CreatePost;
 ///     Handler para criação de post.
 /// </summary>
 /// <param name="repository"></param>
-public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
+public class CreatePostCommandHandler(IPostGraphRepository repository, IBlobStorageProvider blobStorageProvider)
     : IHandler<PostDto, CreatePostCommand>
 {
     /// <summary>
@@ -22,7 +22,7 @@ public class CreatePostCommandHandler(IPostGraphRepository repository, IStorageP
         var blobName = $"post-images/{post.Id}";
         var containerName = ProfileContext.ProfileId.ToString();
 
-        await storageProvider.CreateFolderAsync(blobName, containerName);
+        await blobStorageProvider.CreateFolderAsync(blobName, containerName);
         await repository.CreatePostAsync(ProfileContext.ProfileId, post);
 
         return new PostDto(post);

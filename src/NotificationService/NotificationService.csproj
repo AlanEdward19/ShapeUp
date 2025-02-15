@@ -37,4 +37,8 @@
       <DocFileItem Remove="Configuration\Comments\NotificationService.xml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
+    </ItemGroup>
+
 </Project>

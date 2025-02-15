@@ -20,10 +20,8 @@ public static class EndpointsConfiguration
     /// <returns>An IEndpointRouteBuilder.</returns>
     public static IEndpointRouteBuilder MapEndpoints(this IEndpointRouteBuilder app, IConfiguration configuration)
     {
-        var healthCheck = configuration["EndPointsConfig:HealthCheckPath"];
-
-        app.MapHealthChecks(healthCheck!);
         app.MapControllers();
+        
         return app;
     }
 
@@ -119,8 +117,7 @@ public static class EndpointsConfiguration
             options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         });
-
-        services.AddHealthChecks();
+        
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 

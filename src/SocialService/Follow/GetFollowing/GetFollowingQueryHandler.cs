@@ -10,7 +10,7 @@ namespace SocialService.Follow.GetFollowing;
 /// <param name="graphRepository"></param>
 public class GetFollowingQueryHandler(
     IProfileGraphRepository profileGraphRepository,
-    IFollowerGraphRepository graphRepository, IStorageProvider storageProvider)
+    IFollowerGraphRepository graphRepository, IBlobStorageProvider blobStorageProvider)
     : IHandler<IEnumerable<ProfileBasicInformation>, GetFollowingQuery>
 {
     /// <summary>
@@ -36,7 +36,7 @@ public class GetFollowingQueryHandler(
         {
             string imageUrl = string.IsNullOrWhiteSpace(profile.ImageUrl)
                 ? string.Empty
-                : storageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}");
+                : blobStorageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}");
 
             result.Add(new ProfileBasicInformation(profile.FirstName, profile.LastName, profile.Id, imageUrl));
         }

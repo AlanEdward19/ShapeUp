@@ -1,9 +1,11 @@
 using System.Globalization;
 using NutritionService.Configuration;
+using ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
+builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();

@@ -2,9 +2,9 @@
 
 /// <summary>
 ///     Handler para a query de obter fotos de perfil.
-///     <param name="storageProvider"></param>
+///     <param name="blobStorageProvider"></param>
 /// </summary>
-public class GetProfilePicturesQueryHandler(IStorageProvider storageProvider)
+public class GetProfilePicturesQueryHandler(IBlobStorageProvider blobStorageProvider)
     : IHandler<IEnumerable<ProfilePicture>, GetProfilePicturesQuery>
 {
     /// <summary>
@@ -17,6 +17,6 @@ public class GetProfilePicturesQueryHandler(IStorageProvider storageProvider)
     public Task<IEnumerable<ProfilePicture>> HandleAsync(GetProfilePicturesQuery query,
         CancellationToken cancellationToken)
     {
-        return storageProvider.GetProfilePicturesAsync(query.ProfileId, query.Page, query.Rows);
+        return blobStorageProvider.GetProfilePicturesAsync(query.ProfileId, query.Page, query.Rows);
     }
 }

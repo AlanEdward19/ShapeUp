@@ -38,7 +38,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         
         ProfileDto? profile = await viewProfilehandler.HandleAsync(query, cancellationToken);
 
-        if (profile is null)
+        if (profile is null && profileId == ProfileContext.ProfileId)
         {
             CreateProfileCommand command = new();
             

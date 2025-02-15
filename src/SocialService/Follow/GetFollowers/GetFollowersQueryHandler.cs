@@ -11,7 +11,7 @@ namespace SocialService.Follow.GetFollowers;
 public class GetFollowersQueryHandler(
     IProfileGraphRepository profileGraphRepository,
     IFollowerGraphRepository graphRepository,
-    IStorageProvider storageProvider)
+    IBlobStorageProvider blobStorageProvider)
     : IHandler<IEnumerable<ProfileBasicInformation>, GetFollowersQuery>
 {
     /// <summary>
@@ -37,7 +37,7 @@ public class GetFollowersQueryHandler(
         {
             string imageUrl = string.IsNullOrWhiteSpace(profile.ImageUrl)
                 ? string.Empty
-                : storageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}");
+                : blobStorageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}");
 
             result.Add(new ProfileBasicInformation(profile.FirstName, profile.LastName, profile.Id, imageUrl));
         }

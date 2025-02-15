@@ -5,10 +5,10 @@ namespace SocialService.Profile.DeleteProfile;
 /// <summary>
 ///     Handler para o comando de deletar um perfil
 /// </summary>
-/// <param name="storageProvider"></param>
+/// <param name="blobStorageProvider"></param>
 /// <param name="graphRepository"></param>
 public class DeleteProfileCommandHandler(
-    IStorageProvider storageProvider,
+    IBlobStorageProvider blobStorageProvider,
     IProfileGraphRepository graphRepository) : IHandler<bool, DeleteProfileCommand>
 {
     /// <summary>
@@ -20,7 +20,7 @@ public class DeleteProfileCommandHandler(
     {
         await graphRepository.DeleteProfileAsync(command.ProfileId);
 
-        await storageProvider.DeleteContainerAsync(command.ProfileId.ToString());
+        await blobStorageProvider.DeleteContainerAsync(command.ProfileId.ToString());
 
         return true;
     }

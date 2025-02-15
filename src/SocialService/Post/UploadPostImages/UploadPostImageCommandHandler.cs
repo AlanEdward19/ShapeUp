@@ -7,8 +7,8 @@ namespace SocialService.Post.UploadPostImages;
 ///     Handler para o comando de upload de imagens de um post.
 /// </summary>
 /// <param name="repository"></param>
-/// <param name="storageProvider"></param>
-public class UploadPostImageCommandHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
+/// <param name="blobStorageProvider"></param>
+public class UploadPostImageCommandHandler(IPostGraphRepository repository, IBlobStorageProvider blobStorageProvider)
     : IHandler<bool, UploadPostImageCommand>
 {
     /// <summary>
@@ -28,7 +28,7 @@ public class UploadPostImageCommandHandler(IPostGraphRepository repository, ISto
         {
             var blobName = $"post-images/{command.PostId}/{Guid.NewGuid()}.{image.imageName.Split('.').Last()}";
 
-            await storageProvider.WriteBlobAsync(image.fileContent, blobName, containerName);
+            await blobStorageProvider.WriteBlobAsync(image.fileContent, blobName, containerName);
             
             images.Add(blobName);
         }

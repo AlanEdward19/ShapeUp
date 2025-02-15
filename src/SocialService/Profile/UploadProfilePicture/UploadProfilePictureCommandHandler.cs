@@ -6,8 +6,8 @@ namespace SocialService.Profile.UploadProfilePicture;
 ///     Handler para o comando de upload de foto de perfil.
 /// </summary>
 /// <param name="repository"></param>
-/// <param name="storageProvider"></param>
-public class UploadProfilePictureCommandHandler(IProfileGraphRepository repository, IStorageProvider storageProvider)
+/// <param name="blobStorageProvider"></param>
+public class UploadProfilePictureCommandHandler(IProfileGraphRepository repository, IBlobStorageProvider blobStorageProvider)
     : IHandler<bool, UploadProfilePictureCommand>
 {
     /// <summary>
@@ -21,11 +21,11 @@ public class UploadProfilePictureCommandHandler(IProfileGraphRepository reposito
 
         var containerName = $"{profile.Id}";
 
-        var blobName = storageProvider.SanitizeName(
+        var blobName = blobStorageProvider.SanitizeName(
             $"profile-pictures/{DateTime.Today:yyyy-MM-dd}/{command.ImageHash}.{command.ImageFileName.Split('.').Last()}",
             true);
 
-        await storageProvider.WriteBlobAsync(command.Image, blobName, containerName);
+        await blobStorageProvider.WriteBlobAsync(command.Image, blobName, containerName);
 
         profile.UpdateImage(blobName);
 

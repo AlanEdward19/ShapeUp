@@ -6,7 +6,7 @@ namespace SocialService.Post.Comment.GetPostComments;
 ///     Handler para obter os comentários de um post
 /// </summary>
 /// <param name="repository"></param>
-public class GetPostCommentsQueryHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
+public class GetPostCommentsQueryHandler(IPostGraphRepository repository, IBlobStorageProvider blobStorageProvider)
     : IHandler<IEnumerable<Comment>, GetPostCommentsQuery>
 {
     /// <summary>
@@ -21,7 +21,7 @@ public class GetPostCommentsQueryHandler(IPostGraphRepository repository, IStora
 
         foreach (var comment in comments)
             if (!string.IsNullOrWhiteSpace(comment.ProfileImageUrl))
-                comment.SetProfileImageUrl(storageProvider.GenerateAuthenticatedUrl(comment.ProfileImageUrl, $"{comment.ProfileId}"));
+                comment.SetProfileImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(comment.ProfileImageUrl, $"{comment.ProfileId}"));
         
         return comments;
     }

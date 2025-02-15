@@ -5,7 +5,7 @@ namespace SocialService.Connections.Storage;
 /// <summary>
 ///     Interface para prover armazenamento de arquivos
 /// </summary>
-public interface IStorageProvider
+public interface IBlobStorageProvider
 {
     /// <summary>
     ///     Método para obter fotos de perfil

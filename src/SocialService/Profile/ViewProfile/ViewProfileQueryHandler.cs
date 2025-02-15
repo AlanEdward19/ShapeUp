@@ -11,7 +11,7 @@ namespace SocialService.Profile.ViewProfile;
 public class ViewProfileQueryHandler(
     IProfileGraphRepository repository,
     IBrasilApi brasilApi,
-    IStorageProvider storageProvider)
+    IBlobStorageProvider blobStorageProvider)
     : IHandler<ProfileDto?, ViewProfileQuery>
 {
     /// <summary>
@@ -32,7 +32,7 @@ public class ViewProfileQueryHandler(
         ProfileDto profileDto = new(profile, locationInfo.State, locationInfo.City);
 
         if (!string.IsNullOrWhiteSpace(profile.ImageUrl))
-            profileDto.SetImageUrl(storageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}"));
+            profileDto.SetImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}"));
 
         return profileDto;
     }

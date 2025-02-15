@@ -7,7 +7,7 @@ namespace SocialService.Post.DeletePost;
 ///     Handler para o comando de deletar um post.
 /// </summary>
 /// <param name="repository"></param>
-public class DeletePostCommandHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
+public class DeletePostCommandHandler(IPostGraphRepository repository, IBlobStorageProvider blobStorageProvider)
     : IHandler<bool, DeletePostCommand>
 {
     /// <summary>
@@ -25,7 +25,7 @@ public class DeletePostCommandHandler(IPostGraphRepository repository, IStorageP
 
         var containerName = ProfileContext.ProfileId.ToString();
         var blobName = $"post-images/{command.PostId}";
-        await storageProvider.DeleteFolderAsync(blobName, containerName);
+        await blobStorageProvider.DeleteFolderAsync(blobName, containerName);
 
         return true;
     }

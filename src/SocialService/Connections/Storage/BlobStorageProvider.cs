@@ -9,7 +9,7 @@ namespace SocialService.Connections.Storage;
 /// </summary>
 /// <param name="connectionString"></param>
 /// <param name="logger"></param>
-public class StorageProvider(string connectionString, ILogger<StorageProvider> logger) : IStorageProvider
+public class BlobStorageProvider(string connectionString, ILogger<BlobStorageProvider> logger) : IBlobStorageProvider
 {
     private readonly BlobServiceClient _blobServiceClient = new(connectionString);
 

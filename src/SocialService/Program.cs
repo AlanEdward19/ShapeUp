@@ -1,4 +1,5 @@
 using System.Globalization;
+using ServiceDefaults;
 using SocialService.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
+builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();

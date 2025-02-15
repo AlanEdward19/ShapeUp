@@ -6,7 +6,7 @@ namespace SocialService.Post.GetPostsByProfileId;
 ///     Handler para a query de obter posts pelo id do perfil
 /// </summary>
 /// <param name="repository"></param>
-public class GetPostsByProfileIdQueryHandler(IPostGraphRepository repository, IStorageProvider storageProvider)
+public class GetPostsByProfileIdQueryHandler(IPostGraphRepository repository, IBlobStorageProvider blobStorageProvider)
     : IHandler<IEnumerable<PostDto>, GetPostsByProfileIdQuery>
 {
     /// <summary>
@@ -28,14 +28,14 @@ public class GetPostsByProfileIdQueryHandler(IPostGraphRepository repository, IS
             List<string> imageUrls = new(post.Images.Count());
 
             foreach (var image in post.Images)
-                imageUrls.Add(storageProvider.GenerateAuthenticatedUrl(image, $"{post.PublisherId}"));
+                imageUrls.Add(blobStorageProvider.GenerateAuthenticatedUrl(image, $"{post.PublisherId}"));
 
             PostDto postDto = new(post);
             postDto.SetImages(imageUrls);
 
             if (!string.IsNullOrWhiteSpace(post.PublisherImageUrl))
                 postDto.SetPublisherImageUrl(
-                    storageProvider.GenerateAuthenticatedUrl(post.PublisherImageUrl, $"{post.PublisherId}"));
+                    blobStorageProvider.GenerateAuthenticatedUrl(post.PublisherImageUrl, $"{post.PublisherId}"));
 
             result.Add(postDto);
         }

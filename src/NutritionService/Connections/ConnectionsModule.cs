@@ -26,7 +26,7 @@ public static class ConnectionsModule
     {
         services.AddScoped<IMongoDatabase>(x =>
         {
-            string connectionString = configuration.GetConnectionString("MongoConnection")!;
+            string connectionString = configuration.GetConnectionString("Mongo")!;
 
             var client = new MongoClient(connectionString);
             return client.GetDatabase("nutrition");

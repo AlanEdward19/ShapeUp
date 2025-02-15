@@ -19,10 +19,8 @@ public static class EndpointsConfiguration
     /// <returns>An IEndpointRouteBuilder.</returns>
     public static IEndpointRouteBuilder MapEndpoints(this IEndpointRouteBuilder app, IConfiguration configuration)
     {
-        var healthCheck = configuration["EndPointsConfig:HealthCheckPath"];
-
-        app.MapHealthChecks(healthCheck!);
         app.MapControllers();
+        
         return app;
     }
 

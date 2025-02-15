@@ -7,7 +7,7 @@ namespace SocialService.Recommendation.GetFriendRecommendations;
 ///     Handler para a query de recomendações de amigos.
 /// </summary>
 /// <param name="repository"></param>
-public class GetFriendRecommendationQueryHandler(IRecommendationGraphRepository repository, IStorageProvider storageProvider)
+public class GetFriendRecommendationQueryHandler(IRecommendationGraphRepository repository, IBlobStorageProvider blobStorageProvider)
     : IHandler<IEnumerable<FriendRecommendation>, GetFriendRecommendationQuery>
 {
     /// <summary>
@@ -32,7 +32,7 @@ public class GetFriendRecommendationQueryHandler(IRecommendationGraphRepository 
             ProfileSimplifiedDto profileSimplified = new(profile);
             
             if (!string.IsNullOrWhiteSpace(profileSimplified.ImageUrl))
-                profileSimplified.SetImageUrl(storageProvider.GenerateAuthenticatedUrl(profileSimplified.ImageUrl, $"{profileSimplified.Id}"));
+                profileSimplified.SetImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(profileSimplified.ImageUrl, $"{profileSimplified.Id}"));
             
             result.Add(new FriendRecommendation(profileSimplified, mutualFriends));
             
@@ -43,7 +43,7 @@ public class GetFriendRecommendationQueryHandler(IRecommendationGraphRepository 
             ProfileSimplifiedDto profileSimplified = new(profile);
             
             if (!string.IsNullOrWhiteSpace(profileSimplified.ImageUrl))
-                profileSimplified.SetImageUrl(storageProvider.GenerateAuthenticatedUrl(profileSimplified.ImageUrl, $"{profileSimplified.Id}"));
+                profileSimplified.SetImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(profileSimplified.ImageUrl, $"{profileSimplified.Id}"));
             
             result.Add(new FriendRecommendation(profileSimplified, 0));
         }

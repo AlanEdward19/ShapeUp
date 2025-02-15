@@ -6,7 +6,7 @@ namespace SocialService.Post.GetPost;
 ///     Handler para a query de informações de um post
 /// </summary>
 /// <param name="repository"></param>
-public class GetPostQueryHandler(IPostGraphRepository repository, IStorageProvider storageProvider) : IHandler<PostDto, GetPostQuery>
+public class GetPostQueryHandler(IPostGraphRepository repository, IBlobStorageProvider blobStorageProvider) : IHandler<PostDto, GetPostQuery>
 {
     /// <summary>
     ///     Método para obter as informações de um post
@@ -20,13 +20,13 @@ public class GetPostQueryHandler(IPostGraphRepository repository, IStorageProvid
         List<string> imageUrls = new(post.Images.Count());
         
         foreach (var image in post.Images)
-            imageUrls.Add(storageProvider.GenerateAuthenticatedUrl(image, $"{post.PublisherId}"));
+            imageUrls.Add(blobStorageProvider.GenerateAuthenticatedUrl(image, $"{post.PublisherId}"));
         
         PostDto postDto = new(post);
         postDto.SetImages(imageUrls);
         
         if(!string.IsNullOrWhiteSpace(post.PublisherImageUrl))
-            postDto.SetPublisherImageUrl(storageProvider.GenerateAuthenticatedUrl(post.PublisherImageUrl, $"{post.PublisherId}"));
+            postDto.SetPublisherImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(post.PublisherImageUrl, $"{post.PublisherId}"));
         
         return postDto;
     }
