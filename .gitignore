@@ -374,7 +374,7 @@ MigrationBackup/
 .ionide/
 
 .idea/
-/.idea/**
+**/.idea/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
