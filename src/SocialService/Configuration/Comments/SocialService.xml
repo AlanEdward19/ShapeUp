@@ -3226,7 +3226,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi)">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi,SocialService.Connections.Search.IAzureSearchProvider)">
             <summary>
                 Handler para o comando de criação de perfil.
             </summary>

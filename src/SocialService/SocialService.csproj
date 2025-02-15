@@ -14,9 +14,11 @@
 
     <ItemGroup>
         <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0"/>
+        <PackageReference Include="Azure.Search.Documents" Version="11.6.0" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
         <PackageReference Include="FluentValidation" Version="11.11.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.Azure.Search" Version="10.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
@@ -34,9 +36,6 @@
     <ItemGroup>
         <Content Include="..\.dockerignore">
             <Link>.dockerignore</Link>
-        </Content>
-        <Content Include="..\docker-compose.yml">
-            <Link>docker-compose.yml</Link>
         </Content>
     </ItemGroup>
 

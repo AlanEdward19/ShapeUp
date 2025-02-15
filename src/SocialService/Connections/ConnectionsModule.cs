@@ -1,4 +1,5 @@
-﻿using StackExchange.Redis;
+﻿using SocialService.Connections.Search;
+using StackExchange.Redis;
 
 namespace SocialService.Connections;
 
@@ -19,7 +20,8 @@ public static class ConnectionsModule
         services
             .ConfigureNeo4J(configuration)
             .ConfigureRedis(configuration)
-            .ConfigureStorageProvider(configuration);
+            .ConfigureStorageProvider(configuration)
+            .ConfigureSearchProvider(configuration);
 
         return services;
     }
@@ -34,7 +36,7 @@ public static class ConnectionsModule
             return GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));
         });
 
-        services.AddScoped(typeof(GraphContext));
+        services.AddScoped<GraphContext>();
 
         return services;
     }
@@ -42,7 +44,7 @@ public static class ConnectionsModule
     private static IServiceCollection ConfigureStorageProvider(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<IBlobStorageProvider>(provider =>
+        services.AddSingleton<IBlobStorageProvider>(provider =>
         {
             var connectionString = configuration.GetConnectionString("BlobStorage")!;
 
@@ -58,6 +60,13 @@ public static class ConnectionsModule
         
         services.AddSingleton<IConnectionMultiplexer>(_ =>
             ConnectionMultiplexer.Connect(connectionString));
+
+        return services;
+    }
+    
+    private static IServiceCollection ConfigureSearchProvider(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<IAzureSearchProvider>(x => new AzureSearchProvider(configuration));
 
         return services;
     }

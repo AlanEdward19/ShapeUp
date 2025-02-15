@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Azure;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 var mongo = builder
@@ -18,12 +16,16 @@ var storage = builder
                 .WithImageTag("latest")
         );
 
+var search = builder.AddConnectionString("Search");
+
 var socialService = builder
         .AddProject<Projects.SocialService>("SocialService")
         .WaitFor(redis)
         .WaitFor(storage)
+        // .WaitFor(search)
         .WithReference(storage.AddBlobs("BlobStorage"))
-        .WithReference(redis);
+        .WithReference(redis)
+        .WithReference(search);
 
 var notificationService = builder
         .AddProject<Projects.NotificationService>("NotificationService")
