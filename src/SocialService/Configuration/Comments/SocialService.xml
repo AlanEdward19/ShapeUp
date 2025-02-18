@@ -405,6 +405,37 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="T:SocialService.Connections.Search.AzureSearchProvider">
+            <summary>
+            Provedor de busca do Azure Search.
+            </summary>
+        </member>
+        <member name="M:SocialService.Connections.Search.AzureSearchProvider.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Construtor da classe AzureSearchProvider
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:SocialService.Connections.Search.AzureSearchProvider.UpsertAsync(System.Guid,System.String)">
+            <summary>
+            Método para inserir ou atualizar um perfil no índice de busca.
+            </summary>
+            <param name="profileId"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:SocialService.Connections.Search.AzureSearchProvider.DeleteAsync(System.Guid)">
+            <summary>
+            Método para deletar um perfil do índice de busca.
+            </summary>
+            <param name="profileId"></param>
+        </member>
+        <member name="M:SocialService.Connections.Search.AzureSearchProvider.SearchAsync(System.String)">
+            <summary>
+            Método para fazer uma pesquisa parcial com fuzzy search (busca por nome com margem de erro de até 2 caracteres)
+            </summary>
+            <param name="searchTerm"></param>
+            <returns></returns>
+        </member>
         <member name="T:SocialService.Connections.Storage.BlobStorageProvider">
             <summary>
                 Provedor de armazenamento de arquivos
@@ -3663,20 +3694,29 @@
         </member>
         <member name="M:SocialService.Profile.ProfileController.EditProfile(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.EditProfile.EditProfileCommand},SocialService.Profile.EditProfile.EditProfileCommand,System.Threading.CancellationToken)">
             <summary>
-                Rota para editar um perfil
+            Rota para editar um perfil
             </summary>
+            <param name="handler"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.ProfileController.DeleteProfile(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.DeleteProfile.DeleteProfileCommand},System.Threading.CancellationToken)">
             <summary>
-                Rota para deletar um perfil
+            Rota para deletar um perfil
             </summary>
+            <param name="profileId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.ProfileController.UploadProfilePicture(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
             <summary>
-                Rota para fazer upload de uma foto de perfil
+            Rota para fazer upload de uma foto de perfil
             </summary>
+            <param name="handler"></param>
+            <param name="image"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.ProfileController.GetProfilePictures(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32},SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Profile.GetProfilePictures.ProfilePicture},SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery},System.Threading.CancellationToken)">
@@ -3687,6 +3727,15 @@
             <param name="page"></param>
             <param name="rows"></param>
             <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Profile.ProfileController.SearchProfileByName(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Profile.ProfileSimplifiedDto},SocialService.Profile.SearchProfileByName.SearchProfileByNameQuery},SocialService.Profile.SearchProfileByName.SearchProfileByNameQuery,System.Threading.CancellationToken)">
+            <summary>
+            Rota para buscar um perfil pelo nome
+            </summary>
+            <param name="handler"></param>
+            <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -3836,6 +3885,30 @@
             Método para setar a url da imagem do perfil.
             </summary>
             <param name="imageUrl"></param>
+        </member>
+        <member name="T:SocialService.Profile.SearchProfileByName.SearchProfileByNameQueryHandler">
+            <summary>
+            Handler para a query de busca de perfil por nome.
+            </summary>
+            <param name="searchProvider"></param>
+            <param name="repository"></param>
+            <param name="blobStorageProvider"></param>
+        </member>
+        <member name="M:SocialService.Profile.SearchProfileByName.SearchProfileByNameQueryHandler.#ctor(SocialService.Connections.Search.IAzureSearchProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
+            <summary>
+            Handler para a query de busca de perfil por nome.
+            </summary>
+            <param name="searchProvider"></param>
+            <param name="repository"></param>
+            <param name="blobStorageProvider"></param>
+        </member>
+        <member name="M:SocialService.Profile.SearchProfileByName.SearchProfileByNameQueryHandler.HandleAsync(SocialService.Profile.SearchProfileByName.SearchProfileByNameQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com a query de busca de perfil por nome.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand">
             <summary>

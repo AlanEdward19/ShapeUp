@@ -4,5 +4,5 @@ public interface IAzureSearchProvider
 {
     Task UpsertAsync(Guid profileId, string name);
     Task DeleteAsync(Guid profileId);
-    Task<IEnumerable<Profile>> SearchAsync(string searchTerm);
+    Task<IEnumerable<AzureSearchProfileDto>> SearchAsync(string searchTerm);
 }

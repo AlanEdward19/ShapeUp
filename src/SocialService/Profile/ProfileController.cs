@@ -3,6 +3,7 @@ using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;
 using SocialService.Profile.GetProfilePictures;
+using SocialService.Profile.SearchProfileByName;
 using SocialService.Profile.UploadProfilePicture;
 using SocialService.Profile.ViewProfile;
 using SocialService.Profile.ViewProfileSimplified;
@@ -81,8 +82,11 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     }
 
     /// <summary>
-    ///     Rota para editar um perfil
+    /// Rota para editar um perfil
     /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPatch("editProfile")]
     public async Task<IActionResult> EditProfile([FromServices] IHandler<ProfileDto, EditProfileCommand> handler,
@@ -97,8 +101,11 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     }
 
     /// <summary>
-    ///     Rota para deletar um perfil
+    /// Rota para deletar um perfil
     /// </summary>
+    /// <param name="profileId"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("deleteProfile/{profileId:guid}")]
     public async Task<IActionResult> DeleteProfile(Guid profileId,
@@ -115,10 +122,13 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
-    /// <summary>
-    ///     Rota para fazer upload de uma foto de perfil
-    /// </summary>
-    /// <returns></returns>
+ /// <summary>
+ /// Rota para fazer upload de uma foto de perfil
+ /// </summary>
+ /// <param name="handler"></param>
+ /// <param name="image"></param>
+ /// <param name="cancellationToken"></param>
+ /// <returns></returns>
     [HttpPut("uploadProfilePicture")]
     public async Task<IActionResult> UploadProfilePicture(
         [FromServices] IHandler<bool, UploadProfilePictureCommand> handler,
@@ -153,6 +163,23 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
 
         GetProfilePicturesQueryValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
+    /// <summary>
+    /// Rota para buscar um perfil pelo nome
+    /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="query"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("searchProfileByName")]
+    public async Task<IActionResult> SearchProfileByName(
+        [FromServices] IHandler<IEnumerable<ProfileSimplifiedDto>, SearchProfileByNameQuery> handler,
+        [FromQuery] SearchProfileByNameQuery query, CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
