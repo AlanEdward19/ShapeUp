@@ -1,4 +1,5 @@
 ﻿using SocialService.Common.Services.BrasilApi;
+using SocialService.Connections.Search;
 using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.CreateProfile;
@@ -7,7 +8,7 @@ namespace SocialService.Profile.CreateProfile;
 ///     Handler para o comando de criação de perfil.
 /// </summary>
 /// <param name="graphRepository"></param>
-public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository, IBrasilApi brasilApi)
+public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository, IBrasilApi brasilApi, IAzureSearchProvider searchProvider)
     : IHandler<ProfileDto, CreateProfileCommand>
 {
     /// <summary>
@@ -27,6 +28,8 @@ public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository
         await graphRepository.CreateProfileAsync(profile);
 
         #endregion
+        
+        await searchProvider.UpsertAsync(profile.Id, $"{profile.FirstName} {profile.LastName}");
         
         ProfileDto profileDto = new(profile, locationInfo.State, locationInfo.City);
 
