@@ -71,7 +71,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
     OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
     OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
-    RETURN profile, COUNT(follower) AS followers, COUNT(following) AS following, COUNT(post) AS posts";
+    RETURN profile, SIZE(COLLECT(DISTINCT follower)) AS followers, SIZE(COLLECT(DISTINCT following)) AS following, COUNT(post) AS posts";
 
         var result = await graphContext.ExecuteQueryAsync(query);
 
