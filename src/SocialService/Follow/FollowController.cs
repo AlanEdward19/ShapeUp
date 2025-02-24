@@ -12,7 +12,7 @@ namespace SocialService.Follow;
 [ApiVersion("1.0")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-[Route("[Controller]/v{version:apiVersion}")]
+[Route("v{version:apiVersion}/[Controller]")]
 public class FollowController(IProfileGraphRepository repository) : ControllerBase
 {
     /// <summary>
