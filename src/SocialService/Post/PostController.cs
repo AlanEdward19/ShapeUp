@@ -24,7 +24,7 @@ namespace SocialService.Post;
 [ApiVersion("1.0")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-[Route("[Controller]/v{version:apiVersion}")]
+[Route("v{version:apiVersion}/[Controller]")]
 public class PostController(IPostGraphRepository repository) : ControllerBase
 {
     #region Post

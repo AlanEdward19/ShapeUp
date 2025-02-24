@@ -8,10 +8,13 @@ using NotificationService.Notification.SendNotification;
 
 namespace NotificationService.Notification;
 
+/// <summary>
+/// Controller responsavel por gerenciar notificações
+/// </summary>
 [ApiVersion("1.0")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-[Route("[Controller]/v{version:apiVersion}")]
+[Route("v{version:apiVersion}/[Controller]")]
 public class NotificationController : ControllerBase
 {
     /// <summary>
