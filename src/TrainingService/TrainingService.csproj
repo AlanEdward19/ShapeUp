@@ -15,11 +15,6 @@
     <ItemGroup>
       <Folder Include="Common\" />
       <Folder Include="Connections\" />
-      <Folder Include="Exercises\CreateExercise\" />
-      <Folder Include="Exercises\DeleteExercise\" />
-      <Folder Include="Exercises\GetExerciseById\" />
-      <Folder Include="Exercises\GetExerciseByMuscleGroup\" />
-      <Folder Include="Exercises\UpdateExercise\" />
       <Folder Include="WorkoutSessions\CreateWorkoutSession\" />
       <Folder Include="WorkoutSessions\DeleteWorkoutSession\" />
       <Folder Include="WorkoutSessions\UpdateWorkoutSession\" />
