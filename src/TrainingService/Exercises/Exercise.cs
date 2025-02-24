@@ -15,7 +15,7 @@ public class Exercise
     public string Name { get; set; }
     
     /// <summary>
-    /// Grupso musculares ao qual o exercício pertence.
+    /// Grupos musculares ao qual o exercício pertence.
     /// </summary>
     public EMuscleGroup MuscleGroups { get; set; }
     
@@ -27,12 +27,12 @@ public class Exercise
     /// <summary>
     /// Imagem do exercício.
     /// </summary>
-    public string ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
     
     /// <summary>
     /// Vídeo do exercício.
     /// </summary>
-    public string VideoUrl { get; set; }
+    public string? VideoUrl { get; set; }
     
     /// <summary>
     /// Data de criação do exercício.
