@@ -15,9 +15,6 @@
     <ItemGroup>
       <Folder Include="Common\" />
       <Folder Include="Connections\" />
-      <Folder Include="WorkoutSessions\CreateWorkoutSession\" />
-      <Folder Include="WorkoutSessions\DeleteWorkoutSession\" />
-      <Folder Include="WorkoutSessions\UpdateWorkoutSession\" />
     </ItemGroup>
 
 </Project>

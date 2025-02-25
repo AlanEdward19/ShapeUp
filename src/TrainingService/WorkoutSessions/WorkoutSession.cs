@@ -36,7 +36,7 @@ public class WorkoutSession
     public EWorkoutStatus Status { get; set; }
     
     /// <summary>
-    /// 
+    /// Exercícios da sessão de treino
     /// </summary>
     public List<WorkoutSessionExerciseValueObject> Exercises { get; set; }
 }
