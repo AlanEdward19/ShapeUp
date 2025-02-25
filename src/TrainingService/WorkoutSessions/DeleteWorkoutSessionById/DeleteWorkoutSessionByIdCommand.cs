@@ -3,7 +3,7 @@
 /// <summary>
 /// Comando para deletar uma sessão de treino por id.
 /// </summary>
-public class DeleteWorkoutSessionByIdCOMMAND
+public class DeleteWorkoutSessionByIdCommand
 {
     /// <summary>
     /// Id da sessão de treino.
