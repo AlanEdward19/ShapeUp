@@ -18,11 +18,6 @@
       <Folder Include="WorkoutSessions\CreateWorkoutSession\" />
       <Folder Include="WorkoutSessions\DeleteWorkoutSession\" />
       <Folder Include="WorkoutSessions\UpdateWorkoutSession\" />
-      <Folder Include="Workouts\CreateWorkout\" />
-      <Folder Include="Workouts\DeleteWorkout\" />
-      <Folder Include="Workouts\GetWorkoutById\" />
-      <Folder Include="Workouts\GetWorkoutsByUserId\" />
-      <Folder Include="Workouts\UpdateWorkout\" />
     </ItemGroup>
 
 </Project>
