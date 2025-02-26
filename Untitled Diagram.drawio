@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0" version="26.0.16" pages="6">
   <diagram id="WI9T0HZ2pTsCkuznbFz-" name="Page-1">
-    <mxGraphModel dx="788" dy="447" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="951" dy="540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -49,24 +49,12 @@
         <mxCell id="APoVMLMrE2KenBjDcKF_-17" value="Application&lt;div&gt;Gateway&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="440" y="850" width="120" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-11" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="650" y="805" width="160" height="300" as="geometry" />
-        </mxCell>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-6" value="" style="group" vertex="1" connectable="0" parent="nDXfaXNAh9Cg3Yj6yTfF-11">
-          <mxGeometry width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="ChatService" link="data:page/id,WtlVi93xiYi6eZ-GEQFc" id="APoVMLMrE2KenBjDcKF_-18">
-          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-6">
-            <mxGeometry width="120" height="50" as="geometry" />
+        <UserObject label="" link="data:page/id,imD-58RCATtKXjkI9Uka" id="nDXfaXNAh9Cg3Yj6yTfF-7">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="865" width="160" height="50" as="geometry" />
           </mxCell>
         </UserObject>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-1" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-6">
-          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-7" value="" style="group" vertex="1" connectable="0" parent="nDXfaXNAh9Cg3Yj6yTfF-11">
-          <mxGeometry y="60" width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="NotificationService" link="data:page/id,imD-58RCATtKXjkI9Uka" id="APoVMLMrE2KenBjDcKF_-19">
+        <UserObject label="NotificationService" id="APoVMLMrE2KenBjDcKF_-19">
           <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-7">
             <mxGeometry width="120" height="50" as="geometry" />
           </mxCell>
@@ -74,10 +62,12 @@
         <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-2" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-7">
           <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-8" value="" style="group" vertex="1" connectable="0" parent="nDXfaXNAh9Cg3Yj6yTfF-11">
-          <mxGeometry y="120" width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="NutritionService" link="data:page/id,cqdCLPLS-i-axJ5YcSfw" id="APoVMLMrE2KenBjDcKF_-20">
+        <UserObject label="" link="data:page/id,cqdCLPLS-i-axJ5YcSfw" id="nDXfaXNAh9Cg3Yj6yTfF-8">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="925" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="NutritionService" id="APoVMLMrE2KenBjDcKF_-20">
           <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-8">
             <mxGeometry width="120" height="50" as="geometry" />
           </mxCell>
@@ -85,10 +75,12 @@
         <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-3" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-8">
           <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-9" value="" style="group" vertex="1" connectable="0" parent="nDXfaXNAh9Cg3Yj6yTfF-11">
-          <mxGeometry y="184" width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="TrainingService" link="data:page/id,LFTsON64EvUL7DkV5BSQ" id="APoVMLMrE2KenBjDcKF_-21">
+        <UserObject label="" link="data:page/id,LFTsON64EvUL7DkV5BSQ" id="nDXfaXNAh9Cg3Yj6yTfF-9">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="989" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="TrainingService" id="APoVMLMrE2KenBjDcKF_-21">
           <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-9">
             <mxGeometry width="120" height="50" as="geometry" />
           </mxCell>
@@ -96,15 +88,30 @@
         <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-4" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-9">
           <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-10" value="" style="group" vertex="1" connectable="0" parent="nDXfaXNAh9Cg3Yj6yTfF-11">
-          <mxGeometry y="250" width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="SocialService" link="data:page/id,E0PGFaCb6FTw8js_NYCp" id="APoVMLMrE2KenBjDcKF_-22">
+        <UserObject label="" link="data:page/id,E0PGFaCb6FTw8js_NYCp" id="nDXfaXNAh9Cg3Yj6yTfF-10">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="1055" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="SocialService" id="APoVMLMrE2KenBjDcKF_-22">
           <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-10">
             <mxGeometry width="120" height="50" as="geometry" />
           </mxCell>
         </UserObject>
         <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-5" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-10">
+          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
+        </mxCell>
+        <UserObject label="" link="data:page/id,WtlVi93xiYi6eZ-GEQFc" id="4MoMOEvKHLLlQ9CJ0e1h-1">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="805" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ChatService" id="APoVMLMrE2KenBjDcKF_-18">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="4MoMOEvKHLLlQ9CJ0e1h-1">
+            <mxGeometry width="120" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-1" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="4MoMOEvKHLLlQ9CJ0e1h-1">
           <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
         </mxCell>
       </root>
