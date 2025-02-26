@@ -164,7 +164,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="E0PGFaCb6FTw8js_NYCp" name="SocialService">
-    <mxGraphModel dx="1149" dy="653" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1349" dy="653" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -189,26 +189,25 @@
         <mxCell id="4z8H6LbkjsdZk9EwCTbG-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
           <mxGeometry x="140" y="670" width="43" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="CJ4Lomw9Wyqah6ajB5M1-31" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="400" y="450" width="100" height="490" as="geometry" />
+        <mxCell id="yQ3fUK98fWnP4YMN126Y-1" value="Profile" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="400" y="810" width="100" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="yQ3fUK98fWnP4YMN126Y-1" value="Profile" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="CJ4Lomw9Wyqah6ajB5M1-31">
-          <mxGeometry y="360" width="100" height="50" as="geometry" />
+        <UserObject label="ActivityFeed" link="data:page/id,pl1YrOqQSCPoLLUE3lf9" id="yQ3fUK98fWnP4YMN126Y-2">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+            <mxGeometry x="400" y="450" width="100" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="yQ3fUK98fWnP4YMN126Y-3" value="Follow" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="400" y="540" width="100" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="yQ3fUK98fWnP4YMN126Y-2" value="ActivityFeed" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="CJ4Lomw9Wyqah6ajB5M1-31">
-          <mxGeometry width="100" height="50" as="geometry" />
+        <mxCell id="zdfX1R9SKaw9Ff__tJD0-1" value="Friends" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="400" y="630" width="100" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="yQ3fUK98fWnP4YMN126Y-3" value="Follow" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="CJ4Lomw9Wyqah6ajB5M1-31">
-          <mxGeometry y="90" width="100" height="50" as="geometry" />
+        <mxCell id="zdfX1R9SKaw9Ff__tJD0-2" value="Posts" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="400" y="720" width="100" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="zdfX1R9SKaw9Ff__tJD0-1" value="Friends" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="CJ4Lomw9Wyqah6ajB5M1-31">
-          <mxGeometry y="180" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="zdfX1R9SKaw9Ff__tJD0-2" value="Posts" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="CJ4Lomw9Wyqah6ajB5M1-31">
-          <mxGeometry y="270" width="100" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="zdfX1R9SKaw9Ff__tJD0-3" value="Recommendation" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="CJ4Lomw9Wyqah6ajB5M1-31">
-          <mxGeometry y="440" width="100" height="50" as="geometry" />
+        <mxCell id="zdfX1R9SKaw9Ff__tJD0-3" value="Recommendation" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="1">
+          <mxGeometry x="400" y="890" width="100" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
