@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0" version="26.0.16" pages="6">
   <diagram id="WI9T0HZ2pTsCkuznbFz-" name="Arquitetura da aplicação">
-    <mxGraphModel dx="953" dy="525" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1143" dy="630" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -60,74 +60,6 @@
         <mxCell id="4MoMOEvKHLLlQ9CJ0e1h-4" value="Message Broker" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.direct_data;whiteSpace=wrap;rotation=90;" vertex="1" parent="1">
           <mxGeometry x="827" y="925" width="290" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="4MoMOEvKHLLlQ9CJ0e1h-5" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="650" y="805" width="160" height="300" as="geometry" />
-        </mxCell>
-        <UserObject label="" link="data:page/id,imD-58RCATtKXjkI9Uka" id="nDXfaXNAh9Cg3Yj6yTfF-7">
-          <mxCell style="group" vertex="1" connectable="0" parent="4MoMOEvKHLLlQ9CJ0e1h-5">
-            <mxGeometry y="60" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="NotificationService" id="APoVMLMrE2KenBjDcKF_-19">
-          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-7">
-            <mxGeometry width="120" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-2" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-7">
-          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
-        </mxCell>
-        <UserObject label="" link="data:page/id,cqdCLPLS-i-axJ5YcSfw" id="nDXfaXNAh9Cg3Yj6yTfF-8">
-          <mxCell style="group" vertex="1" connectable="0" parent="4MoMOEvKHLLlQ9CJ0e1h-5">
-            <mxGeometry y="120" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="NutritionService" id="APoVMLMrE2KenBjDcKF_-20">
-          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-8">
-            <mxGeometry width="120" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-3" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-8">
-          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
-        </mxCell>
-        <UserObject label="" link="data:page/id,LFTsON64EvUL7DkV5BSQ" id="nDXfaXNAh9Cg3Yj6yTfF-9">
-          <mxCell style="group" vertex="1" connectable="0" parent="4MoMOEvKHLLlQ9CJ0e1h-5">
-            <mxGeometry y="184" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="TrainingService" id="APoVMLMrE2KenBjDcKF_-21">
-          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-9">
-            <mxGeometry width="120" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-4" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-9">
-          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
-        </mxCell>
-        <UserObject label="" link="data:page/id,E0PGFaCb6FTw8js_NYCp" id="nDXfaXNAh9Cg3Yj6yTfF-10">
-          <mxCell style="group" vertex="1" connectable="0" parent="4MoMOEvKHLLlQ9CJ0e1h-5">
-            <mxGeometry y="250" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="SocialService" id="APoVMLMrE2KenBjDcKF_-22">
-          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-10">
-            <mxGeometry width="120" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-5" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-10">
-          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
-        </mxCell>
-        <UserObject label="" link="data:page/id,WtlVi93xiYi6eZ-GEQFc" id="4MoMOEvKHLLlQ9CJ0e1h-1">
-          <mxCell style="group" vertex="1" connectable="0" parent="4MoMOEvKHLLlQ9CJ0e1h-5">
-            <mxGeometry width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="ChatService" id="APoVMLMrE2KenBjDcKF_-18">
-          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="4MoMOEvKHLLlQ9CJ0e1h-1">
-            <mxGeometry width="120" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-1" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="4MoMOEvKHLLlQ9CJ0e1h-1">
-          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="4MoMOEvKHLLlQ9CJ0e1h-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="APoVMLMrE2KenBjDcKF_-18">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="940" y="840" as="targetPoint" />
@@ -163,46 +95,126 @@
             </Array>
           </mxGeometry>
         </mxCell>
+        <UserObject label="" link="data:page/id,imD-58RCATtKXjkI9Uka" id="nDXfaXNAh9Cg3Yj6yTfF-7">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="865" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="NotificationService" id="APoVMLMrE2KenBjDcKF_-19">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-7">
+            <mxGeometry width="120" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-2" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-7">
+          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
+        </mxCell>
+        <UserObject label="" link="data:page/id,cqdCLPLS-i-axJ5YcSfw" id="nDXfaXNAh9Cg3Yj6yTfF-8">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="925" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="NutritionService" id="APoVMLMrE2KenBjDcKF_-20">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-8">
+            <mxGeometry width="120" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-3" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-8">
+          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
+        </mxCell>
+        <UserObject label="" link="data:page/id,LFTsON64EvUL7DkV5BSQ" id="nDXfaXNAh9Cg3Yj6yTfF-9">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="989" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="TrainingService" id="APoVMLMrE2KenBjDcKF_-21">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-9">
+            <mxGeometry width="120" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-4" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-9">
+          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
+        </mxCell>
+        <UserObject label="" link="data:page/id,E0PGFaCb6FTw8js_NYCp" id="nDXfaXNAh9Cg3Yj6yTfF-10">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="1055" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="SocialService" id="APoVMLMrE2KenBjDcKF_-22">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-10">
+            <mxGeometry width="120" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-5" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="nDXfaXNAh9Cg3Yj6yTfF-10">
+          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
+        </mxCell>
+        <UserObject label="" link="data:page/id,WtlVi93xiYi6eZ-GEQFc" id="4MoMOEvKHLLlQ9CJ0e1h-1">
+          <mxCell style="group" vertex="1" connectable="0" parent="1">
+            <mxGeometry x="650" y="805" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ChatService" id="APoVMLMrE2KenBjDcKF_-18">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="4MoMOEvKHLLlQ9CJ0e1h-1">
+            <mxGeometry width="120" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nDXfaXNAh9Cg3Yj6yTfF-1" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="4MoMOEvKHLLlQ9CJ0e1h-1">
+          <mxGeometry x="130" y="20" width="30" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="E0PGFaCb6FTw8js_NYCp" name="SocialService">
-    <mxGraphModel dx="1379" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="953" dy="525" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="4z8H6LbkjsdZk9EwCTbG-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="43" height="50" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="WtlVi93xiYi6eZ-GEQFc" name="ChatService">
-    <mxGraphModel dx="1379" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2001" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="HhnG0oeVUmT5BabVS7QA-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="43" height="50" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="imD-58RCATtKXjkI9Uka" name="NotificationService">
-    <mxGraphModel dx="1379" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2001" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="dv2ZuGCcBISu4bxte1QI-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="43" height="50" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="cqdCLPLS-i-axJ5YcSfw" name="NutritionService">
-    <mxGraphModel dx="1379" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2001" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="9d2FHR96dPl33qN7iefe-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="43" height="50" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="LFTsON64EvUL7DkV5BSQ" name="TrainingService">
-    <mxGraphModel dx="1379" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2001" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="M0_oa5aLPalBqQIwSzxO-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="43" height="50" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
