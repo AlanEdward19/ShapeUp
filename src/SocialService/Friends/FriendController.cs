@@ -61,7 +61,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("listFriends/{profileId:guid}")]
-    public async Task<IActionResult> ViewProfile(Guid profileId, [FromQuery] int page, [FromQuery] int rows,
+    public async Task<IActionResult> ListFriends(Guid profileId, [FromQuery] int page, [FromQuery] int rows,
         [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery> handler,
         CancellationToken cancellationToken)
     {
