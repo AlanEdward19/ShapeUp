@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16" pages="13">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0" version="26.0.16" pages="10">
   <diagram id="WI9T0HZ2pTsCkuznbFz-" name="Arquitetura da aplicação">
     <mxGraphModel dx="1301" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1784,158 +1784,13 @@
     </mxGraphModel>
   </diagram>
   <diagram id="LFTsON64EvUL7DkV5BSQ" name="TrainingService">
-    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2001" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="SLUJUdYO662ZCJViNxK7-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="SLUJUdYO662ZCJViNxK7-4" target="SLUJUdYO662ZCJViNxK7-5">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="M0_oa5aLPalBqQIwSzxO-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="43" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="SLUJUdYO662ZCJViNxK7-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="SLUJUdYO662ZCJViNxK7-4" target="SLUJUdYO662ZCJViNxK7-6">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="SLUJUdYO662ZCJViNxK7-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="SLUJUdYO662ZCJViNxK7-4" target="SLUJUdYO662ZCJViNxK7-7">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="SLUJUdYO662ZCJViNxK7-4" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
-          <mxGeometry x="150" y="680" width="43" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="&lt;a href=&quot;data:page/id,UHSYMj5ETuVcGcjZkXMR&quot;&gt;Exercises&lt;/a&gt;" id="SLUJUdYO662ZCJViNxK7-5">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="1">
-            <mxGeometry x="410" y="560" width="100" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="SLUJUdYO662ZCJViNxK7-6" value="&lt;a href=&quot;data:page/id,If-x8j8cn83Nnd-QMaZf&quot;&gt;Workouts&lt;/a&gt;" style="whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="410" y="680" width="100" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="&lt;a href=&quot;data:page/id,hI2_vV1eM-R3Bqd6ddmi&quot;&gt;WorkoutSessions&lt;/a&gt;" id="SLUJUdYO662ZCJViNxK7-7">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="1">
-            <mxGeometry x="410" y="790" width="100" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="UHSYMj5ETuVcGcjZkXMR" name="TrainingService/Exercises">
-    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="YjV5e9oR-t30_tD9GAPW-6" target="YjV5e9oR-t30_tD9GAPW-8">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="YjV5e9oR-t30_tD9GAPW-6" target="YjV5e9oR-t30_tD9GAPW-9">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="YjV5e9oR-t30_tD9GAPW-6" target="YjV5e9oR-t30_tD9GAPW-10">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="YjV5e9oR-t30_tD9GAPW-6" target="YjV5e9oR-t30_tD9GAPW-11">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="YjV5e9oR-t30_tD9GAPW-6" target="YjV5e9oR-t30_tD9GAPW-7">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-6" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
-          <mxGeometry x="140" y="630" width="43" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-7" value="UpdateExercise" style="whiteSpace=wrap;html=1;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="400" y="810" width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="CreateExercise" id="YjV5e9oR-t30_tD9GAPW-8">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="1">
-            <mxGeometry x="400" y="450" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="DeleteExerciseById" id="YjV5e9oR-t30_tD9GAPW-9">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" vertex="1" parent="1">
-            <mxGeometry x="400" y="540" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-10" value="GetExerciseById" style="whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="400" y="630" width="160" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="YjV5e9oR-t30_tD9GAPW-11" value="GetExerciseByMuscleGroup" style="whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="400" y="720" width="160" height="50" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="If-x8j8cn83Nnd-QMaZf" name="TrainingService/Workouts">
-    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KfXZvJM10-Ts-kCNywqI-6" target="KfXZvJM10-Ts-kCNywqI-8">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KfXZvJM10-Ts-kCNywqI-6" target="KfXZvJM10-Ts-kCNywqI-9">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KfXZvJM10-Ts-kCNywqI-6" target="KfXZvJM10-Ts-kCNywqI-10">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KfXZvJM10-Ts-kCNywqI-6" target="KfXZvJM10-Ts-kCNywqI-11">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KfXZvJM10-Ts-kCNywqI-6" target="KfXZvJM10-Ts-kCNywqI-7">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-6" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
-          <mxGeometry x="140" y="630" width="43" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-7" value="UpdateWorkoutById" style="whiteSpace=wrap;html=1;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="400" y="810" width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="CreateWorkout" id="KfXZvJM10-Ts-kCNywqI-8">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="1">
-            <mxGeometry x="400" y="450" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="DeleteWorkoutById" id="KfXZvJM10-Ts-kCNywqI-9">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" vertex="1" parent="1">
-            <mxGeometry x="400" y="540" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-10" value="GetWorkoutById" style="whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="400" y="630" width="160" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="KfXZvJM10-Ts-kCNywqI-11" value="GetWorkoutByUserId" style="whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="400" y="720" width="160" height="50" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="hI2_vV1eM-R3Bqd6ddmi" name="TrainingService/WorkoutSessions">
-    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="MH2ggjy3MTWdRWOwjmPU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MH2ggjy3MTWdRWOwjmPU-4" target="MH2ggjy3MTWdRWOwjmPU-6">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="MH2ggjy3MTWdRWOwjmPU-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MH2ggjy3MTWdRWOwjmPU-4" target="MH2ggjy3MTWdRWOwjmPU-7">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="MH2ggjy3MTWdRWOwjmPU-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MH2ggjy3MTWdRWOwjmPU-4" target="MH2ggjy3MTWdRWOwjmPU-5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="MH2ggjy3MTWdRWOwjmPU-4" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
-          <mxGeometry x="140" y="630" width="43" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="MH2ggjy3MTWdRWOwjmPU-5" value="UpdateWorkout" style="whiteSpace=wrap;html=1;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="400" y="720" width="160" height="50" as="geometry" />
-        </mxCell>
-        <UserObject label="CreateWorkout" id="MH2ggjy3MTWdRWOwjmPU-6">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="1">
-            <mxGeometry x="400" y="530" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="DeleteWorkoutById" id="MH2ggjy3MTWdRWOwjmPU-7">
-          <mxCell style="whiteSpace=wrap;html=1;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" vertex="1" parent="1">
-            <mxGeometry x="400" y="630" width="160" height="50" as="geometry" />
-          </mxCell>
-        </UserObject>
       </root>
     </mxGraphModel>
   </diagram>
