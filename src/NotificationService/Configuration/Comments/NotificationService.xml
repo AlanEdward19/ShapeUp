@@ -171,6 +171,11 @@
             Dados adicionais relacionados à notificação
             </summary>
         </member>
+        <member name="T:NotificationService.Notification.NotificationController">
+            <summary>
+            Controller responsavel por gerenciar notificações
+            </summary>
+        </member>
         <member name="M:NotificationService.Notification.NotificationController.SendNotification(NotificationService.Notification.SendNotification.SendNotificationCommand,System.Threading.CancellationToken,NotificationService.Common.Interfaces.IHandler{System.Boolean,NotificationService.Notification.SendNotification.SendNotificationCommand})">
             <summary>
             Rota para enviar uma notificação
