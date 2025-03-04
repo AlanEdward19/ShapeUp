@@ -1,0 +1,96 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16" pages="4">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="TrainingService">
+    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="LHMMx4ZDP15__xMQ6A5U-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="LHMMx4ZDP15__xMQ6A5U-19" target="LHMMx4ZDP15__xMQ6A5U-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LHMMx4ZDP15__xMQ6A5U-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="LHMMx4ZDP15__xMQ6A5U-19" target="LHMMx4ZDP15__xMQ6A5U-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LHMMx4ZDP15__xMQ6A5U-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="LHMMx4ZDP15__xMQ6A5U-19" target="LHMMx4ZDP15__xMQ6A5U-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LHMMx4ZDP15__xMQ6A5U-19" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="150" y="680" width="43" height="50" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;a href=&quot;data:page/id,tvGi3iTjb1CQEqKXGW85&quot;&gt;Exercises&lt;/a&gt;" id="LHMMx4ZDP15__xMQ6A5U-21">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+            <mxGeometry x="410" y="560" width="100" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="LHMMx4ZDP15__xMQ6A5U-23" value="&lt;a href=&quot;data:page/id,MfrrExbCbE9OoC5XJZRm&quot;&gt;Workouts&lt;/a&gt;" style="whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="410" y="680" width="100" height="50" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;a href=&quot;data:page/id,1dJGFQlZsfqqL6nz57dp&quot;&gt;WorkoutSessions&lt;/a&gt;" id="LHMMx4ZDP15__xMQ6A5U-25">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+            <mxGeometry x="410" y="790" width="100" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tvGi3iTjb1CQEqKXGW85" name="Exercises">
+    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PI-6_UQSOjuYXqBsMN-U-7" target="PI-6_UQSOjuYXqBsMN-U-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PI-6_UQSOjuYXqBsMN-U-7" target="PI-6_UQSOjuYXqBsMN-U-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PI-6_UQSOjuYXqBsMN-U-7" target="PI-6_UQSOjuYXqBsMN-U-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PI-6_UQSOjuYXqBsMN-U-7" target="PI-6_UQSOjuYXqBsMN-U-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PI-6_UQSOjuYXqBsMN-U-7" target="PI-6_UQSOjuYXqBsMN-U-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-7" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" vertex="1" parent="1">
+          <mxGeometry x="140" y="630" width="43" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-8" value="UpdateExercise" style="whiteSpace=wrap;html=1;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="400" y="810" width="160" height="50" as="geometry" />
+        </mxCell>
+        <UserObject label="CreateExercise" id="PI-6_UQSOjuYXqBsMN-U-9">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="1">
+            <mxGeometry x="400" y="450" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="DeleteExerciseById" id="PI-6_UQSOjuYXqBsMN-U-10">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" vertex="1" parent="1">
+            <mxGeometry x="400" y="540" width="160" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-11" value="GetExerciseById" style="whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="400" y="630" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="PI-6_UQSOjuYXqBsMN-U-12" value="GetExerciseByMuscleGroup" style="whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="400" y="720" width="160" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="MfrrExbCbE9OoC5XJZRm" name="Workouts">
+    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="1dJGFQlZsfqqL6nz57dp" name="WorkoutSessions">
+    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
