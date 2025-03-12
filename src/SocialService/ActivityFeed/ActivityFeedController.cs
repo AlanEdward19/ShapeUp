@@ -13,7 +13,7 @@ namespace SocialService.ActivityFeed;
 public class ActivityFeedController : ControllerBase
 {
     /// <summary>
-    ///     Rota para seguir um perfil
+    ///     Rota para construir o feed de atividades
     /// </summary>
     /// <param name="handler"></param>
     /// <param name="query"></param>
