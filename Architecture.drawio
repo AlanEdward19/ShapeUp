@@ -2152,9 +2152,11 @@
             <mxGeometry y="670" width="43" height="50" as="geometry" />
           </mxCell>
         </UserObject>
-        <mxCell id="BdmkGecopPNaUvjiB02E-0" value="Comment" style="whiteSpace=wrap;html=1;fillColor=#ffcccc;strokeColor=#36393d;" vertex="1" parent="ZRzCDW87rm3XaBuqy_K3-1">
-          <mxGeometry x="450" y="580" width="100" height="50" as="geometry" />
-        </mxCell>
+        <UserObject label="Comment" link="data:page/id,vLsu6I9nbOJHw3Fs5R0J" id="BdmkGecopPNaUvjiB02E-0">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#ffcccc;strokeColor=#36393d;" vertex="1" parent="ZRzCDW87rm3XaBuqy_K3-1">
+            <mxGeometry x="450" y="580" width="100" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
         <mxCell id="GzCfkmiZbq10evsvzC9u-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="ZRzCDW87rm3XaBuqy_K3-1" target="GcFacyWkJCREZ1MRzVuw-0">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="340" y="715" as="sourcePoint" />
@@ -2183,7 +2185,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="SocialService/Post/Comment" id="vLsu6I9nbOJHw3Fs5R0J">
-    <mxGraphModel dx="2399" dy="736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2812" dy="929" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="L71jfVqouZt2Yx3ggXHQ-0" />
         <mxCell id="L71jfVqouZt2Yx3ggXHQ-1" parent="L71jfVqouZt2Yx3ggXHQ-0" />
