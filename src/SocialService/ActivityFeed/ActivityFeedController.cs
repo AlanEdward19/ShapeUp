@@ -13,13 +13,14 @@ namespace SocialService.ActivityFeed;
 public class ActivityFeedController : ControllerBase
 {
     /// <summary>
-    ///     Rota para seguir um perfil
+    ///     Rota para construir o feed de atividades
     /// </summary>
     /// <param name="handler"></param>
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("buildActivityFeed")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type =  typeof(IEnumerable<PostDto>))]
     public async Task<IActionResult> BuildActivityFeed(
         [FromServices] IHandler<IEnumerable<PostDto>, GetActivityFeedQuery> handler,
         [FromQuery] GetActivityFeedQuery query, CancellationToken cancellationToken)

@@ -1,0 +1,2067 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ShapeUp",
+    "description": "ShapeUp é uma rede social inovadora para praticantes de atividades físicas, conectando usuários a profissionais de saúde, oferecendo gerenciamento de treinos e nutrição, marketplace de serviços, e um ambiente colaborativo para motivação e evolução.",
+    "contact": {
+      "name": "Alan Oliveira",
+      "url": "https://github.com/AlanEdward19",
+      "email": "alan-edward@outlook.com.br"
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local"
+    }
+  ],
+  "paths": {
+    "/v1/ActivityFeed/buildActivityFeed": {
+      "get": {
+        "tags": [
+          "ActivityFeed"
+        ],
+        "summary": "Rota para construir o feed de atividades",
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Página.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Rows",
+            "in": "query",
+            "description": "Quantidade de registros por página.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Follow/followUser/{profileId}": {
+      "post": {
+        "tags": [
+          "Follow"
+        ],
+        "summary": "Rota para seguir um perfil",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/v1/Follow/unfollowUser/{profileId}": {
+      "delete": {
+        "tags": [
+          "Follow"
+        ],
+        "summary": "Rotar para deixar de seguir um perfil",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Follow/getFollowers/{profileId}": {
+      "get": {
+        "tags": [
+          "Follow"
+        ],
+        "summary": "Rotar para obter os seguidores de um perfil",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Número da página",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Rows",
+            "in": "query",
+            "description": "Quantidade de linhas",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Follow/getFollowing/{profileId}": {
+      "get": {
+        "tags": [
+          "Follow"
+        ],
+        "summary": "Rotar para obter os perfis que um perfil segue",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Número da página",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Rows",
+            "in": "query",
+            "description": "Quantidade de linhas",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Friend/sendFriendRequest": {
+      "post": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Rota para enviar uma solicitação de amigo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendFriendRequestCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendFriendRequestCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendFriendRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/v1/Friend/checkRequestStatus": {
+      "get": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Rota para verificar o status de uma solicitação de amizade",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CheckFriendRequestStatusViewModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CheckFriendRequestStatusViewModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CheckFriendRequestStatusViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Friend/listFriends/{profileId}": {
+      "get": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Rota para listar os amigos de um perfil",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Número da página",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Rows",
+            "in": "query",
+            "description": "Quantidade de linhas",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileBasicInformation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Friend/manageFriendRequests": {
+      "put": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Rota para gerenciar solicitações de amizade",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManageFriendRequestsCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManageFriendRequestsCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManageFriendRequestsCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Friend/removeFriend/{profileId}": {
+      "delete": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Rota para remover um amigo",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Friend/removeFriendRequest/{profileId}": {
+      "delete": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Rota para remover uma solicitação de amizade",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/getPost": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para pegar as informações de um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Profile/v1/{id}/getPosts": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para pegar informações dos posts feitos por um perfil",
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Número da página",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Rows",
+            "in": "query",
+            "description": "Quantidade de linhas",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Post/createPost": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para criar um post",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/uploadPostImages": {
+      "put": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para fazer upload de imagens em um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "description": ""
+                  }
+                }
+              },
+              "encoding": {
+                "files": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/deletePost": {
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para deletar um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/editPost": {
+      "patch": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para editar um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPostCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPostCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPostCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/commentOnPost": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para comentar em um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentOnPostCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentOnPostCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentOnPostCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/getComments": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para pegar os comentários de um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comment"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comment"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/editComment": {
+      "put": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para editar um comentário em um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditCommentOnPostCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditCommentOnPostCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditCommentOnPostCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/deleteComment": {
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para deletar um comentário em um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/react": {
+      "put": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rotas para reagir a um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReactToPostCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReactToPostCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReactToPostCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/getReactions": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para pegar as reações de um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reaction"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reaction"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reaction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Post/{id}/deleteReaction": {
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Rota para deletar uma reação de um post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Profile/viewProfile/{profileId}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Rota para visualizar um perfil",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Profile/viewProfile/{profileId}/simplified": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Rota para visualizar um perfil simplificado",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileSimplifiedDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileSimplifiedDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileSimplifiedDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Profile/editProfile": {
+      "patch": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Rota para editar um perfil",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProfileCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProfileCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProfileCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Profile/deleteProfile/{profileId}": {
+      "delete": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Rota para deletar um perfil",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Profile/uploadProfilePicture": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Rota para fazer upload de uma foto de perfil",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": "",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "image": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/Profile/getProfilePictures/{profileId}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Rota para obter fotos de perfil.",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Número da página",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Rows",
+            "in": "query",
+            "description": "Quantidade de linhas",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfilePicture"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfilePicture"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfilePicture"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Profile/searchProfileByName": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Rota para buscar um perfil pelo nome",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileSimplifiedDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileSimplifiedDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileSimplifiedDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Recommendation/friendRecommendations": {
+      "get": {
+        "tags": [
+          "Recommendation"
+        ],
+        "summary": "Rota para receber recomendações de amigos",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FriendRecommendation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FriendRecommendation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FriendRecommendation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CheckFriendRequestStatusViewModel": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "Primeiro nome do perfil.",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Sobrenome do perfil.",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/EFriendStatus"
+          },
+          "profileId": {
+            "type": "string",
+            "description": "Id do perfil.",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ViewModel para a verificação do status de uma solicitação de amizade."
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id da entidade",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "profileId": {
+            "type": "string",
+            "description": "Id do perfil que fez o comentário",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "profileFirstName": {
+            "type": "string",
+            "description": "Primeiro nome do perfil que fez o comentário",
+            "nullable": true,
+            "readOnly": true
+          },
+          "profileLastName": {
+            "type": "string",
+            "description": "Sobrenome do perfil que fez o comentário",
+            "nullable": true,
+            "readOnly": true
+          },
+          "profileImageUrl": {
+            "type": "string",
+            "description": "Url da imagem do perfil que fez o comentário",
+            "nullable": true,
+            "readOnly": true
+          },
+          "postId": {
+            "type": "string",
+            "description": "Id do post",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Data de criação do comentário",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do comentário",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Classe que representa um comentário"
+      },
+      "CommentOnPostCommand": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "string",
+            "description": "Id do post",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do comentário",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para comentar em um post"
+      },
+      "CreatePostCommand": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do post.",
+            "nullable": true
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/EPostVisibility"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para criação de post."
+      },
+      "EFriendStatus": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "Status de um pedido de amizade.",
+        "format": "int32"
+      },
+      "EGender": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "Gênero do perfil.",
+        "format": "int32"
+      },
+      "EPostVisibility": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "description": "Enum para visibilidade de post",
+        "format": "int32"
+      },
+      "EReactionType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "type": "integer",
+        "description": "Enum para os tipos de reações",
+        "format": "int32"
+      },
+      "EditCommentOnPostCommand": {
+        "type": "object",
+        "properties": {
+          "commentId": {
+            "type": "string",
+            "description": "Id do comentário",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do comentário",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para editar um comentário em um post"
+      },
+      "EditPostCommand": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "string",
+            "description": "Id do post",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do post.",
+            "nullable": true
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/EPostVisibility"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para criação de post."
+      },
+      "EditProfileCommand": {
+        "type": "object",
+        "properties": {
+          "gender": {
+            "$ref": "#/components/schemas/EGender"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Data de nascimento do perfil",
+            "format": "date-time",
+            "nullable": true
+          },
+          "bio": {
+            "type": "string",
+            "description": "Biografia do perfil",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para editar um perfil"
+      },
+      "FriendRecommendation": {
+        "type": "object",
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/ProfileSimplifiedDto"
+          },
+          "mutualFriends": {
+            "type": "integer",
+            "description": "Quantidade de amigos em comum",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Classe de recomendação de amigos\r\n<param name=\"profile\"></param><param name=\"mutualFriends\"></param>"
+      },
+      "ManageFriendRequestsCommand": {
+        "type": "object",
+        "properties": {
+          "accept": {
+            "type": "boolean",
+            "description": "Aceitar ou recusar a solicitação."
+          },
+          "profileId": {
+            "type": "string",
+            "description": "Id do perfil.",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para gerenciar solicitações de amizade."
+      },
+      "PostDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id do post.",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "publisherId": {
+            "type": "string",
+            "description": "Id do perfil que publicou o post.",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "publisherFirstName": {
+            "type": "string",
+            "description": "Primeiro nome do perfil que publicou o post.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "publisherLastName": {
+            "type": "string",
+            "description": "Sobrenome do perfil que publicou o post.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "publisherImageUrl": {
+            "type": "string",
+            "description": "Url da imagem do perfil que publicou o post.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/EPostVisibility"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Urls das imagens do post.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do post.",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Objeto de transferência de dados para post"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "ProfileBasicInformation": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "Primeiro nome do perfil.",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Sobrenome do perfil.",
+            "nullable": true
+          },
+          "profileId": {
+            "type": "string",
+            "description": "Id do perfil.",
+            "format": "uuid"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Url da imagem do perfil.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "ViewModel para informações básicas de um perfil."
+      },
+      "ProfileDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id do perfil",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Primeiro nome do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Sobrenome do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "country": {
+            "type": "string",
+            "description": "Pais do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "city": {
+            "type": "string",
+            "description": "Cidade do perfil",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "description": "Estado do perfil",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Nome de exibição do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "followers": {
+            "type": "integer",
+            "description": "Quantidade de seguidores do perfil.",
+            "format": "int32",
+            "readOnly": true
+          },
+          "following": {
+            "type": "integer",
+            "description": "Quantidade de pessoas que o perfil segue.",
+            "format": "int32",
+            "readOnly": true
+          },
+          "posts": {
+            "type": "integer",
+            "description": "Quantidade de posts do perfil.",
+            "format": "int32",
+            "readOnly": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Url da imagem do perfil no blob storage",
+            "nullable": true,
+            "readOnly": true
+          },
+          "bio": {
+            "type": "string",
+            "description": "Biografia do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Data de nascimento do perfil",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "gender": {
+            "$ref": "#/components/schemas/EGender"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Objeto de transferência de dados do perfil"
+      },
+      "ProfilePicture": {
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "description": "Caminho da imagem.",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Data de criação.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Classe para representar uma foto de perfil."
+      },
+      "ProfileSimplifiedDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id do perfil",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Primeiro nome do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Sobrenome do perfil",
+            "nullable": true,
+            "readOnly": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Url da imagem do perfil.",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Objeto de transferência de dados do perfil"
+      },
+      "ReactToPostCommand": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "string",
+            "description": "Id do post",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "reactionType": {
+            "$ref": "#/components/schemas/EReactionType"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para reagir a um post."
+      },
+      "Reaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id da entidade",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "profileId": {
+            "type": "string",
+            "description": "Id do perfil que reagiu",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Data de criação da reação",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "reactionType": {
+            "type": "string",
+            "description": "Tipo da reação",
+            "nullable": true,
+            "readOnly": true
+          },
+          "postId": {
+            "type": "string",
+            "description": "Id do post",
+            "format": "uuid",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Classe que representa uma reação"
+      },
+      "SendFriendRequestCommand": {
+        "type": "object",
+        "properties": {
+          "friendId": {
+            "type": "string",
+            "description": "Id do amigo.",
+            "format": "uuid"
+          },
+          "requestMessage": {
+            "type": "string",
+            "description": "Mensagem de solicitação.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Comando para adicionar um amigo."
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Por favor insira o token JWT com o prefixo 'Bearer '",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

@@ -11,7 +11,7 @@
         </member>
         <member name="M:SocialService.ActivityFeed.ActivityFeedController.BuildActivityFeed(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.PostDto},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery},SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Threading.CancellationToken)">
             <summary>
-                Rota para seguir um perfil
+                Rota para construir o feed de atividades
             </summary>
             <param name="handler"></param>
             <param name="query"></param>
@@ -278,6 +278,21 @@
             </summary>
             <param name="user"></param>
             <returns></returns>
+        </member>
+        <member name="T:SocialService.Common.ValueObjects.BaseQueryParametersValueObject">
+            <summary>
+            Classe base para os parametros de query
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.ValueObjects.BaseQueryParametersValueObject.Page">
+            <summary>
+            Número da página
+            </summary>
+        </member>
+        <member name="P:SocialService.Common.ValueObjects.BaseQueryParametersValueObject.Rows">
+            <summary>
+            Quantidade de linhas
+            </summary>
         </member>
         <member name="T:SocialService.Configuration.Authentication">
             <summary>
@@ -728,24 +743,22 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.FollowController.GetFollowers(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowers.GetFollowersQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.GetFollowers(System.Guid,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowers.GetFollowersQuery},System.Threading.CancellationToken)">
             <summary>
                 Rotar para obter os seguidores de um perfil
             </summary>
             <param name="profileId"></param>
-            <param name="page"></param>
-            <param name="rows"></param>
+            <param name="queryParameters"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.FollowController.GetFollowing(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowing.GetFollowingQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.GetFollowing(System.Guid,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowing.GetFollowingQuery},System.Threading.CancellationToken)">
             <summary>
                 Rotar para obter os perfis que um perfil segue
             </summary>
             <param name="profileId"></param>
-            <param name="page"></param>
-            <param name="rows"></param>
+            <param name="queryParameters"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -1177,13 +1190,12 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.FriendController.ViewProfile(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Friends.FriendController.ListFriends(System.Guid,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
             <summary>
                 Rota para listar os amigos de um perfil
             </summary>
             <param name="profileId"></param>
-            <param name="page"></param>
-            <param name="rows"></param>
+            <param name="queryParameters"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -2597,16 +2609,15 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.PostController.GetPostsByProfileId(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.PostDto},SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery},SocialService.Profile.Common.Repository.IProfileGraphRepository,System.Guid,System.Threading.CancellationToken,System.Int32,System.Int32)">
+        <member name="M:SocialService.Post.PostController.GetPostsByProfileId(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.PostDto},SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery},SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,System.Guid,System.Threading.CancellationToken)">
             <summary>
                 Rota para pegar informações dos posts feitos por um perfil
             </summary>
             <param name="handler"></param>
             <param name="profileGraphRepository"></param>
+            <param name="queryParameters"></param>
             <param name="id"></param>
             <param name="cancellationToken"></param>
-            <param name="page"></param>
-            <param name="rows"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.PostController.CreatePost(SocialService.Common.Interfaces.IHandler{SocialService.Post.PostDto,SocialService.Post.CreatePost.CreatePostCommand},SocialService.Post.CreatePost.CreatePostCommand,System.Threading.CancellationToken)">
@@ -3719,14 +3730,13 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.GetProfilePictures(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32},SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Profile.GetProfilePictures.ProfilePicture},SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.GetProfilePictures(System.Guid,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Profile.GetProfilePictures.ProfilePicture},SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery},SocialService.Common.ValueObjects.BaseQueryParametersValueObject,System.Threading.CancellationToken)">
             <summary>
                 Rota para obter fotos de perfil.
             </summary>
             <param name="profileId"></param>
-            <param name="page"></param>
-            <param name="rows"></param>
             <param name="handler"></param>
+            <param name="queryParameters"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>

@@ -16,6 +16,7 @@ public class RecommendationController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("friendRecommendations")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FriendRecommendation>))]
     public async Task<IActionResult> GetFriendRecommendations(
         [FromServices] IHandler<IEnumerable<FriendRecommendation>, GetFriendRecommendationQuery> handler,
         CancellationToken cancellationToken)

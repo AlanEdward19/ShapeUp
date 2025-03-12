@@ -1,4 +1,5 @@
-﻿using SocialService.Friends.Common.Repository;
+﻿using SocialService.Common.ValueObjects;
+using SocialService.Friends.Common.Repository;
 using SocialService.Friends.FriendRequest.CheckFriendRequestStatus;
 using SocialService.Friends.FriendRequest.ManageFriendRequests;
 using SocialService.Friends.FriendRequest.RemoveFriendRequest;
@@ -24,6 +25,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     /// </summary>
     /// <returns></returns>
     [HttpPost("sendFriendRequest")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> SendFriendRequest([FromServices] IHandler<bool, SendFriendRequestCommand> handler,
         [FromBody] SendFriendRequestCommand requestCommand, CancellationToken cancellationToken)
     {
@@ -32,7 +34,8 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         SendFriendRequestCommandValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(requestCommand, cancellationToken);
 
-        return Ok(await handler.HandleAsync(requestCommand, cancellationToken));
+        await handler.HandleAsync(requestCommand, cancellationToken);
+        return Created();
     }
 
     /// <summary>
@@ -42,6 +45,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("checkRequestStatus")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CheckFriendRequestStatusViewModel>))]
     public async Task<IActionResult> CheckRequestStatus(
         [FromServices] IHandler<IEnumerable<CheckFriendRequestStatusViewModel>, CheckFriendRequestStatusQuery> handler,
         CancellationToken cancellationToken)
@@ -55,13 +59,13 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     ///     Rota para listar os amigos de um perfil
     /// </summary>
     /// <param name="profileId"></param>
-    /// <param name="page"></param>
-    /// <param name="rows"></param>
+    /// <param name="queryParameters"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("listFriends/{profileId:guid}")]
-    public async Task<IActionResult> ListFriends(Guid profileId, [FromQuery] int page, [FromQuery] int rows,
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileBasicInformation>))]
+    public async Task<IActionResult> ListFriends(Guid profileId, [FromQuery] BaseQueryParametersValueObject queryParameters,
         [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery> handler,
         CancellationToken cancellationToken)
     {
@@ -69,8 +73,8 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
 
         ListFriendsQuery query = new();
         query.SetProfileId(profileId);
-        query.SetPage(page);
-        query.SetRows(rows);
+        query.SetPage(queryParameters.Page);
+        query.SetRows(queryParameters.Rows);
 
         ListFriendsQueryValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
@@ -83,6 +87,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     /// </summary>
     /// <returns></returns>
     [HttpPut("manageFriendRequests")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> ManageFriendRequests(
         [FromServices] IHandler<bool, ManageFriendRequestsCommand> handler,
         [FromBody] ManageFriendRequestsCommand command, CancellationToken cancellationToken)
@@ -92,7 +97,8 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         ManageFriendRequestsCommandValidator validator = new(profileGraphRepository, repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
@@ -100,6 +106,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     /// </summary>
     /// <returns></returns>
     [HttpDelete("removeFriend/{profileId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> RemoveFriend(Guid profileId,
         [FromServices] IHandler<bool, RemoveFriendCommand> handler,
         CancellationToken cancellationToken)
@@ -111,7 +118,8 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         RemoveFriendCommandValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
@@ -119,6 +127,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     /// </summary>
     /// <returns></returns>
     [HttpDelete("removeFriendRequest/{profileId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> RemoveFriendRequest(Guid profileId,
         [FromServices] IHandler<bool, RemoveFriendRequestCommand> handler,
         CancellationToken cancellationToken)
@@ -133,6 +142,7 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 }

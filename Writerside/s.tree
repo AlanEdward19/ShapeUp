@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="s"
+                 name="ShapeUp"
+                 start-page="starter-topic.md">
+
+    <toc-element topic="starter-topic.md">
+        <toc-element topic="API_Reference.md">
+            <toc-element topic="Schemas.md">
+                <toc-element topic="SendFriendRequestCommand.md"/>
+                <toc-element topic="Reaction.md"/>
+                <toc-element topic="ReactToPostCommand.md"/>
+                <toc-element topic="ProfileSimplifiedDto.md"/>
+                <toc-element topic="ProfilePicture.md"/>
+                <toc-element topic="ProfileDto.md"/>
+                <toc-element topic="ProfileBasicInformation.md"/>
+                <toc-element topic="ProblemDetails.md"/>
+                <toc-element topic="PostDto.md"/>
+                <toc-element topic="ManageFriendRequestsCommand.md"/>
+                <toc-element topic="FriendRecommendation.md"/>
+                <toc-element topic="EditProfileCommand.md"/>
+                <toc-element topic="EditPostCommand.md"/>
+                <toc-element topic="EditCommentOnPostCommand.md"/>
+                <toc-element topic="EReactionType.md"/>
+                <toc-element topic="EPostVisibility.md"/>
+                <toc-element topic="EGender.md"/>
+                <toc-element topic="EFriendStatus.md"/>
+                <toc-element topic="CreatePostCommand.md"/>
+                <toc-element topic="CommentOnPostCommand.md"/>
+                <toc-element topic="Comment.md"/>
+                <toc-element topic="CheckFriendRequestStatusViewModel.md"/>
+            </toc-element>
+            <toc-element topic="Rota_para_receber_recomendações_de_amigos.md"/>
+            <toc-element topic="Rota_para_buscar_um_perfil_pelo_nome.md"/>
+            <toc-element topic="Rota_para_obter_fotos_de_perfil_.md"/>
+            <toc-element topic="Rota_para_fazer_upload_de_uma_foto_de_perfil.md"/>
+            <toc-element topic="Rota_para_deletar_um_perfil.md"/>
+            <toc-element topic="Rota_para_editar_um_perfil.md"/>
+            <toc-element topic="Rota_para_visualizar_um_perfil_simplificado.md"/>
+            <toc-element topic="Rota_para_visualizar_um_perfil.md"/>
+            <toc-element topic="Rota_para_deletar_uma_reação_de_um_post.md"/>
+            <toc-element topic="Rota_para_pegar_as_reações_de_um_post.md"/>
+            <toc-element topic="Rotas_para_reagir_a_um_post.md"/>
+            <toc-element topic="Rota_para_deletar_um_comentário_em_um_post.md"/>
+            <toc-element topic="Rota_para_editar_um_comentário_em_um_post.md"/>
+            <toc-element topic="Rota_para_pegar_os_comentários_de_um_post.md"/>
+            <toc-element topic="Rota_para_comentar_em_um_post.md"/>
+            <toc-element topic="Rota_para_editar_um_post.md"/>
+            <toc-element topic="Rota_para_deletar_um_post.md"/>
+            <toc-element topic="Rota_para_fazer_upload_de_imagens_em_um_post.md"/>
+            <toc-element topic="Rota_para_criar_um_post.md"/>
+            <toc-element topic="Rota_para_pegar_informações_dos_posts_feitos_por_um_perfil.md"/>
+            <toc-element topic="Rota_para_pegar_as_informações_de_um_post.md"/>
+            <toc-element topic="Rota_para_remover_uma_solicitação_de_amizade.md"/>
+            <toc-element topic="Rota_para_remover_um_amigo.md"/>
+            <toc-element topic="Rota_para_gerenciar_solicitações_de_amizade.md"/>
+            <toc-element topic="Rota_para_listar_os_amigos_de_um_perfil.md"/>
+            <toc-element topic="Rota_para_verificar_o_status_de_uma_solicitação_de_amizade.md"/>
+            <toc-element topic="Rota_para_enviar_uma_solicitação_de_amigo.md"/>
+            <toc-element topic="Rotar_para_obter_os_perfis_que_um_perfil_segue.md"/>
+            <toc-element topic="Rotar_para_obter_os_seguidores_de_um_perfil.md"/>
+            <toc-element topic="Rotar_para_deixar_de_seguir_um_perfil.md"/>
+            <toc-element topic="Rota_para_seguir_um_perfil.md"/>
+            <toc-element topic="Rota_para_construir_o_feed_de_atividades.md"/>
+        </toc-element>
+    </toc-element>
+</instance-profile>
