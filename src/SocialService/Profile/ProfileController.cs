@@ -28,6 +28,9 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("viewProfile/{profileId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileDto))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProfileDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ViewProfile(Guid profileId,
         [FromServices] IHandler<ProfileDto?, ViewProfileQuery> viewProfilehandler,
         [FromServices] IHandler<ProfileDto, CreateProfileCommand> createProfileHandler,
@@ -36,29 +39,31 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
         ViewProfileQuery query = new(profileId);
-        
+
         ProfileDto? profile = await viewProfilehandler.HandleAsync(query, cancellationToken);
 
         if (profile is null && profileId == ProfileContext.ProfileId)
         {
             CreateProfileCommand command = new();
-            
+
             command.SetEmail(User.GetEmail());
             command.SetFirstName(User.GetFirstName());
             command.SetLastName(User.GetLastName());
             command.SetCountry(User.GetCountry());
             command.SetPostalCode(User.GetPostalCode());
             command.SetDisplayName(User.GetDisplayName());
-            
+
             CreateProfileCommandValidator createProfileValidator = new();
             await createProfileValidator.ValidateAndThrowAsync(command, cancellationToken);
 
             profile = await createProfileHandler.HandleAsync(command, cancellationToken);
+
+            return Created(HttpContext.Request.Path, profile);
         }
-        
+
         return Ok(profile);
     }
-    
+
     /// <summary>
     ///     Rota para visualizar um perfil simplificado
     /// </summary>
@@ -67,6 +72,8 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("viewProfile/{profileId:guid}/simplified")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileSimplifiedDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ViewProfileSimplified(Guid profileId,
         [FromServices] IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery> handler,
         CancellationToken cancellationToken)
@@ -89,6 +96,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPatch("editProfile")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileDto))]
     public async Task<IActionResult> EditProfile([FromServices] IHandler<ProfileDto, EditProfileCommand> handler,
         [FromBody] EditProfileCommand command, CancellationToken cancellationToken)
     {
@@ -108,6 +116,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("deleteProfile/{profileId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteProfile(Guid profileId,
         [FromServices] IHandler<bool, DeleteProfileCommand> handler,
         CancellationToken cancellationToken)
@@ -119,17 +128,19 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         DeleteProfileCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
- /// <summary>
- /// Rota para fazer upload de uma foto de perfil
- /// </summary>
- /// <param name="handler"></param>
- /// <param name="image"></param>
- /// <param name="cancellationToken"></param>
- /// <returns></returns>
+    /// <summary>
+    /// Rota para fazer upload de uma foto de perfil
+    /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="image"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("uploadProfilePicture")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UploadProfilePicture(
         [FromServices] IHandler<bool, UploadProfilePictureCommand> handler,
         IFormFile image, CancellationToken cancellationToken)
@@ -139,7 +150,8 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         UploadProfilePictureCommand command = new();
         await command.SetImage(image, image.FileName, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
@@ -152,6 +164,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("getProfilePictures/{profileId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfilePicture>))]
     public async Task<IActionResult> GetProfilePictures(Guid profileId,
         [FromQuery] int? page, [FromQuery] int? rows,
         [FromServices] IHandler<IEnumerable<ProfilePicture>, GetProfilePicturesQuery> handler,
@@ -166,7 +179,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
-    
+
     /// <summary>
     /// Rota para buscar um perfil pelo nome
     /// </summary>
@@ -175,6 +188,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("searchProfileByName")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileSimplifiedDto>))]
     public async Task<IActionResult> SearchProfileByName(
         [FromServices] IHandler<IEnumerable<ProfileSimplifiedDto>, SearchProfileByNameQuery> handler,
         [FromQuery] SearchProfileByNameQuery query, CancellationToken cancellationToken)

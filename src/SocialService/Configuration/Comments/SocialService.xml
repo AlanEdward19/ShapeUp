@@ -1177,7 +1177,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.FriendController.ViewProfile(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Friends.FriendController.ListFriends(System.Guid,System.Int32,System.Int32,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
             <summary>
                 Rota para listar os amigos de um perfil
             </summary>

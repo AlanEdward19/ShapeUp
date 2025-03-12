@@ -37,6 +37,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("{id:guid}/getPost")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostDto))]
     public async Task<IActionResult> GetPost([FromServices] IHandler<PostDto, GetPostQuery> handler,
         Guid id, CancellationToken cancellationToken)
     {
@@ -60,11 +61,12 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="rows"></param>
     /// <returns></returns>
     [HttpGet("/Profile/v{version:apiVersion}/{id:guid}/getPosts")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PostDto>))]
     public async Task<IActionResult> GetPostsByProfileId(
         [FromServices] IHandler<IEnumerable<PostDto>, GetPostsByProfileIdQuery> handler,
         [FromServices] IProfileGraphRepository profileGraphRepository,
         Guid id, CancellationToken cancellationToken,
-        [FromQuery] int page = 1, [FromQuery]int rows = 10)
+        [FromQuery] int page = 1, [FromQuery] int rows = 10)
     {
         GetPostsByProfileIdQuery query = new(page, rows);
         query.SetProfileId(id);
@@ -83,6 +85,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost("createPost")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PostDto))]
     public async Task<IActionResult> CreatePost([FromServices] IHandler<PostDto, CreatePostCommand> handler,
         [FromBody] CreatePostCommand command, CancellationToken cancellationToken)
     {
@@ -91,7 +94,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         CreatePostCommandValidator validator = new();
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
@@ -103,6 +106,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id:guid}/uploadPostImages")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UploadPostImages([FromServices] IHandler<bool, UploadPostImageCommand> handler,
         Guid id, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)
     {
@@ -115,7 +119,8 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         UploadPostImageCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
@@ -126,6 +131,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("{id:guid}/deletePost")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeletePost([FromServices] IHandler<bool, DeletePostCommand> handler,
         Guid id, CancellationToken cancellationToken)
     {
@@ -137,7 +143,8 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         DeletePostCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
@@ -149,6 +156,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPatch("{id:guid}/editPost")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PostDto))]
     public async Task<IActionResult> EditPost([FromServices] IHandler<PostDto, EditPostCommand> handler,
         Guid id, [FromBody] EditPostCommand command, CancellationToken cancellationToken)
     {
@@ -158,7 +166,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         EditPostCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
     }
 
     #endregion
@@ -174,6 +182,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost("{id:guid}/commentOnPost")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CommentOnPost([FromServices] IHandler<bool, CommentOnPostCommand> handler,
         Guid id, [FromBody] CommentOnPostCommand command, CancellationToken cancellationToken)
     {
@@ -183,7 +192,8 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         CommentOnPostCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return Created();
     }
 
     /// <summary>
@@ -194,6 +204,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("{id:guid}/getComments")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Comment.Comment>))]
     public async Task<IActionResult> GetPostComments(
         [FromServices] IHandler<IEnumerable<Comment.Comment>, GetPostCommentsQuery> handler,
         Guid id, CancellationToken cancellationToken)
@@ -216,6 +227,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id:guid}/editComment")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> EditCommentOnPost([FromServices] IHandler<bool, EditCommentOnPostCommand> handler,
         Guid id, [FromBody] EditCommentOnPostCommand command, CancellationToken cancellationToken)
     {
@@ -225,7 +237,8 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         EditCommentOnPostCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
@@ -236,6 +249,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("{id:guid}/deleteComment")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteCommentOnPost(
         [FromServices] IHandler<bool, DeleteCommentOnPostCommand> handler,
         Guid id, CancellationToken cancellationToken)
@@ -248,7 +262,8 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         DeleteCommentOnPostCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     #endregion
@@ -264,6 +279,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id:guid}/react")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> ReactToPost([FromServices] IHandler<bool, ReactToPostCommand> handler,
         Guid id, [FromBody] ReactToPostCommand command, CancellationToken cancellationToken)
     {
@@ -273,7 +289,8 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         ReactToPostCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
@@ -284,6 +301,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("{id:guid}/getReactions")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Reaction>))]
     public async Task<IActionResult> GetReactionsOnPost(
         [FromServices] IHandler<IEnumerable<Reaction>, GetReactionsOnPostQuery> handler,
         Guid id, CancellationToken cancellationToken)
@@ -305,6 +323,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("{id:guid}/deleteReaction")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteReactionFromPost(
         [FromServices] IHandler<bool, DeleteReactionFromPostCommand> handler,
         Guid id, CancellationToken cancellationToken)
@@ -317,7 +336,8 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         DeleteReactionFromPostCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 
     #endregion
