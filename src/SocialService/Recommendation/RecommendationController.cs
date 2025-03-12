@@ -15,7 +15,7 @@ public class RecommendationController : ControllerBase
     ///     Rota para receber recomendações de amigos
     /// </summary>
     /// <returns></returns>
-    [HttpGet("FriendRecommendations")]
+    [HttpGet("friendRecommendations")]
     public async Task<IActionResult> GetFriendRecommendations(
         [FromServices] IHandler<IEnumerable<FriendRecommendation>, GetFriendRecommendationQuery> handler,
         CancellationToken cancellationToken)

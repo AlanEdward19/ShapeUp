@@ -19,7 +19,7 @@ public class ActivityFeedController : ControllerBase
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("BuildActivityFeed")]
+    [HttpGet("buildActivityFeed")]
     public async Task<IActionResult> BuildActivityFeed(
         [FromServices] IHandler<IEnumerable<PostDto>, GetActivityFeedQuery> handler,
         [FromQuery] GetActivityFeedQuery query, CancellationToken cancellationToken)
