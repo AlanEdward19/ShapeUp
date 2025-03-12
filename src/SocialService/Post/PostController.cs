@@ -1,4 +1,5 @@
-﻿using SocialService.Post.Comment.CommentOnPost;
+﻿using SocialService.Common.ValueObjects;
+using SocialService.Post.Comment.CommentOnPost;
 using SocialService.Post.Comment.DeleteCommentOnPost;
 using SocialService.Post.Comment.EditCommentOnPost;
 using SocialService.Post.Comment.GetPostComments;
@@ -55,20 +56,19 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// </summary>
     /// <param name="handler"></param>
     /// <param name="profileGraphRepository"></param>
+    /// <param name="queryParameters"></param>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    /// <param name="page"></param>
-    /// <param name="rows"></param>
     /// <returns></returns>
     [HttpGet("/Profile/v{version:apiVersion}/{id:guid}/getPosts")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PostDto>))]
     public async Task<IActionResult> GetPostsByProfileId(
         [FromServices] IHandler<IEnumerable<PostDto>, GetPostsByProfileIdQuery> handler,
         [FromServices] IProfileGraphRepository profileGraphRepository,
-        Guid id, CancellationToken cancellationToken,
-        [FromQuery] int page = 1, [FromQuery] int rows = 10)
+        [FromQuery] BaseQueryParametersValueObject queryParameters,
+        Guid id, CancellationToken cancellationToken)
     {
-        GetPostsByProfileIdQuery query = new(page, rows);
+        GetPostsByProfileIdQuery query = new(queryParameters.Page, queryParameters.Rows);
         query.SetProfileId(id);
 
         GetPostsByProfileIdQueryValidator validator = new(profileGraphRepository);

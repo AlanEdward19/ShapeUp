@@ -1,4 +1,5 @@
-﻿using SocialService.Profile.Common.Repository;
+﻿using SocialService.Common.ValueObjects;
+using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
 using SocialService.Profile.EditProfile;
@@ -158,21 +159,19 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     ///     Rota para obter fotos de perfil.
     /// </summary>
     /// <param name="profileId"></param>
-    /// <param name="page"></param>
-    /// <param name="rows"></param>
     /// <param name="handler"></param>
+    /// <param name="queryParameters"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("getProfilePictures/{profileId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfilePicture>))]
     public async Task<IActionResult> GetProfilePictures(Guid profileId,
-        [FromQuery] int? page, [FromQuery] int? rows,
         [FromServices] IHandler<IEnumerable<ProfilePicture>, GetProfilePicturesQuery> handler,
-        CancellationToken cancellationToken)
+        [FromQuery] BaseQueryParametersValueObject queryParameters, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
-        GetProfilePicturesQuery query = new(profileId, page, rows);
+        GetProfilePicturesQuery query = new(profileId, queryParameters.Page, queryParameters.Rows);
 
         GetProfilePicturesQueryValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);

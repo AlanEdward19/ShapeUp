@@ -1,4 +1,5 @@
-﻿using SocialService.Friends.Common.Repository;
+﻿using SocialService.Common.ValueObjects;
+using SocialService.Friends.Common.Repository;
 using SocialService.Friends.FriendRequest.CheckFriendRequestStatus;
 using SocialService.Friends.FriendRequest.ManageFriendRequests;
 using SocialService.Friends.FriendRequest.RemoveFriendRequest;
@@ -58,14 +59,13 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
     ///     Rota para listar os amigos de um perfil
     /// </summary>
     /// <param name="profileId"></param>
-    /// <param name="page"></param>
-    /// <param name="rows"></param>
+    /// <param name="queryParameters"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("listFriends/{profileId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileBasicInformation>))]
-    public async Task<IActionResult> ListFriends(Guid profileId, [FromQuery] int page, [FromQuery] int rows,
+    public async Task<IActionResult> ListFriends(Guid profileId, [FromQuery] BaseQueryParametersValueObject queryParameters,
         [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, ListFriendsQuery> handler,
         CancellationToken cancellationToken)
     {
@@ -73,8 +73,8 @@ public class FriendController(IProfileGraphRepository profileGraphRepository, IF
 
         ListFriendsQuery query = new();
         query.SetProfileId(profileId);
-        query.SetPage(page);
-        query.SetRows(rows);
+        query.SetPage(queryParameters.Page);
+        query.SetRows(queryParameters.Rows);
 
         ListFriendsQueryValidator validator = new(profileGraphRepository);
         await validator.ValidateAndThrowAsync(query, cancellationToken);
