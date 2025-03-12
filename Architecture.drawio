@@ -220,9 +220,11 @@
             <mxGeometry x="400" y="630" width="100" height="50" as="geometry" />
           </mxCell>
         </UserObject>
-        <mxCell id="zdfX1R9SKaw9Ff__tJD0-2" value="Posts" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="400" y="720" width="100" height="50" as="geometry" />
-        </mxCell>
+        <UserObject label="Posts" link="data:page/id,FSuxzx4huj0JpfmeO92V" id="zdfX1R9SKaw9Ff__tJD0-2">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+            <mxGeometry x="400" y="720" width="100" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
         <UserObject label="Recommendation" link="data:page/id,T3wcbZwfD-EUPOaXqWei" id="zdfX1R9SKaw9Ff__tJD0-3">
           <mxCell style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
             <mxGeometry x="400" y="890" width="100" height="50" as="geometry" />
