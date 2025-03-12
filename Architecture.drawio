@@ -198,9 +198,11 @@
         <mxCell id="4z8H6LbkjsdZk9EwCTbG-1" value="User" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.account_portal" parent="1" vertex="1">
           <mxGeometry x="140" y="670" width="43" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="yQ3fUK98fWnP4YMN126Y-1" value="Profile" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
-          <mxGeometry x="400" y="810" width="100" height="50" as="geometry" />
-        </mxCell>
+        <UserObject label="Profile" link="data:page/id,HnuPBlIDeBLXp_UWnhS7" id="yQ3fUK98fWnP4YMN126Y-1">
+          <mxCell style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+            <mxGeometry x="400" y="810" width="100" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
         <UserObject label="ActivityFeed" link="data:page/id,pl1YrOqQSCPoLLUE3lf9" id="yQ3fUK98fWnP4YMN126Y-2">
           <mxCell style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
             <mxGeometry x="400" y="450" width="100" height="50" as="geometry" />
@@ -2109,7 +2111,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="HnuPBlIDeBLXp_UWnhS7" name="SocialService/Profile">
-    <mxGraphModel dx="4256" dy="1605" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3729" dy="1358" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
