@@ -22,7 +22,7 @@
         "tags": [
           "ActivityFeed"
         ],
-        "summary": "Rota para seguir um perfil",
+        "summary": "Rota para construir o feed de atividades",
         "parameters": [
           {
             "name": "Page",
