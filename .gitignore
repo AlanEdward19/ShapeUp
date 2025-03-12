@@ -407,4 +407,4 @@ volumes/
 #Drawio backup files
 
 *drawio.bkp
-.dmtp
+*dmtp.dmtp
