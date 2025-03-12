@@ -2119,7 +2119,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="HnuPBlIDeBLXp_UWnhS7" name="SocialService/Profile">
-    <mxGraphModel dx="2224" dy="654" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3521" dy="1261" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2850,6 +2850,11 @@
               <mxPoint x="1590" y="2610" />
               <mxPoint x="1590" y="2590" />
             </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_0nwQt-Pn_-EhvF2Kxo2-1" value="Atualiza" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="o0MpsSrDvdFoQUZXyo5n-14">
+          <mxGeometry x="-0.1748" y="-3" relative="1" as="geometry">
+            <mxPoint x="20" y="-3" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="v39NmtSy-jsfJvSsmS8O-10" value="Repository" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
