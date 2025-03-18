@@ -47,4 +47,15 @@ public class UserGroup
         GroupId = group;
         Role = role;
     }
+
+    public UserGroup() { }
+
+    public UserGroup(Guid userId, User user, Guid groupId, Group group, EGroupRole role)
+    {
+        UserId = userId;
+        User = user;
+        GroupId = groupId;
+        Group = group;
+        Role = role;
+    }
 }
