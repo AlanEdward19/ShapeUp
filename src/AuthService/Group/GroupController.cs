@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
 using AuthService.Authentication.AuthenticateUser;
-using AuthService.Authentication.Common.Enums;
 using AuthService.Common.Interfaces;
 using AuthService.Common.User;
 using AuthService.Group.AddUserToGroup;
+using AuthService.Group.Common.Enums;
 using AuthService.Group.CreateGroup;
 using AuthService.Group.DeleteGroup;
 using AuthService.Group.GetUsersFromGroup;

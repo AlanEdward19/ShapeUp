@@ -1,6 +1,6 @@
-﻿using AuthService.Authentication.Common.Enums;
-using AuthService.Common.User;
+﻿using AuthService.Common.User;
 using AuthService.Connections.Database;
+using AuthService.Group.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Exceptions;
 

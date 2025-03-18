@@ -1,5 +1,5 @@
-﻿using AuthService.Authentication.Common.Enums;
-using AuthService.Connections.Database;
+﻿using AuthService.Connections.Database;
+using AuthService.Group.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthService.Common.User.Repository;

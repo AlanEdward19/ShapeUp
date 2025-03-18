@@ -1,4 +1,4 @@
-﻿namespace AuthService.Authentication.Common.Enums;
+﻿namespace AuthService.Group.Common.Enums;
 
 public enum EGroupRole
 {

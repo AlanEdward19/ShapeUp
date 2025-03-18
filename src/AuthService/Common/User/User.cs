@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AuthService.Authentication.Common.Enums;
 using AuthService.Group;
 
 namespace AuthService.Common.User;

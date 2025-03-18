@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using AuthService.Authentication.Common.Enums;
 using AuthService.Common;
 using AuthService.Common.User;
+using AuthService.Group.Common.Enums;
 
 namespace AuthService.Group;
 
