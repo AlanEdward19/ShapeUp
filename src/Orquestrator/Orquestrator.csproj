@@ -17,9 +17,11 @@
         <PackageReference Include="Aspire.Hosting.Azure.Storage" Version="9.0.0" />
         <PackageReference Include="Aspire.Hosting.MongoDB" Version="9.0.0" />
         <PackageReference Include="Aspire.Hosting.Redis" Version="9.0.0" />
+        <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.1.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AuthService\AuthService.csproj" />
       <ProjectReference Include="..\ChatService\ChatService.csproj" />
       <ProjectReference Include="..\NotificationService\NotificationService.csproj" />
       <ProjectReference Include="..\NutritionService\NutritionService.csproj" />
