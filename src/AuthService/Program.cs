@@ -31,6 +31,7 @@ app.UseCors("AllowLocalhost8080");
 app.ConfigureSwagger();
 app.MapEndpoints(configuration);
 app.ConfigureMiddleware();
+app.UpdateMigrations();
 
 app.Run();
 app.Logger.LogInformation("Application instance is ready to handle incoming requests");

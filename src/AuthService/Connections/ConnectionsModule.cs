@@ -26,9 +26,25 @@ public static class ConnectionsModule
     private static IServiceCollection ConfigureSqlServer(this IServiceCollection services, IConfiguration configuration)
     {
         string connectionString = configuration.GetConnectionString("SqlServer")!;
-        
+
+#if (DEBUG)
         services.AddDbContext<AuthDbContext>(options =>
-            options.UseSqlServer(connectionString));
+            options
+                .UseSqlServer(connectionString)
+                .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+                // ⚠️ !! Ativado somente em modo debug !! ⚠️ 
+                .EnableSensitiveDataLogging()
+        );
+
+#elif (RELEASE)
+        services.AddDbContext<AuthDbContext>(options =>
+               options
+               .UseSqlServer(connectionString)
+               .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+       );
+#endif
+
+        return services;
 
         return services;
     }
