@@ -1,4 +1,4 @@
-﻿using ChatService.Middleware;
+﻿using SharedKernel.Middleware;
 
 namespace ChatService.Configuration;
 

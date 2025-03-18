@@ -1,6 +1,6 @@
 ﻿using SharedKernel.Middleware;
 
-namespace NotificationService.Configuration;
+namespace AuthService.Configuration;
 
 /// <summary>
 ///     Classe para configuração de middlewares

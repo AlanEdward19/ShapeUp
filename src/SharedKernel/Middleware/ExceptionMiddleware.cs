@@ -1,8 +1,10 @@
 ﻿using System.Net;
 using System.Text.Json;
-using SocialService.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using SharedKernel.Exceptions;
 
-namespace SocialService.Middleware;
+namespace SharedKernel.Middleware;
 
 /// <summary>
 ///     Middleware para tratamento de exceções
@@ -11,7 +13,7 @@ namespace SocialService.Middleware;
 /// <param name="logger"></param>
 public class ExceptionMiddleware(
     RequestDelegate next,
-    ILogger<ExceptionMiddleware> logger /*, DatabaseContext databaseContext*/)
+    ILogger<ExceptionMiddleware> logger)
 {
     /// <summary>
     ///     Método para invocar o middleware

@@ -1,8 +1,8 @@
 ﻿using AuthService.Authentication.Common.Enums;
 using AuthService.Common.User;
 using AuthService.Connections.Database;
-using AuthService.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Exceptions;
 
 namespace AuthService.Group.Common.Repository;
 

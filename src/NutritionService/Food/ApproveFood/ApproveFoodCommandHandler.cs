@@ -1,6 +1,7 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.Exceptions;
 using NutritionService.Food.Common.Repository;
+using SharedKernel.Exceptions;
 
 namespace NutritionService.Food.ApproveFood;
 

@@ -1,4 +1,4 @@
-﻿namespace NutritionService.Exceptions;
+﻿namespace SharedKernel.Exceptions;
 
 /// <summary>
 ///     Exceção para quando um item não é encontrado

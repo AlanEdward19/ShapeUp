@@ -1,5 +1,4 @@
-﻿using SocialService.Exceptions;
-using SocialService.Post.Common.Repository;
+﻿using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.UploadPostImages;
 
