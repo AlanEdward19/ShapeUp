@@ -1,0 +1,43 @@
+﻿using AuthService.Common.Interfaces;
+using AuthService.Permission.Common.Repository;
+using AuthService.Permission.CreatePermission;
+using AuthService.Permission.DeletePermission;
+using AuthService.Permission.GetGroupPermissions;
+using AuthService.Permission.GetUserPermissions;
+using AuthService.Permission.GrantGroupPermission;
+using AuthService.Permission.GrantUserPermission;
+using AuthService.Permission.UpdatePermission;
+
+namespace AuthService.Permission;
+
+public static class PermissionModule
+{
+    public static IServiceCollection ConfigurePermissionRelatedDependencies(this IServiceCollection services)
+    {
+        services
+            .AddRepositories()
+            .AddHandlers();
+
+        return services;
+    }
+
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IPermissionRepository, PermissionRepository>();
+
+        return services; 
+    }
+    
+    private static IServiceCollection AddHandlers(this IServiceCollection services)
+    {
+        services.AddScoped<IHandler<bool, CreatePermissionCommand>, CreatePermissionCommandHandler>();
+        services.AddScoped<IHandler<bool, DeletePermissionCommand>, DeletePermissionCommandHandler>();
+        services.AddScoped<IHandler<ICollection<PermissionDto>, GetGroupPermissionsQuery>, GetGroupPermissionsQueryHandler>();
+        services.AddScoped<IHandler<ICollection<PermissionDto>, GetUserPermissionsQuery>, GetUserPermissionsQueryHandler>();
+        services.AddScoped<IHandler<bool, GrantGroupPermissionCommand>, GrantGroupPermissionCommandHandler>();
+        services.AddScoped<IHandler<bool, GrantUserPermissionCommand>, GrantUserPermissionCommandHandler>();
+        services.AddScoped<IHandler<bool, UpdatePermissionCommand>, UpdatePermissionCommandHandler>();
+        
+        return services;
+    }
+}
