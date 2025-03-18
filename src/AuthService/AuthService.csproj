@@ -12,14 +12,4 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Permission\CreatePermission\" />
-      <Folder Include="Permission\DeletePermission\" />
-      <Folder Include="Permission\GetGroupPermissions\" />
-      <Folder Include="Permission\GetUserPermissions\" />
-      <Folder Include="Permission\GrantGroupPermission\" />
-      <Folder Include="Permission\GrantUserPermission\" />
-      <Folder Include="Permission\UpdatePermission\" />
-    </ItemGroup>
-
 </Project>
