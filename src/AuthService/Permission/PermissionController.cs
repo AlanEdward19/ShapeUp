@@ -78,10 +78,10 @@ public class PermissionController : ControllerBase
     }
     
     [HttpPatch("{permissionId:guid}")]
-    public async Task<IActionResult> UpdatePermission(Guid permissionId, [FromBody] EPermissionAction? action, [FromBody] string? theme,
+    public async Task<IActionResult> UpdatePermission(Guid permissionId, [FromBody]  UpdatePermissionCommand command,
         [FromServices] IHandler<bool, UpdatePermissionCommand> handler, CancellationToken cancellationToken)
     {
-        UpdatePermissionCommand command = new(permissionId, action, theme);
+        command.SetPermissionId(permissionId);
         await handler.HandleAsync(command, cancellationToken);
         
         return Ok();
