@@ -19,6 +19,10 @@ public class User(Guid objectId, string email)
     /// Email do usuário
     /// </summary>
     public string Email { get; private set; } = email;
+    
+    public DateTime CreatedAt { get; init; } = DateTime.Now;
+    
+    public DateTime UpdatedAt { get; private set; } = DateTime.Now;
 
     /// <summary>
     /// Grupos do usuário
@@ -30,6 +34,8 @@ public class User(Guid objectId, string email)
         UserGroup userGroup = new(group, this, role);
         
         UserGroups.Add(userGroup);
+        
+        UpdatedAt = DateTime.Now;
     }
     
     public void RemoveGroup(Group.Group group)
@@ -37,5 +43,7 @@ public class User(Guid objectId, string email)
         UserGroup userGroup = UserGroups.First(ug => ug.GroupId == group.Id);
         
         UserGroups.Remove(userGroup);
+        
+        UpdatedAt = DateTime.Now;
     }
 }
