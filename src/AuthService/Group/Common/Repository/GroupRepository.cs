@@ -25,15 +25,14 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
         
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         
-        user.AddGroup(group, role);
+        group.AddUser(user, role);
         
         await dbContext.SaveChangesAsync(cancellationToken);
         
         await dbContext.Database.CommitTransactionAsync(cancellationToken);
     }
 
-    public async Task RemoveUserFromGroupAsync(Guid groupId, Guid userId, EGroupRole role,
-        CancellationToken cancellationToken)
+    public async Task RemoveUserFromGroupAsync(Guid groupId, Guid userId, CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups.Include(g => g.Users)
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
@@ -52,7 +51,7 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
         
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         
-        user.RemoveGroup(group);
+        group.RemoveUser(user);
         
         await dbContext.SaveChangesAsync(cancellationToken);
         
@@ -89,7 +88,10 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
     
     public async Task<ICollection<User>> GetUsersFromGroupAsync(Guid groupId, CancellationToken cancellationToken)
     {
-        Group? group = await dbContext.Groups.Include(g => g.Users).ThenInclude(userGroup => userGroup.User)
+        Group? group = await dbContext.Groups
+            .Include(g => g.Users)
+            .ThenInclude(userGroup => userGroup.User)
+            .AsNoTracking()
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
         
         if (group is null)

@@ -19,7 +19,7 @@ public class UserRepository(AuthDbContext dbContext) : IUserRepository
         await dbContext.Users.AddAsync(user, cancellationToken);
         
         Group.Group userGroup = new();
-        user.AddGroup(userGroup, EGroupRole.Owner);
+        userGroup.AddUser(user, EGroupRole.Owner);
         await dbContext.Groups.AddAsync(userGroup, cancellationToken);
         
         await dbContext.SaveChangesAsync(cancellationToken);

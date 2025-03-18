@@ -1,4 +1,4 @@
-﻿namespace AuthService.Group.AddUserToGroup;
+﻿namespace AuthService.Group.RemoveUserFromGroup;
 
 public class RemoveUserFromGroupCommand(Guid groupId, Guid userId)
 {

@@ -28,22 +28,4 @@ public class User(Guid objectId, string email)
     /// Grupos do usuário
     /// </summary>
     public virtual ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
-    
-    public void AddGroup(Group.Group group, EGroupRole role)
-    {
-        UserGroup userGroup = new(group, this, role);
-        
-        UserGroups.Add(userGroup);
-        
-        UpdatedAt = DateTime.Now;
-    }
-    
-    public void RemoveGroup(Group.Group group)
-    {
-        UserGroup userGroup = UserGroups.First(ug => ug.GroupId == group.Id);
-        
-        UserGroups.Remove(userGroup);
-        
-        UpdatedAt = DateTime.Now;
-    }
 }
