@@ -11,6 +11,7 @@ public class GetUserPermissionsQueryHandler(IPermissionRepository repository) : 
         
         return permissions
             .Select(permission => new PermissionDto(permission))
+            .DistinctBy(x => x.Id)
             .ToList();
     }
 }

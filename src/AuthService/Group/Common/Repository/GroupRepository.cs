@@ -58,11 +58,16 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
         await dbContext.Database.CommitTransactionAsync(cancellationToken);
     }
     
-    public async Task AddAsync(Group group, CancellationToken cancellationToken)
+    public async Task AddAsync(Group group, Guid userId, CancellationToken cancellationToken)
     {
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         
         await dbContext.Groups.AddAsync(group, cancellationToken);
+        
+        User user = await dbContext.Users
+            .FirstAsync(u => u.ObjectId == userId, cancellationToken: cancellationToken);
+        
+        group.AddUser(user, EGroupRole.Admin);
         
         await dbContext.SaveChangesAsync(cancellationToken);
         

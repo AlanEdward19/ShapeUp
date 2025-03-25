@@ -1,4 +1,5 @@
-﻿using AuthService.Common.Interfaces;
+﻿using AuthService.Common;
+using AuthService.Common.Interfaces;
 using AuthService.Group.Common.Repository;
 
 namespace AuthService.Group.CreateGroup;
@@ -9,8 +10,8 @@ public class CreateGroupCommandHandler(IGroupRepository repository) : IHandler<b
     {
         Group group = new();
 
-        await repository.AddAsync(group, cancellationToken);
-        
+        await repository.AddAsync(group, ProfileContext.ProfileId, cancellationToken);
+
         return true;
     }
 }

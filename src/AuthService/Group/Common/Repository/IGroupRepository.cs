@@ -10,7 +10,7 @@ public interface IGroupRepository
 
     Task RemoveUserFromGroupAsync(Guid groupId, Guid userId, CancellationToken cancellationToken);
 
-    Task AddAsync(Group group, CancellationToken cancellationToken);
+    Task AddAsync(Group group, Guid userId, CancellationToken cancellationToken);
 
     Task DeleteAsync(Guid groupId, CancellationToken cancellationToken);
 

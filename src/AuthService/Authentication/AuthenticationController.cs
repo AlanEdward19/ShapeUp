@@ -14,9 +14,11 @@ namespace AuthService.Authentication;
 public class AuthenticationController : ControllerBase
 {
     [HttpPost("authenticate")]
-    public async Task<IActionResult> Authenticate([FromBody] AuthenticateUserCommand command,
-        [FromServices] IHandler<string, AuthenticateUserCommand> handler, CancellationToken cancellationToken)
+    public async Task<IActionResult> Authenticate([FromServices] IHandler<string, AuthenticateUserCommand> handler, 
+        CancellationToken cancellationToken)
     {
+        string azureToken = Request.Headers["Authorization"].ToString().Split(" ").Last();
+        AuthenticateUserCommand command = new(azureToken);
         var token = await handler.HandleAsync(command, cancellationToken);
         return Ok(new { Token = token });
     }

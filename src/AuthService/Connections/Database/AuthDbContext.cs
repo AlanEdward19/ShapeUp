@@ -10,5 +10,6 @@ public partial class AuthDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserGroup>().HasKey(ug => new { ug.UserId, ug.GroupId });
+        modelBuilder.Entity<GroupPermission>().HasKey(gp => new { gp.GroupId, gp.PermissionId });
     }
 }

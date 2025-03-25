@@ -18,7 +18,7 @@ public class Group
     /// <summary>
     /// Permissões do grupo
     /// </summary>
-    public List<Permission.Permission> Permissions { get; private set; } = new();
+    public virtual ICollection<GroupPermission> GroupPermissions { get; private set; } = new List<GroupPermission>();
     
     public virtual ICollection<UserGroup> Users { get; private set; } = new List<UserGroup>();
     
@@ -29,32 +29,28 @@ public class Group
     public void AddUser(User user, EGroupRole role)
     {
         UserGroup userGroup = new(this, user, role);
-        
         Users.Add(userGroup);
-        
         UpdatedAt = DateTime.Now;
     }
     
     public void RemoveUser(User user)
     {
         UserGroup userGroup = Users.First(ug => ug.UserId == user.ObjectId);
-        
         Users.Remove(userGroup);
-        
         UpdatedAt = DateTime.Now;
     }
     
     public void AddPermission(Permission.Permission permission)
     {
-        Permissions.Add(permission);
-        
+        GroupPermission groupPermission = new(this, permission);
+        GroupPermissions.Add(groupPermission);
         UpdatedAt = DateTime.Now;
     }
     
     public void RemovePermission(Permission.Permission permission)
     {
-        Permissions.Remove(permission);
-        
+        GroupPermission groupPermission = GroupPermissions.First(gp => gp.PermissionId == permission.Id);
+        GroupPermissions.Remove(groupPermission);
         UpdatedAt = DateTime.Now;
     }
 }

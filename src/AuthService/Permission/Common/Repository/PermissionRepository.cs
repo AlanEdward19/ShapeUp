@@ -45,14 +45,15 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         CancellationToken cancellationToken)
     {
         Group.Group? group = await dbContext.Groups
-            .Include(x => x.Permissions)
+            .Include(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == groupId, cancellationToken);
 
         if (group is null)
             throw new NotFoundException($"Group with id '{groupId}' not found.");
 
-        return group.Permissions;
+        return group.GroupPermissions.Select(x => x.Permission).ToList();
     }
 
     public async Task<ICollection<Permission>> GetUserPermissionsAsync(Guid userId, CancellationToken cancellationToken)
@@ -60,20 +61,22 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         User? user = await dbContext.Users
             .Include(x => x.UserGroups)
             .ThenInclude(x => x.Group)
-            .ThenInclude(x => x.Permissions)
+            .ThenInclude(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ObjectId == userId, cancellationToken);
 
         if (user is null)
             throw new NotFoundException($"User with id '{userId}' not found.");
 
-        return user.UserGroups.SelectMany(x => x.Group.Permissions).ToList();
+        return user.UserGroups.SelectMany(x => x.Group.GroupPermissions.Select(x => x.Permission)).ToList();
     }
 
     public async Task GrantGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellationToken)
     {
         Group.Group? group = await dbContext.Groups
-            .Include(x => x.Permissions)
+            .Include(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
             .FirstOrDefaultAsync(x => x.Id == groupId, cancellationToken);
 
         if (group is null)
@@ -95,7 +98,8 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         User? user = await dbContext.Users
             .Include(x => x.UserGroups)
             .ThenInclude(x => x.Group)
-            .ThenInclude(x => x.Permissions)
+            .ThenInclude(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
             .FirstOrDefaultAsync(x => x.ObjectId == userId, cancellationToken);
 
         if (user is null)

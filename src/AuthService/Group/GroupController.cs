@@ -1,7 +1,9 @@
 ﻿using Asp.Versioning;
 using AuthService.Authentication.AuthenticateUser;
+using AuthService.Common;
 using AuthService.Common.Interfaces;
 using AuthService.Common.User;
+using AuthService.Common.Utils;
 using AuthService.Group.AddUserToGroup;
 using AuthService.Group.Common.Enums;
 using AuthService.Group.CreateGroup;
@@ -33,6 +35,8 @@ public class GroupController : ControllerBase
     public async Task<IActionResult> CreateGroup([FromBody] CreateGroupCommand command,
         [FromServices] IHandler<bool, CreateGroupCommand> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
         await handler.HandleAsync(command, cancellationToken);
 
         return Created();

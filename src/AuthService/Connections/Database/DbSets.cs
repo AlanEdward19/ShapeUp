@@ -1,5 +1,4 @@
-﻿using AuthService.Common;
-using AuthService.Common.User;
+﻿using AuthService.Common.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthService.Connections.Database;

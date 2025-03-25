@@ -25,7 +25,7 @@ public class AuthenticateUserCommandHandler(
             await userRepository.AddAsync(user, cancellationToken);
         }
 
-        var permissions = user.UserGroups.SelectMany(ug => ug.Group.Permissions)
+        var permissions = user.UserGroups.SelectMany(ug => ug.Group.GroupPermissions.Select(x => x.Permission))
             .Select(p => $"{p.Action.ToString().ToLower()}:{p.Theme}")
             .ToList();
 

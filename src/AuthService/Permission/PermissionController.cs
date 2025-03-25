@@ -23,7 +23,7 @@ public class PermissionController : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreatePermission([FromBody] CreatePermissionCommand command,
-        [FromServices] IHandler<string, CreatePermissionCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<bool, CreatePermissionCommand> handler, CancellationToken cancellationToken)
     {
         await handler.HandleAsync(command, cancellationToken);
         return Created();
@@ -31,7 +31,7 @@ public class PermissionController : ControllerBase
     
     [HttpDelete("{permissionId:guid}")]
     public async Task<IActionResult> CreatePermission(Guid permissionId,
-        [FromServices] IHandler<string, DeletePermissionCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<bool, DeletePermissionCommand> handler, CancellationToken cancellationToken)
     {
         DeletePermissionCommand command = new(permissionId);
         await handler.HandleAsync(command, cancellationToken);
