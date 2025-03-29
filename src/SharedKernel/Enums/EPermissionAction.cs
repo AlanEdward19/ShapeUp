@@ -1,4 +1,4 @@
-﻿namespace AuthService.Permission.Common.Enums;
+﻿namespace SharedKernel.Enums;
 
 /// <summary>
 /// Tipo de ação da permissão

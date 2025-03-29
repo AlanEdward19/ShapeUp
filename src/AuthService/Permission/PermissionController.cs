@@ -1,7 +1,5 @@
 ﻿using Asp.Versioning;
-using AuthService.Authentication.AuthenticateUser;
 using AuthService.Common.Interfaces;
-using AuthService.Permission.Common.Enums;
 using AuthService.Permission.CreatePermission;
 using AuthService.Permission.DeletePermission;
 using AuthService.Permission.GetGroupPermissions;

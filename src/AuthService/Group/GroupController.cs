@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning;
-using AuthService.Authentication.AuthenticateUser;
 using AuthService.Common;
 using AuthService.Common.Interfaces;
 using AuthService.Common.User;

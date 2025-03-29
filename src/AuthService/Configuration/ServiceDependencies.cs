@@ -1,5 +1,4 @@
-﻿using AuthService.Authentication;
-using AuthService.Common;
+﻿using AuthService.Common;
 using AuthService.Connections;
 using AuthService.Group;
 using AuthService.Permission;
@@ -23,7 +22,6 @@ public static class ServiceDependencies
         services
             .ConfigureCommonRelatedDependencies()
             .ConfigureConnections(configuration)
-            .ConfigureAuthenticationRelatedDependencies()
             .ConfigureGroupRelatedDependencies()
             .ConfigurePermissionRelatedDependencies();
 

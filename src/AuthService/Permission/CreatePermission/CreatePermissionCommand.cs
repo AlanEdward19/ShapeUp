@@ -1,4 +1,4 @@
-﻿using AuthService.Permission.Common.Enums;
+﻿using SharedKernel.Enums;
 
 namespace AuthService.Permission.CreatePermission;
 
