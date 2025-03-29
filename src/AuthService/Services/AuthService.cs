@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AuthService.Common.User;
+﻿using AuthService.Common.User;
 using AuthService.Connections.Database;
 using AuthService.Protos;
 using Grpc.Core;
