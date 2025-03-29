@@ -8,8 +8,8 @@ namespace SharedKernel.Filters;
 
 public class AuthFilter(EPermissionAction action, string theme) : Attribute, IAsyncAuthorizationFilter
 {
-    public EPermissionAction Action { get; set; } = action;
-    public string Theme { get; set; } = theme;
+    private EPermissionAction Action { get; set; } = action;
+    private string Theme { get; set; } = theme;
     
 
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
