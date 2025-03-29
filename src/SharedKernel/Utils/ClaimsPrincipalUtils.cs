@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace AuthService.Common.Utils;
+namespace SharedKernel.Utils;
 
 /// <summary>
 ///     Classe utilitária para ClaimsPrincipal

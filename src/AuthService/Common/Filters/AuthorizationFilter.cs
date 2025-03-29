@@ -2,9 +2,9 @@
 using System.Security.Claims;
 using System.Text;
 using AuthService.Common.User.Repository;
-using AuthService.Common.Utils;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
+using SharedKernel.Utils;
 
 namespace AuthService.Common.Filters;
 

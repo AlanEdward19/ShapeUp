@@ -2,7 +2,6 @@
 using AuthService.Common;
 using AuthService.Common.Interfaces;
 using AuthService.Common.User;
-using AuthService.Common.Utils;
 using AuthService.Group.AddUserToGroup;
 using AuthService.Group.Common.Enums;
 using AuthService.Group.CreateGroup;
@@ -12,6 +11,7 @@ using AuthService.Group.RemoveUserFromGroup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Utils;
 
 namespace AuthService.Group;
 
