@@ -11,7 +11,6 @@ public class AuthFilter(EPermissionAction action, string theme) : Attribute, IAs
     private EPermissionAction Action { get; } = action;
     private string Theme { get; } = theme;
     
-
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         var httpContext = context.HttpContext;
