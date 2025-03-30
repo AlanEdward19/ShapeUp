@@ -7,6 +7,9 @@ public interface IGroupRepository
 {
     Task AddUserToGroupAsync(Guid groupId, Guid userId, EGroupRole role,
         CancellationToken cancellationToken);
+    
+    Task ChangeUserRoleInGroupAsync(Guid groupId, Guid userId, EGroupRole role,
+        CancellationToken cancellationToken);
 
     Task RemoveUserFromGroupAsync(Guid groupId, Guid userId, CancellationToken cancellationToken);
 

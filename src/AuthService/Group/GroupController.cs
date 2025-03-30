@@ -3,6 +3,7 @@ using AuthService.Common;
 using AuthService.Common.Interfaces;
 using AuthService.Common.User;
 using AuthService.Group.AddUserToGroup;
+using AuthService.Group.ChangeUserRoleInGroup;
 using AuthService.Group.Common.Enums;
 using AuthService.Group.CreateGroup;
 using AuthService.Group.DeleteGroup;
@@ -69,5 +70,15 @@ public class GroupController : ControllerBase
         await handler.HandleAsync(command, cancellationToken);
 
         return NoContent();
+    }
+    
+    [HttpPut("{groupId:guid}/Users/{userId:guid}")]
+    public async Task<IActionResult> ChangeUserRoleInGroup(Guid groupId, Guid userId, [FromBody] EGroupRole role,
+        [FromServices] IHandler<bool, ChangeUserRoleInGroupCommand> handler, CancellationToken cancellationToken)
+    {
+        ChangeUserRoleInGroupCommand command = new(groupId, userId, role);
+        await handler.HandleAsync(command, cancellationToken);
+
+        return Ok();
     }
 }

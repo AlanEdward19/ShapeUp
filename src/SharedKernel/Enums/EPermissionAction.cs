@@ -18,5 +18,10 @@ public enum EPermissionAction
     /// <summary>
     /// Exclusão
     /// </summary>
-    Delete
+    Delete,
+    
+    /// <summary>
+    /// Atualização
+    /// </summary>
+    Update
 }

@@ -1,6 +1,7 @@
 ﻿using AuthService.Common.Interfaces;
 using AuthService.Common.User;
 using AuthService.Group.AddUserToGroup;
+using AuthService.Group.ChangeUserRoleInGroup;
 using AuthService.Group.Common.Repository;
 using AuthService.Group.CreateGroup;
 using AuthService.Group.DeleteGroup;
@@ -34,6 +35,7 @@ public static class GroupModule
         services.AddScoped<IHandler<bool, DeleteGroupCommand>, DeleteGroupCommandHandler>();
         services.AddScoped<IHandler<ICollection<UserDto>, GetUsersFromGroupQuery>, GetUsersFromGroupQueryHandler>();
         services.AddScoped<IHandler<bool, RemoveUserFromGroupCommand>, RemoveUserFromGroupCommandHandler>();
+        services.AddScoped<IHandler<bool, ChangeUserRoleInGroupCommand>, ChangeUserRoleInGroupCommandHandler>();
         
         return services;
     }

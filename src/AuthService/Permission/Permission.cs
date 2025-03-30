@@ -6,13 +6,13 @@ namespace AuthService.Permission;
 /// <summary>
 /// Classe que representa uma permissão
 /// </summary>
-public class Permission(EPermissionAction action, string theme)
+public class Permission(Guid id, EPermissionAction action, string theme, DateTime createdAt, DateTime updatedAt)
 {
     /// <summary>
     /// Id da permissão
     /// </summary>
     [Key]
-    public Guid Id { get; init; } = Guid.NewGuid();
+    public Guid Id { get; init; } = id;
 
     /// <summary>
     /// Tipo da permissão
@@ -23,10 +23,10 @@ public class Permission(EPermissionAction action, string theme)
     /// Tema da permissão
     /// </summary>
     public string Theme { get; private set; } = theme;
-    
-    public DateTime CreatedAt { get; init; } = DateTime.Now;
-    
-    public DateTime UpdatedAt { get; private set; } = DateTime.Now;
+
+    public DateTime CreatedAt { get; init; } = createdAt;
+
+    public DateTime UpdatedAt { get; private set; } = updatedAt;
 
     public void SetAction(EPermissionAction? action)
     {

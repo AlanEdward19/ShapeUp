@@ -32,6 +32,30 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
         await dbContext.Database.CommitTransactionAsync(cancellationToken);
     }
 
+    public async Task ChangeUserRoleInGroupAsync(Guid groupId, Guid userId, EGroupRole role, CancellationToken cancellationToken)
+    {
+        Group? group = await dbContext.Groups
+            .Include(g => g.Users)
+            .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
+        
+        if (group is null)
+            throw new NotFoundException($"Group with id '{groupId}' not found.");
+        
+        User? user = await dbContext.Users.Include(u => u.UserGroups)
+            .FirstOrDefaultAsync(u => u.ObjectId == userId, cancellationToken: cancellationToken);
+        
+        if (user is null)
+            throw new NotFoundException($"User with id '{userId}' not found.");
+        
+        await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        
+        group.ChangeUserRole(user, role);
+        
+        await dbContext.SaveChangesAsync(cancellationToken);
+        
+        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+    }
+
     public async Task RemoveUserFromGroupAsync(Guid groupId, Guid userId, CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups.Include(g => g.Users)

@@ -10,6 +10,8 @@ using AuthService.Permission.UpdatePermission;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Enums;
+using SharedKernel.Filters;
 
 namespace AuthService.Permission;
 
@@ -20,6 +22,7 @@ namespace AuthService.Permission;
 public class PermissionController : ControllerBase
 {
     [HttpPost]
+    [AuthFilter(EPermissionAction.Write, "permission")]
     public async Task<IActionResult> CreatePermission([FromBody] CreatePermissionCommand command,
         [FromServices] IHandler<bool, CreatePermissionCommand> handler, CancellationToken cancellationToken)
     {
@@ -28,6 +31,7 @@ public class PermissionController : ControllerBase
     }
     
     [HttpDelete("{permissionId:guid}")]
+    [AuthFilter(EPermissionAction.Delete, "permission")]
     public async Task<IActionResult> CreatePermission(Guid permissionId,
         [FromServices] IHandler<bool, DeletePermissionCommand> handler, CancellationToken cancellationToken)
     {
@@ -38,6 +42,7 @@ public class PermissionController : ControllerBase
     }
     
     [HttpGet("/Group/{groupId:guid}/Permission")]
+    [AuthFilter(EPermissionAction.Read, "permission")]
     public async Task<IActionResult> GetGroupPermissions(Guid groupId,
         [FromServices] IHandler<ICollection<PermissionDto>, GetGroupPermissionsQuery> handler, CancellationToken cancellationToken)
     {
@@ -47,6 +52,7 @@ public class PermissionController : ControllerBase
     }
     
     [HttpGet("/User/{userId:guid}/Permission")]
+    [AuthFilter(EPermissionAction.Read, "permission")]
     public async Task<IActionResult> GetUserPermissions(Guid userId,
         [FromServices] IHandler<ICollection<PermissionDto>, GetUserPermissionsQuery> handler, CancellationToken cancellationToken)
     {
@@ -56,6 +62,7 @@ public class PermissionController : ControllerBase
     }
     
     [HttpPost("/Group/{groupId:guid}/Permission/{permissionId:guid}")]
+    [AuthFilter(EPermissionAction.Write, "permission")]
     public async Task<IActionResult> GrantGroupPermission(Guid groupId, Guid permissionId,
         [FromServices] IHandler<bool, GrantGroupPermissionCommand> handler, CancellationToken cancellationToken)
     {
@@ -66,6 +73,7 @@ public class PermissionController : ControllerBase
     }
     
     [HttpPost("/User/{userId:guid}/Permission/{permissionId:guid}")]
+    [AuthFilter(EPermissionAction.Write, "permission")]
     public async Task<IActionResult> GrantUserPermission(Guid userId, Guid permissionId,
         [FromServices] IHandler<bool, GrantUserPermissionCommand> handler, CancellationToken cancellationToken)
     {
@@ -76,6 +84,7 @@ public class PermissionController : ControllerBase
     }
     
     [HttpPatch("{permissionId:guid}")]
+    [AuthFilter(EPermissionAction.Update, "permission")]
     public async Task<IActionResult> UpdatePermission(Guid permissionId, [FromBody]  UpdatePermissionCommand command,
         [FromServices] IHandler<bool, UpdatePermissionCommand> handler, CancellationToken cancellationToken)
     {

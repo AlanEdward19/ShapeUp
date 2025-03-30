@@ -32,6 +32,11 @@ public class Group
         Users.Add(userGroup);
         UpdatedAt = DateTime.Now;
     }
+
+    public void ChangeUserRole(User user, EGroupRole role)
+    {
+        Users.First(x => x.User == user).Role = role;
+    }
     
     public void RemoveUser(User user)
     {
