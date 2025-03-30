@@ -1,5 +1,7 @@
 ﻿using Asp.Versioning;
+using AuthService.Common;
 using AuthService.Common.Interfaces;
+using AuthService.Connections.Database;
 using AuthService.Permission.CreatePermission;
 using AuthService.Permission.DeletePermission;
 using AuthService.Permission.GetGroupPermissions;
@@ -7,11 +9,13 @@ using AuthService.Permission.GetUserPermissions;
 using AuthService.Permission.GrantGroupPermission;
 using AuthService.Permission.GrantUserPermission;
 using AuthService.Permission.UpdatePermission;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Enums;
 using SharedKernel.Filters;
+using SharedKernel.Utils;
 
 namespace AuthService.Permission;
 
@@ -19,13 +23,18 @@ namespace AuthService.Permission;
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("v{version:apiVersion}/[Controller]")]
-public class PermissionController : ControllerBase
+public class PermissionController(AuthDbContext dbContext) : ControllerBase
 {
     [HttpPost]
     [AuthFilter(EPermissionAction.Write, "permission")]
     public async Task<IActionResult> CreatePermission([FromBody] CreatePermissionCommand command,
         [FromServices] IHandler<bool, CreatePermissionCommand> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+
+        CreatePermissionCommandValidator validator = new();
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
         await handler.HandleAsync(command, cancellationToken);
         return Created();
     }
@@ -35,7 +44,12 @@ public class PermissionController : ControllerBase
     public async Task<IActionResult> CreatePermission(Guid permissionId,
         [FromServices] IHandler<bool, DeletePermissionCommand> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
         DeletePermissionCommand command = new(permissionId);
+        DeletePermissionCommandValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
         await handler.HandleAsync(command, cancellationToken);
         
         return NoContent();
@@ -46,7 +60,11 @@ public class PermissionController : ControllerBase
     public async Task<IActionResult> GetGroupPermissions(Guid groupId,
         [FromServices] IHandler<ICollection<PermissionDto>, GetGroupPermissionsQuery> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
         GetGroupPermissionsQuery query = new(groupId);
+        GetGroupPermissionsQueryValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
        
         return Ok( await handler.HandleAsync(query, cancellationToken));
     }
@@ -56,7 +74,11 @@ public class PermissionController : ControllerBase
     public async Task<IActionResult> GetUserPermissions(Guid userId,
         [FromServices] IHandler<ICollection<PermissionDto>, GetUserPermissionsQuery> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
         GetUserPermissionsQuery query = new(userId);
+        GetUserPermissionsQueryValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(query, cancellationToken);
        
         return Ok( await handler.HandleAsync(query, cancellationToken));
     }
@@ -66,7 +88,12 @@ public class PermissionController : ControllerBase
     public async Task<IActionResult> GrantGroupPermission(Guid groupId, Guid permissionId,
         [FromServices] IHandler<bool, GrantGroupPermissionCommand> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
         GrantGroupPermissionCommand command = new(groupId, permissionId);
+        GrantGroupPermissionCommandValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
         await handler.HandleAsync(command, cancellationToken);
         
         return Created();
@@ -77,7 +104,12 @@ public class PermissionController : ControllerBase
     public async Task<IActionResult> GrantUserPermission(Guid userId, Guid permissionId,
         [FromServices] IHandler<bool, GrantUserPermissionCommand> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
         GrantUserPermissionCommand command = new(userId, permissionId);
+        GrantUserPermissionCommandValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
         await handler.HandleAsync(command, cancellationToken);
         
         return Created();
@@ -88,7 +120,12 @@ public class PermissionController : ControllerBase
     public async Task<IActionResult> UpdatePermission(Guid permissionId, [FromBody]  UpdatePermissionCommand command,
         [FromServices] IHandler<bool, UpdatePermissionCommand> handler, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        
         command.SetPermissionId(permissionId);
+        UpdatePermissionCommandValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
         await handler.HandleAsync(command, cancellationToken);
         
         return Ok();
