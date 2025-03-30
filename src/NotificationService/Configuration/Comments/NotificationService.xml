@@ -126,26 +126,6 @@
             <param name="configuration"></param>
             <returns></returns>
         </member>
-        <member name="T:NotificationService.Middleware.ExceptionMiddleware">
-            <summary>
-                Middleware para tratamento de exceções
-            </summary>
-            <param name="next"></param>
-            <param name="logger"></param>
-        </member>
-        <member name="M:NotificationService.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{NotificationService.Middleware.ExceptionMiddleware})">
-            <summary>
-                Middleware para tratamento de exceções
-            </summary>
-            <param name="next"></param>
-            <param name="logger"></param>
-        </member>
-        <member name="M:NotificationService.Middleware.ExceptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
-            <summary>
-                Método para invocar o middleware
-            </summary>
-            <param name="context"></param>
-        </member>
         <member name="T:NotificationService.Notification.Common.Event.NotificationEvent">
             <summary>
             Evento de notificação

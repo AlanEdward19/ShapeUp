@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "AuthService.Protos";
+
+package AuthService.Protos;
+
+service AuthService {
+    rpc CheckPermission(CheckPermissionRequest) returns (CheckPermissionResponse);
+}
+
+message CheckPermissionRequest
+{
+  string objectId = 1;
+  int32 action = 2;
+  string theme = 3;
+}
+
+message CheckPermissionResponse {
+  bool isAllowed = 1;
+}

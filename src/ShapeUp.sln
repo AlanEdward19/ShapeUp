@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "ServiceD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingService", "TrainingService\TrainingService.csproj", "{100455D8-A2BA-4914-B94F-12BEA194075D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{21663C5D-7808-4BF1-B20E-24D2422BB2F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +52,13 @@ Global
 		{100455D8-A2BA-4914-B94F-12BEA194075D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{100455D8-A2BA-4914-B94F-12BEA194075D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{100455D8-A2BA-4914-B94F-12BEA194075D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21663C5D-7808-4BF1-B20E-24D2422BB2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21663C5D-7808-4BF1-B20E-24D2422BB2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21663C5D-7808-4BF1-B20E-24D2422BB2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21663C5D-7808-4BF1-B20E-24D2422BB2F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-﻿using NotificationService.Middleware;
+﻿using SharedKernel.Middleware;
 
 namespace NotificationService.Configuration;
 

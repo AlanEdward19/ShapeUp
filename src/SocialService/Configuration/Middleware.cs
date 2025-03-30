@@ -1,4 +1,4 @@
-﻿using SocialService.Middleware;
+﻿using SharedKernel.Middleware;
 
 namespace SocialService.Configuration;
 

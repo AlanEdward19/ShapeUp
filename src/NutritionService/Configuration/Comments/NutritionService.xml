@@ -211,22 +211,6 @@
             </summary>
             <param name="message"></param>
         </member>
-        <member name="T:NutritionService.Exceptions.NotFoundException">
-            <summary>
-                Exceção para quando um item não é encontrado
-            </summary>
-        </member>
-        <member name="M:NutritionService.Exceptions.NotFoundException.#ctor">
-            <summary>
-                Construtor padrão
-            </summary>
-        </member>
-        <member name="M:NutritionService.Exceptions.NotFoundException.#ctor(System.String)">
-            <summary>
-                Construtor com mensagem
-            </summary>
-            <param name="message"></param>
-        </member>
         <member name="T:NutritionService.Food.FoodController">
             <summary>
                 Controller responsavel por gerenciar comidas

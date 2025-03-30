@@ -8,6 +8,9 @@ var redis = builder
         .AddRedis("Redis")
         .WithDataVolume();
 
+var sqlServer = builder
+        .AddSqlServer("SqlServer")
+        .WithDataVolume();
 
 var storage = builder
         .AddAzureStorage("Storage")
@@ -45,6 +48,12 @@ var nutritionService = builder
         .AddProject<Projects.NutritionService>("NutritionService")
         .WaitFor(mongo)
         .WithReference(mongo)
+        .WithExternalHttpEndpoints();
+
+var authService = builder
+        .AddProject<Projects.AuthService>("AuthService")
+        .WaitFor(sqlServer)
+        .WithReference(sqlServer)
         .WithExternalHttpEndpoints();
 
 builder.Build().Run();

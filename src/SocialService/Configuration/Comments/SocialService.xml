@@ -624,22 +624,6 @@
             <param name="allowSlashes"></param>
             <returns></returns>
         </member>
-        <member name="T:SocialService.Exceptions.NotFoundException">
-            <summary>
-                Exceção para quando um item não é encontrado
-            </summary>
-        </member>
-        <member name="M:SocialService.Exceptions.NotFoundException.#ctor">
-            <summary>
-                Construtor padrão
-            </summary>
-        </member>
-        <member name="M:SocialService.Exceptions.NotFoundException.#ctor(System.String)">
-            <summary>
-                Construtor com mensagem
-            </summary>
-            <param name="message"></param>
-        </member>
         <member name="T:SocialService.Follow.Common.Repository.FollowerGraphRepository">
             <summary>
                 Repositório de grafo sobre seguidores.
@@ -1622,26 +1606,6 @@
             </summary>
             <param name="services"></param>
             <returns></returns>
-        </member>
-        <member name="T:SocialService.Middleware.ExceptionMiddleware">
-            <summary>
-                Middleware para tratamento de exceções
-            </summary>
-            <param name="next"></param>
-            <param name="logger"></param>
-        </member>
-        <member name="M:SocialService.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{SocialService.Middleware.ExceptionMiddleware})">
-            <summary>
-                Middleware para tratamento de exceções
-            </summary>
-            <param name="next"></param>
-            <param name="logger"></param>
-        </member>
-        <member name="M:SocialService.Middleware.ExceptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
-            <summary>
-                Método para invocar o middleware
-            </summary>
-            <param name="context"></param>
         </member>
         <member name="T:SocialService.Post.Comment.Comment">
             <summary>
@@ -3044,7 +3008,7 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
-            <exception cref="T:SocialService.Exceptions.NotFoundException"></exception>
+            <exception cref="!:NotFoundException"></exception>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandValidator">
             <summary>

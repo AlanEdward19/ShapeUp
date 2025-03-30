@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using NutritionService.Exceptions;
+using SharedKernel.Exceptions;
 
 namespace NutritionService.Middleware;
 
