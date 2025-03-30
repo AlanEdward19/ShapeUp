@@ -27,7 +27,7 @@ public class AuthService(ILogger<AuthService> logger, AuthDbContext dbContext) :
 
         List<Permission.Permission> userPermissions = user.UserGroups
                 .SelectMany(x => x.Group.GroupPermissions
-                    .Select(x => x.Permission))
+                    .Select(gp => gp.Permission))
                 .ToList();
         
         CheckPermissionResponse result = new()

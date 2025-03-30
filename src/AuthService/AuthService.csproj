@@ -33,4 +33,8 @@
       <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Protobuf Include="..\SharedKernel\Protos\authService.proto" GrpcServices="Server" />
+    </ItemGroup>
+
 </Project>
