@@ -11,6 +11,8 @@ using AuthService.Group.RemoveUserFromGroup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Enums;
+using SharedKernel.Filters;
 using SharedKernel.Utils;
 
 namespace AuthService.Group;

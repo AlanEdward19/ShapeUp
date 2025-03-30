@@ -40,7 +40,7 @@ namespace AuthService.Migrations
 
                     b.HasKey("ObjectId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AuthService.Group.Group", b =>
@@ -57,7 +57,7 @@ namespace AuthService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("AuthService.Group.GroupPermission", b =>
@@ -72,7 +72,7 @@ namespace AuthService.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("GroupPermission");
+                    b.ToTable("GroupPermission", (string)null);
                 });
 
             modelBuilder.Entity("AuthService.Group.UserGroup", b =>
@@ -90,7 +90,7 @@ namespace AuthService.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("UserGroup");
+                    b.ToTable("UserGroup", (string)null);
                 });
 
             modelBuilder.Entity("AuthService.Permission.Permission", b =>
@@ -114,25 +114,7 @@ namespace AuthService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3c2ca824-eaf0-4dd1-9578-3130c220fce7"),
-                            Action = 1,
-                            CreatedAt = new DateTime(2025, 3, 30, 14, 48, 16, 132, DateTimeKind.Local).AddTicks(3287),
-                            Theme = "mealPlan",
-                            UpdatedAt = new DateTime(2025, 3, 30, 14, 48, 16, 133, DateTimeKind.Local).AddTicks(221)
-                        },
-                        new
-                        {
-                            Id = new Guid("af0f048b-a0db-4316-affa-4d16319a5159"),
-                            Action = 1,
-                            CreatedAt = new DateTime(2025, 3, 30, 14, 48, 16, 133, DateTimeKind.Local).AddTicks(247),
-                            Theme = "workoutPlan",
-                            UpdatedAt = new DateTime(2025, 3, 30, 14, 48, 16, 133, DateTimeKind.Local).AddTicks(248)
-                        });
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("AuthService.Group.GroupPermission", b =>

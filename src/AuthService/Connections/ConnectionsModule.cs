@@ -1,5 +1,6 @@
 ﻿using AuthService.Connections.Database;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Providers.Grpc;
 
 namespace AuthService.Connections;
 
@@ -18,7 +19,14 @@ public static class ConnectionsModule
         IConfiguration configuration)
     {
         services
-            .ConfigureSqlServer(configuration);
+            .ConfigureSqlServer(configuration)
+            .ConfigureGrpc();
+
+        return services;
+    }
+    private static IServiceCollection ConfigureGrpc(this IServiceCollection services)
+    {
+        services.AddScoped<IGrpcProvider, GrpcProvider>();
 
         return services;
     }
@@ -47,5 +55,12 @@ public static class ConnectionsModule
         return services;
 
         return services;
+    }
+    
+    public static IEndpointRouteBuilder ConfigureGrpc(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGrpcService<Services.AuthService>();
+
+        return builder;
     }
 }
