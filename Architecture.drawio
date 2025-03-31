@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0" version="26.2.1" pages="34">
   <diagram id="WI9T0HZ2pTsCkuznbFz-" name="Arquitetura da aplicação">
-    <mxGraphModel dx="1043" dy="462" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1260" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -233,7 +233,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="AuthService/Group" id="XqI-He3K-jB6aIFb2IR6">
-    <mxGraphModel dx="1779" dy="788" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1043" dy="462" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="bfePryCxXBk0uXtErQQe-0" />
         <mxCell id="bfePryCxXBk0uXtErQQe-1" parent="bfePryCxXBk0uXtErQQe-0" />
@@ -525,7 +525,7 @@
         </mxCell>
         <mxCell id="dzX7VxTpOZjgkmudEBpw-12" value="Remove usuario&lt;div&gt;do grupo&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Kpk60DF3fdV6T-5hghjH-82" vertex="1" connectable="0">
           <mxGeometry x="-0.2597" y="-2" relative="1" as="geometry">
-            <mxPoint x="15" y="-2" as="offset" />
+            <mxPoint x="15" y="-1" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Kpk60DF3fdV6T-5hghjH-74" value="Repository" style="whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" parent="bfePryCxXBk0uXtErQQe-1" vertex="1">
