@@ -41,7 +41,7 @@ public class PermissionController(AuthDbContext dbContext) : ControllerBase
     
     [HttpDelete("{permissionId:guid}")]
     [AuthFilter(EPermissionAction.Delete, "permission")]
-    public async Task<IActionResult> CreatePermission(Guid permissionId,
+    public async Task<IActionResult> DeletePermission(Guid permissionId,
         [FromServices] IHandler<bool, DeletePermissionCommand> handler, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
