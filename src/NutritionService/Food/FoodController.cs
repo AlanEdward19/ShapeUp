@@ -61,7 +61,7 @@ public class FoodController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("createFood")]
-    public async Task<IActionResult> SendFriendRequest([FromServices] IHandler<Food, CreateFoodCommand> handler,
+    public async Task<IActionResult> CreateFood([FromServices] IHandler<Food, CreateFoodCommand> handler,
         [FromBody] CreateFoodCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
