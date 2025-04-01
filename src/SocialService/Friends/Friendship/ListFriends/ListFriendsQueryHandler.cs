@@ -27,9 +27,9 @@ public class ListFriendsQueryHandler(
             .Skip((query.Page - 1) * query.Rows).Take(query.Rows).ToList();
 
         var pagedFriendsIds = pagedFriends
-            .Select(x => Guid.Parse(x.ProfileAId))
+            .Select(x => x.ProfileAId)
             .Concat(pagedFriends
-                .Select(x => Guid.Parse(x.ProfileBId)))
+                .Select(x => x.ProfileBId))
             .Distinct()
             .Where(x => x != query.ProfileId)
             .ToList();

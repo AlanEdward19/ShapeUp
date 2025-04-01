@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="accept"></param>
 /// <param name="profileId"></param>
-public class ManageFriendRequestsCommand(bool accept, Guid profileId)
+public class ManageFriendRequestsCommand(bool accept, string profileId)
 {
     /// <summary>
     ///     Aceitar ou recusar a solicitação.
@@ -15,5 +15,5 @@ public class ManageFriendRequestsCommand(bool accept, Guid profileId)
     /// <summary>
     ///     Id do perfil.
     /// </summary>
-    public Guid ProfileId { get; private set; } = profileId;
+    public string ProfileId { get; private set; } = profileId;
 }

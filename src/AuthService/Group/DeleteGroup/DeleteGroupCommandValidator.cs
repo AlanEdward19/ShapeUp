@@ -20,7 +20,7 @@ public class DeleteGroupCommandValidator : AbstractValidator<DeleteGroupCommand>
                 if (group == null)
                     context.AddFailure("Group", $"Group with id {command.GroupId} not found");
 
-                Guid profileId = ProfileContext.ProfileId;
+                string profileId = ProfileContext.ProfileId;
                 
                 if(group!.Users.Select(x => x.UserId).Contains(profileId))
                     context.AddFailure("Group", "You are not a member of this group");

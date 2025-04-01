@@ -13,5 +13,5 @@ public interface IActivityFeedGraphRepository
     /// <param name="query"></param>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    Task<IEnumerable<Post.Post>> BuildActivityFeed(GetActivityFeedQuery query, Guid profileId);
+    Task<IEnumerable<Post.Post>> BuildActivityFeed(GetActivityFeedQuery query, string profileId);
 }

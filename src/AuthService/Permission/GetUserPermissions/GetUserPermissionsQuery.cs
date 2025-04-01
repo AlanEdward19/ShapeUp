@@ -1,6 +1,6 @@
 ﻿namespace AuthService.Permission.GetUserPermissions;
 
-public class GetUserPermissionsQuery(Guid userId)
+public class GetUserPermissionsQuery(string userId)
 {
-    public Guid UserId { get; private set; } = userId;
+    public string UserId { get; private set; } = userId;
 }

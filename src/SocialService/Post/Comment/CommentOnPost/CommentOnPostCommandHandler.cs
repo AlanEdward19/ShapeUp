@@ -22,7 +22,7 @@ public class CommentOnPostCommandHandler(IPostGraphRepository repository, IProfi
     public async Task<bool> HandleAsync(CommentOnPostCommand command, CancellationToken cancellationToken)
     {
         Comment comment = new(command, ProfileContext.ProfileId);
-        Guid profileId = await repository.GetProfileIdByPostIdAsync(command.PostId);
+        string profileId = await repository.GetProfileIdByPostIdAsync(command.PostId);
         Profile.Profile profile = await profileGraphRepository.GetProfileAsync(profileId);
 
         await repository.CommentOnPostAsync(comment);

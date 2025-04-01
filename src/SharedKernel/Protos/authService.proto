@@ -6,6 +6,7 @@ package AuthService.Protos;
 
 service AuthService {
     rpc CheckPermission(CheckPermissionRequest) returns (CheckPermissionResponse);
+    rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
 }
 
 message CheckPermissionRequest
@@ -17,4 +18,18 @@ message CheckPermissionRequest
 
 message CheckPermissionResponse {
   bool isAllowed = 1;
+}
+
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  bool isValid = 1;
+  repeated Claim claims = 2;
+}
+
+message Claim {
+  string type = 1;
+  string value = 2;
 }

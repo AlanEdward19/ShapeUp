@@ -6,7 +6,7 @@ namespace AuthService.Common.User.Repository;
 
 public class UserRepository(AuthDbContext dbContext) : IUserRepository
 {
-    public async Task<User?> GetByObjectIdAsync(Guid objectId, CancellationToken cancellationToken) => 
+    public async Task<User?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken) => 
         await dbContext.Users.Include(u => u.UserGroups)
         .ThenInclude(ug => ug.Group)
         .ThenInclude(g => g.GroupPermissions)

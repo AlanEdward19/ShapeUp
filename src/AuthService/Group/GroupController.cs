@@ -22,15 +22,15 @@ namespace AuthService.Group;
 
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class GroupController(AuthDbContext dbContext) : ControllerBase
 {
-    [HttpPost("{groupId:guid}/Users/{userId:guid}")]
-    public async Task<IActionResult> AddUserToGroup(Guid groupId, Guid userId, [FromBody] EGroupRole role,
+    [HttpPost("{groupId:guid}/Users/{userId}")]
+    public async Task<IActionResult> AddUserToGroup(Guid groupId, string userId, [FromBody] EGroupRole role,
         [FromServices] IHandler<bool, AddUserToGroupCommand> handler, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         AddUserToGroupCommand command = new(groupId, userId, role);
         await handler.HandleAsync(command, cancellationToken);
@@ -45,7 +45,7 @@ public class GroupController(AuthDbContext dbContext) : ControllerBase
     public async Task<IActionResult> CreateGroup([FromBody] CreateGroupCommand command,
         [FromServices] IHandler<bool, CreateGroupCommand> handler, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         await handler.HandleAsync(command, cancellationToken);
 
         return Created();
@@ -55,7 +55,7 @@ public class GroupController(AuthDbContext dbContext) : ControllerBase
     public async Task<IActionResult> DeleteGroup(Guid groupId,
         [FromServices] IHandler<bool, DeleteGroupCommand> handler, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         DeleteGroupCommand command = new(groupId);
         DeleteGroupCommandValidator validator = new(dbContext);
@@ -70,7 +70,7 @@ public class GroupController(AuthDbContext dbContext) : ControllerBase
     public async Task<IActionResult> GetUsersFromGroup(Guid groupId,
         [FromServices] IHandler<ICollection<UserDto>, GetUsersFromGroupQuery> handler, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         GetUsersFromGroupQuery query = new(groupId);
         GetUsersFromGroupQueryValidator validator = new(dbContext);
@@ -79,11 +79,11 @@ public class GroupController(AuthDbContext dbContext) : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
-    [HttpDelete("{groupId:guid}/Users/{userId:guid}")]
-    public async Task<IActionResult> RemoveUserFromGroup(Guid groupId, Guid userId,
+    [HttpDelete("{groupId:guid}/Users/{userId}")]
+    public async Task<IActionResult> RemoveUserFromGroup(Guid groupId, string userId,
         [FromServices] IHandler<bool, RemoveUserFromGroupCommand> handler, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         RemoveUserFromGroupCommand command = new(groupId, userId);
         RemoveUserFromGroupCommandValidator validator = new(dbContext);
@@ -94,11 +94,11 @@ public class GroupController(AuthDbContext dbContext) : ControllerBase
         return NoContent();
     }
     
-    [HttpPut("{groupId:guid}/Users/{userId:guid}")]
-    public async Task<IActionResult> ChangeUserRoleInGroup(Guid groupId, Guid userId, [FromBody] EGroupRole role,
+    [HttpPut("{groupId:guid}/Users/{userId}")]
+    public async Task<IActionResult> ChangeUserRoleInGroup(Guid groupId, string userId, [FromBody] EGroupRole role,
         [FromServices] IHandler<bool, ChangeUserRoleInGroupCommand> handler, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         ChangeUserRoleInGroupCommand command = new(groupId, userId, role);
         ChangeUserRoleInGroupCommandValidator validator = new(dbContext);

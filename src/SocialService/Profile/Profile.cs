@@ -8,7 +8,7 @@ namespace SocialService.Profile;
 /// <summary>
 ///     Classe que representa o perfil do usuário.
 /// </summary>
-public class Profile : GraphEntity
+public class Profile
 {
     /// <summary>
     ///     Construtor padrão.
@@ -23,7 +23,7 @@ public class Profile : GraphEntity
     /// <param name="command"></param>
     /// <param name="id"></param>
     /// <param name="locationInfo"></param>
-    public Profile(CreateProfileCommand command, Guid id, LocationInfoDto locationInfo)
+    public Profile(CreateProfileCommand command, string id, LocationInfoDto locationInfo)
     {
         Id = id;
         UpdateFirstName(command.FirstName, false);
@@ -41,6 +41,11 @@ public class Profile : GraphEntity
         UpdatedAt = DateTime.Now;
     }
 
+    /// <summary>
+    ///     Id da entidade
+    /// </summary>
+    public string Id { get; private set; }
+    
     /// <summary>
     ///     Email do perfil.
     /// </summary>
@@ -130,8 +135,9 @@ public class Profile : GraphEntity
     ///     Método para mapear os dados do neo4j para o perfil
     /// </summary>
     /// <param name="result"></param>
-    public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
+    public void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
+        Id = result["id"].ToString()!;
         Email = result["email"].ToString();
         FirstName = result["firstName"].ToString();
         LastName = result["lastName"].ToString();
@@ -153,8 +159,6 @@ public class Profile : GraphEntity
         Following = result.TryGetValue("following", out var followingCount) ? int.Parse(followingCount.ToString()!) : 0;
         Followers = result.TryGetValue("followers", out var followerCount) ? int.Parse(followerCount.ToString()!) : 0;
         Posts = result.TryGetValue("posts", out var postCount) ? int.Parse(postCount.ToString()!) : 0;
-        
-        base.MapToEntityFromNeo4j(result);
     }
 
     /// <summary>

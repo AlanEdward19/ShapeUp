@@ -14,7 +14,7 @@ public class CheckFriendRequestStatusViewModel
     /// <param name="lastName"></param>
     /// <param name="status"></param>
     /// <param name="profileId"></param>
-    public CheckFriendRequestStatusViewModel(string firstName, string lastName, EFriendStatus status, Guid profileId)
+    public CheckFriendRequestStatusViewModel(string firstName, string lastName, EFriendStatus status, string profileId)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -40,5 +40,5 @@ public class CheckFriendRequestStatusViewModel
     /// <summary>
     ///     Id do perfil.
     /// </summary>
-    public Guid ProfileId { get; private set; }
+    public string ProfileId { get; private set; }
 }

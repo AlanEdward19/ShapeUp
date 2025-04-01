@@ -15,7 +15,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
-    public async Task<Guid> GetProfileIdByPostIdAsync(Guid postId)
+    public async Task<string> GetProfileIdByPostIdAsync(Guid postId)
     {
         var query = $@"
     MATCH (post:Post {{id: '{postId}'}})<-[:PUBLISHED_BY]-(profile:Profile)
@@ -25,9 +25,9 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         var record = result.FirstOrDefault();
 
         if (record == null)
-            return Guid.Empty;
+            return String.Empty;
 
-        return Guid.Parse(record["profileId"].ToString());
+        return record["profileId"].ToString()!;
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// <param name="page"></param>
     /// <param name="rows"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(Guid profileId, Guid requesterId, int page, int rows)
+    public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page, int rows)
     {
         var skip = (page - 1) * rows;
         var cypherQuery = $@"
@@ -119,7 +119,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="post"></param>
-    public async Task CreatePostAsync(Guid profileId, Post post)
+    public async Task CreatePostAsync(string profileId, Post post)
     {
         var query = $@"
     MATCH (p:Profile {{id: '{profileId}'}})
@@ -365,7 +365,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="profileId"></param>
-    public async Task DeleteReactionOnPostAsync(Guid postId, Guid profileId)
+    public async Task DeleteReactionOnPostAsync(Guid postId, string profileId)
     {
         var query = $@"
     MATCH (post:Post {{id: '{postId}'}})<-[r:REACTED]-(profile:Profile {{id: '{profileId}'}})

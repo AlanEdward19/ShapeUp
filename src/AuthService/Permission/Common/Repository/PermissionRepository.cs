@@ -56,7 +56,7 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         return group.GroupPermissions.Select(x => x.Permission).ToList();
     }
 
-    public async Task<ICollection<Permission>> GetUserPermissionsAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<ICollection<Permission>> GetUserPermissionsAsync(string userId, CancellationToken cancellationToken)
     {
         User? user = await dbContext.Users
             .Include(x => x.UserGroups)
@@ -93,7 +93,7 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task GrantUserPermissionAsync(Guid userId, Guid permissionId, CancellationToken cancellationToken)
+    public async Task GrantUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken)
     {
         User? user = await dbContext.Users
             .Include(x => x.UserGroups)

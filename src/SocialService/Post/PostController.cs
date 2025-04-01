@@ -1,4 +1,6 @@
-﻿using SocialService.Common.ValueObjects;
+﻿using SharedKernel.Filters;
+using SharedKernel.Utils;
+using SocialService.Common.ValueObjects;
 using SocialService.Post.Comment.CommentOnPost;
 using SocialService.Post.Comment.DeleteCommentOnPost;
 using SocialService.Post.Comment.EditCommentOnPost;
@@ -24,7 +26,7 @@ namespace SocialService.Post;
 /// <param name="repository"></param>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class PostController(IPostGraphRepository repository) : ControllerBase
 {
@@ -60,13 +62,13 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("/Profile/v{version:apiVersion}/{id:guid}/getPosts")]
+    [HttpGet("/v{version:apiVersion}/Profile/{id}/getPosts")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PostDto>))]
     public async Task<IActionResult> GetPostsByProfileId(
         [FromServices] IHandler<IEnumerable<PostDto>, GetPostsByProfileIdQuery> handler,
         [FromServices] IProfileGraphRepository profileGraphRepository,
         [FromQuery] BaseQueryParametersValueObject queryParameters,
-        Guid id, CancellationToken cancellationToken)
+        string id, CancellationToken cancellationToken)
     {
         GetPostsByProfileIdQuery query = new(queryParameters.Page, queryParameters.Rows);
         query.SetProfileId(id);
@@ -89,7 +91,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> CreatePost([FromServices] IHandler<PostDto, CreatePostCommand> handler,
         [FromBody] CreatePostCommand command, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         CreatePostCommandValidator validator = new();
         await validator.ValidateAndThrowAsync(command, cancellationToken);
@@ -110,7 +112,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> UploadPostImages([FromServices] IHandler<bool, UploadPostImageCommand> handler,
         Guid id, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         var command = new UploadPostImageCommand();
         command.SetPostId(id);
@@ -135,7 +137,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> DeletePost([FromServices] IHandler<bool, DeletePostCommand> handler,
         Guid id, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         DeletePostCommand command = new();
         command.SetPostId(id);
@@ -160,7 +162,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> EditPost([FromServices] IHandler<PostDto, EditPostCommand> handler,
         Guid id, [FromBody] EditPostCommand command, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         command.SetPostId(id);
 
         EditPostCommandValidator validator = new(repository);
@@ -186,7 +188,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> CommentOnPost([FromServices] IHandler<bool, CommentOnPostCommand> handler,
         Guid id, [FromBody] CommentOnPostCommand command, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         command.SetPostId(id);
 
         CommentOnPostCommandValidator validator = new(repository);
@@ -231,7 +233,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> EditCommentOnPost([FromServices] IHandler<bool, EditCommentOnPostCommand> handler,
         Guid id, [FromBody] EditCommentOnPostCommand command, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         command.SetCommentId(id);
 
         EditCommentOnPostCommandValidator validator = new(repository);
@@ -254,7 +256,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         [FromServices] IHandler<bool, DeleteCommentOnPostCommand> handler,
         Guid id, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         DeleteCommentOnPostCommand command = new();
         command.SetCommentId(id);
@@ -283,7 +285,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> ReactToPost([FromServices] IHandler<bool, ReactToPostCommand> handler,
         Guid id, [FromBody] ReactToPostCommand command, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         command.SetPostId(id);
 
         ReactToPostCommandValidator validator = new(repository);
@@ -328,7 +330,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         [FromServices] IHandler<bool, DeleteReactionFromPostCommand> handler,
         Guid id, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         DeleteReactionFromPostCommand command = new();
         command.SetPostId(id);

@@ -24,9 +24,8 @@ namespace AuthService.Migrations
 
             modelBuilder.Entity("AuthService.Common.User.User", b =>
                 {
-                    b.Property<Guid>("ObjectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ObjectId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -77,8 +76,8 @@ namespace AuthService.Migrations
 
             modelBuilder.Entity("AuthService.Group.UserGroup", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");

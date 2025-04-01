@@ -1,5 +1,4 @@
-﻿using AuthService.Common.Filters;
-using AuthService.Common.User.Repository;
+﻿using AuthService.Common.User.Repository;
 
 namespace AuthService.Common;
 

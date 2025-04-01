@@ -10,4 +10,3 @@ global using SocialService.Common;
 global using SocialService.Common.Entities;
 global using SocialService.Common.Interfaces;
 global using SocialService.Common.Models;
-global using SocialService.Common.Utils;

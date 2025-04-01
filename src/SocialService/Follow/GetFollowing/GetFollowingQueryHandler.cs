@@ -26,7 +26,6 @@ public class GetFollowingQueryHandler(
         var pagedFollowingIds = following
             .Skip((query.Page - 1) * query.Rows)
             .Take(query.Rows)
-            .Select(Guid.Parse)
             .ToList();
 
         var profiles = await profileGraphRepository.GetProfilesAsync(pagedFollowingIds);

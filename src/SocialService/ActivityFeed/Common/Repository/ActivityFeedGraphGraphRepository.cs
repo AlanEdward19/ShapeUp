@@ -14,7 +14,7 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
     /// <param name="query"></param>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Post.Post>> BuildActivityFeed(GetActivityFeedQuery query, Guid profileId)
+    public async Task<IEnumerable<Post.Post>> BuildActivityFeed(GetActivityFeedQuery query, string profileId)
     {
         var cypherQuery = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})

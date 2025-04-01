@@ -8,9 +8,9 @@ public interface IPermissionRepository
     
     Task<ICollection<Permission>> GetGroupPermissionsAsync(Guid groupId,
         CancellationToken cancellationToken);
-    Task<ICollection<Permission>> GetUserPermissionsAsync(Guid userId, CancellationToken cancellationToken);
+    Task<ICollection<Permission>> GetUserPermissionsAsync(string userId, CancellationToken cancellationToken);
     Task<Permission> GetPermissionAsync(Guid permissionId, CancellationToken cancellationToken);
     
     Task GrantGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellationToken);
-    Task GrantUserPermissionAsync(Guid userId, Guid permissionId, CancellationToken cancellationToken);
+    Task GrantUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken);
 }

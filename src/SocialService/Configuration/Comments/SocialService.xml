@@ -42,7 +42,7 @@
             </summary>
             <param name="graphContext"></param>
         </member>
-        <member name="M:SocialService.ActivityFeed.Common.Repository.ActivityFeedGraphGraphRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Guid)">
+        <member name="M:SocialService.ActivityFeed.Common.Repository.ActivityFeedGraphGraphRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.String)">
             <summary>
                 Método para construir o feed de atividades.
             </summary>
@@ -55,7 +55,7 @@
                 Interface para o repositório de feed de atividades.
             </summary>
         </member>
-        <member name="M:SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.Guid)">
+        <member name="M:SocialService.ActivityFeed.Common.Repository.IActivityFeedGraphRepository.BuildActivityFeed(SocialService.ActivityFeed.GetActivityFeed.GetActivityFeedQuery,System.String)">
             <summary>
                 Método para construir o feed de atividades.
             </summary>
@@ -181,7 +181,7 @@
                 ViewModel para informações básicas de um perfil.
             </summary>
         </member>
-        <member name="M:SocialService.Common.Models.ProfileBasicInformation.#ctor(System.String,System.String,System.Guid,System.String)">
+        <member name="M:SocialService.Common.Models.ProfileBasicInformation.#ctor(System.String,System.String,System.String,System.String)">
             <summary>
                 Construtor
             </summary>
@@ -225,60 +225,6 @@
                 Método para obter e definir o Id do perfil logado
             </summary>
         </member>
-        <member name="T:SocialService.Common.Utils.ClaimsPrincipalUtils">
-            <summary>
-                Classe utilitária para ClaimsPrincipal
-            </summary>
-        </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetEmail(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o email do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetObjectId(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o id do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetFirstName(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o primeiro nome do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetLastName(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o sobrenome do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetDisplayName(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Método para obter o nome de exibição do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetCountry(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o país do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SocialService.Common.Utils.ClaimsPrincipalUtils.GetPostalCode(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o CEP do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
         <member name="T:SocialService.Common.ValueObjects.BaseQueryParametersValueObject">
             <summary>
             Classe base para os parametros de query
@@ -293,19 +239,6 @@
             <summary>
             Quantidade de linhas
             </summary>
-        </member>
-        <member name="T:SocialService.Configuration.Authentication">
-            <summary>
-                Classe responsavel por configurar a autenticacao
-            </summary>
-        </member>
-        <member name="M:SocialService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-                Metodo responsavel por configurar a autenticacao
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
-            <returns></returns>
         </member>
         <member name="T:SocialService.Configuration.EndpointsConfiguration">
             <summary>
@@ -431,14 +364,14 @@
             </summary>
             <param name="configuration"></param>
         </member>
-        <member name="M:SocialService.Connections.Search.AzureSearchProvider.UpsertAsync(System.Guid,System.String)">
+        <member name="M:SocialService.Connections.Search.AzureSearchProvider.UpsertAsync(System.String,System.String)">
             <summary>
             Método para inserir ou atualizar um perfil no índice de busca.
             </summary>
             <param name="profileId"></param>
             <param name="name"></param>
         </member>
-        <member name="M:SocialService.Connections.Search.AzureSearchProvider.DeleteAsync(System.Guid)">
+        <member name="M:SocialService.Connections.Search.AzureSearchProvider.DeleteAsync(System.String)">
             <summary>
             Método para deletar um perfil do índice de busca.
             </summary>
@@ -465,7 +398,7 @@
             <param name="connectionString"></param>
             <param name="logger"></param>
         </member>
-        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
+        <member name="M:SocialService.Connections.Storage.BlobStorageProvider.GetProfilePicturesAsync(System.String,System.Int32,System.Int32)">
             <summary>
                 Método para obter fotos de perfil
             </summary>
@@ -551,7 +484,7 @@
                 Interface para prover armazenamento de arquivos
             </summary>
         </member>
-        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.GetProfilePicturesAsync(System.Guid,System.Int32,System.Int32)">
+        <member name="M:SocialService.Connections.Storage.IBlobStorageProvider.GetProfilePicturesAsync(System.String,System.Int32,System.Int32)">
             <summary>
                 Método para obter fotos de perfil
             </summary>
@@ -636,28 +569,28 @@
             </summary>
             <param name="graphContext"></param>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.FollowAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.FollowAsync(System.String,System.String)">
             <summary>
                 Método para seguir um perfil: cria uma aresta de "FOLLOWING" entre os perfis
             </summary>
             <param name="followerProfileId"></param>
             <param name="followedProfileId"></param>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.UnfollowAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.UnfollowAsync(System.String,System.String)">
             <summary>
                 Método para deixar de seguir um perfil: deleta a aresta de "FOLLOWING" entre os perfis
             </summary>
             <param name="followerProfileId"></param>
             <param name="followedProfileId"></param>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowersAsync(System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowersAsync(System.String)">
             <summary>
                 Método para verificar se um perfil segue outro: retorna a lista de ids de perfil que o perfil dado segue
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowingAsync(System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.FollowerGraphRepository.GetFollowingAsync(System.String)">
             <summary>
                 Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
             </summary>
@@ -669,7 +602,7 @@
                 Interface do repositório de grafo sobre seguidores.
             </summary>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.FollowAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.FollowAsync(System.String,System.String)">
             <summary>
                 Método para seguir um perfil: cria uma aresta de "FOLLOWING" entre os perfis
             </summary>
@@ -677,7 +610,7 @@
             <param name="followedProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.UnfollowAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.UnfollowAsync(System.String,System.String)">
             <summary>
                 Método para deixar de seguir um perfil: deleta a aresta de "FOLLOWING" entre os perfis
             </summary>
@@ -685,14 +618,14 @@
             <param name="followedProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowersAsync(System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowersAsync(System.String)">
             <summary>
                 Método para verificar se um perfil segue outro: retorna a lista de ids de perfil que o perfil dado segue
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowingAsync(System.Guid)">
+        <member name="M:SocialService.Follow.Common.Repository.IFollowerGraphRepository.GetFollowingAsync(System.String)">
             <summary>
                 Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
             </summary>
@@ -709,7 +642,7 @@
                 Controller responsavel por gerenciar funções de seguir e deixar de seguir de um perfil
             </summary>
         </member>
-        <member name="M:SocialService.Follow.FollowController.FollowUser(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Follow.FollowUser.FollowUserCommand},System.Guid,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.FollowUser(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Follow.FollowUser.FollowUserCommand},System.String,System.Threading.CancellationToken)">
             <summary>
                 Rota para seguir um perfil
             </summary>
@@ -718,7 +651,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.FollowController.UnfollowUser(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Follow.UnfollowUser.UnfollowUserCommand},System.Guid,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.UnfollowUser(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Follow.UnfollowUser.UnfollowUserCommand},System.String,System.Threading.CancellationToken)">
             <summary>
                 Rotar para deixar de seguir um perfil
             </summary>
@@ -727,7 +660,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.FollowController.GetFollowers(System.Guid,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowers.GetFollowersQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.GetFollowers(System.String,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowers.GetFollowersQuery},System.Threading.CancellationToken)">
             <summary>
                 Rotar para obter os seguidores de um perfil
             </summary>
@@ -737,7 +670,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Follow.FollowController.GetFollowing(System.Guid,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowing.GetFollowingQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Follow.FollowController.GetFollowing(System.String,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Follow.GetFollowing.GetFollowingQuery},System.Threading.CancellationToken)">
             <summary>
                 Rotar para obter os perfis que um perfil segue
             </summary>
@@ -764,7 +697,7 @@
                 Comando para seguir um usuário.
             </summary>
         </member>
-        <member name="M:SocialService.Follow.FollowUser.FollowUserCommand.#ctor(System.Guid)">
+        <member name="M:SocialService.Follow.FollowUser.FollowUserCommand.#ctor(System.String)">
             <summary>
                 Construtor do comando.
             </summary>
@@ -826,7 +759,7 @@
                 Quantidade de registros por página.
             </summary>
         </member>
-        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQuery.SetProfileId(System.Guid)">
+        <member name="M:SocialService.Follow.GetFollowers.GetFollowersQuery.SetProfileId(System.String)">
             <summary>
                 Método para setar o Id do perfil.
             </summary>
@@ -897,7 +830,7 @@
                 Quantidade de registros por página.
             </summary>
         </member>
-        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQuery.SetProfileId(System.Guid)">
+        <member name="M:SocialService.Follow.GetFollowing.GetFollowingQuery.SetProfileId(System.String)">
             <summary>
                 Método para setar o Id do perfil.
             </summary>
@@ -953,7 +886,7 @@
                 Comando para deixar de seguir um usuário.
             </summary>
         </member>
-        <member name="M:SocialService.Follow.UnfollowUser.UnfollowUserCommand.#ctor(System.Guid)">
+        <member name="M:SocialService.Follow.UnfollowUser.UnfollowUserCommand.#ctor(System.String)">
             <summary>
                 Construtor do comando.
             </summary>
@@ -1022,7 +955,7 @@
             </summary>
             <param name="graphContext"></param>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.SendFriendRequestAsync(System.Guid,System.Guid,System.String)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.SendFriendRequestAsync(System.String,System.String,System.String)">
             <summary>
                 Método para enviar um pedido de amizade
             </summary>
@@ -1031,7 +964,7 @@
             <param name="message"></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.FriendRequestExistsAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.FriendRequestExistsAsync(System.String,System.String)">
             <summary>
                 Método para verificar se um pedido de amizade existe
             </summary>
@@ -1039,7 +972,7 @@
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.AcceptFriendRequestAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.AcceptFriendRequestAsync(System.String,System.String)">
             <summary>
                 Método para aceitar um pedido de amizade
             </summary>
@@ -1047,7 +980,7 @@
             <param name="receiverProfileId"></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.RejectFriendRequestAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.RejectFriendRequestAsync(System.String,System.String)">
             <summary>
                 Método para rejeitar um pedido de amizade
             </summary>
@@ -1055,28 +988,28 @@
             <param name="receiverProfileId"></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetPendingRequestsForProfileAsync(System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetPendingRequestsForProfileAsync(System.String)">
             <summary>
                 Método para obter os pedidos de amizade pendentes para um perfil
             </summary>
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetSentFriendRequestsAsync(System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetSentFriendRequestsAsync(System.String)">
             <summary>
                 Método para obter os pedidos de amizade enviados por um perfil
             </summary>
             <param name="senderProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetFriendshipsForProfileAsync(System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.GetFriendshipsForProfileAsync(System.String)">
             <summary>
                 Método para obter as amizades de um perfil
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.UnfriendAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.FriendshipGraphRepository.UnfriendAsync(System.String,System.String)">
             <summary>
                 Método para desfazer uma amizade
             </summary>
@@ -1088,7 +1021,7 @@
                 Interface para o repositório de grafo de amizades.
             </summary>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.SendFriendRequestAsync(System.Guid,System.Guid,System.String)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.SendFriendRequestAsync(System.String,System.String,System.String)">
             <summary>
                 Método para enviar uma solicitação de amizade.
             </summary>
@@ -1097,7 +1030,7 @@
             <param name="message"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.FriendRequestExistsAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.FriendRequestExistsAsync(System.String,System.String)">
             <summary>
                 Método para verificar se um pedido de amizade existe
             </summary>
@@ -1105,7 +1038,7 @@
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.AcceptFriendRequestAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.AcceptFriendRequestAsync(System.String,System.String)">
             <summary>
                 Método para aceitar uma solicitação de amizade.
             </summary>
@@ -1113,7 +1046,7 @@
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.RejectFriendRequestAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.RejectFriendRequestAsync(System.String,System.String)">
             <summary>
                 Método para rejeitar uma solicitação de amizade.
             </summary>
@@ -1121,28 +1054,28 @@
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetPendingRequestsForProfileAsync(System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetPendingRequestsForProfileAsync(System.String)">
             <summary>
                 Método para obter as solicitações pendentes de amizade.
             </summary>
             <param name="receiverProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetSentFriendRequestsAsync(System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetSentFriendRequestsAsync(System.String)">
             <summary>
                 Método para obter as solicitações de amizade enviadas.
             </summary>
             <param name="senderProfileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetFriendshipsForProfileAsync(System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.GetFriendshipsForProfileAsync(System.String)">
             <summary>
                 Método para obter as amizades de um perfil.
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.UnfriendAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Common.Repository.IFriendshipGraphRepository.UnfriendAsync(System.String,System.String)">
             <summary>
                 Método para desfazer uma amizade.
             </summary>
@@ -1174,7 +1107,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.FriendController.ListFriends(System.Guid,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Friends.FriendController.ListFriends(System.String,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Common.Models.ProfileBasicInformation},SocialService.Friends.Friendship.ListFriends.ListFriendsQuery},System.Threading.CancellationToken)">
             <summary>
                 Rota para listar os amigos de um perfil
             </summary>
@@ -1190,13 +1123,13 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.FriendController.RemoveFriend(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.Friendship.RemoveFriend.RemoveFriendCommand},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Friends.FriendController.RemoveFriend(System.String,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.Friendship.RemoveFriend.RemoveFriendCommand},System.Threading.CancellationToken)">
             <summary>
                 Rota para remover um amigo
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Friends.FriendController.RemoveFriendRequest(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.FriendRequest.RemoveFriendRequest.RemoveFriendRequestCommand},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Friends.FriendController.RemoveFriendRequest(System.String,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Friends.FriendRequest.RemoveFriendRequest.RemoveFriendRequestCommand},System.Threading.CancellationToken)">
             <summary>
                 Rota para remover uma solicitação de amizade
             </summary>
@@ -1234,7 +1167,7 @@
                 ViewModel para a verificação do status de uma solicitação de amizade.
             </summary>
         </member>
-        <member name="M:SocialService.Friends.FriendRequest.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.#ctor(System.String,System.String,SocialService.Friends.Common.Enums.EFriendStatus,System.Guid)">
+        <member name="M:SocialService.Friends.FriendRequest.CheckFriendRequestStatus.CheckFriendRequestStatusViewModel.#ctor(System.String,System.String,SocialService.Friends.Common.Enums.EFriendStatus,System.String)">
             <summary>
                 Construtor.
             </summary>
@@ -1301,7 +1234,7 @@
             <param name="accept"></param>
             <param name="profileId"></param>
         </member>
-        <member name="M:SocialService.Friends.FriendRequest.ManageFriendRequests.ManageFriendRequestsCommand.#ctor(System.Boolean,System.Guid)">
+        <member name="M:SocialService.Friends.FriendRequest.ManageFriendRequests.ManageFriendRequestsCommand.#ctor(System.Boolean,System.String)">
             <summary>
                 Comando para gerenciar solicitações de amizade.
             </summary>
@@ -1355,7 +1288,7 @@
                 Comando para remover uma solicitação de amizade.
             </summary>
         </member>
-        <member name="M:SocialService.Friends.FriendRequest.RemoveFriendRequest.RemoveFriendRequestCommand.#ctor(System.Guid)">
+        <member name="M:SocialService.Friends.FriendRequest.RemoveFriendRequest.RemoveFriendRequestCommand.#ctor(System.String)">
             <summary>
                 Construtor.
             </summary>
@@ -1449,7 +1382,7 @@
                 Classe que representa uma amizade entre dois perfis
             </summary>
         </member>
-        <member name="M:SocialService.Friends.Friendship.Friendship.#ctor(System.Guid,System.Guid)">
+        <member name="M:SocialService.Friends.Friendship.Friendship.#ctor(System.String,System.String)">
             <summary>
                 Construtor padrão
             </summary>
@@ -1497,7 +1430,7 @@
                 Quantidade de registros por página.
             </summary>
         </member>
-        <member name="M:SocialService.Friends.Friendship.ListFriends.ListFriendsQuery.SetProfileId(System.Guid)">
+        <member name="M:SocialService.Friends.Friendship.ListFriends.ListFriendsQuery.SetProfileId(System.String)">
             <summary>
                 Método para setar o Id do perfil.
             </summary>
@@ -1553,7 +1486,7 @@
                 Comando para remover um amigo.
             </summary>
         </member>
-        <member name="M:SocialService.Friends.Friendship.RemoveFriend.RemoveFriendCommand.#ctor(System.Guid)">
+        <member name="M:SocialService.Friends.Friendship.RemoveFriend.RemoveFriendCommand.#ctor(System.String)">
             <summary>
                 Construtor.
             </summary>
@@ -1617,7 +1550,7 @@
                 Construtor padrão
             </summary>
         </member>
-        <member name="M:SocialService.Post.Comment.Comment.#ctor(SocialService.Post.Comment.CommentOnPost.CommentOnPostCommand,System.Guid)">
+        <member name="M:SocialService.Post.Comment.Comment.#ctor(SocialService.Post.Comment.CommentOnPost.CommentOnPostCommand,System.String)">
             <summary>
                 Construtor para criar um novo comentário.
             </summary>
@@ -1969,7 +1902,7 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostsByProfileIdAsync(System.Guid,System.Guid,System.Int32,System.Int32)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
             <summary>
             Método que retorna os posts de um perfil
             </summary>
@@ -1986,7 +1919,7 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CreatePostAsync(System.Guid,SocialService.Post.Post)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CreatePostAsync(System.String,SocialService.Post.Post)">
             <summary>
                 Método que cria um post
             </summary>
@@ -2073,7 +2006,7 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.String)">
             <summary>
                 Método que deleta uma reação em um post
             </summary>
@@ -2107,7 +2040,7 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostsByProfileIdAsync(System.Guid,System.Guid,System.Int32,System.Int32)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
             <summary>
             Método que retorna os posts de um perfil
             </summary>
@@ -2124,7 +2057,7 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CreatePostAsync(System.Guid,SocialService.Post.Post)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CreatePostAsync(System.String,SocialService.Post.Post)">
             <summary>
                 Método que cria um post
             </summary>
@@ -2204,7 +2137,7 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.DeleteReactionOnPostAsync(System.Guid,System.String)">
             <summary>
                 Método que deleta uma reação em um post
             </summary>
@@ -2387,7 +2320,7 @@
             <param name="page"></param>
             <param name="rows"></param>
         </member>
-        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery.SetProfileId(System.Guid)">
+        <member name="M:SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery.SetProfileId(System.String)">
             <summary>
             Método para setar o id do perfil
             </summary>
@@ -2573,7 +2506,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.PostController.GetPostsByProfileId(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.PostDto},SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery},SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,System.Guid,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.PostController.GetPostsByProfileId(SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Post.PostDto},SocialService.Post.GetPostsByProfileId.GetPostsByProfileIdQuery},SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.ValueObjects.BaseQueryParametersValueObject,System.String,System.Threading.CancellationToken)">
             <summary>
                 Rota para pegar informações dos posts feitos por um perfil
             </summary>
@@ -2868,7 +2801,7 @@
                 Construtor padrão
             </summary>
         </member>
-        <member name="M:SocialService.Post.React.Reaction.#ctor(System.Guid,SocialService.Post.React.ReactToPost.ReactToPostCommand)">
+        <member name="M:SocialService.Post.React.Reaction.#ctor(System.String,SocialService.Post.React.ReactToPost.ReactToPostCommand)">
             <summary>
                 Construtor para criar uma nova reação.
             </summary>
@@ -3048,14 +2981,14 @@
             <param name="profile"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.DeleteProfileAsync(System.Guid)">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.DeleteProfileAsync(System.String)">
             <summary>
                 Método para deletar um perfil do grafo.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.Guid)">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.String)">
             <summary>
                 Método para obter um perfil do grafo.
             </summary>
@@ -3069,14 +3002,14 @@
             <param name="profile"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.Guid})">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
                 Método para obter perfis do grafo.
             </summary>
             <param name="ids"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.ProfileExistsAsync(System.Guid)">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.ProfileExistsAsync(System.String)">
             <summary>
                 Método para verificar se um perfil existe.
             </summary>
@@ -3101,13 +3034,13 @@
             </summary>
             <param name="profile"></param>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.DeleteProfileAsync(System.Guid)">
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.DeleteProfileAsync(System.String)">
             <summary>
                 Método para deletar um perfil
             </summary>
             <param name="id"></param>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.Guid)">
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.String)">
             <summary>
                 Método para obter um perfil
             </summary>
@@ -3121,14 +3054,14 @@
             <param name="profile"></param>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.Guid})">
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfilesAsync(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
                 Método para obter perfis
             </summary>
             <param name="ids"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.ProfileExistsAsync(System.Guid)">
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.ProfileExistsAsync(System.String)">
             <summary>
                 Método para verificar se um perfil existe
             </summary>
@@ -3261,7 +3194,7 @@
                 Comando para deletar um perfil.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommand.#ctor(System.Guid)">
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommand.#ctor(System.String)">
             <summary>
                 Comando para deletar um perfil.
             </summary>
@@ -3371,7 +3304,7 @@
             <param name="page"></param>
             <param name="rows"></param>
         </member>
-        <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery.#ctor(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+        <member name="M:SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery.#ctor(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
                 Query para obter fotos de perfil.
             </summary>
@@ -3455,13 +3388,18 @@
                 Construtor padrão.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.Guid,SocialService.Common.Services.BrasilApi.LocationInfoDto)">
+        <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.String,SocialService.Common.Services.BrasilApi.LocationInfoDto)">
             <summary>
                 Construtor para criação de um novo perfil através de um comando.
             </summary>
             <param name="command"></param>
             <param name="id"></param>
             <param name="locationInfo"></param>
+        </member>
+        <member name="P:SocialService.Profile.Profile.Id">
+            <summary>
+                Id da entidade
+            </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.Email">
             <summary>
@@ -3648,7 +3586,7 @@
                 Controller responsavel por gerenciar funções relacionadas ao perfil do usuario
             </summary>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.Guid,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.String,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},System.Threading.CancellationToken)">
             <summary>
                 Rota para visualizar um perfil
             </summary>
@@ -3658,7 +3596,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.ViewProfileSimplified(System.Guid,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileSimplifiedDto,SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.ViewProfileSimplified(System.String,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileSimplifiedDto,SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery},System.Threading.CancellationToken)">
             <summary>
                 Rota para visualizar um perfil simplificado
             </summary>
@@ -3676,7 +3614,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.DeleteProfile(System.Guid,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.DeleteProfile.DeleteProfileCommand},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.DeleteProfile(System.String,SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.DeleteProfile.DeleteProfileCommand},System.Threading.CancellationToken)">
             <summary>
             Rota para deletar um perfil
             </summary>
@@ -3694,7 +3632,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.GetProfilePictures(System.Guid,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Profile.GetProfilePictures.ProfilePicture},SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery},SocialService.Common.ValueObjects.BaseQueryParametersValueObject,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.GetProfilePictures(System.String,SocialService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{SocialService.Profile.GetProfilePictures.ProfilePicture},SocialService.Profile.GetProfilePictures.GetProfilePicturesQuery},SocialService.Common.ValueObjects.BaseQueryParametersValueObject,System.Threading.CancellationToken)">
             <summary>
                 Rota para obter fotos de perfil.
             </summary>
@@ -3933,7 +3871,7 @@
                 Query para visualização de perfil.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery.#ctor(System.Guid)">
+        <member name="M:SocialService.Profile.ViewProfileSimplified.ViewProfileSimplifiedQuery.#ctor(System.String)">
             <summary>
                 Query para visualização de perfil.
             </summary>
@@ -3979,7 +3917,7 @@
                 Query para visualização de perfil.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQuery.#ctor(System.Guid)">
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQuery.#ctor(System.String)">
             <summary>
                 Query para visualização de perfil.
             </summary>
@@ -4014,14 +3952,14 @@
                 Interface para o repositório de grafo de recomendações.
             </summary>
         </member>
-        <member name="M:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository.GetFriendRecommendationsAsync(System.Guid)">
+        <member name="M:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository.GetFriendRecommendationsAsync(System.String)">
             <summary>
                 Método para obter recomendações de amigos.
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository.GetFriendRecommendationsWithinDistanceAsync(System.Guid,System.Double)">
+        <member name="M:SocialService.Recommendation.Common.Repository.IRecommendationGraphRepository.GetFriendRecommendationsWithinDistanceAsync(System.String,System.Double)">
             <summary>
                Método para obter recomendações de amigos dentro de uma distância.
             </summary>
@@ -4041,14 +3979,14 @@
             </summary>
             <param name="graphContext"></param>
         </member>
-        <member name="M:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository.GetFriendRecommendationsAsync(System.Guid)">
+        <member name="M:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository.GetFriendRecommendationsAsync(System.String)">
             <summary>
                 Método para obter recomendações de amigos.
             </summary>
             <param name="profileId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository.GetFriendRecommendationsWithinDistanceAsync(System.Guid,System.Double)">
+        <member name="M:SocialService.Recommendation.Common.Repository.RecommendationGraphRepository.GetFriendRecommendationsWithinDistanceAsync(System.String,System.Double)">
             <summary>
                Método para obter recomendações de amigos dentro de uma distância.
             </summary>

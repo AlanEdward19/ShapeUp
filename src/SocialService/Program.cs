@@ -1,6 +1,7 @@
 using System.Globalization;
 using ServiceDefaults;
 using SocialService.Configuration;
+using SocialService.Connections;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -16,8 +17,11 @@ builder.Services.AddCors(options =>
 
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
-builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();
+builder.Services.AddGrpc(options =>
+{
+    options.EnableDetailedErrors = true;
+});
 
 var cultureInfo = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;

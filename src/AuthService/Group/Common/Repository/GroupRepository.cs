@@ -8,7 +8,7 @@ namespace AuthService.Group.Common.Repository;
 
 public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
 {
-    public async Task AddUserToGroupAsync(Guid groupId, Guid userId, EGroupRole role,
+    public async Task AddUserToGroupAsync(Guid groupId, string userId, EGroupRole role,
         CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups.Include(g => g.Users)
@@ -32,7 +32,7 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
         await dbContext.Database.CommitTransactionAsync(cancellationToken);
     }
 
-    public async Task ChangeUserRoleInGroupAsync(Guid groupId, Guid userId, EGroupRole role, CancellationToken cancellationToken)
+    public async Task ChangeUserRoleInGroupAsync(Guid groupId, string userId, EGroupRole role, CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups
             .Include(g => g.Users)
@@ -56,7 +56,7 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
         await dbContext.Database.CommitTransactionAsync(cancellationToken);
     }
 
-    public async Task RemoveUserFromGroupAsync(Guid groupId, Guid userId, CancellationToken cancellationToken)
+    public async Task RemoveUserFromGroupAsync(Guid groupId, string userId, CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups.Include(g => g.Users)
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
@@ -82,7 +82,7 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
         await dbContext.Database.CommitTransactionAsync(cancellationToken);
     }
     
-    public async Task AddAsync(Group group, Guid userId, CancellationToken cancellationToken)
+    public async Task AddAsync(Group group, string userId, CancellationToken cancellationToken)
     {
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         

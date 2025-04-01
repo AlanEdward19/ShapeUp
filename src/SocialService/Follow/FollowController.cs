@@ -1,4 +1,6 @@
-﻿using SocialService.Common.ValueObjects;
+﻿using SharedKernel.Filters;
+using SharedKernel.Utils;
+using SocialService.Common.ValueObjects;
 using SocialService.Follow.FollowUser;
 using SocialService.Follow.GetFollowers;
 using SocialService.Follow.GetFollowing;
@@ -13,7 +15,7 @@ namespace SocialService.Follow;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class FollowController(IProfileGraphRepository repository) : ControllerBase
 {
@@ -24,12 +26,12 @@ public class FollowController(IProfileGraphRepository repository) : ControllerBa
     /// <param name="profileId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPost("followUser/{profileId:guid}")]
+    [HttpPost("followUser/{profileId}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> FollowUser([FromServices] IHandler<bool, FollowUserCommand> handler,
-        Guid profileId, CancellationToken cancellationToken)
+        string profileId, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         FollowUserCommand command = new(profileId);
 
@@ -47,12 +49,12 @@ public class FollowController(IProfileGraphRepository repository) : ControllerBa
     /// <param name="profileId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpDelete("unfollowUser/{profileId:guid}")]
+    [HttpDelete("unfollowUser/{profileId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UnfollowUser([FromServices] IHandler<bool, UnfollowUserCommand> handler,
-        Guid profileId, CancellationToken cancellationToken)
+        string profileId, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         UnfollowUserCommand command = new(profileId);
 
@@ -71,13 +73,14 @@ public class FollowController(IProfileGraphRepository repository) : ControllerBa
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("getFollowers/{profileId:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type =  typeof(IEnumerable<ProfileBasicInformation>))]
-    public async Task<IActionResult> GetFollowers(Guid profileId, [FromQuery] BaseQueryParametersValueObject queryParameters,
+    [HttpGet("getFollowers/{profileId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileBasicInformation>))]
+    public async Task<IActionResult> GetFollowers(string profileId,
+        [FromQuery] BaseQueryParametersValueObject queryParameters,
         [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, GetFollowersQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         GetFollowersQuery query = new();
         query.SetProfileId(profileId);
@@ -98,13 +101,14 @@ public class FollowController(IProfileGraphRepository repository) : ControllerBa
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("getFollowing/{profileId:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type =  typeof(IEnumerable<ProfileBasicInformation>))]
-    public async Task<IActionResult> GetFollowing(Guid profileId, [FromQuery] BaseQueryParametersValueObject queryParameters,
+    [HttpGet("getFollowing/{profileId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileBasicInformation>))]
+    public async Task<IActionResult> GetFollowing(string profileId,
+        [FromQuery] BaseQueryParametersValueObject queryParameters,
         [FromServices] IHandler<IEnumerable<ProfileBasicInformation>, GetFollowingQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         GetFollowingQuery query = new();
         query.SetProfileId(profileId);

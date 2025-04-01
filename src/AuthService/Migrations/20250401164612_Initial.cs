@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace AuthService.Migrations
 {
     /// <inheritdoc />
@@ -25,10 +27,25 @@ namespace AuthService.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Permissions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Action = table.Column<int>(type: "int", nullable: false),
+                    Theme = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    ObjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ObjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -39,31 +56,34 @@ namespace AuthService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Permissions",
+                name: "GroupPermission",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Action = table.Column<int>(type: "int", nullable: false),
-                    Theme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PermissionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permissions", x => x.Id);
+                    table.PrimaryKey("PK_GroupPermission", x => new { x.GroupId, x.PermissionId });
                     table.ForeignKey(
-                        name: "FK_Permissions_Groups_GroupId",
+                        name: "FK_GroupPermission_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupPermission_Permissions_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "Permissions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserGroup",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
@@ -84,10 +104,21 @@ namespace AuthService.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Permissions_GroupId",
+            migrationBuilder.InsertData(
                 table: "Permissions",
-                column: "GroupId");
+                columns: new[] { "Id", "Action", "CreatedAt", "Theme", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { new Guid("0c9c9154-2479-406c-8bd2-e15a22c8b31e"), 0, new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "permission", new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("a86b7651-2aef-4f55-9c85-7b1f6d486f14"), 1, new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "permission", new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("d3856d63-8c6d-41c7-bfb0-4a327662a6dc"), 2, new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "permission", new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("e0dcbf9b-1d24-413a-8839-5d70f9ace22a"), 3, new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "permission", new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupPermission_PermissionId",
+                table: "GroupPermission",
+                column: "PermissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserGroup_GroupId",
@@ -99,10 +130,13 @@ namespace AuthService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Permissions");
+                name: "GroupPermission");
 
             migrationBuilder.DropTable(
                 name: "UserGroup");
+
+            migrationBuilder.DropTable(
+                name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "Groups");

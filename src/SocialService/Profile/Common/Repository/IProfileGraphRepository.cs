@@ -17,14 +17,14 @@ public interface IProfileGraphRepository
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task DeleteProfileAsync(Guid id);
+    Task DeleteProfileAsync(string id);
 
     /// <summary>
     ///     Método para obter um perfil do grafo.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<Profile?> GetProfileAsync(Guid id);
+    Task<Profile?> GetProfileAsync(string id);
 
     /// <summary>
     ///     Método para atualizar um perfil no grafo.
@@ -38,12 +38,12 @@ public interface IProfileGraphRepository
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    Task<IEnumerable<Profile>> GetProfilesAsync(IEnumerable<Guid> ids);
+    Task<IEnumerable<Profile>> GetProfilesAsync(IEnumerable<string> ids);
 
     /// <summary>
     ///     Método para verificar se um perfil existe.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<bool> ProfileExistsAsync(Guid id);
+    Task<bool> ProfileExistsAsync(string id);
 }

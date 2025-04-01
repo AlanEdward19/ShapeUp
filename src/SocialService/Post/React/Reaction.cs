@@ -20,9 +20,9 @@ public class Reaction : GraphEntity
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="command"></param>
-    public Reaction(Guid profileId, ReactToPostCommand command)
+    public Reaction(string profileId, ReactToPostCommand command)
     {
-        if (profileId == Guid.Empty)
+        if (string.IsNullOrWhiteSpace(profileId))
             throw new ArgumentException("ProfileId cannot be empty.");
 
         if (Enum.IsDefined(typeof(EReactionType), command.ReactionType) == false)
@@ -38,7 +38,7 @@ public class Reaction : GraphEntity
     /// <summary>
     ///     Id do perfil que reagiu
     /// </summary>
-    public Guid ProfileId { get; private set; }
+    public string ProfileId { get; private set; }
 
     /// <summary>
     ///     Data de criação da reação
@@ -61,10 +61,10 @@ public class Reaction : GraphEntity
     /// <param name="result"></param>
     public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
-        ProfileId = Guid.Parse(result["profileId"].ToString());
-        ReactionType = result["type"].ToString();
-        PostId = Guid.Parse(result["postId"].ToString());
-        CreatedAt = DateTime.Parse(result["createdAt"].ToString());
+        ProfileId = result["profileId"].ToString()!;
+        ReactionType = result["type"].ToString()!;
+        PostId = Guid.Parse(result["postId"].ToString()!);
+        CreatedAt = DateTime.Parse(result["createdAt"].ToString()!);
 
         base.MapToEntityFromNeo4j(result);
     }

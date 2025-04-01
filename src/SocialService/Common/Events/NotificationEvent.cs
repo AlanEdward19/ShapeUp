@@ -10,7 +10,7 @@ public class NotificationEvent
     /// <summary>
     /// Id do destinatário da notificação
     /// </summary>
-    public Guid RecipientId { get; set; }
+    public string RecipientId { get; set; }
     
     /// <summary>
     /// Enum para tipos de notificações

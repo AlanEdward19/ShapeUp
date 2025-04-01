@@ -1,4 +1,6 @@
-﻿using SocialService.ActivityFeed.GetActivityFeed;
+﻿using SharedKernel.Filters;
+using SharedKernel.Utils;
+using SocialService.ActivityFeed.GetActivityFeed;
 using SocialService.Post;
 
 namespace SocialService.ActivityFeed;
@@ -8,7 +10,7 @@ namespace SocialService.ActivityFeed;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class ActivityFeedController : ControllerBase
 {
@@ -25,7 +27,7 @@ public class ActivityFeedController : ControllerBase
         [FromServices] IHandler<IEnumerable<PostDto>, GetActivityFeedQuery> handler,
         [FromQuery] GetActivityFeedQuery query, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         GetActivityFeedQueryValidator validator = new();
         await validator.ValidateAndThrowAsync(query, cancellationToken);

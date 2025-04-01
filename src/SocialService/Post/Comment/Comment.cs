@@ -19,7 +19,7 @@ public class Comment : GraphEntity
     /// </summary>
     /// <param name="command"></param>
     /// <param name="profileId"></param>
-    public Comment(CommentOnPostCommand command, Guid profileId)
+    public Comment(CommentOnPostCommand command, string profileId)
     {
         Id = Guid.NewGuid();
         ProfileId = profileId;
@@ -32,7 +32,7 @@ public class Comment : GraphEntity
     /// <summary>
     ///     Id do perfil que fez o comentário
     /// </summary>
-    public Guid ProfileId { get; private set; }
+    public string ProfileId { get; private set; }
     
     /// <summary>
     /// Primeiro nome do perfil que fez o comentário
@@ -70,7 +70,7 @@ public class Comment : GraphEntity
     /// <param name="result"></param>
     public override void MapToEntityFromNeo4j(Dictionary<string, object> result)
     {
-        ProfileId = Guid.Parse(result["profileId"].ToString());
+        ProfileId = result["profileId"].ToString();
         Content = result["content"].ToString();
         CreatedAt = DateTime.Parse(result["createdAt"].ToString());
         ProfileFirstName = result["profileFirstName"].ToString();

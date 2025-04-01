@@ -14,7 +14,7 @@ public class FriendshipGraphRepository(
     /// <param name="receiverProfileId"></param>
     /// <param name="message"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task SendFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId, string message)
+    public async Task SendFriendRequestAsync(string senderProfileId, string receiverProfileId, string message)
     {
         var existingRequest = await FriendRequestExistsAsync(senderProfileId, receiverProfileId);
 
@@ -39,7 +39,7 @@ public class FriendshipGraphRepository(
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
-    public async Task<bool> FriendRequestExistsAsync(Guid senderProfileId, Guid receiverProfileId)
+    public async Task<bool> FriendRequestExistsAsync(string senderProfileId, string receiverProfileId)
     {
         var query =
             $"MATCH (sender:Profile {{id: '{senderProfileId}'}})-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})\nRETURN r";
@@ -55,7 +55,7 @@ public class FriendshipGraphRepository(
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task AcceptFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
+    public async Task AcceptFriendRequestAsync(string senderProfileId, string receiverProfileId)
     {
         var requestExists = await FriendRequestExistsAsync(senderProfileId, receiverProfileId);
 
@@ -91,7 +91,7 @@ DELETE r";
     /// <param name="senderProfileId"></param>
     /// <param name="receiverProfileId"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task RejectFriendRequestAsync(Guid senderProfileId, Guid receiverProfileId)
+    public async Task RejectFriendRequestAsync(string senderProfileId, string receiverProfileId)
     {
         var requestExists = await FriendRequestExistsAsync(senderProfileId, receiverProfileId);
 
@@ -115,7 +115,7 @@ DELETE r";
     /// <param name="receiverProfileId"></param>
     /// <returns></returns>
     public async Task<IEnumerable<FriendRequest.FriendRequest>> GetPendingRequestsForProfileAsync(
-        Guid receiverProfileId)
+        string receiverProfileId)
     {
         var query = $@"
     MATCH (sender:Profile)-[r:FRIEND_REQUEST]->(receiver:Profile {{id: '{receiverProfileId}'}})
@@ -145,7 +145,7 @@ DELETE r";
     /// </summary>
     /// <param name="senderProfileId"></param>
     /// <returns></returns>
-    public async Task<List<FriendRequest.FriendRequest>> GetSentFriendRequestsAsync(Guid senderProfileId)
+    public async Task<List<FriendRequest.FriendRequest>> GetSentFriendRequestsAsync(string senderProfileId)
     {
         var query = $@"
     MATCH (sender:Profile {{id: '{senderProfileId}'}})-[r:FRIEND_REQUEST]->(receiver:Profile)
@@ -175,7 +175,7 @@ DELETE r";
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Friendship.Friendship>> GetFriendshipsForProfileAsync(Guid profileId)
+    public async Task<IEnumerable<Friendship.Friendship>> GetFriendshipsForProfileAsync(string profileId)
     {
         var query = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})-[:FRIEND]-(friend:Profile)
@@ -185,7 +185,7 @@ DELETE r";
         var friendships = new List<Friendship.Friendship>();
 
         foreach (var item in result)
-            friendships.Add(new Friendship.Friendship(profileId, Guid.Parse(item["id"].ToString()!)));
+            friendships.Add(new Friendship.Friendship(profileId, item["id"].ToString()!));
 
         return friendships;
     }
@@ -195,7 +195,7 @@ DELETE r";
     /// </summary>
     /// <param name="profileAId"></param>
     /// <param name="profileBId"></param>
-    public async Task UnfriendAsync(Guid profileAId, Guid profileBId)
+    public async Task UnfriendAsync(string profileAId, string profileBId)
     {
         var query = $@"
     MATCH (a:Profile {{id: '{profileAId}'}})-[r:FRIEND]-(b:Profile {{id: '{profileBId}'}})

@@ -1,4 +1,5 @@
-﻿using SocialService.Connections.Search;
+﻿using SharedKernel.Providers.Grpc;
+using SocialService.Connections.Search;
 using StackExchange.Redis;
 
 namespace SocialService.Connections;
@@ -21,11 +22,19 @@ public static class ConnectionsModule
             .ConfigureNeo4J(configuration)
             .ConfigureRedis(configuration)
             .ConfigureStorageProvider(configuration)
-            .ConfigureSearchProvider(configuration);
+            .ConfigureSearchProvider(configuration)
+            .ConfigureGrpc();
 
         return services;
     }
 
+    private static IServiceCollection ConfigureGrpc(this IServiceCollection services)
+    {
+        services.AddScoped<IGrpcProvider, GrpcProvider>();
+
+        return services;
+    }
+    
     private static IServiceCollection ConfigureNeo4J(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IDriver>(_ =>

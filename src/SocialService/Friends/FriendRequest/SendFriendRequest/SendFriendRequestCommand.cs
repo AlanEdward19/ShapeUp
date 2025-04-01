@@ -8,7 +8,7 @@ public class SendFriendRequestCommand
     /// <summary>
     ///     Id do amigo.
     /// </summary>
-    public Guid FriendId { get; set; }
+    public string FriendId { get; set; }
 
     /// <summary>
     ///     Mensagem de solicitação.

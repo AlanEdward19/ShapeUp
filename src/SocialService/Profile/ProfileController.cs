@@ -1,4 +1,6 @@
-﻿using SocialService.Common.ValueObjects;
+﻿using SharedKernel.Filters;
+using SharedKernel.Utils;
+using SocialService.Common.ValueObjects;
 using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 using SocialService.Profile.DeleteProfile;
@@ -16,7 +18,7 @@ namespace SocialService.Profile;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class ProfileController(IProfileGraphRepository repository) : ControllerBase
 {
@@ -28,16 +30,16 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="createProfileHandler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("viewProfile/{profileId:guid}")]
+    [HttpGet("viewProfile/{profileId:}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileDto))]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProfileDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> ViewProfile(Guid profileId,
+    public async Task<IActionResult> ViewProfile(string profileId,
         [FromServices] IHandler<ProfileDto?, ViewProfileQuery> viewProfilehandler,
         [FromServices] IHandler<ProfileDto, CreateProfileCommand> createProfileHandler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         ViewProfileQuery query = new(profileId);
 
@@ -72,14 +74,14 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("viewProfile/{profileId:guid}/simplified")]
+    [HttpGet("viewProfile/{profileId}/simplified")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileSimplifiedDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> ViewProfileSimplified(Guid profileId,
+    public async Task<IActionResult> ViewProfileSimplified(string profileId,
         [FromServices] IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         ViewProfileSimplifiedQuery query = new(profileId);
 
@@ -101,7 +103,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     public async Task<IActionResult> EditProfile([FromServices] IHandler<ProfileDto, EditProfileCommand> handler,
         [FromBody] EditProfileCommand command, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         EditProfileCommandValidator validator = new();
         await validator.ValidateAndThrowAsync(command, cancellationToken);
@@ -116,13 +118,13 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpDelete("deleteProfile/{profileId:guid}")]
+    [HttpDelete("deleteProfile/{profileId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> DeleteProfile(Guid profileId,
+    public async Task<IActionResult> DeleteProfile(string profileId,
         [FromServices] IHandler<bool, DeleteProfileCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         DeleteProfileCommand command = new(profileId);
 
@@ -146,7 +148,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         [FromServices] IHandler<bool, UploadProfilePictureCommand> handler,
         IFormFile image, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         UploadProfilePictureCommand command = new();
         await command.SetImage(image, image.FileName, cancellationToken);
@@ -163,13 +165,13 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="queryParameters"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("getProfilePictures/{profileId:guid}")]
+    [HttpGet("getProfilePictures/{profileId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfilePicture>))]
-    public async Task<IActionResult> GetProfilePictures(Guid profileId,
+    public async Task<IActionResult> GetProfilePictures(string profileId,
         [FromServices] IHandler<IEnumerable<ProfilePicture>, GetProfilePicturesQuery> handler,
         [FromQuery] BaseQueryParametersValueObject queryParameters, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         GetProfilePicturesQuery query = new(profileId, queryParameters.Page, queryParameters.Rows);
 
@@ -192,7 +194,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
         [FromServices] IHandler<IEnumerable<ProfileSimplifiedDto>, SearchProfileByNameQuery> handler,
         [FromQuery] SearchProfileByNameQuery query, CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }

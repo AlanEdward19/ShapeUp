@@ -8,7 +8,7 @@ public class GetPostsByProfileIdQuery
     /// <summary>
     /// Id do perfil
     /// </summary>
-    public Guid ProfileId { get; private set; }
+    public string ProfileId { get; private set; }
     
     /// <summary>
     /// Número da página
@@ -35,5 +35,5 @@ public class GetPostsByProfileIdQuery
     /// Método para setar o id do perfil
     /// </summary>
     /// <param name="profileId"></param>
-    public void SetProfileId(Guid profileId) => ProfileId = profileId;
+    public void SetProfileId(string profileId) => ProfileId = profileId;
 }

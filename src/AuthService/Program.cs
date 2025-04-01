@@ -17,7 +17,6 @@ builder.Services.AddCors(options =>
 
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
-builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();
 builder.Services.AddGrpc();
 

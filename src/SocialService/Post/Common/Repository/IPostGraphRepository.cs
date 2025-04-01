@@ -14,7 +14,7 @@ public interface IPostGraphRepository
     /// </summary>
     /// <param name="postId"></param>
     /// <returns></returns>
-    Task<Guid> GetProfileIdByPostIdAsync(Guid postId);
+    Task<string> GetProfileIdByPostIdAsync(Guid postId);
     
     /// <summary>
     ///     Método que retorna um post
@@ -31,7 +31,7 @@ public interface IPostGraphRepository
     /// <param name="page"></param>
     /// <param name="rows"></param>
     /// <returns></returns>
-    Task<IEnumerable<Post>> GetPostsByProfileIdAsync(Guid profileId, Guid requesterId, int page, int rows);
+    Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page, int rows);
 
     /// <summary>
     ///     Método que verifica se um post existe
@@ -47,7 +47,7 @@ public interface IPostGraphRepository
     /// <param name="postId"></param>
     /// <param name="post"></param>
     /// <returns></returns>
-    Task CreatePostAsync(Guid profileId, Post post);
+    Task CreatePostAsync(string profileId, Post post);
 
     /// <summary>
     ///     Método que atualiza um post
@@ -141,7 +141,7 @@ public interface IPostGraphRepository
     /// <param name="postId"></param>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    Task DeleteReactionOnPostAsync(Guid postId, Guid profileId);
+    Task DeleteReactionOnPostAsync(Guid postId, string profileId);
 
     #endregion
 }

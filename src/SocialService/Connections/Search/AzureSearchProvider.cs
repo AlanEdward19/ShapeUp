@@ -47,13 +47,13 @@ public class AzureSearchProvider : IAzureSearchProvider
     /// </summary>
     /// <param name="profileId"></param>
     /// <param name="name"></param>
-    public async Task UpsertAsync(Guid profileId, string name)
+    public async Task UpsertAsync(string profileId, string name)
     {
         var batch = IndexBatch.MergeOrUpload(new[]
         {
             new Document
             {
-                { "ProfileId", profileId.ToString() },
+                { "ProfileId", profileId },
                 { "Name", name }
             }
         });
@@ -65,7 +65,7 @@ public class AzureSearchProvider : IAzureSearchProvider
     /// Método para deletar um perfil do índice de busca.
     /// </summary>
     /// <param name="profileId"></param>
-    public async Task DeleteAsync(Guid profileId)
+    public async Task DeleteAsync(string profileId)
     {
         var batch = IndexBatch.Delete("ProfileId", new[] { profileId.ToString() });
 
@@ -92,7 +92,7 @@ public class AzureSearchProvider : IAzureSearchProvider
         var results = await _indexClient.Documents.SearchAsync(query, parameters);
 
         return results.Results
-            .Select(r => new AzureSearchProfileDto(Guid.Parse(r.Document["ProfileId"].ToString()),  r.Document["Name"].ToString()))
+            .Select(r => new AzureSearchProfileDto(r.Document["ProfileId"].ToString(),  r.Document["Name"].ToString()))
             .ToList();
     }
 }

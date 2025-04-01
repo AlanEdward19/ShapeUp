@@ -12,7 +12,7 @@ public class ProfileBasicInformation
     /// <param name="lastName"></param>
     /// <param name="profileId"></param>
     /// <param name="imageUrl"></param>
-    public ProfileBasicInformation(string firstName, string lastName, Guid profileId, string imageUrl)
+    public ProfileBasicInformation(string firstName, string lastName, string profileId, string imageUrl)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -33,7 +33,7 @@ public class ProfileBasicInformation
     /// <summary>
     ///     Id do perfil.
     /// </summary>
-    public Guid ProfileId { get; set; }
+    public string ProfileId { get; set; }
     
     /// <summary>
     /// Url da imagem do perfil.
