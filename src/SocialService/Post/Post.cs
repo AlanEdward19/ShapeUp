@@ -32,7 +32,7 @@ public class Post : GraphEntity
     /// <summary>
     /// Id do perfil que publicou o post.
     /// </summary>
-    public Guid PublisherId { get; private set; }
+    public string PublisherId { get; private set; }
     
     /// <summary>
     /// Primeiro nome do perfil que publicou o post.
@@ -84,7 +84,7 @@ public class Post : GraphEntity
         CreatedAt = DateTime.Parse(result["createdAt"].ToString()!);
         UpdatedAt = DateTime.Parse(result["updatedAt"].ToString()!);
         Content = result["content"].ToString()!;
-        PublisherId = Guid.Parse(result["publisherId"].ToString()!);
+        PublisherId = result["publisherId"].ToString()!;
         PublisherFirstName = result["publisherFirstName"].ToString()!;
         PublisherLastName = result["publisherLastName"].ToString()!;
         PublisherImageUrl = result["publisherImageUrl"].ToString()!;
