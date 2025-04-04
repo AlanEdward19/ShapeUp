@@ -1,4 +1,5 @@
 ﻿using AuthService.Common.User;
+using AuthService.Common.User.Repository;
 using AuthService.Connections.Database;
 using AuthService.Protos;
 using FirebaseAdmin.Auth;
@@ -8,7 +9,7 @@ using SharedKernel.Enums;
 
 namespace AuthService.Services;
 
-public class AuthService(ILogger<AuthService> logger, AuthDbContext dbContext) : Protos.AuthService.AuthServiceBase
+public class AuthService(ILogger<AuthService> logger, AuthDbContext dbContext, IUserRepository userRepository) : Protos.AuthService.AuthServiceBase
 {
     public override async Task<CheckPermissionResponse> CheckPermission(CheckPermissionRequest request,
         ServerCallContext context)
@@ -48,6 +49,18 @@ public class AuthService(ILogger<AuthService> logger, AuthDbContext dbContext) :
         {
             FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(request.Token);
 
+            var userId = decodedToken.Uid;
+            var email = decodedToken.Claims["email"].ToString();
+            
+            User? user = await userRepository.GetByObjectIdAsync(userId, context.CancellationToken);
+
+            if (user == null)
+            {
+                user = new(userId, email!);
+                
+                await userRepository.AddAsync(user, context.CancellationToken);
+            }
+            
             var claims = decodedToken.Claims.Select(c => new Claim()
             {
                 Type = c.Key,
