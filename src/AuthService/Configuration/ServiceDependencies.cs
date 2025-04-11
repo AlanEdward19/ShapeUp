@@ -21,7 +21,7 @@ public static class ServiceDependencies
         IConfiguration configuration)
     {
         services
-            .ConfigureCommonRelatedDependencies()
+            .ConfigureCommonRelatedDependencies(configuration)
             .ConfigureConnections(configuration)
             .ConfigureGroupRelatedDependencies()
             .ConfigurePermissionRelatedDependencies()
