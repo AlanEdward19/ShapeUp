@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc.Filters;
 using SharedKernel.Enums;
-using SharedKernel.Providers.Grpc;
-using SharedKernel.Utils;
 
 namespace SharedKernel.Filters;
 
@@ -10,19 +9,43 @@ public class AuthFilter(EPermissionAction action, string theme) : Attribute, IAs
 {
     private EPermissionAction Action { get; } = action;
     private string Theme { get; } = theme;
-    
+
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         var httpContext = context.HttpContext;
+        string token = httpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        var jwtHandler = new JwtSecurityTokenHandler();
 
-        IGrpcProvider grpcProvider = httpContext.RequestServices.GetRequiredService<IGrpcProvider>();
+        if (!jwtHandler.CanReadToken(token))
+            throw new ArgumentException("Token inválido");
+
+        var jwtToken = jwtHandler.ReadJwtToken(token);
+
+        var exp = jwtToken.Payload.Exp;
+
+        if (exp == null)
+            throw new InvalidOperationException("O token não contém uma data de expiração");
+
+        var expirationTime = DateTimeOffset.FromUnixTimeSeconds(exp.Value).UtcDateTime;
+
+        if (DateTime.UtcNow >= expirationTime)
+            throw new UnauthorizedAccessException("Token expirado");
+
+        if (jwtToken.Payload.TryGetValue("scopes", out var scopesClaim) && scopesClaim is JsonElement claim && claim.ValueKind == JsonValueKind.Array)
+        {
+            List<string> scopesList = claim.EnumerateArray()
+                .Select(element => element.GetString())
+                .Where(value => value != null)
+                .ToList()!;
+            
+            bool hasPermission = scopesList.Contains($"{Action} - {Theme}".ToLower());
         
-        Guid objectId = Guid.Parse(httpContext.User.GetObjectId());
-        
-        bool hasPermission = await grpcProvider.CheckUserPermission(objectId, Action, Theme, CancellationToken.None);
-        
-        if(!hasPermission)
-            throw new UnauthorizedAccessException("Usuário não tem permissão para acessar este recurso");
-        
+            if(!hasPermission)
+                throw new UnauthorizedAccessException("Usuário não tem permissão para acessar este recurso");
+
+            return;
+        }
+
+        throw new UnauthorizedAccessException("Usuário não tem permissão para acessar este recurso");
     }
 }

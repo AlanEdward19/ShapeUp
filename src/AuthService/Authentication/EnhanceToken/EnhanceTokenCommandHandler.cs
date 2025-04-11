@@ -1,11 +1,12 @@
 ﻿using System.Text.Json;
 using AuthService.Common;
 using AuthService.Common.Interfaces;
+using AuthService.Common.User.Repository;
 using FirebaseAdmin.Auth;
 
 namespace AuthService.Authentication.EnhanceToken;
 
-public class EnhanceTokenCommandHandler : IHandler<bool, EnhanceTokenCommand>
+public class EnhanceTokenCommandHandler(IUserRepository repository) : IHandler<bool, EnhanceTokenCommand>
 {
     public async Task<bool> HandleAsync(EnhanceTokenCommand command, CancellationToken cancellationToken)
     {
@@ -13,6 +14,16 @@ public class EnhanceTokenCommandHandler : IHandler<bool, EnhanceTokenCommand>
             .ToDictionary(x => x.Key, x => ConvertJsonElement(x.Value));
 
         await FirebaseAuth.DefaultInstance.SetCustomUserClaimsAsync(ProfileContext.ProfileId, claims, cancellationToken);
+        
+        var userFirebase = await FirebaseAuth.DefaultInstance.GetUserAsync(ProfileContext.ProfileId, cancellationToken);
+        var userDatabase = await repository.GetByObjectIdAsync(ProfileContext.ProfileId, cancellationToken);
+        
+        if (userDatabase == null)
+        {
+            userDatabase = new(ProfileContext.ProfileId, userFirebase.Email);
+                
+            await repository.AddAsync(userDatabase, cancellationToken);
+        }
 
         return true;
     }

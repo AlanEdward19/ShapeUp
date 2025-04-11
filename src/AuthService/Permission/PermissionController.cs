@@ -21,7 +21,7 @@ namespace AuthService.Permission;
 
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class PermissionController(AuthDbContext dbContext) : ControllerBase
 {
