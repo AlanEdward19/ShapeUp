@@ -32,11 +32,7 @@
       <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
       <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Protobuf Include="..\SharedKernel\Protos\authService.proto" GrpcServices="Server" />
-    </ItemGroup>
-
+    
     <ItemGroup>
       <Folder Include="Migrations\" />
     </ItemGroup>

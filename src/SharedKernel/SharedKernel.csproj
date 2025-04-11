@@ -24,8 +24,4 @@
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Protobuf Include="Protos\authService.proto" GrpcServices="Client" />
-    </ItemGroup>
-
 </Project>

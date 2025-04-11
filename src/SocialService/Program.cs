@@ -20,10 +20,6 @@ AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureEndpoints();
-builder.Services.AddGrpc(options =>
-{
-    options.EnableDetailedErrors = true;
-});
 
 var cultureInfo = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;

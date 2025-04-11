@@ -20,7 +20,6 @@ AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureEndpoints();
-builder.Services.AddGrpc();
 
 var cultureInfo = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
@@ -35,7 +34,6 @@ app.ConfigureSwagger();
 app.MapEndpoints(configuration);
 app.ConfigureMiddleware();
 app.UpdateMigrations();
-app.ConfigureGrpc();
 
 app.UseHttpsRedirection();
 

@@ -3,7 +3,6 @@ using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using SharedKernel.Providers.Grpc;
 
 namespace AuthService.Connections;
 
@@ -23,7 +22,6 @@ public static class ConnectionsModule
     {
         services
             .ConfigureSqlServer(configuration)
-            .ConfigureGrpc()
             .ConfigureFirebase(configuration);
 
         return services;
@@ -40,13 +38,6 @@ public static class ConnectionsModule
         {
             Credential = GoogleCredential.FromJson(jsonCredentials)
         });
-
-        return services;
-    }
-    
-    private static IServiceCollection ConfigureGrpc(this IServiceCollection services)
-    {
-        services.AddScoped<IGrpcProvider, GrpcProvider>();
 
         return services;
     }
@@ -73,12 +64,5 @@ public static class ConnectionsModule
 #endif
 
         return services;
-    }
-    
-    public static IEndpointRouteBuilder ConfigureGrpc(this IEndpointRouteBuilder builder)
-    {
-        builder.MapGrpcService<Services.AuthService>();
-
-        return builder;
     }
 }
