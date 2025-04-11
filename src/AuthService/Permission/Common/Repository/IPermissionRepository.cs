@@ -13,4 +13,7 @@ public interface IPermissionRepository
     
     Task GrantGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellationToken);
     Task GrantUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken);
+    
+    Task RemoveGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellationToken);
+    Task RemoveUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken);
 }

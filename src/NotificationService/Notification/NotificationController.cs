@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
 using NotificationService.Common.Interfaces;
 using NotificationService.Notification.SendNotification;
+using SharedKernel.Filters;
 
 namespace NotificationService.Notification;
 
@@ -13,7 +14,7 @@ namespace NotificationService.Notification;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class NotificationController : ControllerBase
 {

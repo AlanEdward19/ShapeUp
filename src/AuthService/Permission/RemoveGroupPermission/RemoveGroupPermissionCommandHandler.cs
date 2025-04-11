@@ -1,18 +1,16 @@
-﻿using AuthService.Common;
-using AuthService.Common.Interfaces;
+﻿using AuthService.Common.Interfaces;
 using AuthService.Group.Common.Repository;
 using AuthService.Permission.Common.Repository;
 using FirebaseAdmin.Auth;
-using Newtonsoft.Json.Linq;
 
-namespace AuthService.Permission.GrantGroupPermission;
+namespace AuthService.Permission.RemoveGroupPermission;
 
-public class GrantGroupPermissionCommandHandler(IPermissionRepository repository, IGroupRepository groupRepository)
-    : IHandler<bool, GrantGroupPermissionCommand>
+public class RemoveGroupPermissionCommandHandler(IPermissionRepository repository, IGroupRepository groupRepository)
+    : IHandler<bool, RemoveGroupPermissionCommand>
 {
-    public async Task<bool> HandleAsync(GrantGroupPermissionCommand command, CancellationToken cancellationToken)
+    public async Task<bool> HandleAsync(RemoveGroupPermissionCommand command, CancellationToken cancellationToken)
     {
-        await repository.GrantGroupPermissionAsync(command.GroupId, command.PermissionId, cancellationToken);
+        await repository.RemoveGroupPermissionAsync(command.GroupId, command.PermissionId, cancellationToken);
 
         var users = await groupRepository.GetUsersFromGroupAsync(command.GroupId, cancellationToken);
 

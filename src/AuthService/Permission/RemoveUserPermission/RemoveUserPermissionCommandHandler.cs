@@ -1,17 +1,17 @@
-﻿using AuthService.Common;
-using AuthService.Common.Interfaces;
+﻿using AuthService.Common.Interfaces;
 using AuthService.Permission.Common.Repository;
+using AuthService.Permission.GrantUserPermission;
 using FirebaseAdmin.Auth;
 using Newtonsoft.Json.Linq;
 
-namespace AuthService.Permission.GrantUserPermission;
+namespace AuthService.Permission.RemoveUserPermission;
 
-public class GrantUserPermissionCommandHandler(IPermissionRepository repository)
-    : IHandler<bool, GrantUserPermissionCommand>
+public class RemoveUserPermissionCommandHandler(IPermissionRepository repository)
+    : IHandler<bool, RemoveUserPermissionCommand>
 {
-    public async Task<bool> HandleAsync(GrantUserPermissionCommand command, CancellationToken cancellationToken)
+    public async Task<bool> HandleAsync(RemoveUserPermissionCommand command, CancellationToken cancellationToken)
     {
-        await repository.GrantUserPermissionAsync(command.UserId, command.PermissionId, cancellationToken);
+        await repository.RemoveUserPermissionAsync(command.UserId, command.PermissionId, cancellationToken);
 
         Dictionary<string, object> claims =
             (await FirebaseAuth.DefaultInstance.GetUserAsync(command.UserId, cancellationToken)).CustomClaims
