@@ -3,6 +3,7 @@ using NotificationService.Configuration;
 using NotificationService.Notification.Common;
 using NotificationService.Notification.Common.Service;
 using ServiceDefaults;
+using SharedKernel.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -17,6 +18,7 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
+AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureAuthentication(configuration);

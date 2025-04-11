@@ -1,8 +1,10 @@
-﻿using System.Security.Claims;
-using FirebaseAdmin.Auth;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedKernel.Providers.Grpc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SharedKernel.Filters;
 
@@ -13,19 +15,44 @@ public class TokenValidatorFilter: Attribute, IAsyncAuthorizationFilter
         var httpContext = context.HttpContext;
         var token = httpContext.Request.Headers["Authorization"].First()?.Split(" ")[1] ?? "";
         
+        IConfiguration configuration = httpContext.RequestServices.GetRequiredService<IConfiguration>();
+        
+        string firebaseIssuer = configuration["Firebase:Issuer"]!;
+        string projectId = configuration["Firebase:Credentials:project_id"]!;
+        string firebaseIssuerSigningKey = configuration["Firebase:IssuerSigningKey"]!;
+        
         if(string.IsNullOrWhiteSpace(token))
             throw new UnauthorizedAccessException("Usuário não está autenticado");
         
-        IGrpcProvider grpcProvider = httpContext.RequestServices.GetRequiredService<IGrpcProvider>();
+        var handler = new JwtSecurityTokenHandler();
         
-        var user = await grpcProvider.VerifyToken(token, CancellationToken.None);
+        var certificates = firebaseIssuerSigningKey.Split("-?-");
+        List<SecurityKey> keys = [];
         
-        if(!user.IsValid)
-            throw new UnauthorizedAccessException("Token inválido");
-        
-        var identity = new ClaimsIdentity(user.Claims, "Firebase");
-        var principal = new ClaimsPrincipal(identity);
-        
-        httpContext.User = principal;
+        foreach (var cert in certificates)
+        {
+            var x509Cert = new X509Certificate2(Encoding.UTF8.GetBytes(cert));
+            var rsa = x509Cert.GetRSAPublicKey();
+            keys.Add(new RsaSecurityKey(rsa));
+        }
+
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = firebaseIssuer,
+            ValidateAudience = true,
+            ValidAudience = projectId,
+            ValidateLifetime = true,
+            IssuerSigningKeys = keys
+        };
+
+        try
+        {
+            httpContext.User = handler.ValidateToken(token, validationParameters, out _);
+        }
+        catch
+        {
+            throw new UnauthorizedAccessException("Usuário não está autenticado");
+        }
     }
 }

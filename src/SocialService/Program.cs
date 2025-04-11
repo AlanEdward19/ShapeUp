@@ -1,5 +1,6 @@
 using System.Globalization;
 using ServiceDefaults;
+using SharedKernel.Utils;
 using SocialService.Configuration;
 using SocialService.Connections;
 
@@ -15,6 +16,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
+AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureEndpoints();
