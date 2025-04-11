@@ -6,6 +6,8 @@ using AuthService.Permission.GetGroupPermissions;
 using AuthService.Permission.GetUserPermissions;
 using AuthService.Permission.GrantGroupPermission;
 using AuthService.Permission.GrantUserPermission;
+using AuthService.Permission.RemoveGroupPermission;
+using AuthService.Permission.RemoveUserPermission;
 using AuthService.Permission.UpdatePermission;
 
 namespace AuthService.Permission;
@@ -37,6 +39,8 @@ public static class PermissionModule
         services.AddScoped<IHandler<bool, GrantGroupPermissionCommand>, GrantGroupPermissionCommandHandler>();
         services.AddScoped<IHandler<bool, GrantUserPermissionCommand>, GrantUserPermissionCommandHandler>();
         services.AddScoped<IHandler<bool, UpdatePermissionCommand>, UpdatePermissionCommandHandler>();
+        services.AddScoped<IHandler<bool, RemoveUserPermissionCommand>, RemoveUserPermissionCommandHandler>();
+        services.AddScoped<IHandler<bool, RemoveGroupPermissionCommand>, RemoveGroupPermissionCommandHandler>();
         
         return services;
     }

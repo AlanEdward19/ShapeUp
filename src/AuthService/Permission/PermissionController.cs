@@ -8,6 +8,8 @@ using AuthService.Permission.GetGroupPermissions;
 using AuthService.Permission.GetUserPermissions;
 using AuthService.Permission.GrantGroupPermission;
 using AuthService.Permission.GrantUserPermission;
+using AuthService.Permission.RemoveGroupPermission;
+using AuthService.Permission.RemoveUserPermission;
 using AuthService.Permission.UpdatePermission;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -113,6 +115,38 @@ public class PermissionController(AuthDbContext dbContext) : ControllerBase
         await handler.HandleAsync(command, cancellationToken);
         
         return Created();
+    }
+    
+    [HttpDelete("/Group/{groupId:guid}/Permission/{permissionId:guid}")]
+    [AuthFilter(EPermissionAction.Write, "permission")]
+    public async Task<IActionResult> RemoveGroupPermission(Guid groupId, Guid permissionId,
+        [FromServices] IHandler<bool, RemoveGroupPermissionCommand> handler, CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        
+        RemoveGroupPermissionCommand command = new(groupId, permissionId);
+        RemoveGroupPermissionCommandValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
+        await handler.HandleAsync(command, cancellationToken);
+        
+        return NoContent();
+    }
+    
+    [HttpDelete("/User/{userId}/Permission/{permissionId:guid}")]
+    [AuthFilter(EPermissionAction.Delete, "permission")]
+    public async Task<IActionResult> RemoveUserPermission(string userId, Guid permissionId,
+        [FromServices] IHandler<bool, RemoveUserPermissionCommand> handler, CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        
+        RemoveUserPermissionCommand command = new(userId, permissionId);
+        RemoveUserPermissionCommandValidator validator = new(dbContext);
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
+        await handler.HandleAsync(command, cancellationToken);
+        
+        return NoContent();
     }
     
     [HttpPatch("{permissionId:guid}")]

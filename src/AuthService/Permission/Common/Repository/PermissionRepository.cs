@@ -116,6 +116,50 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task RemoveGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellationToken)
+    {
+        Group.Group? group = await dbContext.Groups
+            .Include(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
+            .FirstOrDefaultAsync(x => x.Id == groupId, cancellationToken);
+
+        if (group is null)
+            throw new NotFoundException($"Group with id '{groupId}' not found.");
+
+        Permission? permission = await dbContext.Permissions
+            .FirstOrDefaultAsync(x => x.Id == permissionId, cancellationToken);
+
+        if (permission is null)
+            throw new NotFoundException($"Permission with id '{permissionId}' not found.");
+
+        group.RemovePermission(permission);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task RemoveUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken)
+    {
+        User? user = await dbContext.Users
+            .Include(x => x.UserGroups)
+            .ThenInclude(x => x.Group)
+            .ThenInclude(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
+            .FirstOrDefaultAsync(x => x.ObjectId == userId, cancellationToken);
+        
+        if (user is null)
+            throw new NotFoundException($"User with id '{userId}' not found.");
+        
+        Permission? permission = await dbContext.Permissions
+            .FirstOrDefaultAsync(x => x.Id == permissionId, cancellationToken);
+
+        if (permission is null)
+            throw new NotFoundException($"Permission with id '{permissionId}' not found.");
+
+        user.UserGroups.First(x => x.Role == EGroupRole.Owner).Group.RemovePermission(permission);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<Permission> GetPermissionAsync(Guid permissionId, CancellationToken cancellationToken)
     {
         Permission? permission = await dbContext.Permissions
