@@ -1,4 +1,4 @@
-﻿namespace NutritionService.Food.ListNonRevisedFoods;
+﻿namespace NutritionService.Food.ListUnrevisedFoods;
 
 public class ListUnrevisedFoodsQuery
 {

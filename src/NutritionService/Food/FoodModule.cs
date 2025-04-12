@@ -4,7 +4,7 @@ using NutritionService.Food.Common.Repository;
 using NutritionService.Food.CreateFood;
 using NutritionService.Food.EditFood;
 using NutritionService.Food.GetFoodDetails;
-using NutritionService.Food.ListNonRevisedFoods;
+using NutritionService.Food.ListUnrevisedFoods;
 
 namespace NutritionService.Food;
 
@@ -34,7 +34,6 @@ public static class FoodModule
         services.AddScoped<IHandler<Food, CreateFoodCommand>, CreateFoodCommandHandler>();
         services.AddScoped<IHandler<Food, EditFoodCommand>, EditFoodCommandHandler>();
         services.AddScoped<IHandler<Food, ApproveFoodCommand>, ApproveFoodCommandHandler>();
-
         return services;
     }
 

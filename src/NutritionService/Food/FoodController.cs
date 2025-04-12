@@ -9,7 +9,7 @@ using NutritionService.Food.ApproveFood;
 using NutritionService.Food.CreateFood;
 using NutritionService.Food.EditFood;
 using NutritionService.Food.GetFoodDetails;
-using NutritionService.Food.ListNonRevisedFoods;
+using NutritionService.Food.ListUnrevisedFoods;
 
 namespace NutritionService.Food;
 

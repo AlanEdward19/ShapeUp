@@ -1,7 +1,7 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.Food.Common.Repository;
 
-namespace NutritionService.Food.ListNonRevisedFoods;
+namespace NutritionService.Food.ListUnrevisedFoods;
 
 public class ListUnrevisedFoodsQueryHandler(IFoodMongoRepository repository) : IHandler<IEnumerable<Food>, ListUnrevisedFoodsQuery>
 {

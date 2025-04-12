@@ -4,7 +4,7 @@ namespace NutritionService.Food.Common.Repository;
 
 public class FoodMongoRepository(IMongoDatabase database) : IFoodMongoRepository
 {
-    private readonly IMongoCollection<Food> _foodCollection = database.GetCollection<Food>("foods");
+    private readonly IMongoCollection<Food> _foodCollection = database.GetCollection<Food>("Foods");
 
     public async Task<Food?> GetFoodByNameAsync(string name)
     {
