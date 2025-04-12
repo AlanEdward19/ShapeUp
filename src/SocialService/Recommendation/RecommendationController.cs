@@ -1,4 +1,6 @@
-﻿using SocialService.Recommendation.GetFriendRecommendations;
+﻿using SharedKernel.Filters;
+using SharedKernel.Utils;
+using SocialService.Recommendation.GetFriendRecommendations;
 
 namespace SocialService.Recommendation;
 
@@ -7,7 +9,7 @@ namespace SocialService.Recommendation;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class RecommendationController : ControllerBase
 {
@@ -22,7 +24,7 @@ public class RecommendationController : ControllerBase
         CancellationToken cancellationToken)
     {
         GetFriendRecommendationQuery query = new();
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         GetFriendRecommendationQueryValidator validator = new();
         await validator.ValidateAndThrowAsync(query, cancellationToken);

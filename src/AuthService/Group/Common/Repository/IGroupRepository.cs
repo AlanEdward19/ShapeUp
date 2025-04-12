@@ -5,12 +5,15 @@ namespace AuthService.Group.Common.Repository;
 
 public interface IGroupRepository
 {
-    Task AddUserToGroupAsync(Guid groupId, Guid userId, EGroupRole role,
+    Task AddUserToGroupAsync(Guid groupId, string userId, EGroupRole role,
+        CancellationToken cancellationToken);
+    
+    Task ChangeUserRoleInGroupAsync(Guid groupId, string userId, EGroupRole role,
         CancellationToken cancellationToken);
 
-    Task RemoveUserFromGroupAsync(Guid groupId, Guid userId, CancellationToken cancellationToken);
+    Task RemoveUserFromGroupAsync(Guid groupId, string userId, CancellationToken cancellationToken);
 
-    Task AddAsync(Group group, Guid userId, CancellationToken cancellationToken);
+    Task AddAsync(Group group, string userId, CancellationToken cancellationToken);
 
     Task DeleteAsync(Guid groupId, CancellationToken cancellationToken);
 

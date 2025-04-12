@@ -11,7 +11,7 @@ public interface IFollowerGraphRepository
     /// <param name="followerProfileId"></param>
     /// <param name="followedProfileId"></param>
     /// <returns></returns>
-    Task FollowAsync(Guid followerProfileId, Guid followedProfileId);
+    Task FollowAsync(string followerProfileId, string followedProfileId);
 
     /// <summary>
     ///     Método para deixar de seguir um perfil: deleta a aresta de "FOLLOWING" entre os perfis
@@ -19,19 +19,19 @@ public interface IFollowerGraphRepository
     /// <param name="followerProfileId"></param>
     /// <param name="followedProfileId"></param>
     /// <returns></returns>
-    Task UnfollowAsync(Guid followerProfileId, Guid followedProfileId);
+    Task UnfollowAsync(string followerProfileId, string followedProfileId);
 
     /// <summary>
     ///     Método para verificar se um perfil segue outro: retorna a lista de ids de perfil que o perfil dado segue
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    Task<List<string>> GetFollowersAsync(Guid profileId);
+    Task<List<string>> GetFollowersAsync(string profileId);
 
     /// <summary>
     ///     Método para verificar se um perfil é seguido por outro: retorna a lista de ids de perfil que seguem o perfil dado
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    Task<List<string>> GetFollowingAsync(Guid profileId);
+    Task<List<string>> GetFollowingAsync(string profileId);
 }

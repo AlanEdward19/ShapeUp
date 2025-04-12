@@ -1,6 +1,8 @@
 using System.Globalization;
 using ServiceDefaults;
+using SharedKernel.Utils;
 using SocialService.Configuration;
+using SocialService.Connections;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -14,9 +16,9 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
+AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
-builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();
 
 var cultureInfo = new CultureInfo("en-US");

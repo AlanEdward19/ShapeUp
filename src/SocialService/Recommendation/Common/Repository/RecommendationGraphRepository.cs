@@ -14,7 +14,7 @@ public class RecommendationGraphRepository(GraphContext graphContext) : IRecomme
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<(Profile.Profile profile, int mutualFriends)>> GetFriendRecommendationsAsync(Guid profileId)
+    public async Task<IEnumerable<(Profile.Profile profile, int mutualFriends)>> GetFriendRecommendationsAsync(string profileId)
     {
         var cypherQuery = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})-[:FRIEND]->(friend:Profile)-[:FRIEND]->(fof:Profile)
@@ -45,7 +45,7 @@ public class RecommendationGraphRepository(GraphContext graphContext) : IRecomme
     /// <param name="profileId"></param>
     /// <param name="distanceInKm"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Profile.Profile>> GetFriendRecommendationsWithinDistanceAsync(Guid profileId, double distanceInKm)
+    public async Task<IEnumerable<Profile.Profile>> GetFriendRecommendationsWithinDistanceAsync(string profileId, double distanceInKm)
     {
         var cypherQuery = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})

@@ -9,7 +9,7 @@ public class RemoveFriendCommand
     ///     Construtor.
     /// </summary>
     /// <param name="profileId"></param>
-    public RemoveFriendCommand(Guid profileId)
+    public RemoveFriendCommand(string profileId)
     {
         ProfileId = profileId;
     }
@@ -17,5 +17,5 @@ public class RemoveFriendCommand
     /// <summary>
     ///     Id do perfil.
     /// </summary>
-    public Guid ProfileId { get; private set; }
+    public string ProfileId { get; private set; }
 }

@@ -3,10 +3,10 @@
 /// <summary>
 ///     Comando para deletar um perfil.
 /// </summary>
-public class DeleteProfileCommand(Guid profileId)
+public class DeleteProfileCommand(string profileId)
 {
     /// <summary>
     ///     Identificador do perfil.
     /// </summary>
-    public Guid ProfileId { get; private set; } = profileId;
+    public string ProfileId { get; private set; } = profileId;
 }

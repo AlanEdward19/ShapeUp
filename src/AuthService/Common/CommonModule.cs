@@ -1,4 +1,5 @@
 ﻿using AuthService.Common.User.Repository;
+using SharedKernel.Utils;
 
 namespace AuthService.Common;
 

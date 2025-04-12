@@ -7,7 +7,7 @@ public class CreatePermissionCommandHandler(IPermissionRepository repository) : 
 {
     public async Task<bool> HandleAsync(CreatePermissionCommand command, CancellationToken cancellationToken)
     {
-        Permission permission = new(command.Action, command.Theme);
+        Permission permission = new(Guid.NewGuid(), command.Action, command.Theme, DateTime.Now, DateTime.Now);
         
         await repository.AddAsync(permission, cancellationToken);
 

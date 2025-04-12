@@ -25,7 +25,7 @@ public class ReactToPostCommandHandler(
     public async Task<bool> HandleAsync(ReactToPostCommand command, CancellationToken cancellationToken)
     {
         Reaction reaction = new(ProfileContext.ProfileId, command);
-        Guid postOwnerId = await postGraphRepository.GetProfileIdByPostIdAsync(command.PostId);
+        string postOwnerId = await postGraphRepository.GetProfileIdByPostIdAsync(command.PostId);
         
         Profile.Profile profile = await profileGraphRepository.GetProfileAsync(ProfileContext.ProfileId);
         

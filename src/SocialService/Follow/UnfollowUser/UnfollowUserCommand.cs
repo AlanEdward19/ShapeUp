@@ -9,7 +9,7 @@ public class UnfollowUserCommand
     ///     Construtor do comando.
     /// </summary>
     /// <param name="unfollowedUserId"></param>
-    public UnfollowUserCommand(Guid unfollowedUserId)
+    public UnfollowUserCommand(string unfollowedUserId)
     {
         UnfollowedUserId = unfollowedUserId;
     }
@@ -17,5 +17,5 @@ public class UnfollowUserCommand
     /// <summary>
     ///     Id do usuário que será deixado de seguir.
     /// </summary>
-    public Guid UnfollowedUserId { get; private set; }
+    public string UnfollowedUserId { get; private set; }
 }

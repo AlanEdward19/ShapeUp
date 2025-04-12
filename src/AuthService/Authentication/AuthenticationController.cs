@@ -1,25 +1,27 @@
 ﻿using Asp.Versioning;
-using AuthService.Authentication.AuthenticateUser;
+using AuthService.Authentication.EnhanceToken;
+using AuthService.Common;
 using AuthService.Common.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Filters;
+using SharedKernel.Utils;
 
 namespace AuthService.Authentication;
 
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class AuthenticationController : ControllerBase
 {
-    [HttpPost("authenticate")]
-    public async Task<IActionResult> Authenticate([FromServices] IHandler<string, AuthenticateUserCommand> handler, 
-        CancellationToken cancellationToken)
+    [HttpPost("enhanceToken")]
+    public async Task<IActionResult> EnhanceToken([FromBody] EnhanceTokenCommand command,
+        [FromServices] IHandler<bool, EnhanceTokenCommand> handler, CancellationToken cancellationToken)
     {
-        string azureToken = Request.Headers["Authorization"].ToString().Split(" ").Last();
-        AuthenticateUserCommand command = new(azureToken);
-        var token = await handler.HandleAsync(command, cancellationToken);
-        return Ok(new { Token = token });
+        ProfileContext.ProfileId = User.GetObjectId();
+        
+        await handler.HandleAsync(command, cancellationToken);
+
+        return Created();
     }
 }

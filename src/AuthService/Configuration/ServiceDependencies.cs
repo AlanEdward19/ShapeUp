@@ -23,9 +23,9 @@ public static class ServiceDependencies
         services
             .ConfigureCommonRelatedDependencies()
             .ConfigureConnections(configuration)
-            .ConfigureAuthenticationRelatedDependencies()
             .ConfigureGroupRelatedDependencies()
-            .ConfigurePermissionRelatedDependencies();
+            .ConfigurePermissionRelatedDependencies()
+            .ConfigureAuthenticationRelatedDependencies();
 
         return services;
     }

@@ -1,7 +1,7 @@
 ﻿namespace AuthService.Group.RemoveUserFromGroup;
 
-public class RemoveUserFromGroupCommand(Guid groupId, Guid userId)
+public class RemoveUserFromGroupCommand(Guid groupId, string userId)
 {
     public Guid GroupId { get; private set; } = groupId;
-    public Guid UserId { get; private set; } = userId;
+    public string UserId { get; private set; } = userId;
 }

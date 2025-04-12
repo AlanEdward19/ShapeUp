@@ -21,10 +21,10 @@ public class BlobStorageProvider(string connectionString, ILogger<BlobStoragePro
     /// <param name="rows"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<IEnumerable<ProfilePicture>> GetProfilePicturesAsync(Guid profileId, int page, int rows)
+    public async Task<IEnumerable<ProfilePicture>> GetProfilePicturesAsync(string profileId, int page, int rows)
     {
         var profilePictures = new List<ProfilePicture>();
-        var containerName = SanitizeName(profileId.ToString());
+        var containerName = SanitizeName(profileId);
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
 
         if (!await containerClient.ExistsAsync())
@@ -214,17 +214,14 @@ public class BlobStorageProvider(string connectionString, ILogger<BlobStoragePro
         else
             name = Regex.Replace(name, "[^a-zA-Z0-9-.]", "_");
 
-        // Ensure that the blobName starts and ends with an alphanumeric character
+        // Ensure that the name starts and ends with an alphanumeric character
         if (!char.IsLetterOrDigit(name[0]))
             name = "_" + name;
 
         if (!char.IsLetterOrDigit(name[name.Length - 1]))
             name = name + "_";
 
-        name = name.Replace("-", "");
-        name = name.Replace("_", "");
-
-        return name;
+        return name.ToLower();
     }
 
     /// <summary>

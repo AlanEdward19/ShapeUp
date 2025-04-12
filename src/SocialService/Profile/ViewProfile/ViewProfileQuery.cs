@@ -3,10 +3,10 @@
 /// <summary>
 ///     Query para visualização de perfil.
 /// </summary>
-public class ViewProfileQuery(Guid profileId)
+public class ViewProfileQuery(string profileId)
 {
     /// <summary>
     ///     Id do perfil.
     /// </summary>
-    public Guid ProfileId { get; private set; } = profileId;
+    public string ProfileId { get; private set; } = profileId;
 }

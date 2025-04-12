@@ -6,12 +6,12 @@
 /// <param name="profileId"></param>
 /// <param name="page"></param>
 /// <param name="rows"></param>
-public class GetProfilePicturesQuery(Guid profileId, int? page, int? rows)
+public class GetProfilePicturesQuery(string profileId, int? page, int? rows)
 {
     /// <summary>
     ///     Id do perfil.
     /// </summary>
-    public Guid ProfileId { get; private set; } = profileId;
+    public string ProfileId { get; private set; } = profileId;
 
     /// <summary>
     ///     Página atual.

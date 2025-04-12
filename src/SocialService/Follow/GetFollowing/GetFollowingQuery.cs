@@ -8,7 +8,7 @@ public class GetFollowingQuery
     /// <summary>
     ///     Id do perfil.
     /// </summary>
-    public Guid ProfileId { get; private set; }
+    public string ProfileId { get; private set; }
 
     /// <summary>
     ///     Página.
@@ -24,7 +24,7 @@ public class GetFollowingQuery
     ///     Método para setar o Id do perfil.
     /// </summary>
     /// <param name="profileId"></param>
-    public void SetProfileId(Guid profileId)
+    public void SetProfileId(string profileId)
     {
         ProfileId = profileId;
     }

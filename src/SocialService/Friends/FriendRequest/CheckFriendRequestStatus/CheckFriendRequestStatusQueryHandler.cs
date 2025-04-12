@@ -27,10 +27,10 @@ public class CheckFriendRequestStatusQueryHandler(
         var sentRequests = await graphRepository.GetSentFriendRequestsAsync(ProfileContext.ProfileId);
 
         var invitesSentIdList = sentRequests
-            .Select(x => Guid.Parse(x.ReceiverProfileId))
+            .Select(x => x.ReceiverProfileId)
             .ToList();
         var invitesReceivedIdList = requests
-            .Select(x => Guid.Parse(x.SenderProfileId))
+            .Select(x => x.SenderProfileId)
             .ToList();
         var clearList = invitesSentIdList
             .Concat(invitesReceivedIdList)

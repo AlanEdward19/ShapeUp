@@ -25,7 +25,7 @@ public static class ConnectionsModule
 
         return services;
     }
-
+    
     private static IServiceCollection ConfigureNeo4J(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IDriver>(_ =>

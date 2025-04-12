@@ -1,6 +1,8 @@
 using System.Globalization;
 using AuthService.Configuration;
+using AuthService.Connections;
 using ServiceDefaults;
+using SharedKernel.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -14,9 +16,9 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
+AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
-builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();
 
 var cultureInfo = new CultureInfo("en-US");
@@ -32,7 +34,6 @@ app.ConfigureSwagger();
 app.MapEndpoints(configuration);
 app.ConfigureMiddleware();
 app.UpdateMigrations();
-
 
 app.UseHttpsRedirection();
 

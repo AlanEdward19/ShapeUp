@@ -13,7 +13,7 @@ public class ProfileDto(Profile profile, string state, string city)
     /// <summary>
     ///     Id do perfil
     /// </summary>
-    public Guid Id { get; private set; } = profile.Id;
+    public string Id { get; private set; } = profile.Id;
 
     /// <summary>
     ///     Email do perfil

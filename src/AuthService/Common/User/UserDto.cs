@@ -12,7 +12,7 @@ public class UserDto(User user)
     /// Id do usuário
     /// </summary>
     [Key]
-    public Guid ObjectId { get; private set; } = user.ObjectId;
+    public string ObjectId { get; private set; } = user.ObjectId;
 
     /// <summary>
     /// Email do usuário

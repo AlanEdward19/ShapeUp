@@ -6,13 +6,13 @@ namespace AuthService.Common.User;
 /// <summary>
 /// Classe que representa um usuário
 /// </summary>
-public class User(Guid objectId, string email)
+public class User(string objectId, string email)
 {
     /// <summary>
     /// Id do usuário
     /// </summary>
     [Key]
-    public Guid ObjectId { get; private set; } = objectId;
+    public string ObjectId { get; private set; } = objectId;
 
     /// <summary>
     /// Email do usuário

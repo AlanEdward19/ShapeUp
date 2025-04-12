@@ -41,7 +41,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     ///     Método para deletar um perfil
     /// </summary>
     /// <param name="id"></param>
-    public async Task DeleteProfileAsync(Guid id)
+    public async Task DeleteProfileAsync(string id)
     {
         var query = $@"
     MATCH (p:Profile {{id: '{id}'}})
@@ -64,7 +64,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<Profile?> GetProfileAsync(Guid id)
+    public async Task<Profile?> GetProfileAsync(string id)
     {
         var query = $@"
     MATCH (profile:Profile {{id: '{id}'}})
@@ -127,7 +127,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Profile>> GetProfilesAsync(IEnumerable<Guid> ids)
+    public async Task<IEnumerable<Profile>> GetProfilesAsync(IEnumerable<string> ids)
     {
         var idsString = string.Join("','", ids);
         var query = $@"
@@ -159,7 +159,7 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<bool> ProfileExistsAsync(Guid id)
+    public async Task<bool> ProfileExistsAsync(string id)
     {
         var query = $@"
     MATCH (p:Profile {{id: '{id}'}})

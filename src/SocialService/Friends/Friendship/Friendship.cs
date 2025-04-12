@@ -10,10 +10,10 @@ public class Friendship : GraphEntity
     /// </summary>
     /// <param name="profileAId"></param>
     /// <param name="profileBId"></param>
-    public Friendship(Guid profileAId, Guid profileBId)
+    public Friendship(string profileAId, string profileBId)
     {
-        ProfileAId = profileAId.ToString();
-        ProfileBId = profileBId.ToString();
+        ProfileAId = profileAId;
+        ProfileBId = profileBId;
     }
 
     /// <summary>

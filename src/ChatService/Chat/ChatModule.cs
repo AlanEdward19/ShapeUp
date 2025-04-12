@@ -5,6 +5,7 @@ using ChatService.Chat.GetMessages;
 using ChatService.Chat.GetRecentMessages;
 using ChatService.Chat.SendMessage;
 using ChatService.Common.Interfaces;
+using SharedKernel.Utils;
 
 namespace ChatService.Chat;
 

@@ -11,7 +11,7 @@ public class FollowerGraphRepository(GraphContext graphContext) : IFollowerGraph
     /// </summary>
     /// <param name="followerProfileId"></param>
     /// <param name="followedProfileId"></param>
-    public async Task FollowAsync(Guid followerProfileId, Guid followedProfileId)
+    public async Task FollowAsync(string followerProfileId, string followedProfileId)
     {
         var query =
             $"MATCH (a:Profile {{id: '{followerProfileId}'}}), (b:Profile {{id: '{followedProfileId}'}}) CREATE (a)-[:FOLLOWING]->(b)";
@@ -24,7 +24,7 @@ public class FollowerGraphRepository(GraphContext graphContext) : IFollowerGraph
     /// </summary>
     /// <param name="followerProfileId"></param>
     /// <param name="followedProfileId"></param>
-    public async Task UnfollowAsync(Guid followerProfileId, Guid followedProfileId)
+    public async Task UnfollowAsync(string followerProfileId, string followedProfileId)
     {
         var query =
             $"MATCH (a:Profile {{id: '{followerProfileId}'}})-[r:FOLLOWING]->(b:Profile {{id: '{followedProfileId}'}}) DELETE r";
@@ -37,7 +37,7 @@ public class FollowerGraphRepository(GraphContext graphContext) : IFollowerGraph
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<List<string>> GetFollowersAsync(Guid profileId)
+    public async Task<List<string>> GetFollowersAsync(string profileId)
     {
         var query = $"MATCH (a:Profile {{id: '{profileId}'}})<-[:FOLLOWING]-(f:Profile) RETURN f.id AS id";
 
@@ -51,7 +51,7 @@ public class FollowerGraphRepository(GraphContext graphContext) : IFollowerGraph
     /// </summary>
     /// <param name="profileId"></param>
     /// <returns></returns>
-    public async Task<List<string>> GetFollowingAsync(Guid profileId)
+    public async Task<List<string>> GetFollowingAsync(string profileId)
     {
         var query = $"MATCH (a:Profile {{id: '{profileId}'}})-[:FOLLOWING]->(f:Profile) RETURN f.id AS id";
 

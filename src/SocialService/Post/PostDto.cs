@@ -16,7 +16,7 @@ public class PostDto(Post post)
     /// <summary>
     /// Id do perfil que publicou o post.
     /// </summary>
-    public Guid PublisherId { get; private set; } = post.PublisherId;
+    public string PublisherId { get; private set; } = post.PublisherId;
     
     /// <summary>
     /// Primeiro nome do perfil que publicou o post.

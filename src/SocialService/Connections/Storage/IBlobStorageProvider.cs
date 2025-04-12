@@ -14,7 +14,7 @@ public interface IBlobStorageProvider
     /// <param name="page"></param>
     /// <param name="rows"></param>
     /// <returns></returns>
-    Task<IEnumerable<ProfilePicture>> GetProfilePicturesAsync(Guid profileId, int page, int rows);
+    Task<IEnumerable<ProfilePicture>> GetProfilePicturesAsync(string profileId, int page, int rows);
 
     /// <summary>
     ///     Método para ler um blob

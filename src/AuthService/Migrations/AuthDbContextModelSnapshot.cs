@@ -24,9 +24,8 @@ namespace AuthService.Migrations
 
             modelBuilder.Entity("AuthService.Common.User.User", b =>
                 {
-                    b.Property<Guid>("ObjectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ObjectId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -77,8 +76,8 @@ namespace AuthService.Migrations
 
             modelBuilder.Entity("AuthService.Group.UserGroup", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
@@ -115,6 +114,40 @@ namespace AuthService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0c9c9154-2479-406c-8bd2-e15a22c8b31e"),
+                            Action = 0,
+                            CreatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Theme = "permission",
+                            UpdatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("d3856d63-8c6d-41c7-bfb0-4a327662a6dc"),
+                            Action = 2,
+                            CreatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Theme = "permission",
+                            UpdatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("e0dcbf9b-1d24-413a-8839-5d70f9ace22a"),
+                            Action = 3,
+                            CreatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Theme = "permission",
+                            UpdatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("a86b7651-2aef-4f55-9c85-7b1f6d486f14"),
+                            Action = 1,
+                            CreatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Theme = "permission",
+                            UpdatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("AuthService.Group.GroupPermission", b =>

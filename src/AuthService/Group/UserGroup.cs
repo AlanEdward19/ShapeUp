@@ -13,7 +13,7 @@ public class UserGroup
     /// Id do usuário
     /// </summary>
     [ForeignKey(nameof(User))]
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     
     /// <summary>
     /// Usuário
@@ -40,7 +40,7 @@ public class UserGroup
         Role = role;
     }
     
-    public UserGroup(Guid group, Guid user, EGroupRole role)
+    public UserGroup(Guid group, string user, EGroupRole role)
     {
         UserId = user;
         GroupId = group;
@@ -49,7 +49,7 @@ public class UserGroup
 
     public UserGroup() { }
 
-    public UserGroup(Guid userId, User user, Guid groupId, Group group, EGroupRole role)
+    public UserGroup(string userId, User user, Guid groupId, Group group, EGroupRole role)
     {
         UserId = userId;
         User = user;
