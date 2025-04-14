@@ -21,13 +21,13 @@ public class SendMessageCommandHandler(IChatMongoRepository repository, INotific
     /// <returns></returns>
     public async Task<bool> HandleAsync(SendMessageCommand command, CancellationToken cancellationToken)
     {
-        await repository.SendMessageAsync(command.SenderId, command.ReceiverId, command.Message);
+        await repository.SendMessageAsync(command.GetSenderId(), command.ReceiverId, command.Message);
 
         NotificationEvent @event = new()
         {
             RecipientId = command.ReceiverId,
             Topic = ENotificationTopic.Message,
-            Content = $"Você recebeu uma mensagem de {command.SenderId}"
+            Content = $"Você recebeu uma mensagem de {command.GetSenderId()}"
         };
         
         await notificationPublisher.PublishNotificationEventAsync(@event);

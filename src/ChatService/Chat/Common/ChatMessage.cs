@@ -43,10 +43,10 @@ public class ChatMessage
     /// <param name="receiverId"></param>
     /// <param name="encryptionKey"></param>
     /// <param name="message"></param>
-    public ChatMessage(Guid senderId, Guid receiverId, string encryptionKey, string message)
+    public ChatMessage(string senderId, string receiverId, string encryptionKey, string message)
     {
-        SenderId = senderId.ToString();
-        ReceiverId = receiverId.ToString();
+        SenderId = senderId;
+        ReceiverId = receiverId;
         _encryptionKey = encryptionKey;
         EncryptedMessage = EncryptMessage(message);
     }

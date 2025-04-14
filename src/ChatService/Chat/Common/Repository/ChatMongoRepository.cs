@@ -79,7 +79,7 @@ public class ChatMongoRepository(IMongoDatabase database, IHubContext<ChatHub> h
     /// <param name="receiverId"></param>
     /// <param name="message"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public async Task SendMessageAsync(Guid senderId, Guid receiverId, string message)
+    public async Task SendMessageAsync(string senderId, string receiverId, string message)
     {
         string encryptionKey = configuration["EncryptionKey"] ?? throw new ArgumentNullException("EncryptionKey");
         ChatMessage chatMessage = new(senderId, receiverId, encryptionKey, message);

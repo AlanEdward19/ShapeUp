@@ -8,12 +8,12 @@ public class GetMessagesQuery
     /// <summary>
     /// Id do perfil A
     /// </summary>
-    public Guid ProfileAId { get; private set; }
+    public string ProfileAId { get; private set; }
     
     /// <summary>
     /// Id do perfil B
     /// </summary>
-    public Guid ProfileBId { get; private set; }
+    public string ProfileBId { get; private set; }
     
     /// <summary>
     /// Número da página
@@ -24,13 +24,13 @@ public class GetMessagesQuery
     /// Método para definir o Id do perfil A
     /// </summary>
     /// <param name="profileId"></param>
-    public void SetProfileAId(Guid profileId) => ProfileAId = profileId;
+    public void SetProfileAId(string profileId) => ProfileAId = profileId;
     
     /// <summary>
     /// Método para definir o Id do perfil B
     /// </summary>
     /// <param name="profileId"></param>
-    public void SetProfileBId(Guid profileId) => ProfileBId = profileId;
+    public void SetProfileBId(string profileId) => ProfileBId = profileId;
     
     /// <summary>
     /// Método para definir a página
