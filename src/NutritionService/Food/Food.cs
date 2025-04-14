@@ -11,6 +11,7 @@ namespace NutritionService.Food;
 /// <param name="brand"></param>
 /// <param name="barCode"></param>
 /// <param name="nutritionalInfo"></param>
+/// <param name="totalMass"></param>
 public class Food(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
 {
     /// <summary>
@@ -49,6 +50,7 @@ public class Food(string name, string brand, string barCode, NutritionalInfo nut
     /// </summary>
     [BsonElement("nutritionalInfo")]
     public NutritionalInfo NutritionalInfo { get; private set; } = nutritionalInfo;
+    
 
     /// <summary>
     /// Método para assinalar o alimento como revisado
@@ -65,12 +67,14 @@ public class Food(string name, string brand, string barCode, NutritionalInfo nut
     {
         Id = ObjectId.GenerateNewId().ToString();
     }
+
     /// <summary>
     /// Método para atualizar as informações do alimento
     /// </summary>
     /// <param name="name"></param>
     /// <param name="brand"></param>
     /// <param name="nutritionalInfo"></param>
+    /// <param name="totalMass"></param>
     public void UpdateInfo(string name, string brand, NutritionalInfo nutritionalInfo)
     {
         Name = name;

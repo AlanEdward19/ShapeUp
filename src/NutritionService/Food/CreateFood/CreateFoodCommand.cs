@@ -2,12 +2,12 @@
 
 namespace NutritionService.Food.CreateFood;
 
-public class CreateFoodCommand(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
+public class CreateFoodCommand
 {
-    public string Name { get; private set; } = name;
-    public string Brand { get; private set; } = brand;
-    public string BarCode { get; private set; } = barCode;
-    public NutritionalInfo NutritionalInfo { get; private set; } = nutritionalInfo;
+    public string Name { get; private set; }
+    public string Brand { get; private set; }
+    public string BarCode { get; private set; }
+    public NutritionalInfo NutritionalInfo { get; private set; }
 
     public Food ToFood()
     {
@@ -16,5 +16,15 @@ public class CreateFoodCommand(string name, string brand, string barCode, Nutrit
         food.GenerateId();
         
         return food;
+    }
+    public CreateFoodCommand(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
+    {
+        if (string.IsNullOrWhiteSpace(barCode))
+            throw new ArgumentException("Barcode is required.", nameof(barCode));
+
+        Name = name;
+        Brand = brand;
+        BarCode = barCode;
+        NutritionalInfo = nutritionalInfo;
     }
 }

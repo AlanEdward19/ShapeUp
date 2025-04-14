@@ -4,15 +4,20 @@ namespace NutritionService.Food.Common.Repository;
 
 public class FoodMongoRepository(IMongoDatabase database) : IFoodMongoRepository
 {
-    private readonly IMongoCollection<Food> _foodCollection = database.GetCollection<Food>("Foods");
+    private readonly IMongoCollection<Food> _foodCollection = database.GetCollection<Food>("foods");
 
-    public async Task<Food?> GetFoodByNameAsync(string name)
+    public async Task<List<Food>?> GetFoodsByNameAsync(string name)
     {
-        return await _foodCollection.Find(food => food.Name == name).FirstOrDefaultAsync();
+        var foodList = await _foodCollection
+            .Find(food => food.Name == name)
+            .ToListAsync();
+        
+        return foodList;
     }
 
     public async Task<Food?> GetFoodByBarCodeAsync(string? barCode)
     {
+        if (string.IsNullOrWhiteSpace(barCode)) return null;
         return await _foodCollection.Find(food => food.BarCode == barCode).FirstOrDefaultAsync();
     }
 
@@ -23,13 +28,13 @@ public class FoodMongoRepository(IMongoDatabase database) : IFoodMongoRepository
 
     public async Task UpdateFoodAsync(Food updatedFood)
     {
-        var filter = Builders<Food>.Filter.Eq("barCode", updatedFood.BarCode);
+        var filter = Builders<Food>.Filter.Eq(nameof(Food.BarCode), updatedFood.BarCode);
         await _foodCollection.ReplaceOneAsync(filter, updatedFood);
     }
 
     public async Task DeleteFoodAsync(string? barCode)
     {
-        var filter = Builders<Food>.Filter.Eq("barCode", barCode);
+        var filter = Builders<Food>.Filter.Eq(nameof(Food.BarCode), barCode);
         await _foodCollection.DeleteOneAsync(filter);
     }
     

@@ -4,8 +4,6 @@ namespace NutritionService.Food.Common;
 
 public class Micronutrients(double cholesterol, double sodium, double calcium, double iron, double potassium)
 {
-    [BsonElement("cholesterol")] public double Cholesterol { get; private set; } = cholesterol;
-
     [BsonElement("sodium")] public double Sodium { get; private set; } = sodium;
 
     [BsonElement("calcium")] public double Calcium { get; private set; } = calcium;

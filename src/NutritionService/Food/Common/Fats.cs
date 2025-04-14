@@ -7,7 +7,8 @@ public class Fats(
     double saturatedFat,
     double transFat,
     double polyunsaturatedFat,
-    double monounsaturatedFat)
+    double monounsaturatedFat,
+    double cholesterol)
 {
     [BsonElement("total")]
     public double Total { get; private set; } = total;
@@ -23,4 +24,7 @@ public class Fats(
     
     [BsonElement("monounsaturatedFat")]
     public double MonounsaturatedFat { get; private set; } = monounsaturatedFat;
+    
+    [BsonElement("cholesterol")]
+    public double Cholesterol { get; private set; } = cholesterol;
 }

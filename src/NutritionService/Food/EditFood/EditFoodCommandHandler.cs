@@ -13,10 +13,10 @@ public class EditFoodCommandHandler(IFoodMongoRepository repository) : IHandler<
         if (existingFood == null)
             throw new NotFoundException($"Food with barcode '{command.BarCode}' not found");
         
-        Food food = command.ToFood();
+        existingFood.UpdateInfo(command.Name, command.Brand, command.NutritionalInfo);
         
-        await repository.UpdateFoodAsync(food);
+        await repository.UpdateFoodAsync(existingFood);
 
-        return food;
+        return existingFood;
     }
 }
