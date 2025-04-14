@@ -29,26 +29,26 @@ var socialService = builder
         .WithReference(storage.AddBlobs("BlobStorage"))
         .WithReference(redis)
         .WithReference(search);
-//
-// var notificationService = builder
-//         .AddProject<Projects.NotificationService>("NotificationService")
-//         .WaitFor(redis)
-//         .WithReference(redis)
-//         .WithExternalHttpEndpoints();
-//
-// var chatService = builder
-//         .AddProject<Projects.ChatService>("ChatService")
-//         .WaitFor(redis)
-//         .WaitFor(mongo)
-//         .WithReference(redis)
-//         .WithReference(mongo)
-//         .WithExternalHttpEndpoints();
-//
-// var nutritionService = builder
-//         .AddProject<Projects.NutritionService>("NutritionService")
-//         .WaitFor(mongo)
-//         .WithReference(mongo)
-//         .WithExternalHttpEndpoints();
+
+var notificationService = builder
+        .AddProject<Projects.NotificationService>("NotificationService")
+        .WaitFor(redis)
+        .WithReference(redis)
+        .WithExternalHttpEndpoints();
+
+var chatService = builder
+        .AddProject<Projects.ChatService>("ChatService")
+        .WaitFor(redis)
+        .WaitFor(mongo)
+        .WithReference(redis)
+        .WithReference(mongo)
+        .WithExternalHttpEndpoints();
+
+var nutritionService = builder
+        .AddProject<Projects.NutritionService>("NutritionService")
+        .WaitFor(mongo)
+        .WithReference(mongo)
+        .WithExternalHttpEndpoints();
 
 var authService = builder
         .AddProject<Projects.AuthService>("AuthService")

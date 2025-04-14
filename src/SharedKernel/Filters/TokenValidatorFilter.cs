@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -48,7 +49,11 @@ public class TokenValidatorFilter: Attribute, IAsyncAuthorizationFilter
 
         try
         {
-            httpContext.User = handler.ValidateToken(token, validationParameters, out _);
+            handler.ValidateToken(token, validationParameters, out _);
+
+            var securityToken  = handler.ReadJwtToken(token);
+            
+            httpContext.User = new ClaimsPrincipal(new ClaimsIdentity(securityToken.Claims, "Firebase"));
         }
         catch
         {
