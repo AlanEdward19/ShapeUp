@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using NutritionService.Food.Common;
+using NutritionService.Common;
 
 namespace NutritionService.Food;
 
@@ -11,8 +11,7 @@ namespace NutritionService.Food;
 /// <param name="brand"></param>
 /// <param name="barCode"></param>
 /// <param name="nutritionalInfo"></param>
-/// <param name="totalMass"></param>
-public class Food(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
+public class Food(string name, string? brand, string? barCode, NutritionalInfo? nutritionalInfo)
 {
     /// <summary>
     /// Identitificador do alimento
@@ -31,13 +30,15 @@ public class Food(string name, string brand, string barCode, NutritionalInfo nut
     /// Marca do alimento
     /// </summary>
     [BsonElement("brand")]
-    public string Brand { get; private set; } = brand;
+    [BsonIgnoreIfNull]
+    public string? Brand { get; private set; } = brand;
     
     /// <summary>
     /// Còdigo de barras do alimento
     /// </summary>
     [BsonElement("barCode")]
-    public string BarCode { get; private set; } = barCode;
+    [BsonIgnoreIfNull]
+    public string? BarCode { get; private set; } = barCode;
     
     /// <summary>
     /// Status de revisão do alimento
@@ -49,7 +50,8 @@ public class Food(string name, string brand, string barCode, NutritionalInfo nut
     /// Informações nutricionais do alimento
     /// </summary>
     [BsonElement("nutritionalInfo")]
-    public NutritionalInfo NutritionalInfo { get; private set; } = nutritionalInfo;
+    [BsonIgnoreIfNull]
+    public NutritionalInfo? NutritionalInfo { get; private set; } = nutritionalInfo;
     
 
     /// <summary>
@@ -74,7 +76,6 @@ public class Food(string name, string brand, string barCode, NutritionalInfo nut
     /// <param name="name"></param>
     /// <param name="brand"></param>
     /// <param name="nutritionalInfo"></param>
-    /// <param name="totalMass"></param>
     public void UpdateInfo(string name, string brand, NutritionalInfo nutritionalInfo)
     {
         Name = name;

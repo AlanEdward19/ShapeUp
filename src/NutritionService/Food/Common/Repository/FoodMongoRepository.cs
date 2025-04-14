@@ -6,19 +6,15 @@ public class FoodMongoRepository(IMongoDatabase database) : IFoodMongoRepository
 {
     private readonly IMongoCollection<Food> _foodCollection = database.GetCollection<Food>("foods");
 
-    public async Task<List<Food>?> GetFoodsByNameAsync(string name)
+    public async Task<Food>? GetFoodByIdAsync(string id)
     {
-        var foodList = await _foodCollection
-            .Find(food => food.Name == name)
-            .ToListAsync();
-        
-        return foodList;
+        return await database.GetCollection<Food>("foods").Find(f => f.Id == id).SingleOrDefaultAsync();
     }
 
     public async Task<Food?> GetFoodByBarCodeAsync(string? barCode)
     {
         if (string.IsNullOrWhiteSpace(barCode)) return null;
-        return await _foodCollection.Find(food => food.BarCode == barCode).FirstOrDefaultAsync();
+        return await _foodCollection.Find(food => food.BarCode == barCode).SingleOrDefaultAsync();
     }
 
     public async Task InsertFoodAsync(Food food)

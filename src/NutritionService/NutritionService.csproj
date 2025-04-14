@@ -31,6 +31,9 @@
 
     <ItemGroup>
       <Folder Include="Connections\Migrations\" />
+      <Folder Include="Dish\Common\" />
+      <Folder Include="Dish\GetDishDetails\" />
+      <Folder Include="Dish\ListUnrevisedDishes\" />
       <Folder Include="Food\DeleteFood\" />
     </ItemGroup>
 

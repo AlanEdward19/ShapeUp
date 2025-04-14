@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace NutritionService.Food.Common;
+namespace NutritionService.Common;
 
 public class Macronutrients(double protein, Carbohydrates carbohydrates, Fats fats)
 {

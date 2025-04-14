@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace NutritionService.Food.Common;
+namespace NutritionService.Common;
 
 public class Fats(
     double total,

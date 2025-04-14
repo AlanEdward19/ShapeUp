@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace NutritionService.Food.Common;
+namespace NutritionService.Common;
 
 /// <summary>
 /// Classe que representa as informações nutricionais de um alimento

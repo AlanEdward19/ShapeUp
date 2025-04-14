@@ -2,7 +2,7 @@
 
 public interface IFoodMongoRepository
 {
-    Task<List<Food>?> GetFoodsByNameAsync(string name);
+    Task<Food>? GetFoodByIdAsync(string id);
     Task<Food?> GetFoodByBarCodeAsync(string? barCode);
     Task InsertFoodAsync(Food food);
     Task UpdateFoodAsync(Food updatedFood);
