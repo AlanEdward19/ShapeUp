@@ -55,7 +55,7 @@ public class TokenValidatorFilter: Attribute, IAsyncAuthorizationFilter
             
             httpContext.User = new ClaimsPrincipal(new ClaimsIdentity(securityToken.Claims, "Firebase"));
         }
-        catch
+        catch(Exception ex)
         {
             throw new UnauthorizedAccessException("Usuário não está autenticado");
         }
