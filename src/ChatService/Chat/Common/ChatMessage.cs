@@ -34,7 +34,7 @@ public class ChatMessage
     /// <summary>
     /// Timestamp da mensagem
     /// </summary>
-    public DateTime Timestamp { get; private set; } = DateTime.Now;
+    public DateTime Timestamp { get; private set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Construtor da classe
