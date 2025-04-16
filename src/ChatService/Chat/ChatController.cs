@@ -4,10 +4,9 @@ using ChatService.Chat.GetMessages;
 using ChatService.Chat.GetRecentMessages;
 using ChatService.Chat.SendMessage;
 using ChatService.Common.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web;
+using SharedKernel.Filters;
+using SharedKernel.Utils;
 
 namespace ChatService.Chat;
 
@@ -16,7 +15,7 @@ namespace ChatService.Chat;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class ChatController : ControllerBase
 {
@@ -32,7 +31,7 @@ public class ChatController : ControllerBase
         GetRecentMessagesQuery> handler, CancellationToken cancellationToken, [FromQuery] int page = 1)
     {
         GetRecentMessagesQuery query = new();
-        Guid profileId = Guid.Parse(User.GetObjectId());
+        string profileId = User.GetObjectId();
         query.SetProfileId(profileId);
         query.SetPage(page);
 
@@ -48,11 +47,11 @@ public class ChatController : ControllerBase
     /// <param name="page"></param>
     /// <returns></returns>
     [HttpGet("messages/getMessages/{profileBId}")]
-    public async Task<IActionResult> GetMessages(Guid profileBId, [FromServices] IHandler<IEnumerable<ChatMessage>,
+    public async Task<IActionResult> GetMessages(string profileBId, [FromServices] IHandler<IEnumerable<ChatMessage>,
         GetMessagesQuery> handler, CancellationToken cancellationToken, [FromQuery] int page = 1)
     {
         GetMessagesQuery query = new();
-        Guid profileId = Guid.Parse(User.GetObjectId());
+        string profileId = User.GetObjectId();
         query.SetProfileAId(profileId);
         query.SetProfileBId(profileBId);
         query.SetPage(page);
@@ -72,7 +71,7 @@ public class ChatController : ControllerBase
         [FromServices] IHandler<bool, SendMessageCommand> handler,
         CancellationToken cancellationToken)
     {
-        Guid profileId = Guid.Parse(User.GetObjectId());
+        string profileId = User.GetObjectId();
         command.SetSenderId(profileId);
 
         bool result = await handler.HandleAsync(command, cancellationToken);

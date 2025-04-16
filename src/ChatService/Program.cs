@@ -20,7 +20,6 @@ builder.Services.AddCors(options =>
 AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
-builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();
 
 var cultureInfo = new CultureInfo("pt-BR");

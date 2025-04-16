@@ -8,7 +8,7 @@ public class GetRecentMessagesQuery
     /// <summary>
     /// Id do perfil que deseja obter as mensagens
     /// </summary>
-    public Guid ProfileId { get; private set; }
+    public string ProfileId { get; private set; }
     
     /// <summary>
     /// Página que deseja obter as mensagens
@@ -19,7 +19,7 @@ public class GetRecentMessagesQuery
     /// Método para definir o Id do perfil que deseja obter as mensagens
     /// </summary>
     /// <param name="profileId"></param>
-    public void SetProfileId(Guid profileId) => ProfileId = profileId;
+    public void SetProfileId(string profileId) => ProfileId = profileId;
     
     /// <summary>
     /// Método para definir a página que deseja obter as mensagens
