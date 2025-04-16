@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "BDS.DataPack.SharedKernel.Protos";
+
+package NotificationProto;
+
+service NotificationService {
+  rpc sendNotification (NotificationParams) returns (NotificationResponse);
+}
+
+message NotificationParams {
+  string recipientId = 1;
+  int32 topic = 2;
+  string content = 3;
+  string metadata = 4;
+}
+
+message NotificationResponse {
+  bool success = 1;
+}

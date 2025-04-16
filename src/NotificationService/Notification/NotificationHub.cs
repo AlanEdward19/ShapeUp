@@ -1,9 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Identity.Web;
 using NotificationService.Notification.Common.Service;
 
-namespace NotificationService.Notification.Common;
+namespace NotificationService.Notification;
 
 public class NotificationHub(INotificationService notificationService) : Hub
 {

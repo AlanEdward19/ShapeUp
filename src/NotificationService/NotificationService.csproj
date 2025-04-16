@@ -14,6 +14,11 @@
 
     <ItemGroup>
         <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+        <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.71.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" NoWarn="NU1605"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.0" NoWarn="NU1605"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0"/>
@@ -40,6 +45,10 @@
     <ItemGroup>
       <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
       <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="..\SharedKernel\Protos\notification.proto" GrpcServices="Server" />
     </ItemGroup>
 
 </Project>
