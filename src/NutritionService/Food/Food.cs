@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using NutritionService.Common;
+using NutritionService.Food.Common;
 
 namespace NutritionService.Food;
 
@@ -11,34 +11,34 @@ namespace NutritionService.Food;
 /// <param name="brand"></param>
 /// <param name="barCode"></param>
 /// <param name="nutritionalInfo"></param>
-public class Food(string name, string? brand, string? barCode, NutritionalInfo? nutritionalInfo)
+public class Food
 {
     /// <summary>
     /// Identitificador do alimento
     /// </summary>
     [BsonId]
     [BsonRepresentation(BsonType.String)]
-    public string Id { get; private set; }
+    public string Id { get; private set; } = "";
     
     /// <summary>
     /// Nome do alimento
     /// </summary>
     [BsonElement("name")]
-    public string Name { get; private set; } = name;
+    public string Name { get; private set; }
     
     /// <summary>
     /// Marca do alimento
     /// </summary>
     [BsonElement("brand")]
     [BsonIgnoreIfNull]
-    public string? Brand { get; private set; } = brand;
+    public string? Brand { get; private set; }
     
     /// <summary>
     /// Còdigo de barras do alimento
     /// </summary>
     [BsonElement("barCode")]
     [BsonIgnoreIfNull]
-    public string? BarCode { get; private set; } = barCode;
+    public string? BarCode { get; private set; }
     
     /// <summary>
     /// Status de revisão do alimento
@@ -50,8 +50,22 @@ public class Food(string name, string? brand, string? barCode, NutritionalInfo? 
     /// Informações nutricionais do alimento
     /// </summary>
     [BsonElement("nutritionalInfo")]
-    [BsonIgnoreIfNull]
-    public NutritionalInfo? NutritionalInfo { get; private set; } = nutritionalInfo;
+    public NutritionalInfo NutritionalInfo { get; private set; }
+    
+    /// <summary>
+    /// Construtor da classe Food
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="brand"></param>
+    /// <param name="barCode"></param>
+    /// <param name="nutritionalInfo"></param>
+    public Food(string name, string? brand, string? barCode, NutritionalInfo nutritionalInfo)
+    {
+        Name = name;
+        Brand = brand;
+        BarCode = barCode;
+        NutritionalInfo = nutritionalInfo;
+    }
     
 
     /// <summary>
@@ -65,7 +79,7 @@ public class Food(string name, string? brand, string? barCode, NutritionalInfo? 
     /// <summary>
     /// Método para gerar um novo identificador para o alimento
     /// </summary>
-    public void GenerateId()
+    public void SetId()
     {
         Id = ObjectId.GenerateNewId().ToString();
     }
@@ -75,12 +89,13 @@ public class Food(string name, string? brand, string? barCode, NutritionalInfo? 
     /// </summary>
     /// <param name="name"></param>
     /// <param name="brand"></param>
+    /// <param name="barCode"></param>
     /// <param name="nutritionalInfo"></param>
-    public void UpdateInfo(string name, string brand, NutritionalInfo nutritionalInfo)
+    public void UpdateInfo(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
     {
         Name = name;
         Brand = brand;
+        BarCode = barCode;
         NutritionalInfo = nutritionalInfo;
     }
-
 }

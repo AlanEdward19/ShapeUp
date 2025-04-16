@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace NutritionService.Common;
+namespace NutritionService.Food.Common;
 
 public class SugarDetails(double total, double addedSugar, double sugarAlcohols)
 {

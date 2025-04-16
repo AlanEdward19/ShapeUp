@@ -8,10 +8,10 @@ public class GetFoodDetailsQueryHandler(IFoodMongoRepository repository) : IHand
 {
     public async Task<Food> HandleAsync(GetFoodDetailsQuery query, CancellationToken cancellationToken)
     {
-        var food = await repository.GetFoodByBarCodeAsync(query.BarCode);
+        var food = await repository.GetFoodByIdAsync(query.Id);
         
         if (food == null)
-            throw new NotFoundException($"Food with barcode '{query.BarCode}' not found");
+            throw new NotFoundException($"Food with id '{query.Id}' not found");
 
         return food;
     }

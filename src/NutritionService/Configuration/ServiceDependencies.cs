@@ -1,5 +1,7 @@
 ﻿using NutritionService.Connections;
+using NutritionService.Dish;
 using NutritionService.Food;
+using NutritionService.Meal;
 
 namespace NutritionService.Configuration;
 
@@ -18,7 +20,9 @@ public static class ServiceDependencies
         IConfiguration configuration)
     {
         services.ConfigureConnections(configuration)
-            .ConfigureFoodRelatedDependencies();
+            .ConfigureFoodRelatedDependencies()
+            .ConfigureDishRelatedDependencies()
+            .ConfigureMealRelatedDependencies();
         
         return services;
     }

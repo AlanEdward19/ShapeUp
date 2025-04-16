@@ -1,15 +1,14 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NutritionService.Common;
 using NutritionService.Common.Interfaces;
-using NutritionService.Common.Utils;
 using NutritionService.Food.ApproveFood;
 using NutritionService.Food.CreateFood;
 using NutritionService.Food.EditFood;
 using NutritionService.Food.GetFoodDetails;
 using NutritionService.Food.ListUnrevisedFoods;
+using SharedKernel.Filters;
+using SharedKernel.Utils;
 
 namespace NutritionService.Food;
 
@@ -18,7 +17,7 @@ namespace NutritionService.Food;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class FoodController : ControllerBase
 {
@@ -42,25 +41,25 @@ public class FoodController : ControllerBase
     /// <summary>
     /// Rota para pegar detalhes de uma comida
     /// </summary>
-    /// <param name="barCode"></param>
+    /// <param name="id"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("getFoodDetails/{barCode}")]
-    public async Task<IActionResult> GetFoodDetails(string barCode,
+    [HttpGet("getFoodDetails/{id}")]
+    public async Task<IActionResult> GetFoodDetails(string id,
         [FromServices] IHandler<Food, GetFoodDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
-        return Ok(await handler.HandleAsync(new GetFoodDetailsQuery(barCode), cancellationToken));
+        return Ok(await handler.HandleAsync(new GetFoodDetailsQuery(id), cancellationToken));
     }
 
     /// <summary>
     ///     Rota para criar uma comida
     /// </summary>
     /// <returns></returns>
-    [HttpPost("createFood")]
+    [HttpPost]
     public async Task<IActionResult> CreateFood([FromServices] IHandler<Food, CreateFoodCommand> handler,
         [FromBody] CreateFoodCommand command, CancellationToken cancellationToken)
     {
@@ -72,18 +71,18 @@ public class FoodController : ControllerBase
     /// <summary>
     /// Rota para editar uma comida
     /// </summary>
-    /// <param name="barCode"></param>
+    /// <param name="id"></param>
     /// <param name="handler"></param>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPut("editFood/{barCode}")]
-    public async Task<IActionResult> EditFood(string barCode, [FromServices] IHandler<Food, EditFoodCommand> handler,
+    [HttpPut("editFood/{id}")]
+    public async Task<IActionResult> EditFood(string id, [FromServices] IHandler<Food, EditFoodCommand> handler,
         [FromBody] EditFoodCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
-        command.SetBarCode(barCode);
+        command.SetId(id);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }

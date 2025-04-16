@@ -14,7 +14,7 @@ public class CreateFoodCommand
     {
         Food food = new(Name, Brand, BarCode, NutritionalInfo);
         
-        food.GenerateId();
+        food.SetId();
         
         return food;
     }

@@ -8,12 +8,12 @@ public class EditFoodCommandHandler(IFoodMongoRepository repository) : IHandler<
 {
     public async Task<Food> HandleAsync(EditFoodCommand command, CancellationToken cancellationToken)
     {
-        var existingFood = await repository.GetFoodByBarCodeAsync(command.BarCode);
+        var existingFood = await repository.GetFoodByIdAsync(command.Id);
         
         if (existingFood == null)
-            throw new NotFoundException($"Food with barcode '{command.BarCode}' not found");
+            throw new NotFoundException($"Food with id '{command.Id}' not found");
         
-        existingFood.UpdateInfo(command.Name, command.Brand, command.NutritionalInfo);
+        existingFood.UpdateInfo(command.Name, command.Brand, command.BarCode, command.NutritionalInfo);
         
         await repository.UpdateFoodAsync(existingFood);
 

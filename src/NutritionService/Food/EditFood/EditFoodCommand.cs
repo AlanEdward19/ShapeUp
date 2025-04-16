@@ -3,16 +3,16 @@ using NutritionService.Food.Common;
 
 namespace NutritionService.Food.EditFood;
 
-public class EditFoodCommand(string name, string brand, NutritionalInfo nutritionalInfo, double totalMass)
+public class EditFoodCommand(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
 {
-    public string Name { get; private set; } = name;
-    public string Brand { get; private set; } = brand;
-    public string BarCode { get; private set; } = "";
-    public NutritionalInfo NutritionalInfo { get; private set; } = nutritionalInfo;
-    public double TotalMass { get; private set; } = totalMass;
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = name;
+    public string Brand { get; set; } = brand;
+    public string BarCode { get; set; } = barCode;
+    public NutritionalInfo NutritionalInfo { get; set; } = nutritionalInfo;
 
-    public void SetBarCode(string barCode)
+    public void SetId(string id)
     {
-        BarCode = barCode;
+        Id = id;
     }
 }

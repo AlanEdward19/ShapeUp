@@ -8,11 +8,6 @@ public class CreateDishCommandHandler(IDishMongoRepository repository) : IHandle
 {
     public async Task<Dish> HandleAsync(CreateDishCommand item, CancellationToken cancellationToken)
     {
-        var existingDish = await repository.GetDishByBarCodeAsync(item.BarCode);
-        
-        if (existingDish != null)
-            throw new DishAlreadyExistsException(item.BarCode);
-
         var dish = item.ToDish();
         
         await repository.InsertDishAsync(dish);

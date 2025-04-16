@@ -15,12 +15,6 @@ public class DishMongoRepository(IMongoDatabase database) : IDishMongoRepository
         return await _dishCollection.Find(d => d.Id == id).SingleOrDefaultAsync();
     }
 
-    public async Task<Dish?> GetDishByBarCodeAsync(string? barCode)
-    {
-        if (string.IsNullOrWhiteSpace(barCode)) return null;
-        return await _dishCollection.Find(d => d.BarCode == barCode).SingleOrDefaultAsync();
-    }
-
     public async Task InsertDishAsync(Dish dish)
     {
         await _dishCollection.InsertOneAsync(dish);

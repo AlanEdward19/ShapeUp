@@ -1,71 +1,40 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using NutritionService.Common;
 
 namespace NutritionService.Dish;
 
 /// <summary>
 /// Classe que representa um prato
 /// </summary>
-public class Dish(string name, string? brand, string? barCode, NutritionalInfo? nutritionalInfo, List<Food.Food> ingredients)
+public class Dish
 {
     /// <summary>
     /// Identificador do prato
     /// </summary>
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public string Id { get; private set; } =  "";
 
     /// <summary>
     /// Nome do prato
     /// </summary>
-    public string Name { get; set; } = name;
-    
-    /// <summary>
-    /// Marca do prato
-    /// </summary>
-    [BsonElement("brand")]
-    [BsonIgnoreIfNull]
-    public string? Brand { get; private set; } = brand;
-    
-    /// <summary>
-    /// Còdigo de barras do prato
-    /// </summary>
-    [BsonElement("barCode")]
-    [BsonIgnoreIfNull]
-    public string? BarCode { get; private set; } = barCode;
-    
-    /// <summary>
-    /// Status de revisão do prato
-    /// </summary>
-    [BsonElement("revised")]
-    public bool Revised { get; private set; } = false;
-    
-    /// <summary>
-    /// Informações nutricionais do prato
-    /// </summary>
-    [BsonElement("nutritionalInfo")]
-    [BsonIgnoreIfNull]
-    public NutritionalInfo? NutritionalInfo { get; private set; } = nutritionalInfo;
-    
-
-    /// <summary>
-    /// Método para assinalar o prato como revisado
-    /// </summary>
-    public void MarkAsRevised()
-    {
-        Revised = true;
-    }
+    public string Name { get; set; }
     
     /// <summary>
     ///Lista de ingredientes (alimentos) do prato
     /// </summary>
-    public List<Food.Food> Ingredients { get; set; } = ingredients;
+    public List<Food.Food> Ingredients { get; set; }
+    
+    public Dish(string name, List<Food.Food> ingredients)
+    {
+        Name = name;
+        Ingredients = ingredients;
+    }
     
     /// <summary>
     /// Método para gerar um novo ID para o prato
     /// </summary>
-    public void GenerateId()
+    public void SetId()
     {
         Id = ObjectId.GenerateNewId().ToString();
     }

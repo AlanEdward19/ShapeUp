@@ -8,7 +8,7 @@ public class CreateFoodCommandHandler(IFoodMongoRepository repository) : IHandle
 {
     public async Task<Food> HandleAsync(CreateFoodCommand command, CancellationToken cancellationToken)
     {
-        var existingFood = await repository.GetFoodByBarCodeAsync(command.BarCode);
+        var existingFood = await repository.GetFoodByIdAsync(command.BarCode);
         
         if (existingFood != null)
             throw new FoodAlreadyExistsException(command.BarCode);

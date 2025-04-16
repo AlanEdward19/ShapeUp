@@ -1,6 +1,6 @@
 ﻿namespace NutritionService.Food.GetFoodDetails;
 
-public class GetFoodDetailsQuery(string barCode)
+public class GetFoodDetailsQuery(string id)
 {
-    public string BarCode { get; private set; } = barCode;
+    public string Id { get; private set; } = id;
 }
