@@ -18,12 +18,17 @@ public class NotificationDto
     public ENotificationTopic Topic { get; set; }
     
     /// <summary>
+    /// Título da notificação
+    /// </summary>
+    public string Title { get; set; }
+    
+    /// <summary>
     /// Breve descrição da notificação
     /// </summary>
-    public string Content { get; set; } 
+    public string Body { get; set; }
     
     /// <summary>
     /// Dados adicionais relacionados à notificação
     /// </summary>
-    public object Metadata { get; set; }
+    public Dictionary<string, string> Metadata { get; set; }
 }

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.AspNetCore.SignalR;
-using NotificationService.Notification.Common.Service;
 
 namespace NotificationService.Notification;
 
-public class NotificationHub(INotificationService notificationService) : Hub
+public class NotificationHub : Hub
 {
     private static readonly ConcurrentDictionary<string, string> ConnectedUsers = new();
     
@@ -16,11 +15,6 @@ public class NotificationHub(INotificationService notificationService) : Hub
         {
             ConnectedUsers[Context.ConnectionId] = userId;
             await Groups.AddToGroupAsync(Context.ConnectionId, userId);
-
-            // Recuperar notificações pendentes e enviar
-            var pendingNotifications = await notificationService.GetPendingNotificationsAsync(Guid.Parse(userId));
-            foreach (var notification in pendingNotifications)
-                await Clients.Caller.SendAsync("ReceiveNotification", notification);
         }
 
         await base.OnConnectedAsync();

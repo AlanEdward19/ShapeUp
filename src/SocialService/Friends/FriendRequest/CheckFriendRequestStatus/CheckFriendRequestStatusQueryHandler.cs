@@ -1,4 +1,5 @@
-﻿using SocialService.Friends.Common.Enums;
+﻿using SharedKernel.Utils;
+using SocialService.Friends.Common.Enums;
 using SocialService.Friends.Common.Repository;
 using SocialService.Profile.Common.Repository;
 

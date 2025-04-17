@@ -1,8 +1,6 @@
 using System.Globalization;
 using NotificationService.Configuration;
 using NotificationService.Notification;
-using NotificationService.Notification.Common;
-using NotificationService.Notification.Common.Service;
 using ServiceDefaults;
 using SharedKernel.Utils;
 
@@ -22,7 +20,6 @@ builder.Services.AddCors(options =>
 AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
-builder.Services.ConfigureAuthentication(configuration);
 builder.Services.ConfigureEndpoints();
 
 var cultureInfo = new CultureInfo("pt-BR");
@@ -37,13 +34,6 @@ app.UseCors("AllowSpecificOrigins");
 app.ConfigureSwagger();
 app.MapEndpoints(configuration);
 app.ConfigureMiddleware();
-
-var notificationConsumer = app.Services.GetRequiredService<INotificationConsumer>();
-var cancellationTokenSource = new CancellationTokenSource();
-
-_ = Task.Run(() => notificationConsumer.ConsumeNotificationEventsAsync(cancellationTokenSource.Token));
-
-app.Lifetime.ApplicationStopping.Register(() => cancellationTokenSource.Cancel());
 
 app.MapHub<NotificationHub>("/notifications");
 

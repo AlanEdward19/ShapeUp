@@ -1,4 +1,4 @@
-﻿namespace AuthService.Common;
+﻿namespace SharedKernel.Utils;
 
 /// <summary>
 ///     Context para perfil logado

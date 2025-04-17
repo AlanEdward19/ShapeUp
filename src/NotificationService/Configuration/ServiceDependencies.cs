@@ -1,5 +1,5 @@
 ﻿using NotificationService.Connections;
-using NotificationService.Notification;
+using NotificationService.User;
 
 namespace NotificationService.Configuration;
 
@@ -18,7 +18,7 @@ public static class ServiceDependencies
         IConfiguration configuration)
     {
         services.ConfigureConnections(configuration)
-            .ConfigureNotificationRelatedDependencies();
+            .ConfigureUserRelatedDependencies();
         
         return services;
     }

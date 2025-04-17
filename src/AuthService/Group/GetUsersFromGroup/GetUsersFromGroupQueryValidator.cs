@@ -2,6 +2,7 @@
 using AuthService.Connections.Database;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Utils;
 
 namespace AuthService.Group.GetUsersFromGroup;
 

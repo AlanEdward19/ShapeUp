@@ -1,4 +1,5 @@
-﻿using SocialService.Common.Services.BrasilApi;
+﻿using SharedKernel.Utils;
+using SocialService.Common.Services.BrasilApi;
 using SocialService.Connections.Search;
 using SocialService.Profile.Common.Repository;
 

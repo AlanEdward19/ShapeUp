@@ -11,8 +11,9 @@ service NotificationService {
 message NotificationParams {
   string recipientId = 1;
   int32 topic = 2;
-  string content = 3;
-  string metadata = 4;
+  string title = 3;
+  string body = 4;
+  string metadata = 5;
 }
 
 message NotificationResponse {

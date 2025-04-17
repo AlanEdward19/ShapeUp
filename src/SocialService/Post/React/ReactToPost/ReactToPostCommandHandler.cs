@@ -1,4 +1,5 @@
-﻿using SocialService.Common.Enums;
+﻿using SharedKernel.Utils;
+using SocialService.Common.Enums;
 using SocialService.Common.Events;
 using SocialService.Common.Services;
 using SocialService.Post.Common.Repository;

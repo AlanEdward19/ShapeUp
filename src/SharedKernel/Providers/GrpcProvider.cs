@@ -1,4 +1,5 @@
-﻿using BDS.DataPack.SharedKernel.Protos;
+﻿using System.Text.Json;
+using BDS.DataPack.SharedKernel.Protos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SharedKernel.Dtos;
@@ -35,8 +36,9 @@ public class GrpcProvider : IGrpcProvider
         {
             RecipientId = notification.RecipientId,
             Topic = (int)notification.Topic,
-            Content = notification.Content,
-            Metadata = notification.Metadata.ToString()
+            Title = notification.Title,
+            Body = notification.Body,
+            Metadata = JsonSerializer.Serialize(notification.Metadata)
         }, cancellationToken: cancellationToken);
 
         return result.Success;
