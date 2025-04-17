@@ -8,10 +8,10 @@ public class ApproveFoodCommandHandler(IFoodMongoRepository repository) : IHandl
 {
     public async Task<Food> HandleAsync(ApproveFoodCommand command, CancellationToken cancellationToken)
     {
-        var existingFood = await repository.GetFoodByIdAsync(command.BarCode);
+        var existingFood = await repository.GetFoodByIdAsync(command.Id);
         
         if (existingFood == null)
-            throw new NotFoundException($"Food with barcode '{command.BarCode}' not found");
+            throw new NotFoundException($"Food with barcode '{command.Id}' not found");
         
         existingFood.MarkAsRevised();
         

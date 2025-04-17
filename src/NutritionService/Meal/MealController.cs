@@ -58,9 +58,9 @@ public class MealController : ControllerBase
         
         var command = new DeleteMealCommand(mealId);
         
-        var result = await handler.HandleAsync(command, cancellationToken);
-        
         //Validations
+        
+        var result = await handler.HandleAsync(command, cancellationToken);
         
         return NoContent();
     }
@@ -81,11 +81,11 @@ public class MealController : ControllerBase
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
         
-        var result = await handler.HandleAsync(command, cancellationToken);
+        command.SetId(mealId);
         
         //Validations
         
-        return NoContent();
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     
     /// <summary>
@@ -104,9 +104,10 @@ public class MealController : ControllerBase
         
         var query = new GetMealDetailsQuery(mealId);
         
+        //Validations
+        
         var result = await handler.HandleAsync(query, cancellationToken);
         
-        //Validations
         
         return Ok(result);
     }

@@ -1,4 +1,5 @@
 ﻿using NutritionService.Connections;
+using NutritionService.DailyMenu;
 using NutritionService.Dish;
 using NutritionService.Food;
 using NutritionService.Meal;
@@ -22,7 +23,8 @@ public static class ServiceDependencies
         services.ConfigureConnections(configuration)
             .ConfigureFoodRelatedDependencies()
             .ConfigureDishRelatedDependencies()
-            .ConfigureMealRelatedDependencies();
+            .ConfigureMealRelatedDependencies()
+            .ConfigureDailyMenuRelatedDependencies();
         
         return services;
     }

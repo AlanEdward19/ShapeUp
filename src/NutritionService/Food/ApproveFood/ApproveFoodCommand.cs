@@ -1,6 +1,6 @@
 ﻿namespace NutritionService.Food.ApproveFood;
 
-public class ApproveFoodCommand(string barCode)
+public class ApproveFoodCommand(string id)
 {
-    public string BarCode { get; private set; } = barCode;
+    public string Id { get; private set; } = id;
 }

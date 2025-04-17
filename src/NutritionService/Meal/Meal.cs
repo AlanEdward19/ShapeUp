@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using NutritionService.Common.Enums;
+using NutritionService.Meal.Common.Enums;
 
 namespace NutritionService.Meal;
 

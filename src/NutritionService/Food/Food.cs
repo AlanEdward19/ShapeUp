@@ -30,14 +30,12 @@ public class Food
     /// Marca do alimento
     /// </summary>
     [BsonElement("brand")]
-    [BsonIgnoreIfNull]
     public string? Brand { get; private set; }
     
     /// <summary>
     /// Còdigo de barras do alimento
     /// </summary>
     [BsonElement("barCode")]
-    [BsonIgnoreIfNull]
     public string? BarCode { get; private set; }
     
     /// <summary>

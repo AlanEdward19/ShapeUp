@@ -1,4 +1,4 @@
-﻿namespace NutritionService.Common.Enums;
+﻿namespace NutritionService.Meal.Common.Enums;
 
 /// <summary>
 /// Tipo de refeição

@@ -1,4 +1,4 @@
-﻿using NutritionService.Common.Enums;
+﻿using NutritionService.Meal.Common.Enums;
 
 namespace NutritionService.Meal.EditMeal;
 

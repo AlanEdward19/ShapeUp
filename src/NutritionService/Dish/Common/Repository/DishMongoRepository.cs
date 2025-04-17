@@ -1,33 +1,32 @@
 ﻿using MongoDB.Driver;
+using NutritionService.Connections;
 
 namespace NutritionService.Dish.Common.Repository;
 
 /// <summary>
 /// 
 /// </summary>
-public class DishMongoRepository(IMongoDatabase database) : IDishMongoRepository
+public class DishMongoRepository(NutritionDbContext context) : IDishMongoRepository
 {
-    private readonly IMongoCollection<Dish> _dishCollection = database.GetCollection<Dish>("dishes");
-
     public async Task<Dish?> GetDishByIdAsync(string? id)
     {
         if (string.IsNullOrWhiteSpace(id)) return null;
-        return await _dishCollection.Find(d => d.Id == id).SingleOrDefaultAsync();
+        return await context.Dishes.Find(d => d.Id == id).SingleOrDefaultAsync();
     }
 
     public async Task InsertDishAsync(Dish dish)
     {
-        await _dishCollection.InsertOneAsync(dish);
+        await context.Dishes.InsertOneAsync(dish);
     }
 
     public async Task UpdateDishAsync(Dish updatedDish)
     {
         var filter = Builders<Dish>.Filter.Eq(d => d.Id, updatedDish.Id);
-        await _dishCollection.ReplaceOneAsync(filter, updatedDish);
+        await context.Dishes.ReplaceOneAsync(filter, updatedDish);
     }
 
     public async Task DeleteDishAsync(string? id)
     {
-        await _dishCollection.DeleteOneAsync(d => d.Id == id);
+        await context.Dishes.DeleteOneAsync(d => d.Id == id);
     }
 }

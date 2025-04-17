@@ -8,11 +8,6 @@ public class CreateDishCommand
     
     public CreateDishCommand(string name, List<Food.Food> foods)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name is required.", nameof(name));
-        if (foods == null || foods.Count == 0)
-            throw new ArgumentException("Foods are required.", nameof(foods));
-        
         Name = name;
         Foods = foods;
     }

@@ -13,7 +13,7 @@ using SharedKernel.Utils;
 namespace NutritionService.Food;
 
 /// <summary>
-///     Controller responsavel por gerenciar comidas
+///     Controller responsável por gerenciar comidas
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
@@ -45,7 +45,7 @@ public class FoodController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("getFoodDetails/{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetFoodDetails(string id,
         [FromServices] IHandler<Food, GetFoodDetailsQuery> handler,
         CancellationToken cancellationToken)
@@ -76,7 +76,7 @@ public class FoodController : ControllerBase
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPut("editFood/{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> EditFood(string id, [FromServices] IHandler<Food, EditFoodCommand> handler,
         [FromBody] EditFoodCommand command, CancellationToken cancellationToken)
     {
@@ -90,17 +90,17 @@ public class FoodController : ControllerBase
     /// <summary>
     /// Rota para aprovar uma comida, e marcar como revisada
     /// </summary>
-    /// <param name="barCode"></param>
+    /// <param name="id"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPut("approveFood/{barCode}")]
-    public async Task<IActionResult> ApproveFood(string barCode,
+    [HttpPut("approveFood/{id}")]
+    public async Task<IActionResult> ApproveFood(string id,
         [FromServices] IHandler<Food, ApproveFoodCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
 
-        return Ok(await handler.HandleAsync(new ApproveFoodCommand(barCode), cancellationToken));
+        return Ok(await handler.HandleAsync(new ApproveFoodCommand(id), cancellationToken));
     }
 }
