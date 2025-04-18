@@ -5,10 +5,10 @@ namespace NutritionService.Food.CreateFood;
 
 public class CreateFoodCommand
 {
-    public string Name { get; private set; }
-    public string Brand { get; private set; }
-    public string BarCode { get; private set; }
-    public NutritionalInfo NutritionalInfo { get; private set; }
+    public string Name { get; set; }
+    public string Brand { get; set; }
+    public string BarCode { get; set; }
+    public NutritionalInfo NutritionalInfo { get; set; }
 
     public Food ToFood()
     {

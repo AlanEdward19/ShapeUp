@@ -7,14 +7,14 @@ public class ListDailyMenuQueryHandler(IDailyMenuMongoRepository repository) : I
 {
     public async Task<IEnumerable<DailyMenu>> HandleAsync(ListDailyMenuQuery item, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrEmpty(item.DayOfWeek))
+        switch (item.DayOfWeek)
         {
-            await repository.ListDailyMenusAsync(item.Page, item.Size);
-        }
-
-        if (item.DayOfWeek.Equals("none", StringComparison.OrdinalIgnoreCase))
-        {
-            await repository.ListDailyMenusAsync(null, item.Page, item.Size);
+            case null:
+                await repository.ListDailyMenusAsync(item.Page, item.Size);
+                break;
+            case "":
+                await repository.ListDailyMenusAsync(null, item.Page, item.Size);
+                break;
         }
 
         if (Enum.TryParse<DayOfWeek>(item.DayOfWeek, true, out var parsedDay))

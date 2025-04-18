@@ -11,7 +11,7 @@ public class FoodRevision
 
     public string OriginalFoodId { get; set; }
     public Food.Food RevisedFood { get; set; }
-    public Guid RevisedBy { get; set; }
+    public string RevisedBy { get; set; }
     public DateTime SubmittedAt { get; set; }
     public string? AdminComment { get; set; }
     public bool? Approved { get; set; }

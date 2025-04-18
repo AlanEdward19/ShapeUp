@@ -3,6 +3,7 @@ using NutritionService.DailyMenu;
 using NutritionService.Dish;
 using NutritionService.Food;
 using NutritionService.Meal;
+using NutritionService.UserNutrition;
 
 namespace NutritionService.Configuration;
 
@@ -24,7 +25,8 @@ public static class ServiceDependencies
             .ConfigureFoodRelatedDependencies()
             .ConfigureDishRelatedDependencies()
             .ConfigureMealRelatedDependencies()
-            .ConfigureDailyMenuRelatedDependencies();
+            .ConfigureDailyMenuRelatedDependencies()
+            .ConfigureUserNutritionRelatedDependencies();
         
         return services;
     }

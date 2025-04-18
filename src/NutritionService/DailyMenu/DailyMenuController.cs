@@ -48,7 +48,7 @@ public class DailyMenuController : ControllerBase
         return NoContent();
     }
     [HttpPut("{id}")]
-    public async Task<IActionResult> EditDailyMenu(string id, EditDailyMenuCommand command,
+    public async Task<IActionResult> EditDailyMenu(string id, [FromBody] EditDailyMenuCommand command,
         [FromServices] IHandler<DailyMenu, EditDailyMenuCommand> handler,
         CancellationToken cancellationToken)
     {
