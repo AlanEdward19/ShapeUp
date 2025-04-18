@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0" version="26.2.13" pages="35">
   <diagram id="WI9T0HZ2pTsCkuznbFz-" name="Arquitetura da aplicação">
-    <mxGraphModel dx="1580" dy="738" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1308" dy="611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -134,7 +134,7 @@
           <mxGeometry x="590" y="939" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="YgMY3jvaAM1hqM7jARhr-4" value="4" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
-          <mxGeometry x="1000" y="929" width="10" height="10" as="geometry" />
+          <mxGeometry x="1020" y="929" width="10" height="10" as="geometry" />
         </mxCell>
         <UserObject label="" link="data:page/id,V7hrb1qeIUZQiWwNmzRx" id="Vsdo3Nub-qhaeojypmjV-1">
           <mxCell style="group" parent="1" vertex="1" connectable="0">
@@ -6424,6 +6424,11 @@
         <mxCell id="QHfgFfkn0FLyZoSfZI-8-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" target="QHfgFfkn0FLyZoSfZI-8-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="320" y="1283" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="320" y="1284" />
+              <mxPoint x="240" y="1284" />
+              <mxPoint x="240" y="1283" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="YyqoRZnzdddnrkvuwHYx-3" value="Resposta" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="QHfgFfkn0FLyZoSfZI-8-5" vertex="1" connectable="0">
