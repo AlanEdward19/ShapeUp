@@ -23,10 +23,11 @@ public class NotificationService(
 
         Dictionary<string, string> metadata = JsonSerializer.Deserialize<Dictionary<string, string>>(request.Metadata)!;
         string title = request.Title, body = request.Body;
+        ENotificationTopic topic = (ENotificationTopic)request.Topic;
 
         dynamic notification = new
         {
-            request.Topic,
+            topic,
             title,
             body,
             metadata

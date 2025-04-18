@@ -1,7 +1,7 @@
-﻿using SharedKernel.Utils;
-using SocialService.Common.Enums;
-using SocialService.Common.Events;
-using SocialService.Common.Services;
+﻿using SharedKernel.Dtos;
+using SharedKernel.Enums;
+using SharedKernel.Providers;
+using SharedKernel.Utils;
 using SocialService.Follow.Common.Repository;
 using SocialService.Profile.Common.Repository;
 
@@ -11,7 +11,10 @@ namespace SocialService.Follow.FollowUser;
 ///     Handler para seguir um usuário.
 /// </summary>
 /// <param name="graphRepository"></param>
-public class FollowUserCommandHandler(IFollowerGraphRepository graphRepository, IProfileGraphRepository profileGraphRepository, INotificationPublisher notificationPublisher) : IHandler<bool, FollowUserCommand>
+public class FollowUserCommandHandler(
+    IFollowerGraphRepository graphRepository,
+    IProfileGraphRepository profileGraphRepository,
+    IGrpcProvider grpcProvider) : IHandler<bool, FollowUserCommand>
 {
     /// <summary>
     ///     Método para seguir um usuário.
@@ -23,15 +26,20 @@ public class FollowUserCommandHandler(IFollowerGraphRepository graphRepository, 
     {
         await graphRepository.FollowAsync(ProfileContext.ProfileId, command.FollowedUserId);
         Profile.Profile profile = await profileGraphRepository.GetProfileAsync(ProfileContext.ProfileId);
-        
-        NotificationEvent @event = new()
+
+        NotificationDto notificationDto = new()
         {
             RecipientId = command.FollowedUserId,
+            Title = "Novo seguidor",
             Topic = ENotificationTopic.NewFollower,
-            Content = $"{profile.FirstName} {profile.LastName} começou a te seguir.",
+            Body = $"{profile.FirstName} {profile.LastName} começou a te seguir.",
+            Metadata = new()
+            {
+                { "userId", command.FollowedUserId.ToString() }
+            }
         };
 
-        await notificationPublisher.PublishNotificationEventAsync(@event);
+        await grpcProvider.SendNotification(notificationDto, cancellationToken);
 
         return true;
     }

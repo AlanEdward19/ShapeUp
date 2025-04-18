@@ -1,7 +1,7 @@
-﻿using SharedKernel.Utils;
-using SocialService.Common.Enums;
-using SocialService.Common.Events;
-using SocialService.Common.Services;
+﻿using SharedKernel.Dtos;
+using SharedKernel.Enums;
+using SharedKernel.Providers;
+using SharedKernel.Utils;
 using SocialService.Friends.Common.Repository;
 using SocialService.Profile.Common.Repository;
 
@@ -11,7 +11,10 @@ namespace SocialService.Friends.FriendRequest.SendFriendRequest;
 ///     Handler para adicionar um amigo.
 /// </summary>
 /// <param name="graphRepository"></param>
-public class SendFriendRequestCommandHandler(IFriendshipGraphRepository graphRepository,  IProfileGraphRepository profileGraphRepository, INotificationPublisher notificationPublisher)
+public class SendFriendRequestCommandHandler(
+    IFriendshipGraphRepository graphRepository,
+    IProfileGraphRepository profileGraphRepository,
+    IGrpcProvider grpcProvider)
     : IHandler<bool, SendFriendRequestCommand>
 {
     /// <summary>
@@ -25,15 +28,20 @@ public class SendFriendRequestCommandHandler(IFriendshipGraphRepository graphRep
         Profile.Profile profile = await profileGraphRepository.GetProfileAsync(ProfileContext.ProfileId);
         await graphRepository.SendFriendRequestAsync(ProfileContext.ProfileId, requestCommand.FriendId,
             requestCommand.RequestMessage ?? "");
-        
-        NotificationEvent @event = new()
+
+        NotificationDto notificationDto = new()
         {
             RecipientId = requestCommand.FriendId,
+            Title = "Novo pedido de amizade",
             Topic = ENotificationTopic.FriendRequest,
-            Content = $"{profile.FirstName} {profile.LastName} enviou uma solicitação de amizade.",
+            Body = $"{profile.FirstName} {profile.LastName} enviou uma solicitação de amizade.",
+            Metadata = new()
+            {
+                { "userId", requestCommand.FriendId.ToString() }
+            }
         };
 
-        await notificationPublisher.PublishNotificationEventAsync(@event);
+        await grpcProvider.SendNotification(notificationDto, cancellationToken);
 
         return true;
     }

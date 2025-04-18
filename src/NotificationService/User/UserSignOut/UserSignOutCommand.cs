@@ -1,10 +1,10 @@
-﻿namespace NotificationService.User.UserLoggedIn;
+﻿namespace NotificationService.User.UserSignOut;
 
 /// <summary>
-/// Comando para registrar o login do usuário
+/// Comando para remover o dispositivo do usuário
 /// </summary>
 /// <param name="deviceToken"></param>
-public class UserLoggedInCommand(string deviceToken)
+public class UserSignOutCommand(string deviceToken)
 {
     public string UserId { get; private set; } = "";
     public string DeviceToken { get; set; } = deviceToken;

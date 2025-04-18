@@ -1,6 +1,4 @@
-﻿using NotificationService.Common.Enums;
-
-namespace NotificationService.User.Repository;
+﻿namespace NotificationService.User.Repository;
 
 /// <summary>
 /// Interface para o repositório de usuários
@@ -12,11 +10,18 @@ public interface IUserRepository
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="deviceToken"></param>
-    /// <param name="devicePlatform"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task UserLogInAsync(string userId, string deviceToken, EPlatform devicePlatform,
-        CancellationToken cancellationToken);
+    Task UserLogInAsync(string userId, string deviceToken, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Método responsável por remover o dispositivo do usuário
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="deviceToken"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UserSignOutAsync(string userId, string deviceToken, CancellationToken cancellationToken);
 
     /// <summary>
     /// Método responsável por retornar o token do último dispositivo acessado pelo usuário

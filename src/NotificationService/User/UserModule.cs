@@ -2,6 +2,7 @@
 using NotificationService.Common.Interfaces;
 using NotificationService.User.Repository;
 using NotificationService.User.UserLoggedIn;
+using NotificationService.User.UserSignOut;
 
 namespace NotificationService.User;
 
@@ -26,6 +27,7 @@ public static class UserModule
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddScoped<IHandler<bool, UserLoggedInCommand>, UserLoggedInCommandHandler>();
+        services.AddScoped<IHandler<bool, UserSignOutCommand>, UserSignOutCommandHandler>();
         
         return services;
     }

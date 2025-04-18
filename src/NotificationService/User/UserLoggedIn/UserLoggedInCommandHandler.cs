@@ -17,7 +17,7 @@ public class UserLoggedInCommandHandler(IUserRepository repository) : IHandler<b
     /// <returns></returns>
     public async Task<bool> HandleAsync(UserLoggedInCommand command, CancellationToken cancellationToken)
     {
-        await repository.UserLogInAsync(command.UserId, command.DeviceToken, command.DevicePlatform, cancellationToken);
+        await repository.UserLogInAsync(command.UserId, command.DeviceToken, cancellationToken);
 
         return true;
     }

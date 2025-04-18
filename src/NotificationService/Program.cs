@@ -1,5 +1,6 @@
 using System.Globalization;
 using NotificationService.Configuration;
+using NotificationService.Connections;
 using NotificationService.Notification;
 using ServiceDefaults;
 using SharedKernel.Utils;
@@ -21,6 +22,7 @@ AuthenticationUtils.GetIssuerSigningKey(configuration);
 builder.AddServiceDefaults();
 builder.Services.SolveServiceDependencies(configuration);
 builder.Services.ConfigureEndpoints();
+builder.Services.AddGrpc();
 
 var cultureInfo = new CultureInfo("pt-BR");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
@@ -34,6 +36,7 @@ app.UseCors("AllowSpecificOrigins");
 app.ConfigureSwagger();
 app.MapEndpoints(configuration);
 app.ConfigureMiddleware();
+app.ConfigureGrpc();
 
 app.MapHub<NotificationHub>("/notifications");
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NotificationService.Common.Enums;
 using NotificationService.Connections.Database;
 using SharedKernel.Exceptions;
 
@@ -30,13 +29,9 @@ public class UserRepository(NotificationDbContext dbContext, ILogger<UserReposit
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="deviceToken"></param>
-    /// <param name="devicePlatform"></param>
     /// <param name="cancellationToken"></param>
-    public async Task UserLogInAsync(string userId, string deviceToken, EPlatform devicePlatform,
-        CancellationToken cancellationToken)
+    public async Task UserLogInAsync(string userId, string deviceToken, CancellationToken cancellationToken)
     {
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
         try
         {
             User? user = await dbContext.Users
@@ -51,7 +46,43 @@ public class UserRepository(NotificationDbContext dbContext, ILogger<UserReposit
                 device.UpdateLastAccess();
 
             else
-                user.AddDevice(deviceToken, devicePlatform);
+                user.AddDevice(deviceToken);
+
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error while logging in user {UserId}", userId);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Método responsável por remover o dispositivo do usuário
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="deviceToken"></param>
+    /// <param name="cancellationToken"></param>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task UserSignOutAsync(string userId, string deviceToken, CancellationToken cancellationToken)
+    {
+        await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+        try
+        {
+            User? user = await dbContext.Users
+                .Include(x => x.Devices)
+                .FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
+
+            if (user == null)
+                throw new NotFoundException("User not found");
+
+            var device = user.Devices.FirstOrDefault(x => x.FcmToken == deviceToken);
+
+            if (device == null)
+                throw new NotFoundException("Device not found");
+
+            user.RemoveDevice(deviceToken);
 
             await dbContext.SaveChangesAsync(cancellationToken);
 
@@ -61,7 +92,7 @@ public class UserRepository(NotificationDbContext dbContext, ILogger<UserReposit
         {
             await dbContext.Database.RollbackTransactionAsync(cancellationToken);
             logger.LogError(e, "Error while logging in user {UserId}", userId);
-            throw new Exception("Error while logging in user");
+            throw;
         }
     }
 

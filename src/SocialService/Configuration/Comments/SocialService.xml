@@ -136,31 +136,6 @@
             </summary>
             <param name="result"></param>
         </member>
-        <member name="T:SocialService.Common.Events.NotificationEvent">
-            <summary>
-            Evento de notificação
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.RecipientId">
-            <summary>
-            Id do destinatário da notificação
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.Topic">
-            <summary>
-            Enum para tipos de notificações
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.Content">
-            <summary>
-            Breve descrição da notificação
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.Metadata">
-            <summary>
-            Dados adicionais relacionados à notificação
-            </summary>
-        </member>
         <member name="T:SocialService.Common.Interfaces.IHandler`2">
             <summary>
                 Interface para padronizar handlers.
@@ -208,21 +183,6 @@
         <member name="P:SocialService.Common.Models.ProfileBasicInformation.ImageUrl">
             <summary>
             Url da imagem do perfil.
-            </summary>
-        </member>
-        <member name="T:SocialService.Common.ProfileContext">
-            <summary>
-                Context para perfil logado
-            </summary>
-        </member>
-        <member name="F:SocialService.Common.ProfileContext._profileId">
-            <summary>
-                Id do perfil logado
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.ProfileContext.ProfileId">
-            <summary>
-                Método para obter e definir o Id do perfil logado
             </summary>
         </member>
         <member name="T:SocialService.Common.ValueObjects.BaseQueryParametersValueObject">
@@ -714,7 +674,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para seguir um usuário.
             </summary>
@@ -1352,7 +1312,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para adicionar um amigo.
             </summary>
@@ -1637,7 +1597,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para comentar em um post
             </summary>
@@ -2867,7 +2827,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.React.ReactToPost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Post.React.ReactToPost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Post.Common.Repository.IPostGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para o comando de like em um post.
             </summary>
@@ -2941,7 +2901,7 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
-            <exception cref="!:NotFoundException"></exception>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandValidator">
             <summary>

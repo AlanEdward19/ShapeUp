@@ -17,8 +17,7 @@ public static class CommonModule
     public static IServiceCollection ConfigureCommonRelatedDependencies(this IServiceCollection services)
     {
         services
-            .AddExternalApis()
-            .AddPublishers();
+            .AddExternalApis();
 
         return services;
     }
@@ -28,13 +27,6 @@ public static class CommonModule
         services.AddRefitClient<IBrasilApi>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://brasilapi.com.br"));
         
-        return services;
-    }
-
-    private static IServiceCollection AddPublishers(this IServiceCollection services)
-    {
-        services.AddScoped<INotificationPublisher, NotificationPublisher>();
-
         return services;
     }
 }

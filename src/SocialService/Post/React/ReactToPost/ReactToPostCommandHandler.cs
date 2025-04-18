@@ -1,7 +1,7 @@
-﻿using SharedKernel.Utils;
-using SocialService.Common.Enums;
-using SocialService.Common.Events;
-using SocialService.Common.Services;
+﻿using SharedKernel.Dtos;
+using SharedKernel.Enums;
+using SharedKernel.Providers;
+using SharedKernel.Utils;
 using SocialService.Post.Common.Repository;
 using SocialService.Profile.Common.Repository;
 
@@ -15,7 +15,7 @@ public class ReactToPostCommandHandler(
     IPostGraphRepository repository,
     IProfileGraphRepository profileGraphRepository,
     IPostGraphRepository postGraphRepository,
-    INotificationPublisher notificationPublisher) : IHandler<bool, ReactToPostCommand>
+    IGrpcProvider grpcProvider) : IHandler<bool, ReactToPostCommand>
 {
     /// <summary>
     ///     Método para lidar com o comando de like em um post.
@@ -34,14 +34,19 @@ public class ReactToPostCommandHandler(
 
         if(postOwnerId != ProfileContext.ProfileId)
         {
-            NotificationEvent @event = new()
+            NotificationDto notificationDto = new()
             {
-                RecipientId = postOwnerId,
-                Topic = ENotificationTopic.Reaction,
-                Content = $"{profile.FirstName} {profile.LastName} reagiu ao seu post: {command.PostId}",
+                RecipientId =  postOwnerId,
+                Title = "Nova reação em seu post",
+                Topic =  ENotificationTopic.Reaction,
+                Body = $"{profile.FirstName} {profile.LastName} reagiu ao seu post",
+                Metadata = new()
+                {
+                    { "PostId", command.PostId.ToString() }
+                }
             };
 
-            await notificationPublisher.PublishNotificationEventAsync(@event);
+            await grpcProvider.SendNotification(notificationDto, cancellationToken);
         }
 
         return true;

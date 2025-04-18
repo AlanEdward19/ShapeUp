@@ -1,8 +1,8 @@
-﻿using ChatService.Chat.Common.Enum;
-using ChatService.Chat.Common.Event;
-using ChatService.Chat.Common.Repository;
-using ChatService.Chat.Common.Service;
+﻿using ChatService.Chat.Common.Repository;
 using ChatService.Common.Interfaces;
+using SharedKernel.Dtos;
+using SharedKernel.Enums;
+using SharedKernel.Providers;
 
 namespace ChatService.Chat.SendMessage;
 
@@ -10,7 +10,7 @@ namespace ChatService.Chat.SendMessage;
 /// Handler para o comando de envio de mensagem
 /// </summary>
 /// <param name="repository"></param>
-public class SendMessageCommandHandler(IChatMongoRepository repository, INotificationPublisher notificationPublisher)
+public class SendMessageCommandHandler(IChatMongoRepository repository, IGrpcProvider grpcProvider)
     : IHandler<bool, SendMessageCommand>
 {
     /// <summary>
@@ -22,15 +22,20 @@ public class SendMessageCommandHandler(IChatMongoRepository repository, INotific
     public async Task<bool> HandleAsync(SendMessageCommand command, CancellationToken cancellationToken)
     {
         await repository.SendMessageAsync(command.GetSenderId(), command.ReceiverId, command.Message);
-
-        NotificationEvent @event = new()
+        
+        NotificationDto notificationDto = new()
         {
             RecipientId = command.ReceiverId,
-            Topic = ENotificationTopic.Message,
-            Content = $"Você recebeu uma mensagem de {command.GetSenderId()}"
+            Title = "Nova mensagem",
+            Topic = ENotificationTopic.FriendRequest,
+            Body = "Você recebeu uma nova mensagem\"",
+            Metadata = new()
+            {
+                { "userId",command.ReceiverId.ToString() }
+            }
         };
-        
-        await notificationPublisher.PublishNotificationEventAsync(@event);
+
+        await grpcProvider.SendNotification(notificationDto, cancellationToken);
 
         return true;
     }

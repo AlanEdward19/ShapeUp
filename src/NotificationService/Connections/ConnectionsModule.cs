@@ -66,4 +66,11 @@ public static class ConnectionsModule
 
         return services;
     }
+    
+    public static IEndpointRouteBuilder ConfigureGrpc(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGrpcService<Notification.Services.NotificationService>();
+
+        return builder;
+    }
 }

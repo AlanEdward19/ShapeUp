@@ -32,8 +32,8 @@ var socialService = builder
 
 var notificationService = builder
         .AddProject<Projects.NotificationService>("NotificationService")
-        .WaitFor(redis)
-        .WithReference(redis)
+        .WaitFor(mongo)
+        .WithReference(mongo)
         .WithExternalHttpEndpoints();
 
 var chatService = builder
