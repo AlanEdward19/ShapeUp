@@ -1,6 +1,7 @@
-﻿using SocialService.Common.Enums;
-using SocialService.Common.Events;
-using SocialService.Common.Services;
+﻿using SharedKernel.Dtos;
+using SharedKernel.Enums;
+using SharedKernel.Providers;
+using SharedKernel.Utils;
 using SocialService.Post.Common.Repository;
 using SocialService.Profile.Common.Repository;
 
@@ -10,7 +11,10 @@ namespace SocialService.Post.Comment.CommentOnPost;
 ///     Handler para comentar em um post
 /// </summary>
 /// <param name="repository"></param>
-public class CommentOnPostCommandHandler(IPostGraphRepository repository, IProfileGraphRepository profileGraphRepository, INotificationPublisher notificationPublisher)
+public class CommentOnPostCommandHandler(
+    IPostGraphRepository repository,
+    IProfileGraphRepository profileGraphRepository,
+    IGrpcProvider grpcProvider)
     : IHandler<bool, CommentOnPostCommand>
 {
     /// <summary>
@@ -29,14 +33,19 @@ public class CommentOnPostCommandHandler(IPostGraphRepository repository, IProfi
 
         if (profileId != ProfileContext.ProfileId)
         {
-            NotificationEvent @event = new()
+            NotificationDto notificationDto = new()
             {
                 RecipientId = profileId,
+                Title = "Novo comentário em seu post",
                 Topic = ENotificationTopic.Comment,
-                Content = $"{profile.FirstName} {profile.LastName} comentou em seu post: {command.PostId}",
+                Body = $"{profile.FirstName} {profile.LastName} comentou em seu post: {command.PostId}",
+                Metadata = new()
+                {
+                    { "userId", profileId }
+                }
             };
 
-            await notificationPublisher.PublishNotificationEventAsync(@event);
+            await grpcProvider.SendNotification(notificationDto, cancellationToken);
         }
 
         return true;

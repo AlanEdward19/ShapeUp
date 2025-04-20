@@ -1,4 +1,5 @@
-﻿using SocialService.Profile;
+﻿using SharedKernel.Utils;
+using SocialService.Profile;
 using SocialService.Recommendation.Common.Repository;
 
 namespace SocialService.Recommendation.GetFriendRecommendations;

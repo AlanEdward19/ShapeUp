@@ -1,4 +1,5 @@
-﻿using SocialService.Profile.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.UploadProfilePicture;
 

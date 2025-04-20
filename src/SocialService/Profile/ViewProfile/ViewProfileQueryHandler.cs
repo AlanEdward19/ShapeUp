@@ -27,9 +27,16 @@ public class ViewProfileQueryHandler(
         if (profile is null)
             return null;
 
-        var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
+        string state = "", city = "";
+        try
+        {
+            var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
+            city = locationInfo.City;
+            state = locationInfo.State;
+        }
+        catch { }
         
-        ProfileDto profileDto = new(profile, locationInfo.State, locationInfo.City);
+        ProfileDto profileDto = new(profile, state, city);
 
         if (!string.IsNullOrWhiteSpace(profile.ImageUrl))
             profileDto.SetImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}"));

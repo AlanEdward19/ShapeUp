@@ -1,4 +1,5 @@
-﻿using SocialService.Common.Services.BrasilApi;
+﻿using SharedKernel.Utils;
+using SocialService.Common.Services.BrasilApi;
 using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.EditProfile;

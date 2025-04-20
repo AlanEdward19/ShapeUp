@@ -1,4 +1,5 @@
-﻿using SocialService.Connections.Search;
+﻿using SharedKernel.Providers;
+using SocialService.Connections.Search;
 using StackExchange.Redis;
 
 namespace SocialService.Connections;
@@ -21,6 +22,7 @@ public static class ConnectionsModule
             .ConfigureNeo4J(configuration)
             .ConfigureRedis(configuration)
             .ConfigureStorageProvider(configuration)
+            .ConfigureGrpc()
             .ConfigureSearchProvider(configuration);
 
         return services;
@@ -67,6 +69,13 @@ public static class ConnectionsModule
     private static IServiceCollection ConfigureSearchProvider(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IAzureSearchProvider>(x => new AzureSearchProvider(configuration));
+
+        return services;
+    }
+    
+    private static IServiceCollection ConfigureGrpc(this IServiceCollection services)
+    {
+        services.AddScoped<IGrpcProvider, GrpcProvider>();
 
         return services;
     }

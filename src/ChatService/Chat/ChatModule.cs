@@ -1,11 +1,10 @@
 ﻿using ChatService.Chat.Common;
 using ChatService.Chat.Common.Repository;
-using ChatService.Chat.Common.Service;
 using ChatService.Chat.GetMessages;
 using ChatService.Chat.GetRecentMessages;
 using ChatService.Chat.SendMessage;
 using ChatService.Common.Interfaces;
-using SharedKernel.Utils;
+using SharedKernel.Providers;
 
 namespace ChatService.Chat;
 
@@ -24,7 +23,7 @@ public static class ChatModule
         services
             .AddRepositories()
             .AddHandlers()
-            .AddPublishers();
+            .ConfigureGrpc();
 
         return services;
     }
@@ -45,9 +44,9 @@ public static class ChatModule
         return services;
     }
     
-    private static IServiceCollection AddPublishers(this IServiceCollection services)
+    private static IServiceCollection ConfigureGrpc(this IServiceCollection services)
     {
-        services.AddScoped<INotificationPublisher, NotificationPublisher>();
+        services.AddScoped<IGrpcProvider, GrpcProvider>();
 
         return services;
     }

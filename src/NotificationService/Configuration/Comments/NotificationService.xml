@@ -19,19 +19,6 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:NotificationService.Configuration.Authentication">
-            <summary>
-                Classe responsavel por configurar a autenticacao
-            </summary>
-        </member>
-        <member name="M:NotificationService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-                Metodo responsavel por configurar a autenticacao
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
-            <returns></returns>
-        </member>
         <member name="T:NotificationService.Configuration.EndpointsConfiguration">
             <summary>
                 Configuração dos Endpoints
@@ -126,56 +113,222 @@
             <param name="configuration"></param>
             <returns></returns>
         </member>
-        <member name="T:NotificationService.Notification.Common.Event.NotificationEvent">
+        <member name="T:NotificationService.User.Repository.IUserRepository">
             <summary>
-            Evento de notificação
+            Interface para o repositório de usuários
             </summary>
         </member>
-        <member name="P:NotificationService.Notification.Common.Event.NotificationEvent.RecipientId">
+        <member name="M:NotificationService.User.Repository.IUserRepository.UserLogInAsync(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
-            Id do destinatário da notificação
+            Método responsável por adicionar um dispositivo ao usuário ou atualizar o último acesso
+            </summary>
+            <param name="userId"></param>
+            <param name="deviceToken"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NotificationService.User.Repository.IUserRepository.UserSignOutAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método responsável por remover o dispositivo do usuário
+            </summary>
+            <param name="userId"></param>
+            <param name="deviceToken"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NotificationService.User.Repository.IUserRepository.GetUserLastAccessDeviceTokenAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método responsável por retornar o token do último dispositivo acessado pelo usuário
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NotificationService.User.Repository.UserRepository">
+            <summary>
+            Repositório de usuários
+            </summary>
+            <param name="dbContext"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:NotificationService.User.Repository.UserRepository.#ctor(NotificationService.Connections.Database.NotificationDbContext,Microsoft.Extensions.Logging.ILogger{NotificationService.User.Repository.UserRepository})">
+            <summary>
+            Repositório de usuários
+            </summary>
+            <param name="dbContext"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:NotificationService.User.Repository.UserRepository.AddUserAsync(NotificationService.User.User,System.Threading.CancellationToken)">
+            <summary>
+            Método para adicionar um usuário ao banco de dados
+            </summary>
+            <param name="user"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:NotificationService.User.Repository.UserRepository.UserLogInAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método responsável por adicionar um dispositivo ao usuário ou atualizar o último acesso
+            </summary>
+            <param name="userId"></param>
+            <param name="deviceToken"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:NotificationService.User.Repository.UserRepository.UserSignOutAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método responsável por remover o dispositivo do usuário
+            </summary>
+            <param name="userId"></param>
+            <param name="deviceToken"></param>
+            <param name="cancellationToken"></param>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="M:NotificationService.User.Repository.UserRepository.GetUserLastAccessDeviceTokenAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método responsável por retornar o token do último dispositivo acessado pelo usuário
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="T:NotificationService.User.UserController">
+            <summary>
+            Controller responsável por gerenciar operações relacionadas ao usuário
             </summary>
         </member>
-        <member name="P:NotificationService.Notification.Common.Event.NotificationEvent.Topic">
+        <member name="M:NotificationService.User.UserController.UserLogIn(NotificationService.User.UserLoggedIn.UserLoggedInCommand,NotificationService.Common.Interfaces.IHandler{System.Boolean,NotificationService.User.UserLoggedIn.UserLoggedInCommand},System.Threading.CancellationToken)">
             <summary>
-            Enum para tipos de notificações
+            Rota para registrar o login do usuário
             </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
-        <member name="P:NotificationService.Notification.Common.Event.NotificationEvent.Content">
+        <member name="M:NotificationService.User.UserController.UserSignOut(NotificationService.User.UserSignOut.UserSignOutCommand,NotificationService.Common.Interfaces.IHandler{System.Boolean,NotificationService.User.UserSignOut.UserSignOutCommand},System.Threading.CancellationToken)">
             <summary>
-            Breve descrição da notificação
+            Rota para remover o dispositivo do usuário
             </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
-        <member name="P:NotificationService.Notification.Common.Event.NotificationEvent.Metadata">
+        <member name="T:NotificationService.User.UserLoggedIn.UserLoggedInCommand">
             <summary>
-            Dados adicionais relacionados à notificação
+            Comando para registrar o login do usuário
             </summary>
+            <param name="deviceToken"></param>
         </member>
-        <member name="T:NotificationService.Notification.NotificationController">
+        <member name="M:NotificationService.User.UserLoggedIn.UserLoggedInCommand.#ctor(System.String)">
             <summary>
-            Controller responsavel por gerenciar notificações
+            Comando para registrar o login do usuário
             </summary>
+            <param name="deviceToken"></param>
         </member>
-        <member name="M:NotificationService.Notification.NotificationController.SendNotification(NotificationService.Notification.SendNotification.SendNotificationCommand,System.Threading.CancellationToken,NotificationService.Common.Interfaces.IHandler{System.Boolean,NotificationService.Notification.SendNotification.SendNotificationCommand})">
+        <member name="M:NotificationService.User.UserLoggedIn.UserLoggedInCommand.SetUserId(System.String)">
             <summary>
-            Rota para enviar uma notificação
+            Método para definir o ID do usuário
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="T:NotificationService.User.UserLoggedIn.UserLoggedInCommandHandler">
+            <summary>
+            Handler para o comando de login do usuário
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:NotificationService.User.UserLoggedIn.UserLoggedInCommandHandler.#ctor(NotificationService.User.Repository.IUserRepository)">
+            <summary>
+            Handler para o comando de login do usuário
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:NotificationService.User.UserLoggedIn.UserLoggedInCommandHandler.HandleAsync(NotificationService.User.UserLoggedIn.UserLoggedInCommand,System.Threading.CancellationToken)">
+            <summary>
+            Executa o comando de login do usuário
             </summary>
             <param name="command"></param>
             <param name="cancellationToken"></param>
-            <param name="handler"></param>
             <returns></returns>
         </member>
-        <member name="T:NotificationService.Notification.NotificationModule">
+        <member name="T:NotificationService.User.UserSignOut.UserSignOutCommand">
             <summary>
-                Modulo para resolver as dependências relacionadas a notificações
+            Comando para remover o dispositivo do usuário
             </summary>
+            <param name="deviceToken"></param>
         </member>
-        <member name="M:NotificationService.Notification.NotificationModule.ConfigureNotificationRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:NotificationService.User.UserSignOut.UserSignOutCommand.#ctor(System.String)">
             <summary>
-                Método para resolver as dependências relacionadas a notificações
+            Comando para remover o dispositivo do usuário
             </summary>
-            <param name="services"></param>
+            <param name="deviceToken"></param>
+        </member>
+        <member name="M:NotificationService.User.UserSignOut.UserSignOutCommand.SetUserId(System.String)">
+            <summary>
+            Método para definir o ID do usuário
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="T:NotificationService.User.UserSignOut.UserSignOutCommandHandler">
+            <summary>
+            Handler para o comando para remover o dispositivo do usuário
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:NotificationService.User.UserSignOut.UserSignOutCommandHandler.#ctor(NotificationService.User.Repository.IUserRepository)">
+            <summary>
+            Handler para o comando para remover o dispositivo do usuário
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:NotificationService.User.UserSignOut.UserSignOutCommandHandler.HandleAsync(NotificationService.User.UserSignOut.UserSignOutCommand,System.Threading.CancellationToken)">
+            <summary>
+            Executa o comando para remover o dispositivo do usuário
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:BDS.DataPack.SharedKernel.Protos.NotificationReflection">
+            <summary>Holder for reflection information generated from notification.proto</summary>
+        </member>
+        <member name="P:BDS.DataPack.SharedKernel.Protos.NotificationReflection.Descriptor">
+            <summary>File descriptor for notification.proto</summary>
+        </member>
+        <member name="F:BDS.DataPack.SharedKernel.Protos.NotificationParams.RecipientIdFieldNumber">
+            <summary>Field number for the "recipientId" field.</summary>
+        </member>
+        <member name="F:BDS.DataPack.SharedKernel.Protos.NotificationParams.TopicFieldNumber">
+            <summary>Field number for the "topic" field.</summary>
+        </member>
+        <member name="F:BDS.DataPack.SharedKernel.Protos.NotificationParams.TitleFieldNumber">
+            <summary>Field number for the "title" field.</summary>
+        </member>
+        <member name="F:BDS.DataPack.SharedKernel.Protos.NotificationParams.BodyFieldNumber">
+            <summary>Field number for the "body" field.</summary>
+        </member>
+        <member name="F:BDS.DataPack.SharedKernel.Protos.NotificationParams.MetadataFieldNumber">
+            <summary>Field number for the "metadata" field.</summary>
+        </member>
+        <member name="F:BDS.DataPack.SharedKernel.Protos.NotificationResponse.SuccessFieldNumber">
+            <summary>Field number for the "success" field.</summary>
+        </member>
+        <member name="P:BDS.DataPack.SharedKernel.Protos.NotificationService.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:BDS.DataPack.SharedKernel.Protos.NotificationService.NotificationServiceBase">
+            <summary>Base class for server-side implementations of NotificationService</summary>
+        </member>
+        <member name="M:BDS.DataPack.SharedKernel.Protos.NotificationService.BindService(BDS.DataPack.SharedKernel.Protos.NotificationService.NotificationServiceBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:BDS.DataPack.SharedKernel.Protos.NotificationService.BindService(Grpc.Core.ServiceBinderBase,BDS.DataPack.SharedKernel.Protos.NotificationService.NotificationServiceBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
     </members>
 </doc>

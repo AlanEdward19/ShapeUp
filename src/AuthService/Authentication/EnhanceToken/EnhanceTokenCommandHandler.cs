@@ -3,6 +3,7 @@ using AuthService.Common;
 using AuthService.Common.Interfaces;
 using AuthService.Common.User.Repository;
 using FirebaseAdmin.Auth;
+using SharedKernel.Utils;
 
 namespace AuthService.Authentication.EnhanceToken;
 
