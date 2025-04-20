@@ -67,7 +67,7 @@ public class AzureSearchProvider : IAzureSearchProvider
     /// <param name="profileId"></param>
     public async Task DeleteAsync(string profileId)
     {
-        var batch = IndexBatch.Delete("ProfileId", new[] { profileId.ToString() });
+        var batch = IndexBatch.Delete("ProfileId", new[] { profileId });
 
         await _indexClient.Documents.IndexAsync(batch);
     }
