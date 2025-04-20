@@ -6606,7 +6606,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="WtlVi93xiYi6eZ-GEQFc" name="ChatService">
-    <mxGraphModel dx="2602" dy="983" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3667" dy="1572" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -7024,6 +7024,42 @@
         </mxCell>
         <mxCell id="piAUac7OIYU2fynLHvmh-5" value="3" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
           <mxGeometry x="-87" y="525.95" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-1" value="" style="whiteSpace=wrap;html=1;fillColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="455" width="500" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-22" value="&lt;div style=&quot;text-align: center;&quot;&gt;Diagrama de classes / MER&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1031.37" y="400" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-3" value="ChatMessage" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="566" width="450" height="198" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-4" value="attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="30" width="450" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-5" value="string Id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="50" width="450" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-45" value="string SenderId" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="70" width="450" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-6" value="string ReceiverId" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="90" width="450" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-46" value="string EncryptedMessage" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="110" width="450" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-7" value="datetime Timestamp" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="130" width="450" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-8" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="150" width="450" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-9" value="operations" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="158" width="450" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xYtnchiL2MryBPKA2cqc-10" value="private string EncryptMessage(string message)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" vertex="1" parent="xYtnchiL2MryBPKA2cqc-3">
+          <mxGeometry y="178" width="450" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
