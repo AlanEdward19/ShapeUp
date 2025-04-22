@@ -36,13 +36,23 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
         RETURN COUNT(reaction) AS reactionsCount
     }}
 
-    RETURN post, 
-           friend.id AS publisherId, 
-           friend.firstName AS publisherFirstName, 
-           friend.lastName AS publisherLastName, 
+    CALL {{
+        WITH post
+        MATCH (post)<-[r:REACTED]-()
+        RETURN r.type AS reactionType, COUNT(r) AS count
+        ORDER BY count DESC
+        LIMIT 3
+    }}
+    WITH post, friend, commentsCount, reactionsCount, COLLECT(reactionType) AS topReactions
+
+    RETURN post,
+           friend.id AS publisherId,
+           friend.firstName AS publisherFirstName,
+           friend.lastName AS publisherLastName,
            friend.imageUrl AS publisherImageUrl,
            commentsCount,
-           reactionsCount
+           reactionsCount,
+           topReactions
     ORDER BY post.creationDate DESC, rand()
     SKIP {(query.Page - 1) * query.Rows}
     LIMIT {query.Rows}";
@@ -59,6 +69,8 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
             parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
             parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
             parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
+            parsedDictionary.Add("topReactions",
+                string.Join(",", record["topReactions"].As<List<object>>().Select(r => r.ToString())));
             post.MapToEntityFromNeo4j(parsedDictionary);
             return post;
         }).ToList();
