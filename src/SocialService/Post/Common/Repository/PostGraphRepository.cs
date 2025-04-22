@@ -39,7 +39,26 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     {
         var query = $@"
     MATCH (post:Post {{id: '{postId}'}})<-[:PUBLISHED_BY]-(profile:Profile)
-    RETURN post, profile.id AS publisherId, profile.firstName as publisherFirstName, profile.lastName as publisherLastName, profile.ImageUrl as publisherImageUrl";
+
+CALL {{
+    WITH post
+    MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+    RETURN COUNT(comment) AS commentsCount
+}}
+
+CALL {{
+    WITH post
+    MATCH (post)<-[:REACTED]-(reaction)
+    RETURN COUNT(reaction) AS reactionsCount
+}}
+
+RETURN post, 
+       profile.id AS publisherId, 
+       profile.firstName AS publisherFirstName, 
+       profile.lastName AS publisherLastName, 
+       profile.imageUrl AS publisherImageUrl, 
+       commentsCount, 
+       reactionsCount";
 
         var result = await graphContext.ExecuteQueryAsync(query);
         var record = result.FirstOrDefault();
@@ -53,6 +72,8 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString()!);
         parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString()!);
         parsedDictionary.Add("publisherImageUrl", (record["publisherImageUrl"] ?? "").ToString()!);
+        parsedDictionary.Add("commentsCount", record["commentsCount"].ToString()!);
+        parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString()!);
         post.MapToEntityFromNeo4j(parsedDictionary);
 
         return post;
@@ -66,7 +87,8 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// <param name="page"></param>
     /// <param name="rows"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page, int rows)
+    public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page,
+        int rows)
     {
         var skip = (page - 1) * rows;
         var cypherQuery = $@"
@@ -77,8 +99,27 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
            (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(publisher)) OR
            (post.visibility = 'Private' AND publisher.id = '{requesterId}') OR
            ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND publisher.id = '{requesterId}'))
-    RETURN post, publisher.id AS publisherId, publisher.firstName as publisherFirstName, publisher.lastName as publisherLastName, publisher.imageUrl as publisherImageUrl
-    ORDER BY post.creationDate DESC
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+        RETURN COUNT(comment) AS commentsCount
+    }}
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:REACTED]-(reaction)
+        RETURN COUNT(reaction) AS reactionsCount
+    }}
+
+    RETURN post, 
+           publisher.id AS publisherId, 
+           publisher.firstName AS publisherFirstName, 
+           publisher.lastName AS publisherLastName, 
+           publisher.imageUrl AS publisherImageUrl,
+           commentsCount,
+           reactionsCount
+    ORDER BY post.createdAt DESC
     SKIP {skip}
     LIMIT {rows}";
 
@@ -92,6 +133,8 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
             parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
             parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
             parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
+            parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
+            parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
             post.MapToEntityFromNeo4j(parsedDictionary);
             return post;
         }).ToList();

@@ -2425,6 +2425,16 @@
                 Conteúdo do post.
             </summary>
         </member>
+        <member name="P:SocialService.Post.Post.ReactionsCount">
+            <summary>
+            Quantidade de reações do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.CommentsCount">
+            <summary>
+            Quantidade de comentários do post.
+            </summary>
+        </member>
         <member name="M:SocialService.Post.Post.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>
                 Método para mapear os dados do neo4j para a entidade.
@@ -2631,6 +2641,16 @@
         <member name="P:SocialService.Post.PostDto.Content">
             <summary>
                 Conteúdo do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.CommentsCount">
+            <summary>
+            Quantidade de comentários do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.ReactionsCount">
+            <summary>
+            Quantidade de reações do post.
             </summary>
         </member>
         <member name="M:SocialService.Post.PostDto.SetImages(System.Collections.Generic.IEnumerable{System.String})">
@@ -3171,7 +3191,7 @@
             <param name="blobStorageProvider"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Connections.Storage.IBlobStorageProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Connections.Storage.IBlobStorageProvider,SocialService.Connections.Search.IAzureSearchProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
                 Handler para o comando de deletar um perfil
             </summary>

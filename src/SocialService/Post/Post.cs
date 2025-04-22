@@ -25,6 +25,8 @@ public class Post : GraphEntity
         UpdateVisibility(command.Visibility);
         UpdateContent(command.Content);
         Images = new List<string>();
+        ReactionsCount = 0;
+        CommentsCount = 0;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
@@ -73,6 +75,16 @@ public class Post : GraphEntity
     ///     Conteúdo do post.
     /// </summary>
     public string Content { get; private set; }
+    
+    /// <summary>
+    /// Quantidade de reações do post.
+    /// </summary>
+    public int ReactionsCount { get; private set; }
+    
+    /// <summary>
+    /// Quantidade de comentários do post.
+    /// </summary>
+    public int CommentsCount { get; private set; }
 
     /// <summary>
     ///     Método para mapear os dados do neo4j para a entidade.
@@ -88,6 +100,8 @@ public class Post : GraphEntity
         PublisherFirstName = result["publisherFirstName"].ToString()!;
         PublisherLastName = result["publisherLastName"].ToString()!;
         PublisherImageUrl = result["publisherImageUrl"].ToString()!;
+        ReactionsCount = int.Parse(result["reactionsCount"].ToString()!);
+        CommentsCount = int.Parse(result["commentsCount"].ToString()!);
 
         if (result.ContainsKey("images"))
             Images = result["images"] == null
