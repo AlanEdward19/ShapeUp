@@ -23,7 +23,36 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
            (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(friend)) OR
            (post.visibility = 'Private' AND friend.id = '{profileId}') OR
            ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND friend.id = '{profileId}'))
-    RETURN post, friend.id AS publisherId, friend.firstName as publisherFirstName, friend.lastName as publisherLastName, friend.imageUrl as publisherImageUrl
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+        RETURN COUNT(comment) AS commentsCount
+    }}
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:REACTED]-(reaction)
+        RETURN COUNT(reaction) AS reactionsCount
+    }}
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[r:REACTED]-()
+        RETURN r.type AS reactionType, COUNT(r) AS count
+        ORDER BY count DESC
+        LIMIT 3
+    }}
+    WITH post, friend, commentsCount, reactionsCount, COLLECT(reactionType) AS topReactions
+
+    RETURN post,
+           friend.id AS publisherId,
+           friend.firstName AS publisherFirstName,
+           friend.lastName AS publisherLastName,
+           friend.imageUrl AS publisherImageUrl,
+           commentsCount,
+           reactionsCount,
+           topReactions
     ORDER BY post.creationDate DESC, rand()
     SKIP {(query.Page - 1) * query.Rows}
     LIMIT {query.Rows}";
@@ -38,6 +67,10 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
             parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
             parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
             parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
+            parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
+            parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
+            parsedDictionary.Add("topReactions",
+                string.Join(",", record["topReactions"].As<List<object>>().Select(r => r.ToString())));
             post.MapToEntityFromNeo4j(parsedDictionary);
             return post;
         }).ToList();

@@ -39,7 +39,36 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     {
         var query = $@"
     MATCH (post:Post {{id: '{postId}'}})<-[:PUBLISHED_BY]-(profile:Profile)
-    RETURN post, profile.id AS publisherId, profile.firstName as publisherFirstName, profile.lastName as publisherLastName, profile.ImageUrl as publisherImageUrl";
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+        RETURN COUNT(comment) AS commentsCount
+    }}
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:REACTED]-(reaction)
+        RETURN COUNT(reaction) AS reactionsCount
+    }}
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[r:REACTED]-()
+        RETURN r.type AS reactionType, COUNT(r) AS count
+        ORDER BY count DESC
+        LIMIT 3
+    }}
+    WITH post, profile, commentsCount, reactionsCount, COLLECT(reactionType) AS topReactions
+
+    RETURN post, 
+           profile.id AS publisherId, 
+           profile.firstName AS publisherFirstName, 
+           profile.lastName AS publisherLastName, 
+           profile.imageUrl AS publisherImageUrl, 
+           commentsCount, 
+           reactionsCount,
+           topReactions";
 
         var result = await graphContext.ExecuteQueryAsync(query);
         var record = result.FirstOrDefault();
@@ -53,6 +82,9 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString()!);
         parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString()!);
         parsedDictionary.Add("publisherImageUrl", (record["publisherImageUrl"] ?? "").ToString()!);
+        parsedDictionary.Add("commentsCount", record["commentsCount"].ToString()!);
+        parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString()!);
+        parsedDictionary.Add("topReactions", string.Join(",", record["topReactions"].As<List<object>>().Select(r => r.ToString())));
         post.MapToEntityFromNeo4j(parsedDictionary);
 
         return post;
@@ -66,10 +98,11 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     /// <param name="page"></param>
     /// <param name="rows"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page, int rows)
-    {
-        var skip = (page - 1) * rows;
-        var cypherQuery = $@"
+    public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page,
+    int rows)
+{
+    var skip = (page - 1) * rows;
+    var cypherQuery = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})
     MATCH (post:Post)<-[:PUBLISHED_BY]-(publisher:Profile)
     WHERE publisher.id = '{profileId}' AND
@@ -77,27 +110,59 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
            (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(publisher)) OR
            (post.visibility = 'Private' AND publisher.id = '{requesterId}') OR
            ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND publisher.id = '{requesterId}'))
-    RETURN post, publisher.id AS publisherId, publisher.firstName as publisherFirstName, publisher.lastName as publisherLastName, publisher.imageUrl as publisherImageUrl
-    ORDER BY post.creationDate DESC
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+        RETURN COUNT(comment) AS commentsCount
+    }}
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[:REACTED]-(reaction)
+        RETURN COUNT(reaction) AS reactionsCount
+    }}
+
+    CALL {{
+        WITH post
+        MATCH (post)<-[r:REACTED]-()
+        RETURN r.type AS reactionType, COUNT(r) AS count
+        ORDER BY count DESC
+        LIMIT 3
+    }}
+    WITH post, publisher, commentsCount, reactionsCount, COLLECT(reactionType) AS topReactions
+
+    RETURN post,
+           publisher.id AS publisherId,
+           publisher.firstName AS publisherFirstName,
+           publisher.lastName AS publisherLastName,
+           publisher.imageUrl AS publisherImageUrl,
+           commentsCount,
+           reactionsCount,
+           topReactions
+    ORDER BY post.createdAt DESC
     SKIP {skip}
     LIMIT {rows}";
 
-        var result = await graphContext.ExecuteQueryAsync(cypherQuery);
+    var result = await graphContext.ExecuteQueryAsync(cypherQuery);
 
-        var posts = result.Select(record =>
-        {
-            var post = new Post();
-            var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            parsedDictionary.Add("publisherId", record["publisherId"].ToString());
-            parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
-            parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
-            parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
-            post.MapToEntityFromNeo4j(parsedDictionary);
-            return post;
-        }).ToList();
+    var posts = result.Select(record =>
+    {
+        var post = new Post();
+        var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        parsedDictionary.Add("publisherId", record["publisherId"].ToString());
+        parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
+        parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
+        parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
+        parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
+        parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
+        parsedDictionary.Add("topReactions", string.Join(",", record["topReactions"].As<List<object>>().Select(r => r.ToString())));
+        post.MapToEntityFromNeo4j(parsedDictionary);
+        return post;
+    }).ToList();
 
-        return posts;
-    }
+    return posts;
+}
 
     /// <summary>
     ///     Método que verifica se um post existe

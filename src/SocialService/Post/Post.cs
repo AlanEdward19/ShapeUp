@@ -24,26 +24,29 @@ public class Post : GraphEntity
         Id = Guid.NewGuid();
         UpdateVisibility(command.Visibility);
         UpdateContent(command.Content);
-        Images = new List<string>();
+        Images = [];
+        ReactionsCount = 0;
+        CommentsCount = 0;
+        TopReactions = [];
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
-    
+
     /// <summary>
     /// Id do perfil que publicou o post.
     /// </summary>
     public string PublisherId { get; private set; }
-    
+
     /// <summary>
     /// Primeiro nome do perfil que publicou o post.
     /// </summary>
     public string PublisherFirstName { get; private set; }
-    
+
     /// <summary>
     /// Sobrenome do perfil que publicou o post.
     /// </summary>
     public string PublisherLastName { get; private set; }
-    
+
     /// <summary>
     /// Url da imagem do perfil que publicou o post.
     /// </summary>
@@ -75,6 +78,21 @@ public class Post : GraphEntity
     public string Content { get; private set; }
 
     /// <summary>
+    /// Quantidade de reações do post.
+    /// </summary>
+    public int ReactionsCount { get; private set; }
+
+    /// <summary>
+    /// Quantidade de comentários do post.
+    /// </summary>
+    public int CommentsCount { get; private set; }
+
+    /// <summary>
+    /// Reações mais comuns do post.
+    /// </summary>
+    public List<EReactionType> TopReactions { get; private set; }
+
+    /// <summary>
     ///     Método para mapear os dados do neo4j para a entidade.
     /// </summary>
     /// <param name="result"></param>
@@ -88,6 +106,13 @@ public class Post : GraphEntity
         PublisherFirstName = result["publisherFirstName"].ToString()!;
         PublisherLastName = result["publisherLastName"].ToString()!;
         PublisherImageUrl = result["publisherImageUrl"].ToString()!;
+        ReactionsCount = int.Parse(result["reactionsCount"].ToString()!);
+        CommentsCount = int.Parse(result["commentsCount"].ToString()!);
+        TopReactions = result["topReactions"]
+            .ToString()!
+            .Split(",")
+            .Select(id => (EReactionType)Enum.Parse(typeof(EReactionType), id.ToString()!))
+            .ToList();
 
         if (result.ContainsKey("images"))
             Images = result["images"] == null
