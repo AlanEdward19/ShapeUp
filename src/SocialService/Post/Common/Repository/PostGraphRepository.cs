@@ -84,7 +84,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         parsedDictionary.Add("publisherImageUrl", (record["publisherImageUrl"] ?? "").ToString()!);
         parsedDictionary.Add("commentsCount", record["commentsCount"].ToString()!);
         parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString()!);
-        parsedDictionary.Add("topReactions", string.Join(",", record["topReactions"].As<List<object>>().Select(r => r.ToString())));
+        parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
         post.MapToEntityFromNeo4j(parsedDictionary);
 
         return post;
@@ -156,7 +156,7 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
         parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
         parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
         parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
-        parsedDictionary.Add("topReactions", string.Join(",", record["topReactions"].As<List<object>>().Select(r => r.ToString())));
+        parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
         post.MapToEntityFromNeo4j(parsedDictionary);
         return post;
     }).ToList();

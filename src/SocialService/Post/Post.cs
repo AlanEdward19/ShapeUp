@@ -31,22 +31,22 @@ public class Post : GraphEntity
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
-
+    
     /// <summary>
     /// Id do perfil que publicou o post.
     /// </summary>
     public string PublisherId { get; private set; }
-
+    
     /// <summary>
     /// Primeiro nome do perfil que publicou o post.
     /// </summary>
     public string PublisherFirstName { get; private set; }
-
+    
     /// <summary>
     /// Sobrenome do perfil que publicou o post.
     /// </summary>
     public string PublisherLastName { get; private set; }
-
+    
     /// <summary>
     /// Url da imagem do perfil que publicou o post.
     /// </summary>
@@ -76,17 +76,17 @@ public class Post : GraphEntity
     ///     Conteúdo do post.
     /// </summary>
     public string Content { get; private set; }
-
+    
     /// <summary>
     /// Quantidade de reações do post.
     /// </summary>
     public int ReactionsCount { get; private set; }
-
+    
     /// <summary>
     /// Quantidade de comentários do post.
     /// </summary>
     public int CommentsCount { get; private set; }
-
+    
     /// <summary>
     /// Reações mais comuns do post.
     /// </summary>
@@ -108,9 +108,7 @@ public class Post : GraphEntity
         PublisherImageUrl = result["publisherImageUrl"].ToString()!;
         ReactionsCount = int.Parse(result["reactionsCount"].ToString()!);
         CommentsCount = int.Parse(result["commentsCount"].ToString()!);
-        TopReactions = result["topReactions"]
-            .ToString()!
-            .Split(",")
+        TopReactions = result["topReactions"].As<List<object>>()
             .Select(id => (EReactionType)Enum.Parse(typeof(EReactionType), id.ToString()!))
             .ToList();
 
