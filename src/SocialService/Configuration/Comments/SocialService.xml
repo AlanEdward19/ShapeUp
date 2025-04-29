@@ -2374,11 +2374,12 @@
                 Construtor padrão
             </summary>
         </member>
-        <member name="M:SocialService.Post.Post.#ctor(SocialService.Post.CreatePost.CreatePostCommand)">
+        <member name="M:SocialService.Post.Post.#ctor(SocialService.Post.CreatePost.CreatePostCommand,System.String)">
             <summary>
                 Construtor para criar um novo post.
             </summary>
             <param name="command"></param>
+            <param name="profileId"></param>
         </member>
         <member name="P:SocialService.Post.Post.PublisherId">
             <summary>
