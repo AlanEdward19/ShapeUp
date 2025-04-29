@@ -19,9 +19,14 @@ public class Post : GraphEntity
     ///     Construtor para criar um novo post.
     /// </summary>
     /// <param name="command"></param>
-    public Post(CreatePostCommand command)
+    /// <param name="profileId"></param>
+    public Post(CreatePostCommand command, string profileId)
     {
         Id = Guid.NewGuid();
+        PublisherId = profileId;
+        PublisherFirstName = "";
+        PublisherLastName = "";
+        PublisherImageUrl = "";
         UpdateVisibility(command.Visibility);
         UpdateContent(command.Content);
         Images = [];
