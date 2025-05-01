@@ -86,6 +86,16 @@ public class ProfileDto(Profile profile, string state, string city)
     public EGender? Gender { get; private set; } = profile.Gender;
     
     /// <summary>
+    /// Se o perfil é amigo do usuário logado.
+    /// </summary>
+    public bool IsFriend { get; private set; } = profile.IsFriend;
+    
+    /// <summary>
+    /// Se o perfil é seguido pelo usuário logado.
+    /// </summary>
+    public bool IsFollowing { get; private set; } = profile.IsFollowing;
+    
+    /// <summary>
     /// Método para setar a url da imagem do perfil.
     /// </summary>
     /// <param name="imageUrl"></param>

@@ -1,4 +1,5 @@
-﻿using SocialService.Profile.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.ViewProfileSimplified;
 
@@ -6,7 +7,9 @@ namespace SocialService.Profile.ViewProfileSimplified;
 ///     Handler para a query de visualização de perfil.
 /// </summary>
 /// <param name="repository"></param>
-public class ViewProfileSimplifiedQueryHandler(IProfileGraphRepository repository, IBlobStorageProvider blobStorageProvider) : IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery>
+public class ViewProfileSimplifiedQueryHandler(
+    IProfileGraphRepository repository,
+    IBlobStorageProvider blobStorageProvider) : IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery>
 {
     /// <summary>
     ///     Método para lidar com a query de visualização de perfil.
@@ -14,7 +17,8 @@ public class ViewProfileSimplifiedQueryHandler(IProfileGraphRepository repositor
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<ProfileSimplifiedDto> HandleAsync(ViewProfileSimplifiedQuery query, CancellationToken cancellationToken)
+    public async Task<ProfileSimplifiedDto> HandleAsync(ViewProfileSimplifiedQuery query,
+        CancellationToken cancellationToken)
     {
         Profile profile = await repository.GetProfileAsync(query.ProfileId);
         ProfileSimplifiedDto profileDto = new(profile);

@@ -120,6 +120,16 @@ public class Profile
     ///     Gênero do perfil.
     /// </summary>
     public EGender? Gender { get; private set; }
+    
+    /// <summary>
+    /// Se o perfil é amigo do usuário logado.
+    /// </summary>
+    public bool IsFriend { get; private set; }
+    
+    /// <summary>
+    /// Se o perfil está sendo seguido pelo usuário logado.
+    /// </summary>
+    public bool IsFollowing { get; private set; }
 
     /// <summary>
     ///     Data de criação do perfil.
@@ -159,6 +169,8 @@ public class Profile
         Following = result.TryGetValue("following", out var followingCount) ? int.Parse(followingCount.ToString()!) : 0;
         Followers = result.TryGetValue("followers", out var followerCount) ? int.Parse(followerCount.ToString()!) : 0;
         Posts = result.TryGetValue("posts", out var postCount) ? int.Parse(postCount.ToString()!) : 0;
+        IsFriend = result.TryGetValue("isFriend", out var isFriend) && bool.Parse(isFriend.ToString()!);
+        IsFollowing = result.TryGetValue("isFollowing", out var isFollowing) && bool.Parse(isFollowing.ToString()!);
     }
 
     /// <summary>

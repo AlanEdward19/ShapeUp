@@ -1,4 +1,5 @@
-﻿using SocialService.Common.Services.BrasilApi;
+﻿using SharedKernel.Utils;
+using SocialService.Common.Services.BrasilApi;
 using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 
@@ -22,7 +23,7 @@ public class ViewProfileQueryHandler(
     /// <returns></returns>
     public async Task<ProfileDto?> HandleAsync(ViewProfileQuery query, CancellationToken cancellationToken)
     {
-        Profile? profile = await repository.GetProfileAsync(query.ProfileId);
+        Profile? profile = await repository.GetProfileAsync(query.ProfileId, ProfileContext.ProfileId);
 
         if (profile is null)
             return null;
@@ -34,8 +35,10 @@ public class ViewProfileQueryHandler(
             city = locationInfo.City;
             state = locationInfo.State;
         }
-        catch { }
-        
+        catch
+        {
+        }
+
         ProfileDto profileDto = new(profile, state, city);
 
         if (!string.IsNullOrWhiteSpace(profile.ImageUrl))
