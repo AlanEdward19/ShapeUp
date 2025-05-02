@@ -9,12 +9,12 @@ namespace TrainingService.Exercises.UpdateExercise;
 /// <param name="name"></param>
 /// <param name="muscleGroups"></param>
 /// <param name="requiresWeight"></param>
-public class UpdateExerciseCommand(Guid id, string? name, IEnumerable<EMuscleGroup>? muscleGroups, bool? requiresWeight)
+public class UpdateExerciseCommand(Guid id, string? name, IEnumerable<EMuscleGroup>? muscleGroups, bool? requiresWeight, string? imageUrl, string? videoUrl)
 {
     /// <summary>
     /// Id do exercício.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 
     /// <summary>
     /// Nome do exercício.
@@ -30,4 +30,14 @@ public class UpdateExerciseCommand(Guid id, string? name, IEnumerable<EMuscleGro
     /// Se o exercício requer peso.
     /// </summary>
     public bool? RequiresWeight { get; set; } = requiresWeight;
+
+    /// <summary>
+    /// Imaegm do exercício.
+    /// </summary>
+    public string? ImageUrl { get; set; } = imageUrl;
+
+    /// <summary>
+    /// Video do exercício.
+    /// </summary>
+    public string? VideoUrl { get; set; } = videoUrl;
 }

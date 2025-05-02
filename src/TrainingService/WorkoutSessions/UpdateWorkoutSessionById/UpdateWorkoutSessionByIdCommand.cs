@@ -10,14 +10,14 @@ namespace TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 /// <param name="status"></param>
 /// <param name="exercises"></param>
 public class UpdateWorkoutSessionByIdCommand(
-    Guid id,
+    string id,
     EWorkoutStatus? status,
     List<WorkoutSessionExerciseValueObject>? exercises)
 {
     /// <summary>
     /// Id da sessão de treino
     /// </summary>
-    public Guid Id { get; set; } = id;
+    public string SessionId { get; set; } = id;
 
     /// <summary>
     /// Status da sessão de treino

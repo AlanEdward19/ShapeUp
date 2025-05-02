@@ -8,5 +8,12 @@ public class DeleteWorkoutSessionByIdCommand
     /// <summary>
     /// Id da sessão de treino.
     /// </summary>
-    public Guid Id { get; set; }
+    public string SessionId { get; private set; }
+    
+    public void SetSessionId(Guid sessionId)
+    {
+        SessionId = sessionId.ToString();
+    }
 }
+
+
