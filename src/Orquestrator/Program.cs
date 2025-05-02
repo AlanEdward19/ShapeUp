@@ -56,4 +56,11 @@ var authService = builder
         .WithReference(sqlServer)
         .WithExternalHttpEndpoints();
 
+var trainingService = builder
+        .AddProject<Projects.TrainingService>("TrainingService")
+        .WaitFor(sqlServer)
+        .WaitFor(mongo)
+        .WithReference(sqlServer)
+        .WithReference(mongo);
+
 builder.Build().Run();

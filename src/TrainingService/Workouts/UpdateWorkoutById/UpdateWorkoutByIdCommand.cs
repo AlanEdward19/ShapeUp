@@ -9,12 +9,17 @@ namespace TrainingService.Workouts.UpdateWorkoutById;
 /// <param name="name"></param>
 /// <param name="visibility"></param>
 /// <param name="exercises"></param>
-public class UpdateWorkoutByIdCommand(Guid id, string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises)
+public class UpdateWorkoutByIdCommand(Guid id, Guid userId, string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises)
 {
     /// <summary>
     /// Id do treino.
     /// </summary>
     public Guid Id { get; set; } = id;
+    
+    /// <summary>
+    /// Id usuario do treino.
+    /// </summary>
+    public Guid UserId { get; set; } = userId;
     
     /// <summary>
     /// Nome do treino.

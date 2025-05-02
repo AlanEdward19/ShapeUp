@@ -9,12 +9,17 @@ namespace TrainingService.Workouts.CreateWorkout;
 /// <param name="name"></param>
 /// <param name="visibility"></param>
 /// <param name="exercises"></param>
-public class CreateWorkoutCommand(Guid? userId, string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises)
+public class CreateWorkoutCommand(string creatorId, string? userId, string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises)
 {
+    /// <summary>
+    /// Id do usuário criador do treino.
+    /// </summary>
+    public string CreatorId { get; set; } = creatorId;
+    
     /// <summary>
     /// Id do usuário para o qual o treino foi criado. Caso não seja informado, será o usuário autenticado.
     /// </summary>
-    public Guid? UserId { get; set; } = userId;
+    public string? UserId { get; set; } = userId;
 
     /// <summary>
     /// Nome do treino.
