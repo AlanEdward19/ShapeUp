@@ -2979,11 +2979,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.String)">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.String,System.String)">
             <summary>
                 Método para obter um perfil do grafo.
             </summary>
             <param name="id"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
@@ -3031,11 +3032,12 @@
             </summary>
             <param name="id"></param>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.String)">
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.String,System.String)">
             <summary>
                 Método para obter um perfil
             </summary>
             <param name="id"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
@@ -3467,6 +3469,16 @@
                 Gênero do perfil.
             </summary>
         </member>
+        <member name="P:SocialService.Profile.Profile.IsFriend">
+            <summary>
+            Se o perfil é amigo do usuário logado.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.IsFollowing">
+            <summary>
+            Se o perfil está sendo seguido pelo usuário logado.
+            </summary>
+        </member>
         <member name="P:SocialService.Profile.Profile.CreatedAt">
             <summary>
                 Data de criação do perfil.
@@ -3731,6 +3743,16 @@
         <member name="P:SocialService.Profile.ProfileDto.Gender">
             <summary>
                 Gênero do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileDto.IsFriend">
+            <summary>
+            Se o perfil é amigo do usuário logado.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileDto.IsFollowing">
+            <summary>
+            Se o perfil é seguido pelo usuário logado.
             </summary>
         </member>
         <member name="M:SocialService.Profile.ProfileDto.SetImageUrl(System.String)">

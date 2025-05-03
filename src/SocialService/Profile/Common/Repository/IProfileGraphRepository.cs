@@ -23,8 +23,9 @@ public interface IProfileGraphRepository
     ///     Método para obter um perfil do grafo.
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="requesterId"></param>
     /// <returns></returns>
-    Task<Profile?> GetProfileAsync(string id);
+    Task<Profile?> GetProfileAsync(string id, string? requesterId = null);
 
     /// <summary>
     ///     Método para atualizar um perfil no grafo.

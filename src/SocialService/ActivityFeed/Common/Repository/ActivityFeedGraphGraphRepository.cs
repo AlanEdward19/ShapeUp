@@ -19,40 +19,51 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
         var cypherQuery = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})
     MATCH (friend:Profile)-[:PUBLISHED_BY]->(post:Post)
-    WHERE ((post.visibility = 'Public' AND (profile)-[:FOLLOWING|FRIEND]->(friend)) OR
-           (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(friend)) OR
-           (post.visibility = 'Private' AND friend.id = '{profileId}') OR
-           ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND friend.id = '{profileId}'))
+    WHERE
+    (
+        (profile)-[:FOLLOWING]->(friend) AND
+        (
+            post.visibility = 'Public' OR
+            (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(friend))
+        )
+    )
+    OR
+    (friend.id = profile.id AND post.visibility IN ['Public', 'FriendsOnly', 'Private'])
 
     CALL {{
         WITH post
-        MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+            OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
         RETURN COUNT(comment) AS commentsCount
-    }}
+            }}
 
-    CALL {{
+CALL {{
         WITH post
-        MATCH (post)<-[:REACTED]-(reaction)
-        RETURN COUNT(reaction) AS reactionsCount
-    }}
+        OPTIONAL MATCH (post)<-[:REACTED]-(reaction)
+            RETURN COUNT(reaction) AS reactionsCount
+            }}
 
-    CALL {{
+CALL {{
         WITH post
-        MATCH (post)<-[r:REACTED]-()
-        RETURN r.type AS reactionType, COUNT(r) AS count
-        ORDER BY count DESC
-        LIMIT 3
-    }}
-    WITH post, friend, commentsCount, reactionsCount, COLLECT(reactionType) AS topReactions
+        OPTIONAL MATCH (post)<-[r:REACTED]-()
+        RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
+            }}
 
-    RETURN post,
-           friend.id AS publisherId,
-           friend.firstName AS publisherFirstName,
-           friend.lastName AS publisherLastName,
-           friend.imageUrl AS publisherImageUrl,
-           commentsCount,
-           reactionsCount,
-           topReactions
+WITH post, friend, commentsCount, reactionsCount, rawReactions
+
+UNWIND rawReactions AS r
+WITH post, friend, commentsCount, reactionsCount, r.type AS reactionType
+WITH post, friend, commentsCount, reactionsCount, reactionType, COUNT(*) AS count
+ORDER BY count DESC
+WITH post, friend, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] AS topReactions
+
+RETURN post,
+       friend.id AS publisherId,
+       friend.firstName AS publisherFirstName,
+       friend.lastName AS publisherLastName,
+       friend.imageUrl AS publisherImageUrl,
+       commentsCount,
+       reactionsCount,
+       topReactions
     ORDER BY post.creationDate DESC, rand()
     SKIP {(query.Page - 1) * query.Rows}
     LIMIT {query.Rows}";

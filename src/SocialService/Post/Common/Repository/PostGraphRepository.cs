@@ -42,24 +42,29 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
 
     CALL {{
         WITH post
-        MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+            OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
         RETURN COUNT(comment) AS commentsCount
-    }}
+            }}
 
-    CALL {{
+CALL {{
         WITH post
-        MATCH (post)<-[:REACTED]-(reaction)
-        RETURN COUNT(reaction) AS reactionsCount
-    }}
+        OPTIONAL MATCH (post)<-[:REACTED]-(reaction)
+            RETURN COUNT(reaction) AS reactionsCount
+            }}
 
-    CALL {{
+CALL {{
         WITH post
-        MATCH (post)<-[r:REACTED]-()
-        RETURN r.type AS reactionType, COUNT(r) AS count
-        ORDER BY count DESC
-        LIMIT 3
-    }}
-    WITH post, profile, commentsCount, reactionsCount, COLLECT(reactionType) AS topReactions
+        OPTIONAL MATCH (post)<-[r:REACTED]-()
+        RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
+            }}
+
+    WITH post, profile, commentsCount, reactionsCount, rawReactions
+
+UNWIND rawReactions AS r
+WITH post, profile, commentsCount, reactionsCount, r.type AS reactionType
+WITH post, profile, commentsCount, reactionsCount, reactionType, COUNT(*) AS count
+ORDER BY count DESC
+WITH post, profile, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] AS topReactions
 
     RETURN post, 
            profile.id AS publisherId, 
@@ -113,24 +118,29 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
 
     CALL {{
         WITH post
-        MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+        OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
         RETURN COUNT(comment) AS commentsCount
     }}
 
     CALL {{
         WITH post
-        MATCH (post)<-[:REACTED]-(reaction)
+        OPTIONAL MATCH (post)<-[:REACTED]-(reaction)
         RETURN COUNT(reaction) AS reactionsCount
     }}
 
     CALL {{
-        WITH post
-        MATCH (post)<-[r:REACTED]-()
-        RETURN r.type AS reactionType, COUNT(r) AS count
-        ORDER BY count DESC
-        LIMIT 3
-    }}
-    WITH post, publisher, commentsCount, reactionsCount, COLLECT(reactionType) AS topReactions
+    WITH post
+    OPTIONAL MATCH (post)<-[r:REACTED]-()
+    RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
+}}
+
+WITH post, publisher, commentsCount, reactionsCount, rawReactions
+
+UNWIND rawReactions AS r
+WITH post, publisher, commentsCount, reactionsCount, r.type AS reactionType
+WITH post, publisher, commentsCount, reactionsCount, reactionType, COUNT(*) AS count
+ORDER BY count DESC
+WITH post, publisher, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] AS topReactions
 
     RETURN post,
            publisher.id AS publisherId,
