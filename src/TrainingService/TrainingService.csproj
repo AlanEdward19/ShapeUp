@@ -7,6 +7,10 @@
         <UserSecretsId>c2c9eac3-2098-4405-858a-2feb6dbfffa6</UserSecretsId>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <DocumentationFile>Configuration\Comments\TrainingService.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
         <PackageReference Include="FluentValidation" Version="11.11.0" />
