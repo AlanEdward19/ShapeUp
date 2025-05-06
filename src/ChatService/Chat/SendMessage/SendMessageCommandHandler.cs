@@ -28,10 +28,10 @@ public class SendMessageCommandHandler(IChatMongoRepository repository, IGrpcPro
             RecipientId = command.ReceiverId,
             Title = "Nova mensagem",
             Topic = ENotificationTopic.FriendRequest,
-            Body = "Você recebeu uma nova mensagem\"",
+            Body = "Você recebeu uma nova mensagem",
             Metadata = new()
             {
-                { "userId",command.ReceiverId.ToString() }
+                { "userId",command.GetSenderId() }
             }
         };
 
