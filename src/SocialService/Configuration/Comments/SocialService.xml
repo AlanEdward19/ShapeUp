@@ -1910,6 +1910,13 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostImagesIdAsync(System.Guid)">
+            <summary>
+            Método para ler os ids das imagens de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.CommentOnPostAsync(SocialService.Post.Comment.Comment)">
             <summary>
                 Método que comenta em um post
@@ -2042,6 +2049,14 @@
                 Método que deleta um post
             </summary>
             <param name="postId"></param>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostImagesIdAsync(System.Guid)">
+            <summary>
+            Método para ler os ids das imagens de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CommentOnPostAsync(SocialService.Post.Comment.Comment)">
             <summary>
@@ -2502,13 +2517,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.PostController.UploadPostImages(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.UploadPostImages.UploadPostImageCommand},System.Guid,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.PostController.UploadPostImages(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.UploadPostImages.UploadPostImageCommand},System.Guid,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Collections.Generic.List{System.Guid},System.Threading.CancellationToken)">
             <summary>
                 Rota para fazer upload de imagens em um post
             </summary>
             <param name="handler"></param>
             <param name="id"></param>
             <param name="files"></param>
+            <param name="filesToKeep"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -2898,6 +2914,11 @@
                 Lista de imagens a serem enviadas.
             </summary>
         </member>
+        <member name="P:SocialService.Post.UploadPostImages.UploadPostImageCommand.FilesToKeep">
+            <summary>
+            Lista de Ids de imagens a serem mantidas.
+            </summary>
+        </member>
         <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetImages(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
             <summary>
                 Método para setar as imagens.
@@ -2910,6 +2931,12 @@
                 Método para setar o id do post.
             </summary>
             <param name="postId"></param>
+        </member>
+        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetFilesToKeep(System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Método para setar os ids de imagens a serem mantidas.
+            </summary>
+            <param name="filesToKeep"></param>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler">
             <summary>

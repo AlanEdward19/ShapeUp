@@ -105,18 +105,21 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     /// <param name="handler"></param>
     /// <param name="id"></param>
     /// <param name="files"></param>
+    /// <param name="filesToKeep"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id:guid}/uploadPostImages")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UploadPostImages([FromServices] IHandler<bool, UploadPostImageCommand> handler,
-        Guid id, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)
+        Guid id, [FromForm] List<IFormFile> files, [FromForm] List<Guid> filesToKeep,
+        CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
 
         var command = new UploadPostImageCommand();
         command.SetPostId(id);
         await command.SetImages(files, cancellationToken);
+        command.SetFilesToKeep(filesToKeep);
 
         UploadPostImageCommandValidator validator = new(repository);
         await validator.ValidateAndThrowAsync(command, cancellationToken);

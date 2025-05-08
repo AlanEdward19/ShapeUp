@@ -28,7 +28,7 @@ public class UploadPostImageCommandHandler(IPostGraphRepository repository, IBlo
         
         var imageIds = await repository.GetPostImagesIdAsync(command.PostId);
         
-        if(images != null && imageIds.Any())
+        if(imageIds.Any())
             foreach (var imageId in imageIds)
             {
                 var parsedImageId = imageId.Split("/").Last().Split(".").First();
