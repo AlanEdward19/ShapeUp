@@ -104,10 +104,10 @@ WITH post, profile, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] A
     /// <param name="rows"></param>
     /// <returns></returns>
     public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page,
-    int rows)
-{
-    var skip = (page - 1) * rows;
-    var cypherQuery = $@"
+        int rows)
+    {
+        var skip = (page - 1) * rows;
+        var cypherQuery = $@"
     MATCH (profile:Profile {{id: '{profileId}'}})
     MATCH (post:Post)<-[:PUBLISHED_BY]-(publisher:Profile)
     WHERE publisher.id = '{profileId}' AND
@@ -154,25 +154,25 @@ WITH post, publisher, commentsCount, reactionsCount, COLLECT(reactionType)[0..3]
     SKIP {skip}
     LIMIT {rows}";
 
-    var result = await graphContext.ExecuteQueryAsync(cypherQuery);
+        var result = await graphContext.ExecuteQueryAsync(cypherQuery);
 
-    var posts = result.Select(record =>
-    {
-        var post = new Post();
-        var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        parsedDictionary.Add("publisherId", record["publisherId"].ToString());
-        parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
-        parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
-        parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
-        parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
-        parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
-        parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
-        post.MapToEntityFromNeo4j(parsedDictionary);
-        return post;
-    }).ToList();
+        var posts = result.Select(record =>
+        {
+            var post = new Post();
+            var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            parsedDictionary.Add("publisherId", record["publisherId"].ToString());
+            parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
+            parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
+            parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
+            parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
+            parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
+            parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
+            post.MapToEntityFromNeo4j(parsedDictionary);
+            return post;
+        }).ToList();
 
-    return posts;
-}
+        return posts;
+    }
 
     /// <summary>
     ///     Método que verifica se um post existe
@@ -255,6 +255,29 @@ WITH post, publisher, commentsCount, reactionsCount, COLLECT(reactionType)[0..3]
     DETACH DELETE post, comment, r";
 
         await graphContext.ExecuteQueryAsync(query);
+    }
+
+    /// <summary>
+    /// Método para ler os ids das imagens de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<List<string>> GetPostImagesIdAsync(Guid postId)
+    {
+        var query = $@"
+    MATCH (post:Post {{id: '{postId}'}})
+    RETURN post.images AS imageIds";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+        var record = result.FirstOrDefault();
+
+        if (record == null || record["imageIds"] == null)
+            return new List<string>();
+
+        return record["imageIds"].As<List<object>>()
+            .Select(imageId => imageId.ToString()!)
+            .ToList();
     }
 
     #endregion

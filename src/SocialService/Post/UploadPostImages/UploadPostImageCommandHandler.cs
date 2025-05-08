@@ -22,8 +22,27 @@ public class UploadPostImageCommandHandler(IPostGraphRepository repository, IBlo
     public async Task<bool> HandleAsync(UploadPostImageCommand command, CancellationToken cancellationToken)
     {
         List<string> images = new();
+        List<string> imagesToRemove = new();
 
         var containerName = $"{ProfileContext.ProfileId}";
+        
+        var imageIds = await repository.GetPostImagesIdAsync(command.PostId);
+        
+        if(images != null && imageIds.Any())
+            foreach (var imageId in imageIds)
+            {
+                var parsedImageId = imageId.Split("/").Last().Split(".").First();
+                
+                if (command.FilesToKeep != null && command.FilesToKeep.Contains(Guid.Parse(parsedImageId)))
+                    images.Add(imageId);
+                
+                else
+                    imagesToRemove.Add(imageId);
+            }
+        
+        if (imagesToRemove.Any())
+            foreach (var imageId in imagesToRemove)
+                await blobStorageProvider.DeleteBlobAsync(imageId, containerName);
 
         foreach (var image in command.Images)
         {

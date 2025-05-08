@@ -70,6 +70,13 @@ public interface IPostGraphRepository
     /// <param name="postId"></param>
     /// <returns></returns>
     Task DeletePostAsync(Guid postId);
+    
+    /// <summary>
+    /// Método para ler os ids das imagens de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    Task<List<string>> GetPostImagesIdAsync(Guid postId);
 
     #endregion
 
