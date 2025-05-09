@@ -14,6 +14,11 @@ public class UploadPostImageCommand
     ///     Lista de imagens a serem enviadas.
     /// </summary>
     public List<(string imageName, MemoryStream fileContent)> Images { get; private set; }
+    
+    /// <summary>
+    /// Lista de Ids de imagens a serem mantidas.
+    /// </summary>
+    public List<Guid> FilesToKeep { get; private set; }
 
     /// <summary>
     ///     Método para setar as imagens.
@@ -39,5 +44,14 @@ public class UploadPostImageCommand
     public void SetPostId(Guid postId)
     {
         PostId = postId;
+    }
+    
+    /// <summary>
+    /// Método para setar os ids de imagens a serem mantidas.
+    /// </summary>
+    /// <param name="filesToKeep"></param>
+    public void SetFilesToKeep(List<Guid> filesToKeep)
+    {
+        FilesToKeep = filesToKeep;
     }
 }

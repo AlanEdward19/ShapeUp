@@ -1,4 +1,5 @@
-﻿using SocialService.Post.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.GetPost;
 
@@ -11,12 +12,12 @@ public class GetPostQueryHandler(IPostGraphRepository repository, IBlobStoragePr
     /// <summary>
     ///     Método para obter as informações de um post
     /// </summary>
-    /// <param name="item"></param>
+    /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public async Task<PostDto> HandleAsync(GetPostQuery query, CancellationToken cancellationToken)
     {
-        Post post = await repository.GetPostAsync(query.PostId);
+        Post post = await repository.GetPostAsync(query.PostId, ProfileContext.ProfileId);
         List<string> imageUrls = new(post.Images.Count());
         
         foreach (var image in post.Images)

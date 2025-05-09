@@ -1855,11 +1855,12 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid,System.String)">
             <summary>
                 Método que retorna um post
             </summary>
             <param name="postId"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
@@ -1906,6 +1907,13 @@
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeletePostAsync(System.Guid)">
             <summary>
                 Método que deleta um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostImagesIdAsync(System.Guid)">
+            <summary>
+            Método para ler os ids das imagens de um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
@@ -1993,11 +2001,12 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid,System.String)">
             <summary>
                 Método que retorna um post
             </summary>
             <param name="postId"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
@@ -2042,6 +2051,14 @@
                 Método que deleta um post
             </summary>
             <param name="postId"></param>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostImagesIdAsync(System.Guid)">
+            <summary>
+            Método para ler os ids das imagens de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CommentOnPostAsync(SocialService.Post.Comment.Comment)">
             <summary>
@@ -2349,7 +2366,7 @@
             <summary>
                 Método para obter as informações de um post
             </summary>
-            <param name="item"></param>
+            <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -2441,6 +2458,16 @@
             Reações mais comuns do post.
             </summary>
         </member>
+        <member name="P:SocialService.Post.Post.HasUserReacted">
+            <summary>
+            Se o usuário reagiu ao post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.HasUserCommented">
+            <summary>
+            Se o usuário comentou no post.
+            </summary>
+        </member>
         <member name="M:SocialService.Post.Post.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>
                 Método para mapear os dados do neo4j para a entidade.
@@ -2502,13 +2529,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.PostController.UploadPostImages(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.UploadPostImages.UploadPostImageCommand},System.Guid,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.PostController.UploadPostImages(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.UploadPostImages.UploadPostImageCommand},System.Guid,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Collections.Generic.List{System.Guid},System.Threading.CancellationToken)">
             <summary>
                 Rota para fazer upload de imagens em um post
             </summary>
             <param name="handler"></param>
             <param name="id"></param>
             <param name="files"></param>
+            <param name="filesToKeep"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -2662,6 +2690,16 @@
         <member name="P:SocialService.Post.PostDto.TopReactions">
             <summary>
             Reações mais comuns do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.HasUserReacted">
+            <summary>
+            Se o usuário reagiu ao post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.HasUserCommented">
+            <summary>
+            Se o usuário comentou no post.
             </summary>
         </member>
         <member name="M:SocialService.Post.PostDto.SetImages(System.Collections.Generic.IEnumerable{System.String})">
@@ -2898,6 +2936,11 @@
                 Lista de imagens a serem enviadas.
             </summary>
         </member>
+        <member name="P:SocialService.Post.UploadPostImages.UploadPostImageCommand.FilesToKeep">
+            <summary>
+            Lista de Ids de imagens a serem mantidas.
+            </summary>
+        </member>
         <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetImages(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
             <summary>
                 Método para setar as imagens.
@@ -2910,6 +2953,12 @@
                 Método para setar o id do post.
             </summary>
             <param name="postId"></param>
+        </member>
+        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetFilesToKeep(System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Método para setar os ids de imagens a serem mantidas.
+            </summary>
+            <param name="filesToKeep"></param>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler">
             <summary>

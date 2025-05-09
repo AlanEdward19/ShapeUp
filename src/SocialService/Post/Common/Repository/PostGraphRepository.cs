@@ -34,46 +34,62 @@ public class PostGraphRepository(GraphContext graphContext) : IPostGraphReposito
     ///     Método que retorna um post
     /// </summary>
     /// <param name="postId"></param>
+    /// <param name="requesterId"></param>
     /// <returns></returns>
-    public async Task<Post> GetPostAsync(Guid postId)
+    public async Task<Post> GetPostAsync(Guid postId, string requesterId)
     {
         var query = $@"
-    MATCH (post:Post {{id: '{postId}'}})<-[:PUBLISHED_BY]-(profile:Profile)
-
-    CALL {{
-        WITH post
-            OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
-        RETURN COUNT(comment) AS commentsCount
-            }}
+MATCH (post:Post {{id: '{postId}'}})<-[:PUBLISHED_BY]-(profile:Profile)
+MATCH (requester:Profile {{id: '{requesterId}'}})
 
 CALL {{
-        WITH post
-        OPTIONAL MATCH (post)<-[:REACTED]-(reaction)
-            RETURN COUNT(reaction) AS reactionsCount
-            }}
+    WITH post
+    OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+    RETURN COUNT(comment) AS commentsCount
+}}
 
 CALL {{
-        WITH post
-        OPTIONAL MATCH (post)<-[r:REACTED]-()
-        RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
-            }}
+    WITH post
+    OPTIONAL MATCH (post)<-[r:REACTED]-(:Profile)
+    RETURN COUNT(r) AS reactionsCount
+}}
 
-    WITH post, profile, commentsCount, reactionsCount, rawReactions
+CALL {{
+    WITH post
+    OPTIONAL MATCH (post)<-[r:REACTED]-()
+    RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
+}}
+
+CALL {{
+  WITH post, requester
+  OPTIONAL MATCH (post)<-[r:REACTED]-(requester)
+  RETURN COUNT(r) > 0 AS hasUserReacted
+}}
+
+CALL {{
+  WITH post, requester
+  OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(c:Comment)-[:COMMENTED]->(requester)
+  RETURN COUNT(c) > 0 AS hasUserCommented
+}}
+
+WITH post, profile, commentsCount, reactionsCount, rawReactions, hasUserReacted, hasUserCommented
 
 UNWIND rawReactions AS r
-WITH post, profile, commentsCount, reactionsCount, r.type AS reactionType
-WITH post, profile, commentsCount, reactionsCount, reactionType, COUNT(*) AS count
+WITH post, profile, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, r.type AS reactionType
+WITH post, profile, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, reactionType, COUNT(*) AS count
 ORDER BY count DESC
-WITH post, profile, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] AS topReactions
+WITH post, profile, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, COLLECT(reactionType)[0..3] AS topReactions
 
-    RETURN post, 
-           profile.id AS publisherId, 
-           profile.firstName AS publisherFirstName, 
-           profile.lastName AS publisherLastName, 
-           profile.imageUrl AS publisherImageUrl, 
-           commentsCount, 
-           reactionsCount,
-           topReactions";
+RETURN post, 
+       profile.id AS publisherId, 
+       profile.firstName AS publisherFirstName, 
+       profile.lastName AS publisherLastName, 
+       profile.imageUrl AS publisherImageUrl, 
+       commentsCount, 
+       reactionsCount,
+       topReactions,
+       hasUserReacted,
+       hasUserCommented";
 
         var result = await graphContext.ExecuteQueryAsync(query);
         var record = result.FirstOrDefault();
@@ -90,6 +106,8 @@ WITH post, profile, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] A
         parsedDictionary.Add("commentsCount", record["commentsCount"].ToString()!);
         parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString()!);
         parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
+        parsedDictionary.Add("hasUserReacted", record["hasUserReacted"].ToString()!);
+        parsedDictionary.Add("hasUserCommented", record["hasUserCommented"].ToString()!);
         post.MapToEntityFromNeo4j(parsedDictionary);
 
         return post;
@@ -104,75 +122,91 @@ WITH post, profile, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] A
     /// <param name="rows"></param>
     /// <returns></returns>
     public async Task<IEnumerable<Post>> GetPostsByProfileIdAsync(string profileId, string requesterId, int page,
-    int rows)
-{
-    var skip = (page - 1) * rows;
-    var cypherQuery = $@"
-    MATCH (profile:Profile {{id: '{profileId}'}})
-    MATCH (post:Post)<-[:PUBLISHED_BY]-(publisher:Profile)
-    WHERE publisher.id = '{profileId}' AND
-          ((post.visibility = 'Public') OR
-           (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(publisher)) OR
-           (post.visibility = 'Private' AND publisher.id = '{requesterId}') OR
-           ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND publisher.id = '{requesterId}'))
+        int rows)
+    {
+        var skip = (page - 1) * rows;
+        var cypherQuery = $@"
+MATCH (profile:Profile {{id: '{requesterId}'}})
+MATCH (post:Post)<-[:PUBLISHED_BY]-(publisher:Profile)
+WHERE publisher.id = '{profileId}' AND
+      (
+        post.visibility = 'Public' OR
+        (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(publisher)) OR
+        (post.visibility = 'Private' AND publisher.id = '{requesterId}') OR
+        ((post.visibility = 'Public' OR post.visibility = 'FriendsOnly') AND publisher.id = '{requesterId}')
+      )
 
-    CALL {{
-        WITH post
-        OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
-        RETURN COUNT(comment) AS commentsCount
-    }}
+CALL {{
+    WITH post
+    OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+    RETURN COUNT(comment) AS commentsCount
+}}
 
-    CALL {{
-        WITH post
-        OPTIONAL MATCH (post)<-[:REACTED]-(reaction)
-        RETURN COUNT(reaction) AS reactionsCount
-    }}
+CALL {{
+    WITH post
+    OPTIONAL MATCH (post)<-[r:REACTED]-(:Profile)
+    RETURN COUNT(r) AS reactionsCount
+}}
 
-    CALL {{
+CALL {{
     WITH post
     OPTIONAL MATCH (post)<-[r:REACTED]-()
     RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
 }}
 
-WITH post, publisher, commentsCount, reactionsCount, rawReactions
+CALL {{
+    WITH post, profile
+    OPTIONAL MATCH (post)<-[r:REACTED]-(profile)
+    RETURN COUNT(r) > 0 AS hasUserReacted
+}}
+
+CALL {{
+    WITH post, profile
+    OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(c:Comment)-[:COMMENTED]->(profile)
+    RETURN COUNT(c) > 0 AS hasUserCommented
+}}
+
+WITH post, publisher, commentsCount, reactionsCount, rawReactions, hasUserReacted, hasUserCommented
 
 UNWIND rawReactions AS r
-WITH post, publisher, commentsCount, reactionsCount, r.type AS reactionType
-WITH post, publisher, commentsCount, reactionsCount, reactionType, COUNT(*) AS count
+WITH post, publisher, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, r.type AS reactionType
+WITH post, publisher, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, reactionType, COUNT(*) AS count
 ORDER BY count DESC
-WITH post, publisher, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] AS topReactions
+WITH post, publisher, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, COLLECT(reactionType)[0..3] AS topReactions
 
-    RETURN post,
-           publisher.id AS publisherId,
-           publisher.firstName AS publisherFirstName,
-           publisher.lastName AS publisherLastName,
-           publisher.imageUrl AS publisherImageUrl,
-           commentsCount,
-           reactionsCount,
-           topReactions
-    ORDER BY post.createdAt DESC
-    SKIP {skip}
-    LIMIT {rows}";
+RETURN post,
+       publisher.id AS publisherId,
+       publisher.firstName AS publisherFirstName,
+       publisher.lastName AS publisherLastName,
+       publisher.imageUrl AS publisherImageUrl,
+       commentsCount,
+       reactionsCount,
+       topReactions,
+       hasUserReacted,
+       hasUserCommented
+ORDER BY post.createdAt DESC
+SKIP {skip}
+LIMIT {rows}";
+        
+        var result = await graphContext.ExecuteQueryAsync(cypherQuery);
 
-    var result = await graphContext.ExecuteQueryAsync(cypherQuery);
+        var posts = result.Select(record =>
+        {
+            var post = new Post();
+            var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            parsedDictionary.Add("publisherId", record["publisherId"].ToString());
+            parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
+            parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
+            parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
+            parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
+            parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
+            parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
+            post.MapToEntityFromNeo4j(parsedDictionary);
+            return post;
+        }).ToList();
 
-    var posts = result.Select(record =>
-    {
-        var post = new Post();
-        var parsedDictionary = record["post"].As<INode>().Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        parsedDictionary.Add("publisherId", record["publisherId"].ToString());
-        parsedDictionary.Add("publisherFirstName", record["publisherFirstName"].ToString());
-        parsedDictionary.Add("publisherLastName", record["publisherLastName"].ToString());
-        parsedDictionary.Add("publisherImageUrl", record["publisherImageUrl"].ToString());
-        parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
-        parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
-        parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
-        post.MapToEntityFromNeo4j(parsedDictionary);
-        return post;
-    }).ToList();
-
-    return posts;
-}
+        return posts;
+    }
 
     /// <summary>
     ///     Método que verifica se um post existe
@@ -255,6 +289,29 @@ WITH post, publisher, commentsCount, reactionsCount, COLLECT(reactionType)[0..3]
     DETACH DELETE post, comment, r";
 
         await graphContext.ExecuteQueryAsync(query);
+    }
+
+    /// <summary>
+    /// Método para ler os ids das imagens de um post
+    /// </summary>
+    /// <param name="postId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<List<string>> GetPostImagesIdAsync(Guid postId)
+    {
+        var query = $@"
+    MATCH (post:Post {{id: '{postId}'}})
+    RETURN post.images AS imageIds";
+
+        var result = await graphContext.ExecuteQueryAsync(query);
+        var record = result.FirstOrDefault();
+
+        if (record == null || record["imageIds"] == null)
+            return new List<string>();
+
+        return record["imageIds"].As<List<object>>()
+            .Select(imageId => imageId.ToString()!)
+            .ToList();
     }
 
     #endregion

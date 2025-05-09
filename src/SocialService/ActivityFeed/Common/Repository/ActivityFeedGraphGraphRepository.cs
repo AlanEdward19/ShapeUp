@@ -16,45 +16,57 @@ public class ActivityFeedGraphGraphRepository(GraphContext graphContext) : IActi
     /// <returns></returns>
     public async Task<IEnumerable<Post.Post>> BuildActivityFeed(GetActivityFeedQuery query, string profileId)
     {
-        var cypherQuery = $@"
-    MATCH (profile:Profile {{id: '{profileId}'}})
-    MATCH (friend:Profile)-[:PUBLISHED_BY]->(post:Post)
-    WHERE
+        string cypherQuery = $@"
+MATCH (profile:Profile {{id: '{profileId}'}})
+MATCH (friend:Profile)-[:PUBLISHED_BY]->(post:Post)
+WHERE
+(
+    (profile)-[:FOLLOWING]->(friend) AND
     (
-        (profile)-[:FOLLOWING]->(friend) AND
-        (
-            post.visibility = 'Public' OR
-            (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(friend))
-        )
+        post.visibility = 'Public' OR
+        (post.visibility = 'FriendsOnly' AND (profile)-[:FRIEND]->(friend))
     )
-    OR
-    (friend.id = profile.id AND post.visibility IN ['Public', 'FriendsOnly', 'Private'])
-
-    CALL {{
-        WITH post
-            OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
-        RETURN COUNT(comment) AS commentsCount
-            }}
+)
+OR
+(friend.id = profile.id AND post.visibility IN ['Public', 'FriendsOnly', 'Private'])
 
 CALL {{
-        WITH post
-        OPTIONAL MATCH (post)<-[:REACTED]-(reaction)
-            RETURN COUNT(reaction) AS reactionsCount
-            }}
+    WITH post
+    OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(comment:Comment)
+    RETURN COUNT(comment) AS commentsCount
+}}
 
 CALL {{
-        WITH post
-        OPTIONAL MATCH (post)<-[r:REACTED]-()
-        RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
-            }}
+    WITH post
+    OPTIONAL MATCH (post)<-[r:REACTED]-(:Profile)
+    RETURN COUNT(r) AS reactionsCount
+}}
 
-WITH post, friend, commentsCount, reactionsCount, rawReactions
+CALL {{
+    WITH post
+    OPTIONAL MATCH (post)<-[r:REACTED]-()
+    RETURN COLLECT({{type: r.type, count: 1}}) AS rawReactions
+}}
+
+CALL {{
+    WITH post, profile
+    OPTIONAL MATCH (post)<-[r:REACTED]-(profile)
+    RETURN COUNT(r) > 0 AS hasUserReacted
+}}
+
+CALL {{
+    WITH post, profile
+    OPTIONAL MATCH (post)<-[:COMMENTED_ON]-(c:Comment)-[:COMMENTED]->(profile)
+    RETURN COUNT(c) > 0 AS hasUserCommented
+}}
+
+WITH post, friend, commentsCount, reactionsCount, rawReactions, hasUserReacted, hasUserCommented
 
 UNWIND rawReactions AS r
-WITH post, friend, commentsCount, reactionsCount, r.type AS reactionType
-WITH post, friend, commentsCount, reactionsCount, reactionType, COUNT(*) AS count
+WITH post, friend, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, r.type AS reactionType
+WITH post, friend, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, reactionType, COUNT(*) AS count
 ORDER BY count DESC
-WITH post, friend, commentsCount, reactionsCount, COLLECT(reactionType)[0..3] AS topReactions
+WITH post, friend, commentsCount, reactionsCount, hasUserReacted, hasUserCommented, COLLECT(reactionType)[0..3] AS topReactions
 
 RETURN post,
        friend.id AS publisherId,
@@ -63,10 +75,12 @@ RETURN post,
        friend.imageUrl AS publisherImageUrl,
        commentsCount,
        reactionsCount,
-       topReactions
-    ORDER BY post.creationDate DESC, rand()
-    SKIP {(query.Page - 1) * query.Rows}
-    LIMIT {query.Rows}";
+       topReactions,
+       hasUserReacted,
+       hasUserCommented
+ORDER BY post.creationDate DESC, rand()
+SKIP {(query.Page - 1) * query.Rows}
+LIMIT {query.Rows}";
 
         var result = await graphContext.ExecuteQueryAsync(cypherQuery);
 
@@ -81,6 +95,8 @@ RETURN post,
             parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
             parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
             parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
+            parsedDictionary.Add("hasUserReacted", record["hasUserReacted"].ToString());
+            parsedDictionary.Add("hasUserCommented", record["hasUserCommented"].ToString());
             post.MapToEntityFromNeo4j(parsedDictionary);
             return post;
         }).ToList();
