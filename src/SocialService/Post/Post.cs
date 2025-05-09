@@ -96,6 +96,16 @@ public class Post : GraphEntity
     /// Reações mais comuns do post.
     /// </summary>
     public List<EReactionType> TopReactions { get; private set; }
+    
+    /// <summary>
+    /// Se o usuário reagiu ao post.
+    /// </summary>
+    public bool HasUserReacted { get; private set; }
+    
+    /// <summary>
+    /// Se o usuário comentou no post.
+    /// </summary>
+    public bool HasUserCommented { get; private set; }
 
     /// <summary>
     ///     Método para mapear os dados do neo4j para a entidade.
@@ -116,6 +126,8 @@ public class Post : GraphEntity
         TopReactions = result["topReactions"].As<List<object>>()
             .Select(id => (EReactionType)Enum.Parse(typeof(EReactionType), id.ToString()!))
             .ToList();
+        HasUserReacted = bool.Parse(result["hasUserReacted"].ToString()!);
+        HasUserCommented = bool.Parse(result["hasUserCommented"].ToString()!);
 
         if (result.ContainsKey("images"))
             Images = result["images"] == null

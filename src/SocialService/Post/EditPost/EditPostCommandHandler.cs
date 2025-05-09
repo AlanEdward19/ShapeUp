@@ -1,4 +1,5 @@
-﻿using SocialService.Post.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.EditPost;
 
@@ -17,7 +18,7 @@ public class EditPostCommandHandler(IPostGraphRepository repository)
     /// <returns></returns>
     public async Task<PostDto> HandleAsync(EditPostCommand command, CancellationToken cancellationToken)
     {
-        Post post = await repository.GetPostAsync(command.PostId);
+        Post post = await repository.GetPostAsync(command.PostId, ProfileContext.ProfileId);
 
         post.UpdateContent(command.Content);
         post.UpdateVisibility(command.Visibility);

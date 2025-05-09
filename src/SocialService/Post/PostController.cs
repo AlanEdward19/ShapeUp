@@ -44,6 +44,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
     public async Task<IActionResult> GetPost([FromServices] IHandler<PostDto, GetPostQuery> handler,
         Guid id, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = User.GetObjectId();
         GetPostQuery query = new();
         query.SetPostId(id);
 

@@ -1855,11 +1855,12 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid,System.String)">
             <summary>
                 Método que retorna um post
             </summary>
             <param name="postId"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
@@ -2000,11 +2001,12 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid,System.String)">
             <summary>
                 Método que retorna um post
             </summary>
             <param name="postId"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
@@ -2364,7 +2366,7 @@
             <summary>
                 Método para obter as informações de um post
             </summary>
-            <param name="item"></param>
+            <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -2454,6 +2456,16 @@
         <member name="P:SocialService.Post.Post.TopReactions">
             <summary>
             Reações mais comuns do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.HasUserReacted">
+            <summary>
+            Se o usuário reagiu ao post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.HasUserCommented">
+            <summary>
+            Se o usuário comentou no post.
             </summary>
         </member>
         <member name="M:SocialService.Post.Post.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
@@ -2678,6 +2690,16 @@
         <member name="P:SocialService.Post.PostDto.TopReactions">
             <summary>
             Reações mais comuns do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.HasUserReacted">
+            <summary>
+            Se o usuário reagiu ao post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.HasUserCommented">
+            <summary>
+            Se o usuário comentou no post.
             </summary>
         </member>
         <member name="M:SocialService.Post.PostDto.SetImages(System.Collections.Generic.IEnumerable{System.String})">

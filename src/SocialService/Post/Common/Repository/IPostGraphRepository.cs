@@ -15,13 +15,14 @@ public interface IPostGraphRepository
     /// <param name="postId"></param>
     /// <returns></returns>
     Task<string> GetProfileIdByPostIdAsync(Guid postId);
-    
+
     /// <summary>
     ///     Método que retorna um post
     /// </summary>
     /// <param name="postId"></param>
+    /// <param name="requesterId"></param>
     /// <returns></returns>
-    Task<Post> GetPostAsync(Guid postId);
+    Task<Post> GetPostAsync(Guid postId, string requesterId);
 
     /// <summary>
     /// Método que retorna os posts de um perfil
