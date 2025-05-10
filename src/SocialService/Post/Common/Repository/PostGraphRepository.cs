@@ -201,6 +201,8 @@ LIMIT {rows}";
             parsedDictionary.Add("commentsCount", record["commentsCount"].ToString());
             parsedDictionary.Add("reactionsCount", record["reactionsCount"].ToString());
             parsedDictionary.Add("topReactions", record["topReactions"].As<List<object>>().Select(r => r.ToString()));
+            parsedDictionary.Add("hasUserReacted", record["hasUserReacted"].ToString());
+            parsedDictionary.Add("hasUserCommented", record["hasUserCommented"].ToString());
             post.MapToEntityFromNeo4j(parsedDictionary);
             return post;
         }).ToList();
