@@ -71,6 +71,7 @@ public class PostController(IPostGraphRepository repository) : ControllerBase
         [FromQuery] BaseQueryParametersValueObject queryParameters,
         string id, CancellationToken cancellationToken)
     {
+        ProfileContext.ProfileId = User.GetObjectId();
         GetPostsByProfileIdQuery query = new(queryParameters.Page, queryParameters.Rows);
         query.SetProfileId(id);
 
