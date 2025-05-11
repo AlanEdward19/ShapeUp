@@ -9,12 +9,25 @@ using SharedKernel.Enums;
 
 namespace NotificationService.Notification.Services;
 
+/// <summary>
+/// Serviço de notificação.
+/// </summary>
+/// <param name="hubContext"></param>
+/// <param name="repository"></param>
+/// <param name="fcmService"></param>
+/// <param name="logger"></param>
 public class NotificationService(
     IHubContext<NotificationHub> hubContext,
     IUserRepository repository,
     IFcmService fcmService,
     ILogger<NotificationService> logger) : BDS.DataPack.SharedKernel.Protos.NotificationService.NotificationServiceBase
 {
+    /// <summary>
+    /// Método para enviar uma notificação.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public override async Task<NotificationResponse> sendNotification(NotificationParams request,
         ServerCallContext context)
     {
