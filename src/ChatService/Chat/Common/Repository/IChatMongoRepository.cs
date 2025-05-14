@@ -29,5 +29,5 @@ public interface IChatMongoRepository
     /// <param name="receiverId"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    Task SendMessageAsync(Guid senderId, Guid receiverId, string message);
+    Task SendMessageAsync(string senderId, string receiverId, string message);
 }

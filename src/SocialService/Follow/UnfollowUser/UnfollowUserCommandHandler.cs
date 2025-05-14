@@ -1,4 +1,5 @@
-﻿using SocialService.Follow.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.Follow.Common.Repository;
 
 namespace SocialService.Follow.UnfollowUser;
 

@@ -1,5 +1,9 @@
-﻿using NotificationService.Notification.Common;
-using StackExchange.Redis;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using NotificationService.Connections.Database;
+using NotificationService.Connections.Firebase;
 
 namespace NotificationService.Connections;
 
@@ -19,17 +23,39 @@ public static class ConnectionsModule
     {
         services
             .ConfigureSignalR()
-            .ConfigureRedis(configuration);
+            .ConfigureMongoDb(configuration)
+            .ConfigureFcm();
 
         return services;
     }
-    
-    private static IServiceCollection ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
+
+    private static IServiceCollection ConfigureMongoDb(this IServiceCollection services, IConfiguration configuration)
     {
-        string connectionString = configuration.GetConnectionString("Redis")!;
+        string connectionString = configuration.GetConnectionString("Mongo")!;
         
-        services.AddSingleton<IConnectionMultiplexer>(_ =>
-            ConnectionMultiplexer.Connect(connectionString));
+#if (DEBUG)
+        services.AddDbContext<NotificationDbContext>(options =>
+            options
+                .UseMongoDB(connectionString, "NotificationDb")
+                .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+                // ⚠️ !! Ativado somente em modo debug !! ⚠️ 
+                .EnableSensitiveDataLogging()
+        );
+
+#elif (RELEASE)
+        services.AddDbContext<AuthDbContext>(options =>
+               options
+               .UseMongoDB(connectionString, "NotificationDb")
+               .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+       );
+#endif
+
+        return services;
+    }
+
+    private static IServiceCollection ConfigureFcm(this IServiceCollection services)
+    {
+        services.AddScoped<IFcmService, FcmService>();
 
         return services;
     }
@@ -39,5 +65,12 @@ public static class ConnectionsModule
         services.AddSignalR();
 
         return services;
+    }
+    
+    public static IEndpointRouteBuilder ConfigureGrpc(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGrpcService<Notification.Services.NotificationService>();
+
+        return builder;
     }
 }

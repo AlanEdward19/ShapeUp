@@ -1,4 +1,5 @@
-﻿using SocialService.Common.Services.BrasilApi;
+﻿using SharedKernel.Utils;
+using SocialService.Common.Services.BrasilApi;
 using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 
@@ -22,14 +23,23 @@ public class ViewProfileQueryHandler(
     /// <returns></returns>
     public async Task<ProfileDto?> HandleAsync(ViewProfileQuery query, CancellationToken cancellationToken)
     {
-        Profile? profile = await repository.GetProfileAsync(query.ProfileId);
+        Profile? profile = await repository.GetProfileAsync(query.ProfileId, ProfileContext.ProfileId);
 
         if (profile is null)
             return null;
 
-        var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
-        
-        ProfileDto profileDto = new(profile, locationInfo.State, locationInfo.City);
+        string state = "", city = "";
+        try
+        {
+            var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
+            city = locationInfo.City;
+            state = locationInfo.State;
+        }
+        catch
+        {
+        }
+
+        ProfileDto profileDto = new(profile, state, city);
 
         if (!string.IsNullOrWhiteSpace(profile.ImageUrl))
             profileDto.SetImageUrl(blobStorageProvider.GenerateAuthenticatedUrl(profile.ImageUrl, $"{profile.Id}"));

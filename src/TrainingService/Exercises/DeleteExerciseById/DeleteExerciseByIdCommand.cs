@@ -3,11 +3,19 @@
 /// <summary>
 /// Comando para deletar um exercício.
 /// </summary>
-/// <param name="id"></param>
-public class DeleteExerciseByIdCommand(Guid id)
+public class DeleteExerciseByIdCommand()
 {
     /// <summary>
     /// Id do exercício.
     /// </summary>
-    public Guid Id { get; set; } = id;
+    public Guid ExerciseId { get; private set; }
+    
+    /// <summary>
+    /// método para setar o id do exercício.
+    /// </summary>
+    /// <param name="exerciseId"></param>
+    public void SetExerciseId(Guid exerciseId)
+    {
+        ExerciseId = exerciseId;
+    }
 }

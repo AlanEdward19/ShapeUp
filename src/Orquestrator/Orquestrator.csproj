@@ -27,6 +27,7 @@
       <ProjectReference Include="..\NutritionService\NutritionService.csproj" />
       <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
       <ProjectReference Include="..\SocialService\SocialService.csproj" />
+      <ProjectReference Include="..\TrainingService\TrainingService.csproj" />
     </ItemGroup>
 
 </Project>

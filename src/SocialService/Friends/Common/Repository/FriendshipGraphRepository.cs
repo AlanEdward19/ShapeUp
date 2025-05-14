@@ -66,9 +66,8 @@ public class FriendshipGraphRepository(
 
         var query = $@"
 MATCH (profileA:Profile {{id: '{senderProfileId}'}}), (profileB:Profile {{id: '{receiverProfileId}'}})
-CREATE (profileA)-[:FRIEND {{
-    createdAt: datetime()
-}}]->(profileB)
+CREATE (profileA)-[:FRIEND {{ createdAt: datetime() }}]->(profileB),
+       (profileB)-[:FRIEND {{ createdAt: datetime() }}]->(profileA)
 ";
         await graphContext.ExecuteQueryAsync(query);
 
@@ -198,8 +197,8 @@ DELETE r";
     public async Task UnfriendAsync(string profileAId, string profileBId)
     {
         var query = $@"
-    MATCH (a:Profile {{id: '{profileAId}'}})-[r:FRIEND]-(b:Profile {{id: '{profileBId}'}})
-    DELETE r";
+MATCH (a:Profile {{id: '{profileAId}'}})-[r:FRIEND]-(b:Profile {{id: '{profileBId}'}})
+DELETE r";
 
         await graphContext.ExecuteQueryAsync(query);
     }

@@ -136,31 +136,6 @@
             </summary>
             <param name="result"></param>
         </member>
-        <member name="T:SocialService.Common.Events.NotificationEvent">
-            <summary>
-            Evento de notificação
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.RecipientId">
-            <summary>
-            Id do destinatário da notificação
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.Topic">
-            <summary>
-            Enum para tipos de notificações
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.Content">
-            <summary>
-            Breve descrição da notificação
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.Events.NotificationEvent.Metadata">
-            <summary>
-            Dados adicionais relacionados à notificação
-            </summary>
-        </member>
         <member name="T:SocialService.Common.Interfaces.IHandler`2">
             <summary>
                 Interface para padronizar handlers.
@@ -208,21 +183,6 @@
         <member name="P:SocialService.Common.Models.ProfileBasicInformation.ImageUrl">
             <summary>
             Url da imagem do perfil.
-            </summary>
-        </member>
-        <member name="T:SocialService.Common.ProfileContext">
-            <summary>
-                Context para perfil logado
-            </summary>
-        </member>
-        <member name="F:SocialService.Common.ProfileContext._profileId">
-            <summary>
-                Id do perfil logado
-            </summary>
-        </member>
-        <member name="P:SocialService.Common.ProfileContext.ProfileId">
-            <summary>
-                Método para obter e definir o Id do perfil logado
             </summary>
         </member>
         <member name="T:SocialService.Common.ValueObjects.BaseQueryParametersValueObject">
@@ -714,7 +674,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Follow.FollowUser.FollowUserCommandHandler.#ctor(SocialService.Follow.Common.Repository.IFollowerGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para seguir um usuário.
             </summary>
@@ -1352,7 +1312,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Friends.FriendRequest.SendFriendRequest.SendFriendRequestCommandHandler.#ctor(SocialService.Friends.Common.Repository.IFriendshipGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para adicionar um amigo.
             </summary>
@@ -1637,7 +1597,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Post.Comment.CommentOnPost.CommentOnPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para comentar em um post
             </summary>
@@ -1895,11 +1855,12 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostAsync(System.Guid,System.String)">
             <summary>
                 Método que retorna um post
             </summary>
             <param name="postId"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
@@ -1946,6 +1907,13 @@
         <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.DeletePostAsync(System.Guid)">
             <summary>
                 Método que deleta um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.IPostGraphRepository.GetPostImagesIdAsync(System.Guid)">
+            <summary>
+            Método para ler os ids das imagens de um post
             </summary>
             <param name="postId"></param>
             <returns></returns>
@@ -2033,11 +2001,12 @@
             <param name="postId"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid)">
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostAsync(System.Guid,System.String)">
             <summary>
                 Método que retorna um post
             </summary>
             <param name="postId"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostsByProfileIdAsync(System.String,System.String,System.Int32,System.Int32)">
@@ -2082,6 +2051,14 @@
                 Método que deleta um post
             </summary>
             <param name="postId"></param>
+        </member>
+        <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.GetPostImagesIdAsync(System.Guid)">
+            <summary>
+            Método para ler os ids das imagens de um post
+            </summary>
+            <param name="postId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:SocialService.Post.Common.Repository.PostGraphRepository.CommentOnPostAsync(SocialService.Post.Comment.Comment)">
             <summary>
@@ -2389,7 +2366,7 @@
             <summary>
                 Método para obter as informações de um post
             </summary>
-            <param name="item"></param>
+            <param name="query"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -2414,11 +2391,12 @@
                 Construtor padrão
             </summary>
         </member>
-        <member name="M:SocialService.Post.Post.#ctor(SocialService.Post.CreatePost.CreatePostCommand)">
+        <member name="M:SocialService.Post.Post.#ctor(SocialService.Post.CreatePost.CreatePostCommand,System.String)">
             <summary>
                 Construtor para criar um novo post.
             </summary>
             <param name="command"></param>
+            <param name="profileId"></param>
         </member>
         <member name="P:SocialService.Post.Post.PublisherId">
             <summary>
@@ -2463,6 +2441,31 @@
         <member name="P:SocialService.Post.Post.Content">
             <summary>
                 Conteúdo do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.ReactionsCount">
+            <summary>
+            Quantidade de reações do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.CommentsCount">
+            <summary>
+            Quantidade de comentários do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.TopReactions">
+            <summary>
+            Reações mais comuns do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.HasUserReacted">
+            <summary>
+            Se o usuário reagiu ao post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.Post.HasUserCommented">
+            <summary>
+            Se o usuário comentou no post.
             </summary>
         </member>
         <member name="M:SocialService.Post.Post.MapToEntityFromNeo4j(System.Collections.Generic.Dictionary{System.String,System.Object})">
@@ -2526,13 +2529,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Post.PostController.UploadPostImages(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.UploadPostImages.UploadPostImageCommand},System.Guid,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Post.PostController.UploadPostImages(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Post.UploadPostImages.UploadPostImageCommand},System.Guid,System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},System.Collections.Generic.List{System.Guid},System.Threading.CancellationToken)">
             <summary>
                 Rota para fazer upload de imagens em um post
             </summary>
             <param name="handler"></param>
             <param name="id"></param>
             <param name="files"></param>
+            <param name="filesToKeep"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -2671,6 +2675,31 @@
         <member name="P:SocialService.Post.PostDto.Content">
             <summary>
                 Conteúdo do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.CommentsCount">
+            <summary>
+            Quantidade de comentários do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.ReactionsCount">
+            <summary>
+            Quantidade de reações do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.TopReactions">
+            <summary>
+            Reações mais comuns do post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.HasUserReacted">
+            <summary>
+            Se o usuário reagiu ao post.
+            </summary>
+        </member>
+        <member name="P:SocialService.Post.PostDto.HasUserCommented">
+            <summary>
+            Se o usuário comentou no post.
             </summary>
         </member>
         <member name="M:SocialService.Post.PostDto.SetImages(System.Collections.Generic.IEnumerable{System.String})">
@@ -2867,7 +2896,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Post.React.ReactToPost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Common.Services.INotificationPublisher)">
+        <member name="M:SocialService.Post.React.ReactToPost.ReactToPostCommandHandler.#ctor(SocialService.Post.Common.Repository.IPostGraphRepository,SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Post.Common.Repository.IPostGraphRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
                 Handler para o comando de like em um post.
             </summary>
@@ -2907,6 +2936,11 @@
                 Lista de imagens a serem enviadas.
             </summary>
         </member>
+        <member name="P:SocialService.Post.UploadPostImages.UploadPostImageCommand.FilesToKeep">
+            <summary>
+            Lista de Ids de imagens a serem mantidas.
+            </summary>
+        </member>
         <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetImages(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
             <summary>
                 Método para setar as imagens.
@@ -2919,6 +2953,12 @@
                 Método para setar o id do post.
             </summary>
             <param name="postId"></param>
+        </member>
+        <member name="M:SocialService.Post.UploadPostImages.UploadPostImageCommand.SetFilesToKeep(System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Método para setar os ids de imagens a serem mantidas.
+            </summary>
+            <param name="filesToKeep"></param>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandHandler">
             <summary>
@@ -2941,7 +2981,7 @@
             <param name="command"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
-            <exception cref="!:NotFoundException"></exception>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
         </member>
         <member name="T:SocialService.Post.UploadPostImages.UploadPostImageCommandValidator">
             <summary>
@@ -2988,11 +3028,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.String)">
+        <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.GetProfileAsync(System.String,System.String)">
             <summary>
                 Método para obter um perfil do grafo.
             </summary>
             <param name="id"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.IProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
@@ -3040,11 +3081,12 @@
             </summary>
             <param name="id"></param>
         </member>
-        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.String)">
+        <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.GetProfileAsync(System.String,System.String)">
             <summary>
                 Método para obter um perfil
             </summary>
             <param name="id"></param>
+            <param name="requesterId"></param>
             <returns></returns>
         </member>
         <member name="M:SocialService.Profile.Common.Repository.ProfileGraphRepository.UpdateProfileAsync(SocialService.Profile.Profile)">
@@ -3211,7 +3253,7 @@
             <param name="blobStorageProvider"></param>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Connections.Storage.IBlobStorageProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
+        <member name="M:SocialService.Profile.DeleteProfile.DeleteProfileCommandHandler.#ctor(SocialService.Connections.Storage.IBlobStorageProvider,SocialService.Connections.Search.IAzureSearchProvider,SocialService.Profile.Common.Repository.IProfileGraphRepository)">
             <summary>
                 Handler para o comando de deletar um perfil
             </summary>
@@ -3474,6 +3516,16 @@
         <member name="P:SocialService.Profile.Profile.Gender">
             <summary>
                 Gênero do perfil.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.IsFriend">
+            <summary>
+            Se o perfil é amigo do usuário logado.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.Profile.IsFollowing">
+            <summary>
+            Se o perfil está sendo seguido pelo usuário logado.
             </summary>
         </member>
         <member name="P:SocialService.Profile.Profile.CreatedAt">
@@ -3740,6 +3792,16 @@
         <member name="P:SocialService.Profile.ProfileDto.Gender">
             <summary>
                 Gênero do perfil
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileDto.IsFriend">
+            <summary>
+            Se o perfil é amigo do usuário logado.
+            </summary>
+        </member>
+        <member name="P:SocialService.Profile.ProfileDto.IsFollowing">
+            <summary>
+            Se o perfil é seguido pelo usuário logado.
             </summary>
         </member>
         <member name="M:SocialService.Profile.ProfileDto.SetImageUrl(System.String)">

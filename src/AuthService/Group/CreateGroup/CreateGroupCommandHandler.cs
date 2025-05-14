@@ -1,6 +1,7 @@
 ﻿using AuthService.Common;
 using AuthService.Common.Interfaces;
 using AuthService.Group.Common.Repository;
+using SharedKernel.Utils;
 
 namespace AuthService.Group.CreateGroup;
 

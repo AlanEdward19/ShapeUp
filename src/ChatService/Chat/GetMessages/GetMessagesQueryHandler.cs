@@ -19,6 +19,6 @@ public class GetMessagesQueryHandler(IChatMongoRepository repository)
     /// <returns></returns>
     public async Task<IEnumerable<ChatMessage>> HandleAsync(GetMessagesQuery query, CancellationToken cancellationToken)
     {
-        return await repository.GetMessagesAsync(query.ProfileAId.ToString(), query.ProfileBId.ToString(), query.Page);
+        return await repository.GetMessagesAsync(query.ProfileAId, query.ProfileBId, query.Page);
     }
 }

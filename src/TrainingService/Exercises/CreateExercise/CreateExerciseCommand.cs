@@ -8,20 +8,20 @@ namespace TrainingService.Exercises.CreateExercise;
 /// <param name="name"></param>
 /// <param name="muscleGroups"></param>
 /// <param name="requiresWeight"></param>
-public class CreateExerciseCommand(string name, IEnumerable<EMuscleGroup> muscleGroups, bool requiresWeight)
+public class CreateExerciseCommand
 {
     /// <summary>
     /// Nome do exercício.
     /// </summary>
-    public string Name { get; set; } = name;
+    public string Name { get; set; }
 
     /// <summary>
     /// Grupos musculares ao qual o exercício pertence.
     /// </summary>
-    public IEnumerable<EMuscleGroup> MuscleGroups { get; set; } = muscleGroups;
+    public IEnumerable<EMuscleGroup> MuscleGroups { get; set; }
 
     /// <summary>
     /// Se o exercício requer peso.
     /// </summary>
-    public bool RequiresWeight { get; set; } = requiresWeight;
+    public bool RequiresWeight { get; set; }
 }

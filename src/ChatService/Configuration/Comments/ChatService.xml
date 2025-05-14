@@ -18,7 +18,7 @@
             <param name="page"></param>
             <returns></returns>
         </member>
-        <member name="M:ChatService.Chat.ChatController.GetMessages(System.Guid,ChatService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{ChatService.Chat.Common.ChatMessage},ChatService.Chat.GetMessages.GetMessagesQuery},System.Threading.CancellationToken,System.Int32)">
+        <member name="M:ChatService.Chat.ChatController.GetMessages(System.String,ChatService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{ChatService.Chat.Common.ChatMessage},ChatService.Chat.GetMessages.GetMessagesQuery},System.Threading.CancellationToken,System.Int32)">
             <summary>
             Rota para obter as mensagens entre dois perfis
             </summary>
@@ -79,7 +79,7 @@
             Timestamp da mensagem
             </summary>
         </member>
-        <member name="M:ChatService.Chat.Common.ChatMessage.#ctor(System.Guid,System.Guid,System.String,System.String)">
+        <member name="M:ChatService.Chat.Common.ChatMessage.#ctor(System.String,System.String,System.String,System.String)">
             <summary>
             Construtor da classe
             </summary>
@@ -87,31 +87,6 @@
             <param name="receiverId"></param>
             <param name="encryptionKey"></param>
             <param name="message"></param>
-        </member>
-        <member name="T:ChatService.Chat.Common.Event.NotificationEvent">
-            <summary>
-            Evento de notificação
-            </summary>
-        </member>
-        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.RecipientId">
-            <summary>
-            Id do destinatário da notificação
-            </summary>
-        </member>
-        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.Topic">
-            <summary>
-            Enum para tipos de notificações
-            </summary>
-        </member>
-        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.Content">
-            <summary>
-            Breve descrição da notificação
-            </summary>
-        </member>
-        <member name="P:ChatService.Chat.Common.Event.NotificationEvent.Metadata">
-            <summary>
-            Dados adicionais relacionados à notificação
-            </summary>
         </member>
         <member name="T:ChatService.Chat.Common.Repository.ChatMongoRepository">
             <summary>
@@ -144,7 +119,7 @@
             <param name="page"></param>
             <returns></returns>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.SendMessageAsync(System.Guid,System.Guid,System.String)">
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.SendMessageAsync(System.String,System.String,System.String)">
             <summary>
             Método para enviar uma mensagem
             </summary>
@@ -175,7 +150,7 @@
             <param name="page"></param>
             <returns></returns>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.SendMessageAsync(System.Guid,System.Guid,System.String)">
+        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.SendMessageAsync(System.String,System.String,System.String)">
             <summary>
             Método para enviar mensagem
             </summary>
@@ -204,13 +179,13 @@
             Número da página
             </summary>
         </member>
-        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetProfileAId(System.Guid)">
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetProfileAId(System.String)">
             <summary>
             Método para definir o Id do perfil A
             </summary>
             <param name="profileId"></param>
         </member>
-        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetProfileBId(System.Guid)">
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetProfileBId(System.String)">
             <summary>
             Método para definir o Id do perfil B
             </summary>
@@ -257,7 +232,7 @@
             Página que deseja obter as mensagens
             </summary>
         </member>
-        <member name="M:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.SetProfileId(System.Guid)">
+        <member name="M:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.SetProfileId(System.String)">
             <summary>
             Método para definir o Id do perfil que deseja obter as mensagens
             </summary>
@@ -296,7 +271,7 @@
             <param name="receiverId"></param>
             <param name="message"></param>
         </member>
-        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.#ctor(System.Guid,System.String)">
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.#ctor(System.String,System.String)">
             <summary>
             Comando para enviar uma mensagem
             </summary>
@@ -318,7 +293,7 @@
             Mensagem a ser enviada
             </summary>
         </member>
-        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.SetSenderId(System.Guid)">
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.SetSenderId(System.String)">
             <summary>
             Método para definir o Id do perfil que enviou a mensagem
             </summary>
@@ -330,7 +305,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:ChatService.Chat.SendMessage.SendMessageCommandHandler.#ctor(ChatService.Chat.Common.Repository.IChatMongoRepository,ChatService.Chat.Common.Service.INotificationPublisher)">
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommandHandler.#ctor(ChatService.Chat.Common.Repository.IChatMongoRepository,SharedKernel.Providers.IGrpcProvider)">
             <summary>
             Handler para o comando de envio de mensagem
             </summary>
@@ -357,19 +332,6 @@
             </summary>
             <param name="item"></param>
             <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="T:ChatService.Configuration.Authentication">
-            <summary>
-                Classe responsavel por configurar a autenticacao
-            </summary>
-        </member>
-        <member name="M:ChatService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-                Metodo responsavel por configurar a autenticacao
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
             <returns></returns>
         </member>
         <member name="T:ChatService.Configuration.EndpointsConfiguration">

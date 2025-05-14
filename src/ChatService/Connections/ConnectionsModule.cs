@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using SharedKernel.Providers;
 using StackExchange.Redis;
 
 namespace ChatService.Connections;
@@ -20,6 +21,7 @@ public static class ConnectionsModule
         services
             .ConfigureMongoDb(configuration)
             .ConfigureRedis(configuration)
+            .ConfigureGrpc()
             .AddSignalR();
 
         return services;
@@ -44,6 +46,13 @@ public static class ConnectionsModule
         
         services.AddSingleton<IConnectionMultiplexer>(_ =>
             ConnectionMultiplexer.Connect(connectionString));
+
+        return services;
+    }
+    
+    private static IServiceCollection ConfigureGrpc(this IServiceCollection services)
+    {
+        services.AddScoped<IGrpcProvider, GrpcProvider>();
 
         return services;
     }

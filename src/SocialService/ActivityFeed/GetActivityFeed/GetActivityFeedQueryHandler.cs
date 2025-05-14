@@ -1,4 +1,5 @@
-﻿using SocialService.ActivityFeed.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.ActivityFeed.Common.Repository;
 using SocialService.Post;
 
 namespace SocialService.ActivityFeed.GetActivityFeed;

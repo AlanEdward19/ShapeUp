@@ -1,4 +1,5 @@
-﻿using SocialService.Friends.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.Friends.Common.Repository;
 
 namespace SocialService.Friends.FriendRequest.ManageFriendRequests;
 

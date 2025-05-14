@@ -1,4 +1,5 @@
-﻿using SocialService.Post.Common.Repository;
+﻿using SharedKernel.Utils;
+using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.CreatePost;
 
@@ -17,12 +18,12 @@ public class CreatePostCommandHandler(IPostGraphRepository repository, IBlobStor
     /// <returns></returns>
     public async Task<PostDto> HandleAsync(CreatePostCommand command, CancellationToken cancellationToken)
     {
-        Post post = new(command);
+        string profileId = ProfileContext.ProfileId;
+        Post post = new(command, profileId);
 
         var blobName = $"post-images/{post.Id}";
-        var containerName = ProfileContext.ProfileId.ToString();
 
-        await blobStorageProvider.CreateFolderAsync(blobName, containerName);
+        await blobStorageProvider.CreateFolderAsync(blobName, profileId);
         await repository.CreatePostAsync(ProfileContext.ProfileId, post);
 
         return new PostDto(post);

@@ -1,4 +1,5 @@
 ﻿using SharedKernel.Exceptions;
+using SharedKernel.Utils;
 using SocialService.Post.Common.Repository;
 
 namespace SocialService.Post.DeletePost;

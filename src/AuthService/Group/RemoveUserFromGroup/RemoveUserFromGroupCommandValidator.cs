@@ -3,6 +3,7 @@ using AuthService.Connections.Database;
 using AuthService.Group.Common.Enums;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Utils;
 
 namespace AuthService.Group.RemoveUserFromGroup;
 

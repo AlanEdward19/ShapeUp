@@ -1,4 +1,5 @@
-﻿using SocialService.Profile.Common.Repository;
+﻿using SocialService.Connections.Search;
+using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.DeleteProfile;
 
@@ -9,6 +10,7 @@ namespace SocialService.Profile.DeleteProfile;
 /// <param name="graphRepository"></param>
 public class DeleteProfileCommandHandler(
     IBlobStorageProvider blobStorageProvider,
+    IAzureSearchProvider searchProvider,
     IProfileGraphRepository graphRepository) : IHandler<bool, DeleteProfileCommand>
 {
     /// <summary>
@@ -20,7 +22,9 @@ public class DeleteProfileCommandHandler(
     {
         await graphRepository.DeleteProfileAsync(command.ProfileId);
 
-        await blobStorageProvider.DeleteContainerAsync(command.ProfileId.ToString());
+        await blobStorageProvider.DeleteContainerAsync(command.ProfileId);
+        
+        await searchProvider.DeleteAsync(command.ProfileId);
 
         return true;
     }

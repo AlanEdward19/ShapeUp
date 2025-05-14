@@ -47,6 +47,31 @@ public class PostDto(Post post)
     ///     Conteúdo do post.
     /// </summary>
     public string Content { get; private set; } = post.Content;
+
+    /// <summary>
+    /// Quantidade de comentários do post.
+    /// </summary>
+    public int CommentsCount { get; private set; } = post.CommentsCount;
+    
+    /// <summary>
+    /// Quantidade de reações do post.
+    /// </summary>
+    public int ReactionsCount { get; private set; } = post.ReactionsCount;
+
+    /// <summary>
+    /// Reações mais comuns do post.
+    /// </summary>
+    public List<EReactionType> TopReactions { get; private set; } = post.TopReactions;
+    
+    /// <summary>
+    /// Se o usuário reagiu ao post.
+    /// </summary>
+    public bool HasUserReacted { get; set; } = post.HasUserReacted;
+    
+    /// <summary>
+    /// Se o usuário comentou no post.
+    /// </summary>
+    public bool HasUserCommented { get; set; } = post.HasUserCommented;
     
     /// <summary>
     /// Método para setar as imagens do post.

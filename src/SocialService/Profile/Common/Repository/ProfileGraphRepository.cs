@@ -63,15 +63,30 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     ///     Método para obter um perfil
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="requesterId"></param>
     /// <returns></returns>
-    public async Task<Profile?> GetProfileAsync(string id)
+    public async Task<Profile?> GetProfileAsync(string id, string? requesterId = null)
     {
-        var query = $@"
+        var query = string.IsNullOrWhiteSpace(requesterId)
+            ? $@"
     MATCH (profile:Profile {{id: '{id}'}})
     OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
     OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
     OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
-    RETURN profile, SIZE(COLLECT(DISTINCT follower)) AS followers, SIZE(COLLECT(DISTINCT following)) AS following, COUNT(post) AS posts";
+    RETURN profile, SIZE(COLLECT(DISTINCT follower)) AS followers, SIZE(COLLECT(DISTINCT following)) AS following, COUNT(post) AS posts"
+            : $@"
+    MATCH (profile:Profile {{id: '{id}'}})
+    OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
+    OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
+    OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
+    OPTIONAL MATCH (profile)<-[:FRIEND]-(friend:Profile {{id: '{requesterId}'}})
+    OPTIONAL MATCH (profile)<-[:FOLLOWING]-(followingRequester:Profile {{id: '{requesterId}'}})
+    RETURN profile, 
+           SIZE(COLLECT(DISTINCT follower)) AS followers, 
+           SIZE(COLLECT(DISTINCT following)) AS following, 
+           COUNT(post) AS posts,
+           COUNT(friend) > 0 AS isFriend,
+           COUNT(followingRequester) > 0 AS isFollowing";
 
         var result = await graphContext.ExecuteQueryAsync(query);
 
@@ -85,6 +100,12 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         parsedDictionary["followers"] = record["followers"].As<int>();
         parsedDictionary["following"] = record["following"].As<int>();
         parsedDictionary["posts"] = record["posts"].As<int>();
+
+        if (!string.IsNullOrWhiteSpace(requesterId))
+        {
+            parsedDictionary["isFriend"] = record["isFriend"].As<bool>();
+            parsedDictionary["isFollowing"] = record["isFollowing"].As<bool>();
+        }
 
         profile.MapToEntityFromNeo4j(parsedDictionary);
 
