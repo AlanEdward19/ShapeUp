@@ -1,16 +1,16 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-// var mongo = builder
-//         .AddMongoDB("Mongo")
-//         .WithDataVolume();
-//
+ var mongo = builder
+         .AddMongoDB("Mongo")
+         .WithDataVolume();
+
 // var redis = builder
 //         .AddRedis("Redis")
 //         .WithDataVolume();
 //
-var sqlServer = builder
-        .AddSqlServer("SqlServer")
-        .WithDataVolume();
+// var sqlServer = builder
+//         .AddSqlServer("SqlServer")
+//         .WithDataVolume();
 //
 // var storage = builder
 //         .AddAzureStorage("Storage")
@@ -44,16 +44,16 @@ var sqlServer = builder
 //         .WithReference(mongo)
 //         .WithExternalHttpEndpoints();
 //
-// var nutritionService = builder
-//         .AddProject<Projects.NutritionService>("NutritionService")
-//         .WaitFor(mongo)
-//         .WithReference(mongo)
-//         .WithExternalHttpEndpoints();
+ var nutritionService = builder
+         .AddProject<Projects.NutritionService>("NutritionService")
+         .WaitFor(mongo)
+         .WithReference(mongo)
+         .WithExternalHttpEndpoints();
 
-var authService = builder
-        .AddProject<Projects.AuthService>("AuthService")
-        .WaitFor(sqlServer)
-        .WithReference(sqlServer)
-        .WithExternalHttpEndpoints();
+// var authService = builder
+//         .AddProject<Projects.AuthService>("AuthService")
+//         .WaitFor(sqlServer)
+//         .WithReference(sqlServer)
+//         .WithExternalHttpEndpoints();
 
 builder.Build().Run();

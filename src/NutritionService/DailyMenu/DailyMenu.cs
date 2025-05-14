@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Diagnostics.Metrics;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace NutritionService.DailyMenu;
@@ -18,7 +19,7 @@ public class DailyMenu
     /// <summary>
     /// Dia da Semana
     /// </summary>
-    public DayOfWeek? DayOfWeek { get; private set; } = DateTime.Now.DayOfWeek;
+    public DayOfWeek? DayOfWeek { get; private set; }
     /// <summary>
     /// Lista de refeições do dia
     /// </summary>

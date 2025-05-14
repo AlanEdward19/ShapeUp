@@ -1,12 +1,14 @@
-﻿namespace NutritionService.Dish.EditDish;
+﻿using NutritionService.UserFood;
+
+namespace NutritionService.Dish.EditDish;
 
 public class EditDishCommand
 {
     public string Id { get; set; } = "";
     public string Name { get; set; }
-    public List<Food.Food> Foods { get; set; }
+    public List<Food> Foods { get; set; }
     
-    public EditDishCommand(string name, List<Food.Food> foods)
+    public EditDishCommand(string name, List<Food> foods)
     {
         Name = name;
         Foods = foods;

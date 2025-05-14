@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using NutritionService.Meal.Common.Enums;
+using NutritionService.UserFood;
 
 namespace NutritionService.Meal;
 
@@ -31,7 +32,7 @@ public class Meal
     /// <summary>
     /// Lista de alimentos que compoe a refeição
     /// </summary>
-    public List<Food.Food> Foods { get; set; } 
+    public List<Food> Foods { get; set; } 
     
     /// <summary>
     /// Construtor da classe Meal
@@ -40,7 +41,7 @@ public class Meal
     /// <param name="name"></param>
     /// <param name="dishes"></param>
     /// <param name="foods"></param>
-    public Meal(MealType type, string name, List<Dish.Dish> dishes, List<Food.Food> foods)
+    public Meal(MealType type, string name, List<Dish.Dish> dishes, List<Food> foods)
     {
         Type = type;
         Name = name;
@@ -63,7 +64,7 @@ public class Meal
     /// <param name="name"></param>
     /// <param name="dishes"></param>
     /// <param name="foods"></param>
-    public void UpdateInfo(MealType type, string name, List<Dish.Dish> dishes, List<Food.Food> foods)
+    public void UpdateInfo(MealType type, string name, List<Dish.Dish> dishes, List<Food> foods)
     {
         Type = type;
         Name = name;

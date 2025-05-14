@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using NutritionService.UserFood;
 
 namespace NutritionService.FoodRevision;
 
@@ -10,7 +11,7 @@ public class FoodRevision
     public string Id { get; set; }
 
     public string OriginalFoodId { get; set; }
-    public Food.Food RevisedFood { get; set; }
+    public Food RevisedFood { get; set; }
     public string RevisedBy { get; set; }
     public DateTime SubmittedAt { get; set; }
     public string? AdminComment { get; set; }

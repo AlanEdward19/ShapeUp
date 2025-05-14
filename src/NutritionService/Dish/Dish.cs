@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using NutritionService.UserFood;
 
 namespace NutritionService.Dish;
 
@@ -23,9 +24,9 @@ public class Dish
     /// <summary>
     ///Lista de ingredientes (alimentos) do prato
     /// </summary>
-    public List<Food.Food> Ingredients { get; set; }
+    public List<Food> Ingredients { get; set; }
     
-    public Dish(string name, List<Food.Food> ingredients)
+    public Dish(string name, List<Food> ingredients)
     {
         Name = name;
         Ingredients = ingredients;
@@ -39,7 +40,7 @@ public class Dish
         Id = ObjectId.GenerateNewId().ToString();
     }
     
-    public void UpdateInfo(string name, List<Food.Food> ingredients)
+    public void UpdateInfo(string name, List<Food> ingredients)
     {
         Name = name;
         Ingredients = ingredients;

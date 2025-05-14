@@ -1,12 +1,14 @@
 ﻿
+using NutritionService.UserFood;
+
 namespace NutritionService.Dish.CreateDish;
 
 public class CreateDishCommand
 {
     public string Name { get; set; }
-    public List<Food.Food> Foods { get; set; }
+    public List<Food> Foods { get; set; }
     
-    public CreateDishCommand(string name, List<Food.Food> foods)
+    public CreateDishCommand(string name, List<Food> foods)
     {
         Name = name;
         Foods = foods;

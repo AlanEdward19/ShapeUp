@@ -1,4 +1,5 @@
 ﻿using NutritionService.Meal.Common.Enums;
+using NutritionService.UserFood;
 
 namespace NutritionService.Meal.CreateMeal;
 
@@ -7,9 +8,9 @@ public class CreateMealCommand
     public MealType Type { get; set; }
     public string Name { get; set; }
     public List<Dish.Dish> Dishes { get; set; }
-    public List<Food.Food> Foods { get; set; }
+    public List<Food> Foods { get; set; }
 
-    public CreateMealCommand(MealType type, string name, List<Dish.Dish> dishes, List<Food.Food> foods)
+    public CreateMealCommand(MealType type, string name, List<Dish.Dish> dishes, List<Food> foods)
     {
         Type = type;
         Name = name;

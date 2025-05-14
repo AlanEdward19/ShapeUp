@@ -363,175 +363,6 @@
             </summary>
             <param name="barcode"></param>
         </member>
-        <member name="T:NutritionService.Food.Common.NutritionalInfo">
-            <summary>
-            Classe que representa as informações nutricionais de um alimento
-            </summary>
-            <param name="macronutrients"></param>
-            <param name="micronutrients"></param>
-            <param name="vitamins"></param>
-            <param name="totalMass"></param>
-            <param name="servingSize"></param>
-            <param name="calories"></param>
-        </member>
-        <member name="M:NutritionService.Food.Common.NutritionalInfo.#ctor(NutritionService.Food.Common.Macronutrients,System.Collections.Generic.Dictionary{System.String,NutritionService.Food.Common.MicronutrientDetails},System.Double,System.Double)">
-            <summary>
-            Classe que representa as informações nutricionais de um alimento
-            </summary>
-            <param name="macronutrients"></param>
-            <param name="micronutrients"></param>
-            <param name="vitamins"></param>
-            <param name="totalMass"></param>
-            <param name="servingSize"></param>
-            <param name="calories"></param>
-        </member>
-        <member name="P:NutritionService.Food.Common.NutritionalInfo.Macronutrients">
-            <summary>
-            Macronutrientes do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Common.NutritionalInfo.Micronutrients">
-            <summary>
-            Micronutrientes por porção do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Common.NutritionalInfo.ServingSize">
-            <summary>
-            Massa por porção do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Common.NutritionalInfo.Calories">
-            <summary>
-            Calorias por porção do alimento
-            </summary>
-        </member>
-        <member name="T:NutritionService.Food.Food">
-            <summary>
-            Classe que representa um alimento
-            </summary>
-            <param name="name"></param>
-            <param name="brand"></param>
-            <param name="barCode"></param>
-            <param name="nutritionalInfo"></param>
-        </member>
-        <member name="P:NutritionService.Food.Food.Id">
-            <summary>
-            Identitificador do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Food.Name">
-            <summary>
-            Nome do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Food.Brand">
-            <summary>
-            Marca do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Food.BarCode">
-            <summary>
-            Còdigo de barras do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Food.Revised">
-            <summary>
-            Status de revisão do alimento
-            </summary>
-        </member>
-        <member name="P:NutritionService.Food.Food.NutritionalInfo">
-            <summary>
-            Informações nutricionais do alimento
-            </summary>
-        </member>
-        <member name="M:NutritionService.Food.Food.#ctor(System.String,System.String,System.String,NutritionService.Food.Common.NutritionalInfo)">
-            <summary>
-            Construtor da classe Food
-            </summary>
-            <param name="name"></param>
-            <param name="brand"></param>
-            <param name="barCode"></param>
-            <param name="nutritionalInfo"></param>
-        </member>
-        <member name="M:NutritionService.Food.Food.MarkAsRevised">
-            <summary>
-            Método para assinalar o alimento como revisado
-            </summary>
-        </member>
-        <member name="M:NutritionService.Food.Food.SetId">
-            <summary>
-            Método para gerar um novo identificador para o alimento
-            </summary>
-        </member>
-        <member name="M:NutritionService.Food.Food.UpdateInfo(System.String,System.String,System.String,NutritionService.Food.Common.NutritionalInfo)">
-            <summary>
-            Método para atualizar as informações do alimento
-            </summary>
-            <param name="name"></param>
-            <param name="brand"></param>
-            <param name="barCode"></param>
-            <param name="nutritionalInfo"></param>
-        </member>
-        <member name="T:NutritionService.Food.FoodController">
-            <summary>
-                Controller responsável por gerenciar comidas
-            </summary>
-        </member>
-        <member name="M:NutritionService.Food.FoodController.ListUnrevisedFoods(NutritionService.Food.ListUnrevisedFoods.ListUnrevisedFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Food.Food},NutritionService.Food.ListUnrevisedFoods.ListUnrevisedFoodsQuery},System.Threading.CancellationToken)">
-            <summary>
-            Rota para listar comidas não revisadas
-            </summary>
-            <param name="query"></param>
-            <param name="handler"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Food.FoodController.GetFoodDetails(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.GetFoodDetails.GetFoodDetailsQuery},System.Threading.CancellationToken)">
-            <summary>
-            Rota para pegar detalhes de uma comida
-            </summary>
-            <param name="id"></param>
-            <param name="handler"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Food.FoodController.CreateFood(NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.CreateFood.CreateFoodCommand},NutritionService.Food.CreateFood.CreateFoodCommand,System.Threading.CancellationToken)">
-            <summary>
-                Rota para criar uma comida
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Food.FoodController.EditFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.EditFood.EditFoodCommand},NutritionService.Food.EditFood.EditFoodCommand,System.Threading.CancellationToken)">
-            <summary>
-            Rota para editar uma comida
-            </summary>
-            <param name="id"></param>
-            <param name="handler"></param>
-            <param name="command"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Food.FoodController.ApproveFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.ApproveFood.ApproveFoodCommand},System.Threading.CancellationToken)">
-            <summary>
-            Rota para aprovar uma comida, e marcar como revisada
-            </summary>
-            <param name="id"></param>
-            <param name="handler"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NutritionService.Food.FoodModule">
-            <summary>
-                Modulo para resolver as dependências relacionadas a comidas
-            </summary>
-        </member>
-        <member name="M:NutritionService.Food.FoodModule.ConfigureFoodRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-                Método para resolver as dependências relacionadas a comidas
-            </summary>
-            <param name="services"></param>
-            <returns></returns>
-        </member>
         <member name="T:NutritionService.Meal.Common.Enums.MealType">
             <summary>
             Tipo de refeição
@@ -603,7 +434,7 @@
             Lista de alimentos que compoe a refeição
             </summary>
         </member>
-        <member name="M:NutritionService.Meal.Meal.#ctor(NutritionService.Meal.Common.Enums.MealType,System.String,System.Collections.Generic.List{NutritionService.Dish.Dish},System.Collections.Generic.List{NutritionService.Food.Food})">
+        <member name="M:NutritionService.Meal.Meal.#ctor(NutritionService.Meal.Common.Enums.MealType,System.String,System.Collections.Generic.List{NutritionService.Dish.Dish},System.Collections.Generic.List{NutritionService.UserFood.Food})">
             <summary>
             Construtor da classe Meal
             </summary>
@@ -617,7 +448,7 @@
             Método para gerar um novo ID para a refeição
             </summary>
         </member>
-        <member name="M:NutritionService.Meal.Meal.UpdateInfo(NutritionService.Meal.Common.Enums.MealType,System.String,System.Collections.Generic.List{NutritionService.Dish.Dish},System.Collections.Generic.List{NutritionService.Food.Food})">
+        <member name="M:NutritionService.Meal.Meal.UpdateInfo(NutritionService.Meal.Common.Enums.MealType,System.String,System.Collections.Generic.List{NutritionService.Dish.Dish},System.Collections.Generic.List{NutritionService.UserFood.Food})">
             <summary>
             Método para atualizar as informações da refeição
             </summary>
@@ -692,6 +523,186 @@
                 Método para invocar o middleware
             </summary>
             <param name="context"></param>
+        </member>
+        <member name="T:NutritionService.UserFood.Common.NutritionalInfo">
+            <summary>
+            Classe que representa as informações nutricionais de um alimento
+            </summary>
+            <param name="macronutrients"></param>
+            <param name="micronutrients"></param>
+            <param name="vitamins"></param>
+            <param name="totalMass"></param>
+            <param name="servingSize"></param>
+            <param name="calories"></param>
+        </member>
+        <member name="M:NutritionService.UserFood.Common.NutritionalInfo.#ctor(NutritionService.UserFood.Common.Macronutrients,System.Collections.Generic.Dictionary{System.String,NutritionService.UserFood.Common.MicronutrientDetails},System.Double,System.Double)">
+            <summary>
+            Classe que representa as informações nutricionais de um alimento
+            </summary>
+            <param name="macronutrients"></param>
+            <param name="micronutrients"></param>
+            <param name="vitamins"></param>
+            <param name="totalMass"></param>
+            <param name="servingSize"></param>
+            <param name="calories"></param>
+        </member>
+        <member name="P:NutritionService.UserFood.Common.NutritionalInfo.Macronutrients">
+            <summary>
+            Macronutrientes do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Common.NutritionalInfo.Micronutrients">
+            <summary>
+            Micronutrientes por porção do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Common.NutritionalInfo.ServingSize">
+            <summary>
+            Massa por porção do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Common.NutritionalInfo.Calories">
+            <summary>
+            Calorias por porção do alimento
+            </summary>
+        </member>
+        <member name="T:NutritionService.UserFood.Food">
+            <summary>
+            Classe que representa um alimento
+            </summary>
+            <param name="name"></param>
+            <param name="brand"></param>
+            <param name="barCode"></param>
+            <param name="nutritionalInfo"></param>
+        </member>
+        <member name="P:NutritionService.UserFood.Food.Id">
+            <summary>
+            Identitificador do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Food.CreatedByGuid">
+            <summary>
+            Identificador do perfil que criou o alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Food.Name">
+            <summary>
+            Nome do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Food.Brand">
+            <summary>
+            Marca do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Food.BarCode">
+            <summary>
+            Código de barras do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Food.Revised">
+            <summary>
+            Classificação de revisão do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserFood.Food.NutritionalInfo">
+            <summary>
+            Informações nutricionais do alimento
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserFood.Food.#ctor(System.String,System.String,System.String,NutritionService.UserFood.Common.NutritionalInfo)">
+            <summary>
+            Construtor da classe Food
+            </summary>
+            <param name="name"></param>
+            <param name="brand"></param>
+            <param name="barCode"></param>
+            <param name="nutritionalInfo"></param>
+        </member>
+        <member name="M:NutritionService.UserFood.Food.MarkAsRevised">
+            <summary>
+            Método para assinalar o alimento como revisado
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserFood.Food.SetId">
+            <summary>
+            Método para gerar um novo identificador para o alimento
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserFood.Food.SetCreatedBy(System.Guid)">
+            <summary>
+            Método para definir o identificador do perfil que criou o alimento
+            </summary>
+            <param name="createdBy"></param>
+        </member>
+        <member name="M:NutritionService.UserFood.Food.UpdateInfo(System.String,System.String,System.String,NutritionService.UserFood.Common.NutritionalInfo)">
+            <summary>
+            Método para atualizar as informações do alimento
+            </summary>
+            <param name="name"></param>
+            <param name="brand"></param>
+            <param name="barCode"></param>
+            <param name="nutritionalInfo"></param>
+        </member>
+        <member name="T:NutritionService.UserFood.UserFoodController">
+            <summary>
+                Controller responsável por gerenciar comidas
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.ListUnrevisedFoods(NutritionService.UserFood.ListUnrevisedFoods.ListUnrevisedFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.UserFood.Food},NutritionService.UserFood.ListUnrevisedFoods.ListUnrevisedFoodsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para listar comidas não revisadas
+            </summary>
+            <param name="query"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.GetFoodDetails(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.UserFood.Food,NutritionService.UserFood.GetUserFoodDetails.GetUserFoodDetailsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para pegar detalhes de uma comida
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.CreateFood(NutritionService.Common.Interfaces.IHandler{NutritionService.UserFood.Food,NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand},NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand,System.Threading.CancellationToken)">
+            <summary>
+                Rota para criar uma comida
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.EditFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.UserFood.Food,NutritionService.UserFood.EditUserFood.EditUserFoodCommand},NutritionService.UserFood.EditUserFood.EditUserFoodCommand,System.Threading.CancellationToken)">
+            <summary>
+            Rota para editar uma comida
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.ApproveFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.UserFood.Food,NutritionService.UserFood.ApproveUserFood.ApproveUserFoodCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para aprovar uma comida, e marcar como revisada
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.UserFood.UserFoodModule">
+            <summary>
+                Modulo para resolver as dependências relacionadas a comidas
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodModule.ConfigureUserFoodRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Método para resolver as dependências relacionadas a comidas
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
         </member>
         <member name="T:NutritionService.UserNutrition.UserNutrition">
             <summary>
