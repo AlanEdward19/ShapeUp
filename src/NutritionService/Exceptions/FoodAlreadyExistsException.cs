@@ -15,7 +15,7 @@ public class FoodAlreadyExistsException : Exception
     /// <summary>
     ///     Construtor com mensagem
     /// </summary>
-    /// <param name="message"></param>
+    /// <param name="barcode"></param>
     public FoodAlreadyExistsException(string barcode) : base($"Food with barcode '{barcode}' already exists")
     {
     }

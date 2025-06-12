@@ -4,6 +4,90 @@
         <name>NutritionService</name>
     </assembly>
     <members>
+        <member name="T:NutritionService.Common.Food">
+            <summary>
+            Classe que representa um alimento
+            </summary>
+            <param name="name"></param>
+            <param name="brand"></param>
+            <param name="barCode"></param>
+            <param name="nutritionalInfo"></param>
+        </member>
+        <member name="P:NutritionService.Common.Food.Id">
+            <summary>
+            Identitificador do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.Common.Food.CreatedBy">
+            <summary>
+            Identificador do perfil que criou o alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.Common.Food.Name">
+            <summary>
+            Nome do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.Common.Food.Brand">
+            <summary>
+            Marca do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.Common.Food.BarCode">
+            <summary>
+            Código de barras do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.Common.Food.IsRevised">
+            <summary>
+            Classificação de revisão do alimento
+            </summary>
+        </member>
+        <member name="P:NutritionService.Common.Food.NutritionalInfo">
+            <summary>
+            Informações nutricionais do alimento
+            </summary>
+        </member>
+        <member name="M:NutritionService.Common.Food.#ctor(System.String,System.String,System.String,NutritionService.Common.NutritionalInfo)">
+            <summary>
+            Construtor da classe Food
+            </summary>
+            <param name="name"></param>
+            <param name="brand"></param>
+            <param name="barCode"></param>
+            <param name="nutritionalInfo"></param>
+        </member>
+        <member name="M:NutritionService.Common.Food.MarkAsRevised">
+            <summary>
+            Método para assinalar o alimento como revisado
+            </summary>
+        </member>
+        <member name="M:NutritionService.Common.Food.SetId">
+            <summary>
+            Método para gerar um novo identificador para o alimento
+            </summary>
+        </member>
+        <member name="M:NutritionService.Common.Food.SetId(System.String)">
+            <summary>
+            Método para definir o identificador do alimento
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:NutritionService.Common.Food.SetCreatedBy(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que criou o alimento
+            </summary>
+            <param name="createdBy"></param>
+        </member>
+        <member name="M:NutritionService.Common.Food.UpdateInfo(System.String,System.String,System.String,NutritionService.Common.NutritionalInfo)">
+            <summary>
+            Método para atualizar as informações do alimento
+            </summary>
+            <param name="name"></param>
+            <param name="brand"></param>
+            <param name="barCode"></param>
+            <param name="nutritionalInfo"></param>
+        </member>
         <member name="T:NutritionService.Common.Interfaces.IHandler`2">
             <summary>
                 Interface para padronizar handlers.
@@ -19,87 +103,47 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:NutritionService.Common.ProfileContext">
+        <member name="T:NutritionService.Common.NutritionalInfo">
             <summary>
-                Context para perfil logado
+            Classe que representa as informações nutricionais de um alimento
+            </summary>
+            <param name="macronutrients"></param>
+            <param name="micronutrients"></param>
+            <param name="vitamins"></param>
+            <param name="totalMass"></param>
+            <param name="servingSize"></param>
+            <param name="calories"></param>
+        </member>
+        <member name="M:NutritionService.Common.NutritionalInfo.#ctor(NutritionService.Common.Macronutrients,System.Collections.Generic.Dictionary{System.String,NutritionService.Common.MicronutrientDetails},System.Double,System.Nullable{System.Double})">
+            <summary>
+            Classe que representa as informações nutricionais de um alimento
+            </summary>
+            <param name="macronutrients"></param>
+            <param name="micronutrients"></param>
+            <param name="vitamins"></param>
+            <param name="totalMass"></param>
+            <param name="servingSize"></param>
+            <param name="calories"></param>
+        </member>
+        <member name="P:NutritionService.Common.NutritionalInfo.Macronutrients">
+            <summary>
+            Macronutrientes do alimento
             </summary>
         </member>
-        <member name="F:NutritionService.Common.ProfileContext._profileId">
+        <member name="P:NutritionService.Common.NutritionalInfo.Micronutrients">
             <summary>
-                Id do perfil logado
+            Micronutrientes por porção do alimento
             </summary>
         </member>
-        <member name="P:NutritionService.Common.ProfileContext.ProfileId">
+        <member name="P:NutritionService.Common.NutritionalInfo.ServingSize">
             <summary>
-                Método para obter e definir o Id do perfil logado
+            Massa por porção do alimento
             </summary>
         </member>
-        <member name="T:NutritionService.Common.Utils.ClaimsPrincipalUtils">
+        <member name="P:NutritionService.Common.NutritionalInfo.Calories">
             <summary>
-                Classe utilitária para ClaimsPrincipal
+            Calorias por porção do alimento
             </summary>
-        </member>
-        <member name="M:NutritionService.Common.Utils.ClaimsPrincipalUtils.GetEmail(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o email do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Common.Utils.ClaimsPrincipalUtils.GetObjectId(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o id do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Common.Utils.ClaimsPrincipalUtils.GetFirstName(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o primeiro nome do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Common.Utils.ClaimsPrincipalUtils.GetLastName(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-                Método para obter o sobrenome do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Common.Utils.ClaimsPrincipalUtils.GetCity(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Método para obter a cidade do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Common.Utils.ClaimsPrincipalUtils.GetCountry(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Método para obter o país do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Common.Utils.ClaimsPrincipalUtils.GetState(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Método para obter o estado do usuário
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NutritionService.Configuration.Authentication">
-            <summary>
-                Classe responsavel por configurar a autenticacao
-            </summary>
-        </member>
-        <member name="M:NutritionService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-                Metodo responsavel por configurar a autenticacao
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
-            <returns></returns>
         </member>
         <member name="T:NutritionService.Configuration.EndpointsConfiguration">
             <summary>
@@ -195,6 +239,247 @@
             <param name="configuration"></param>
             <returns></returns>
         </member>
+        <member name="T:NutritionService.DailyMenu.Common.DailyMenuMongoRepository">
+            <summary>
+            Repositório para gerenciar o acesso aos dados do DailyMenu.
+            </summary>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.#ctor(NutritionService.Connections.NutritionDbContext)">
+            <summary>
+            Repositório para gerenciar o acesso aos dados do DailyMenu.
+            </summary>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.GetDailyMenuDetailsAsync(System.String)">
+            <summary>
+            Método para buscar um DailyMenu pelo ID.
+            </summary>
+            <param name="dailyMenuId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.InsertDailyMenuAsync(NutritionService.DailyMenu.DailyMenu)">
+            <summary>
+            Método para inserir um DailyMenu.
+            </summary>
+            <param name="dailyMenu"></param>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.UpdateDailyMenuAsync(NutritionService.DailyMenu.DailyMenu)">
+            <summary>
+            Método para atualizar um DailyMenu.
+            </summary>
+            <param name="updatedDailyMenu"></param>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.DeleteDailyMenuAsync(System.String)">
+            <summary>
+            Método para deletar um DailyMenu.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.ListDailyMenusAsync(System.Nullable{System.DayOfWeek},System.Int32,System.Int32)">
+            <summary>
+            Consulta filtrada, com paginação e possibilidade de buscar menus sem dia definido
+            </summary>
+            <param name="dayOfWeek"></param>
+            <param name="page"></param>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.ListDailyMenusAsync(System.Int32,System.Int32)">
+            <summary>
+            Consulta completa sem filtro
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository">
+            <summary>
+            Interface para o repositório de DailyMenu.
+            </summary>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.GetDailyMenuDetailsAsync(System.String)">
+            <summary>
+            Método para obter um DailyMenu pelo seu ID.
+            </summary>
+            <param name="dailyMenuId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.InsertDailyMenuAsync(NutritionService.DailyMenu.DailyMenu)">
+            <summary>
+            Método para inserir um DailyMenu.
+            </summary>
+            <param name="dailyMenu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.UpdateDailyMenuAsync(NutritionService.DailyMenu.DailyMenu)">
+            <summary>
+            Método para atualizar um DailyMenu.
+            </summary>
+            <param name="updatedDailyMenu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.DeleteDailyMenuAsync(System.String)">
+            <summary>
+            Método para deletar um DailyMenu.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.ListDailyMenusAsync(System.Nullable{System.DayOfWeek},System.Int32,System.Int32)">
+            <summary>
+            Método para listar os DailyMenus, filtrando por dia da semana.
+            </summary>
+            <param name="dayOfWeek"></param>
+            <param name="page"></param>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.ListDailyMenusAsync(System.Int32,System.Int32)">
+            <summary>
+            Método para listar os DailyMenus, sem filtro.
+            </summary>
+            <param name="page"></param>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.DailyMenu.DailyMenu">
+            <summary>
+            Classe que representa um cardápio diário
+            </summary>
+        </member>
+        <member name="P:NutritionService.DailyMenu.DailyMenu.Id">
+            <summary>
+            Identificador do cardápio
+            </summary>
+        </member>
+        <member name="P:NutritionService.DailyMenu.DailyMenu.DayOfWeek">
+            <summary>
+            Dia da Semana
+            </summary>
+        </member>
+        <member name="P:NutritionService.DailyMenu.DailyMenu.Meals">
+            <summary>
+            Lista de refeições do dia
+            </summary>
+        </member>
+        <member name="T:NutritionService.DailyMenu.DailyMenuController">
+            <summary>
+            Controlador para gerenciar o cardápio diário.
+            </summary>
+        </member>
+        <member name="T:NutritionService.DailyMenu.DailyMenuModule">
+            <summary>
+            Módulo para resolver as dependências do Cardápio Diário.
+            </summary>
+        </member>
+        <member name="T:NutritionService.Dish.Common.Repository.DishMongoRepository">
+            <summary>
+            Repositório para gerenciar operações de CRUD para pratos no MongoDB.
+            </summary>
+        </member>
+        <member name="M:NutritionService.Dish.Common.Repository.DishMongoRepository.#ctor(NutritionService.Connections.NutritionDbContext)">
+            <summary>
+            Repositório para gerenciar operações de CRUD para pratos no MongoDB.
+            </summary>
+        </member>
+        <member name="T:NutritionService.Dish.Common.Repository.IDishMongoRepository">
+            <summary>
+            Interface para o repositório de pratos no MongoDB.
+            </summary>
+        </member>
+        <member name="M:NutritionService.Dish.CreateDish.CreateDishCommand.ToDishAsync(NutritionService.UserFood.Common.Repository.IUserFoodMongoRepository,System.Threading.CancellationToken)">
+            <summary>
+            Método assíncrono que transforma o comando em uma entidade Dish,
+            buscando os objetos Food com base nos IDs fornecidos.
+            </summary>
+        </member>
+        <member name="T:NutritionService.Dish.Dish">
+            <summary>
+            Classe que representa um prato
+            </summary>
+        </member>
+        <member name="P:NutritionService.Dish.Dish.Id">
+            <summary>
+            Identificador do prato
+            </summary>
+        </member>
+        <member name="P:NutritionService.Dish.Dish.CreatedBy">
+            <summary>
+            Identificador do perfil que criou o prato
+            </summary>
+        </member>
+        <member name="P:NutritionService.Dish.Dish.Name">
+            <summary>
+            Nome do prato
+            </summary>
+        </member>
+        <member name="P:NutritionService.Dish.Dish.Foods">
+             <summary>
+            Lista de ingredientes (alimentos) do prato
+             </summary>
+        </member>
+        <member name="M:NutritionService.Dish.Dish.SetId">
+            <summary>
+            Método para gerar um novo ID para o prato
+            </summary>
+        </member>
+        <member name="M:NutritionService.Dish.Dish.SetCreatedBy(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que criou o prato
+            </summary>
+            <param name="createdBy"></param>
+        </member>
+        <member name="T:NutritionService.Dish.DishController">
+            <summary>
+            Controller para o gerenciamento de pratos
+            </summary>
+        </member>
+        <member name="M:NutritionService.Dish.DishController.GetDishDetails(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Dish.Dish,NutritionService.Dish.GetDishDetails.GetDishDetailsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter detalhes de um prato
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.Dish.DishController.CreateDish(NutritionService.Dish.CreateDish.CreateDishCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Dish.Dish,NutritionService.Dish.CreateDish.CreateDishCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para criar um prato
+            </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.Dish.DishController.EditDish(System.String,NutritionService.Dish.EditDish.EditDishCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Dish.Dish,NutritionService.Dish.EditDish.EditDishCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para atualizar um prato
+            </summary>
+            <param name="id"></param>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.Dish.DishController.DeleteDish(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Dish.Dish,NutritionService.Dish.DeleteDish.DeleteDishCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para deletar um prato
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.Dish.DishModule">
+            <summary>
+            Módulo para resolver as dependências relacionadas a pratos.
+            </summary>
+        </member>
+        <member name="M:NutritionService.Dish.DishModule.ConfigureDishRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método de extensão para configurar as dependências do módulo de pratos.
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
         <member name="T:NutritionService.Exceptions.FoodAlreadyExistsException">
             <summary>
                 Exceção para quando um alimento já existe
@@ -209,67 +494,157 @@
             <summary>
                 Construtor com mensagem
             </summary>
-            <param name="message"></param>
+            <param name="barcode"></param>
         </member>
-        <member name="T:NutritionService.Food.FoodController">
+        <member name="T:NutritionService.Meal.Common.Enums.MealType">
             <summary>
-                Controller responsavel por gerenciar comidas
+            Tipo de refeição
             </summary>
         </member>
-        <member name="M:NutritionService.Food.FoodController.ListUnrevisedFoods(NutritionService.Food.ListNonRevisedFoods.ListUnrevisedFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Food.Food},NutritionService.Food.ListNonRevisedFoods.ListUnrevisedFoodsQuery},System.Threading.CancellationToken)">
+        <member name="F:NutritionService.Meal.Common.Enums.MealType.Breakfast">
             <summary>
-            Rota para listar comidas não revisadas
+            Café da manhã
             </summary>
-            <param name="query"></param>
-            <param name="handler"></param>
-            <param name="cancellationToken"></param>
+        </member>
+        <member name="F:NutritionService.Meal.Common.Enums.MealType.MorningSnack">
+            <summary>
+            Lanche da manhã
+            </summary>
+        </member>
+        <member name="F:NutritionService.Meal.Common.Enums.MealType.Lunch">
+            <summary>
+            Almoço
+            </summary>
+        </member>
+        <member name="F:NutritionService.Meal.Common.Enums.MealType.AfternoonSnack">
+            <summary>
+            Lanche da tarde
+            </summary>
+        </member>
+        <member name="F:NutritionService.Meal.Common.Enums.MealType.Dinner">
+            <summary>
+            Jantar
+            </summary>
+        </member>
+        <member name="F:NutritionService.Meal.Common.Enums.MealType.Supper">
+            <summary>
+            Ceia
+            </summary>
+        </member>
+        <member name="M:NutritionService.Meal.CreateMeal.CreateMealCommand.ToMeal">
+            <summary>
+            Metodo para mapear o comando para a entidade Meal
+            </summary>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.Food.FoodController.GetFoodDetails(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.GetFoodDetails.GetFoodDetailsQuery},System.Threading.CancellationToken)">
+        <member name="T:NutritionService.Meal.Meal">
             <summary>
-            Rota para pegar detalhes de uma comida
+            Classe que representa uma refeição
             </summary>
-            <param name="barCode"></param>
-            <param name="handler"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
         </member>
-        <member name="M:NutritionService.Food.FoodController.SendFriendRequest(NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.CreateFood.CreateFoodCommand},NutritionService.Food.CreateFood.CreateFoodCommand,System.Threading.CancellationToken)">
+        <member name="P:NutritionService.Meal.Meal.Id">
             <summary>
-                Rota para criar uma comida
+            Identificador da refeição
             </summary>
-            <returns></returns>
         </member>
-        <member name="M:NutritionService.Food.FoodController.EditFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.EditFood.EditFoodCommand},NutritionService.Food.EditFood.EditFoodCommand,System.Threading.CancellationToken)">
+        <member name="P:NutritionService.Meal.Meal.CreatedBy">
             <summary>
-            Rota para editar uma comida
+            Tipo da refeição
             </summary>
-            <param name="barCode"></param>
-            <param name="handler"></param>
+            <summary>
+            Identificador do perfil que criou a refeição
+            </summary>
+        </member>
+        <member name="P:NutritionService.Meal.Meal.Name">
+            <summary>
+            Nome da refeição
+            </summary>
+        </member>
+        <member name="P:NutritionService.Meal.Meal.Dishes">
+            <summary>
+            Lista de pratos que compoe a refeição
+            </summary>
+        </member>
+        <member name="P:NutritionService.Meal.Meal.Foods">
+            <summary>
+            Lista de alimentos que compõe a refeição
+            </summary>
+        </member>
+        <member name="M:NutritionService.Meal.Meal.#ctor(NutritionService.Meal.Common.Enums.MealType,System.String,System.Collections.Generic.List{NutritionService.Dish.Dish},System.Collections.Generic.List{NutritionService.Common.Food})">
+            <summary>
+            Construtor da classe Meal
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <param name="dishes"></param>
+            <param name="foods"></param>
+        </member>
+        <member name="M:NutritionService.Meal.Meal.SetId">
+            <summary>
+            Método para gerar um novo ID para a refeição
+            </summary>
+        </member>
+        <member name="M:NutritionService.Meal.Meal.SetCreatedBy(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que criou a refeição
+            </summary>
+            <param name="createdBy"></param>
+        </member>
+        <member name="M:NutritionService.Meal.Meal.UpdateInfo(NutritionService.Meal.Common.Enums.MealType,System.String,System.Collections.Generic.List{NutritionService.Dish.Dish},System.Collections.Generic.List{NutritionService.Common.Food})">
+            <summary>
+            Método para atualizar as informações da refeição
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <param name="dishes"></param>
+            <param name="foods"></param>
+        </member>
+        <member name="T:NutritionService.Meal.MealController">
+            <summary>
+            Classe responsável por gerenciar as refeições.
+            </summary>
+        </member>
+        <member name="M:NutritionService.Meal.MealController.Post(NutritionService.Meal.CreateMeal.CreateMealCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Meal.Meal,NutritionService.Meal.CreateMeal.CreateMealCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota responsável por criar uma refeição.
+            </summary>
             <param name="command"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NutritionService.Food.FoodController.ApproveFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Food.Food,NutritionService.Food.ApproveFood.ApproveFoodCommand},System.Threading.CancellationToken)">
-            <summary>
-            Rota para aprovar uma comida, e marcar como revisada
-            </summary>
-            <param name="barCode"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:NutritionService.Food.FoodModule">
+        <member name="M:NutritionService.Meal.MealController.Delete(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Meal.Meal,NutritionService.Meal.DeleteMeal.DeleteMealCommand},System.Threading.CancellationToken)">
             <summary>
-                Modulo para resolver as dependências relacionadas a comidas
+            Rota responsável por apagar uma refeição.
             </summary>
-        </member>
-        <member name="M:NutritionService.Food.FoodModule.ConfigureFoodRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-                Método para resolver as dependências relacionadas a comidas
-            </summary>
-            <param name="services"></param>
+            <param name="mealId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="M:NutritionService.Meal.MealController.Put(System.String,NutritionService.Meal.EditMeal.EditMealCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Meal.Meal,NutritionService.Meal.EditMeal.EditMealCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota responsável por editar uma refeição.
+            </summary>
+            <param name="mealId"></param>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.Meal.MealController.Get(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Meal.Meal,NutritionService.Meal.GetMealDetails.GetMealDetailsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota responsável por buscar uma refeição.
+            </summary>
+            <param name="mealId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.Meal.MealModule">
+            <summary>
+            Módulo para resolver as dependências do serviço de refeições.
+            </summary>
         </member>
         <member name="T:NutritionService.Middleware.ExceptionMiddleware">
             <summary>
@@ -290,6 +665,111 @@
                 Método para invocar o middleware
             </summary>
             <param name="context"></param>
+        </member>
+        <member name="M:NutritionService.UserFood.EditUserFood.EditUserFoodCommandHandler.HandleAsync(NutritionService.UserFood.EditUserFood.EditUserFoodCommand,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="T:NutritionService.UserFood.UserFoodController">
+            <summary>
+                Controller responsável por gerenciar comidas
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.ListUserFoods(NutritionService.UserFood.ListFoods.ListFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.Food},NutritionService.UserFood.ListFoods.ListFoodsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para listar comidas
+            </summary>
+            <param name="query"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.GetUserFoodDetails(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Common.Food,NutritionService.UserFood.GetUserFoodDetails.GetUserFoodDetailsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para pegar detalhes de uma comida
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.CreateUserFood(NutritionService.Common.Interfaces.IHandler{NutritionService.Common.Food,NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand},NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand,System.Threading.CancellationToken)">
+            <summary>
+            Rota para criar uma comida
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.EditUserFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Common.Food,NutritionService.UserFood.EditUserFood.EditUserFoodCommand},NutritionService.UserFood.EditUserFood.EditUserFoodCommand,System.Threading.CancellationToken)">
+            <summary>
+            Rota para editar uma comida
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.ApproveUserFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Common.Food,NutritionService.UserFood.ApproveUserFood.ApproveUserFoodCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para aprovar uma comida, e marcar como revisada
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodController.DeleteUserFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Common.Food,NutritionService.UserFood.DeleteUserFood.DeleteUserFoodCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para deletar uma comida
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.UserFood.UserFoodModule">
+            <summary>
+                Modulo para resolver as dependências relacionadas a comidas
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserFood.UserFoodModule.ConfigureUserFoodRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Método para resolver as dependências relacionadas a comidas
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.UserNutrition.UserNutrition">
+            <summary>
+            Classe que representa a nutrição do usuário no banco de dados
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserNutrition.UserNutrition.Id">
+            <summary>
+            Identificador do gerenciamento de nutrição
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserNutrition.UserNutrition.CreatedBy">
+            <summary>
+            Identificador do perfil que criou o gerenciamento de nutrição
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserNutrition.UserNutrition.DailyMenus">
+            <summary>
+            Lista de cardápios diários do usuário
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserNutrition.UserNutrition.SetCreatedBy(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que criou o gerenciamento de nutrição
+            </summary>
+            <param name="createdBy"></param>
         </member>
     </members>
 </doc>

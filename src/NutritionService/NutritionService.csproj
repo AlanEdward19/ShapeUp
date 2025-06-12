@@ -30,7 +30,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Food\DeleteFood\" />
+      <Folder Include="Connections\Migrations\" />
+      <Folder Include="Dish\Common\" />
     </ItemGroup>
 
     <ItemGroup>
