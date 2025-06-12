@@ -4,6 +4,7 @@ using NutritionService.Meal.CreateMeal;
 using NutritionService.Meal.DeleteMeal;
 using NutritionService.Meal.EditMeal;
 using NutritionService.Meal.GetMealDetails;
+using NutritionService.Meal.ListMeals;
 
 namespace NutritionService.Meal;
 
@@ -30,6 +31,7 @@ public static class MealModule
         services.AddScoped<IHandler<Meal, EditMealCommand>, EditMealCommandHandler>();
         services.AddScoped<IHandler<Meal, DeleteMealCommand>, DeleteMealCommandHandler>();
         services.AddScoped<IHandler<Meal, GetMealDetailsQuery>, GetMealDetailsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<Meal>, ListMealsQuery>, ListMealsQueryHandler>();
         return services;
     }
 }

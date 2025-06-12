@@ -1,17 +1,18 @@
-﻿using NutritionService.UserFood;
+﻿using NutritionService.Common;
+using NutritionService.UserFood;
 
 namespace NutritionService.Dish.EditDish;
 
 public class EditDishCommand
 {
-    public string Id { get; set; } = "";
+    public string? Id { get; set; }
     public string Name { get; set; }
-    public List<Food> Foods { get; set; }
+    public string[] FoodIds { get; set; }
     
-    public EditDishCommand(string name, List<Food> foods)
+    public EditDishCommand(string name, string[] foodIds)
     {
         Name = name;
-        Foods = foods;
+        FoodIds = foodIds;
     }
 
     public void SetId(string id) => Id = id;

@@ -4,6 +4,7 @@ using NutritionService.UserNutrition.CreateUserNutrition;
 using NutritionService.UserNutrition.DeleteUserNutrition;
 using NutritionService.UserNutrition.EditUserNutrition;
 using NutritionService.UserNutrition.GetUserNutritionDetails;
+using NutritionService.UserNutrition.ListUserNutritions;
 
 namespace NutritionService.UserNutrition;
 
@@ -29,6 +30,7 @@ public static class UserNutritionModule
         services.AddScoped<IHandler<UserNutrition, EditUserNutritionCommand>, EditUserNutritionCommandHandler>();
         services.AddScoped<IHandler<UserNutrition, DeleteUserNutritionCommand>, DeleteUserNutritionCommandHandler>();
         services.AddScoped<IHandler<UserNutrition, GetUserNutritionDetailsQuery>, GetUserNutritionDetailsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<UserNutrition>, ListUserNutritionsQuery>, ListUserNutritionsQueryHandler>();
         return services;
     }
 }

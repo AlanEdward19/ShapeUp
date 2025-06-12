@@ -2,15 +2,15 @@
 
 public class EditDailyMenuCommand
 {
-    public string Id { get; set; } = "";
+    public string? Id { get; set; }
     public DayOfWeek? DayOfWeek { get; set; }
-    public List<Dish.Dish> Dishes { get; set; }
+    public List<Meal.Meal> Meals { get; set; }
     
-    public EditDailyMenuCommand(DayOfWeek? dayOfWeek, List<Dish.Dish> dishes)
+    public EditDailyMenuCommand(DayOfWeek? dayOfWeek, List<Meal.Meal> meals)
     {
         DayOfWeek = dayOfWeek;
-        Dishes = dishes;
+        Meals = meals;
     }
-    
+    public EditDailyMenuCommand() { }
     public void SetId(string id) => Id = id;
 }

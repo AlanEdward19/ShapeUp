@@ -1,10 +1,13 @@
-﻿using NutritionService.Common.Interfaces;
+﻿using NutritionService.Common;
+using NutritionService.Common.Interfaces;
 using NutritionService.UserFood.ApproveUserFood;
 using NutritionService.UserFood.Common.Repository;
 using NutritionService.UserFood.CreateUserFood;
+using NutritionService.UserFood.DeleteUserFood;
 using NutritionService.UserFood.EditUserFood;
 using NutritionService.UserFood.GetUserFoodDetails;
-using NutritionService.UserFood.ListUnrevisedFoods;
+using NutritionService.UserFood.InsertPublicFoodsInUserFood;
+using NutritionService.UserFood.ListFoods;
 
 namespace NutritionService.UserFood;
 
@@ -29,11 +32,13 @@ public static class UserFoodModule
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<IEnumerable<Food>, ListUnrevisedFoodsQuery>, ListUnrevisedFoodsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<Food>, ListFoodsQuery>, ListFoodsQueryHandler>();
         services.AddScoped<IHandler<Food, GetUserFoodDetailsQuery>, GetUserFoodDetailsQueryHandler>();
         services.AddScoped<IHandler<Food, CreateUserFoodCommand>, CreateUserFoodCommandHandler>();
         services.AddScoped<IHandler<Food, EditUserFoodCommand>, EditUserFoodCommandHandler>();
         services.AddScoped<IHandler<Food, ApproveUserFoodCommand>, ApproveUserFoodCommandHandler>();
+        services.AddScoped<IHandler<Food, DeleteUserFoodCommand>, DeleteUserFoodCommandHandler>();
+        services.AddScoped<IHandler<IEnumerable<Food>, InsertPublicFoodsInUserFoodCommand>, InsertPublicFoodsInUserFoodCommandHandler>();
         return services;
     }
 

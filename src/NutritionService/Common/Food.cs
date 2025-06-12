@@ -1,8 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using NutritionService.UserFood.Common;
 
-namespace NutritionService.UserFood;
+namespace NutritionService.Common;
 
 /// <summary>
 /// Classe que representa um alimento
@@ -24,7 +23,7 @@ public class Food
     /// Identificador do perfil que criou o alimento
     /// </summary>
     [BsonElement("createdBy")]
-    public Guid CreatedByGuid { get; private set; } = Guid.Empty;
+    public string CreatedBy { get; private set; } = "";
     
     /// <summary>
     /// Nome do alimento
@@ -48,7 +47,7 @@ public class Food
     /// Classificação de revisão do alimento
     /// </summary>
     [BsonElement("revised")]
-    public bool Revised { get; private set; } = false;
+    public bool IsRevised { get; private set; } = false;
     
     /// <summary>
     /// Informações nutricionais do alimento
@@ -77,7 +76,7 @@ public class Food
     /// </summary>
     public void MarkAsRevised()
     {
-        Revised = true;
+        IsRevised = true;
     }
     
     /// <summary>
@@ -87,13 +86,22 @@ public class Food
     {
         Id = ObjectId.GenerateNewId().ToString();
     }
+    
+    /// <summary>
+    /// Método para definir o identificador do alimento
+    /// </summary>
+    /// <param name="id"></param>
+    public void SetId(string id)
+    {
+        Id = id;
+    }
     /// <summary>
     /// Método para definir o identificador do perfil que criou o alimento
     /// </summary>
     /// <param name="createdBy"></param>
-    public void SetCreatedBy(Guid createdBy)
+    public void SetCreatedBy(string createdBy)
     {
-        CreatedByGuid = createdBy;
+        CreatedBy = createdBy;
     }
 
     /// <summary>
@@ -103,11 +111,20 @@ public class Food
     /// <param name="brand"></param>
     /// <param name="barCode"></param>
     /// <param name="nutritionalInfo"></param>
-    public void UpdateInfo(string name, string brand, string barCode, NutritionalInfo nutritionalInfo)
+    public void UpdateInfo(string name, string? brand, string? barCode, NutritionalInfo nutritionalInfo)
     {
         Name = name;
         Brand = brand;
         BarCode = barCode;
         NutritionalInfo = nutritionalInfo;
+    }
+
+    /// <summary>
+    /// Método para clonar o objeto Food
+    /// </summary>
+    /// <returns></returns>
+    public Food Clone()
+    {
+        return new Food(Name, Brand, BarCode, NutritionalInfo.Clone());
     }
 }

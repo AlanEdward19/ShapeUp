@@ -1,4 +1,5 @@
-﻿using NutritionService.Common.Interfaces;
+﻿using NutritionService.Common;
+using NutritionService.Common.Interfaces;
 using NutritionService.PublicFood.Common.Repository;
 using NutritionService.UserFood;
 using SharedKernel.Exceptions;
@@ -9,6 +10,11 @@ public class EditPublicFoodCommandHandler(IPublicFoodMongoRepository repository)
 {
     public async Task<Food> HandleAsync(EditPublicFoodCommand command, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrWhiteSpace(command.Id))
+        {
+            throw new ArgumentException("Id is required", nameof(command.Id));
+        }
+        
         var existingFood = await repository.GetPublicFoodByIdAsync(command.Id);
         
         if (existingFood == null)

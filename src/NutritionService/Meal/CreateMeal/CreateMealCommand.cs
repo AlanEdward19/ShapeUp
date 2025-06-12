@@ -1,5 +1,8 @@
-﻿using NutritionService.Meal.Common.Enums;
-using NutritionService.UserFood;
+﻿using NutritionService.Common;
+using NutritionService.Dish.Common.Repository;
+using NutritionService.Meal.Common.Enums;
+using NutritionService.UserFood.Common.Repository;
+using SharedKernel.Utils;
 
 namespace NutritionService.Meal.CreateMeal;
 
@@ -7,27 +10,14 @@ public class CreateMealCommand
 {
     public MealType Type { get; set; }
     public string Name { get; set; }
-    public List<Dish.Dish> Dishes { get; set; }
-    public List<Food> Foods { get; set; }
+    public string[] DishIds { get; set; }
+    public string[] FoodIds { get; set; }
 
-    public CreateMealCommand(MealType type, string name, List<Dish.Dish> dishes, List<Food> foods)
+    public CreateMealCommand(MealType type, string name, string[] dishIds, string[] foodIds)
     {
         Type = type;
         Name = name;
-        Dishes = dishes;
-        Foods = foods;
-    }
-
-    /// <summary>
-    /// Metodo para mapear o comando para a entidade Meal
-    /// </summary>
-    /// <returns></returns>
-    public Meal ToMeal()
-    {
-        Meal meal = new(Type, Name, Dishes, Foods);
-
-        meal.SetId();
-
-        return meal;
+        DishIds = dishIds;
+        FoodIds = foodIds;
     }
 }

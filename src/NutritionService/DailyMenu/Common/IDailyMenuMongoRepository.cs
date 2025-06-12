@@ -44,4 +44,6 @@ public interface IDailyMenuMongoRepository
     /// <param name="size"></param>
     /// <returns></returns>
     Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(int page, int size);
+
+    Task<IEnumerable<DailyMenu>> GetManyByIdsAsync(string[] itemDailyMenuIds, CancellationToken cancellationToken);
 }

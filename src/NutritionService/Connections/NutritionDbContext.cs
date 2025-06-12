@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using NutritionService.Common;
 using NutritionService.UserFood;
 
 namespace NutritionService.Connections;

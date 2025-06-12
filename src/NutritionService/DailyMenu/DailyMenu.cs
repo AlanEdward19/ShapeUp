@@ -15,6 +15,12 @@ public class DailyMenu
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; private set; } = "";
+    
+    /// <summary>
+    /// Identificador do perfil que criou o cardápio
+    /// </summary>
+    [BsonElement("createdBy")]
+    public string CreatedBy { get; private set; } = "";
 
     /// <summary>
     /// Dia da Semana
@@ -25,17 +31,39 @@ public class DailyMenu
     /// </summary>
     public List<Meal.Meal> Meals { get; private set; } = [];
 
+    /// <summary>
+    /// Construtor da classe DailyMenu
+    /// </summary>
+    /// <param name="dayOfWeek"></param>
+    /// <param name="meals"></param>
     public DailyMenu(DayOfWeek? dayOfWeek, List<Meal.Meal> meals)
     {
         DayOfWeek = dayOfWeek;
         Meals = meals;
     }
 
+    /// <summary>
+    /// Método para gerar um novo ID para o cardápio
+    /// </summary>
     public void SetId()
     {
         Id = ObjectId.GenerateNewId().ToString();
     }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que criou o cardápio
+    /// </summary>
+    /// <param name="createdBy"></param>
+    public void SetCreatedBy(string createdBy)
+    {
+        CreatedBy = createdBy;
+    }
 
+    /// <summary>
+    /// Método para atualizar as informações do cardápio diário
+    /// </summary>
+    /// <param name="dayOfWeek"></param>
+    /// <param name="meals"></param>
     public void UpdateInfo(DayOfWeek? dayOfWeek, List<Meal.Meal> meals)
     {
         DayOfWeek = dayOfWeek;

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using NutritionService.Common;
 using NutritionService.Meal.Common.Enums;
 using NutritionService.UserFood;
 
@@ -16,7 +17,13 @@ public class Meal
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = "";
-
+    
+    /// <summary>
+    /// Identificador do perfil que criou a refeição
+    /// </summary>
+    [BsonElement("createdBy")]
+    public string CreatedBy { get; private set; } = "";
+    
     /// <summary>
     /// Tipo da refeição
     /// </summary>
@@ -30,7 +37,7 @@ public class Meal
     /// </summary>
     public List<Dish.Dish> Dishes { get; set; } 
     /// <summary>
-    /// Lista de alimentos que compoe a refeição
+    /// Lista de alimentos que compõe a refeição
     /// </summary>
     public List<Food> Foods { get; set; } 
     
@@ -55,6 +62,15 @@ public class Meal
     public void SetId()
     {
         Id = ObjectId.GenerateNewId().ToString();
+    }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que criou a refeição
+    /// </summary>
+    /// <param name="createdBy"></param>
+    public void SetCreatedBy(string createdBy)
+    {
+        CreatedBy = createdBy;
     }
     
     /// <summary>

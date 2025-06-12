@@ -1,9 +1,12 @@
-﻿using NutritionService.Common.Interfaces;
+﻿using NutritionService.Common;
+using NutritionService.Common.Interfaces;
 using NutritionService.PublicFood.Common.Repository;
 using NutritionService.PublicFood.CreatePublicFood;
 using NutritionService.PublicFood.DeletePublicFood;
 using NutritionService.PublicFood.EditPublicFood;
 using NutritionService.PublicFood.GetPublicFoodDetails;
+using NutritionService.PublicFood.ListPublicFoods;
+using NutritionService.PublicFood.ListRevisedPublicFoods;
 using NutritionService.PublicFood.ListUnrevisedPublicFoods;
 using NutritionService.UserFood;
 
@@ -23,6 +26,8 @@ public static class PublicFoodModule
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddScoped<IHandler<IEnumerable<Food>, ListUnrevisedPublicFoodsQuery>, ListUnrevisedPublicFoodsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<Food>, ListPublicFoodsQuery>, ListPublicFoodsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<Food>, ListRevisedPublicFoodsQuery>, ListRevisedPublicFoodsQueryHandler>();
         services.AddScoped<IHandler<Food, GetPublicFoodDetailsQuery>, GetPublicFoodDetailsQueryHandler>();
         services.AddScoped<IHandler<Food, CreatePublicFoodCommand>, CreatePublicFoodCommandHandler>();
         services.AddScoped<IHandler<Food, EditPublicFoodCommand>, EditPublicFoodCommandHandler>();

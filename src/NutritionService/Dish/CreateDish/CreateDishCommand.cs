@@ -1,26 +1,17 @@
-﻿
-using NutritionService.UserFood;
+﻿using NutritionService.UserFood.Common.Repository;
+using SharedKernel.Utils;
 
 namespace NutritionService.Dish.CreateDish;
 
 public class CreateDishCommand
 {
     public string Name { get; set; }
-    public List<Food> Foods { get; set; }
+    public string[] FoodIds { get; set; }
     
-    public CreateDishCommand(string name, List<Food> foods)
+    public CreateDishCommand(string name, string[] foodIds)
     {
         Name = name;
-        Foods = foods;
-    }
-    
-    public Dish ToDish()
-    {
-        Dish dish = new(Name, Foods);
-        
-        dish.SetId();
-        
-        return dish;
+        FoodIds  = foodIds;
     }
     
     

@@ -16,6 +16,14 @@ public class UserNutritionMongoRepository(NutritionDbContext context) : IUserNut
     public async Task InsertUserNutritionAsync(UserNutrition userNutrition)
     {
         ArgumentNullException.ThrowIfNull(userNutrition);
+        
+        var existing = await context.UserNutritions
+            .Find(x => x.CreatedBy == userNutrition.CreatedBy)
+            .FirstOrDefaultAsync();
+
+        if (existing is not null)
+            throw new InvalidOperationException($"Já existe um UserNutrition para o usuário {userNutrition.CreatedBy}");
+        
         await context.UserNutritions.InsertOneAsync(userNutrition);
     }
 
@@ -36,5 +44,13 @@ public class UserNutritionMongoRepository(NutritionDbContext context) : IUserNut
     public Task<List<UserNutrition>> ListUserNutritionAsync(string? userId)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<UserNutrition>> ListUserNutritionsAsync(int itemPage, int itemRows, CancellationToken cancellationToken)
+    {
+        return await context.UserNutritions.Find(_ => true)
+            .Skip(itemPage * itemRows)
+            .Limit(itemRows)
+            .ToListAsync(cancellationToken);
     }
 }

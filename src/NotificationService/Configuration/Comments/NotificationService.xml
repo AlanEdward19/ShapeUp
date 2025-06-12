@@ -113,6 +113,32 @@
             <param name="configuration"></param>
             <returns></returns>
         </member>
+        <member name="T:NotificationService.Notification.Services.NotificationService">
+            <summary>
+            Serviço de notificação.
+            </summary>
+            <param name="hubContext"></param>
+            <param name="repository"></param>
+            <param name="fcmService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:NotificationService.Notification.Services.NotificationService.#ctor(Microsoft.AspNetCore.SignalR.IHubContext{NotificationService.Notification.NotificationHub},NotificationService.User.Repository.IUserRepository,NotificationService.Connections.Firebase.IFcmService,Microsoft.Extensions.Logging.ILogger{NotificationService.Notification.Services.NotificationService})">
+            <summary>
+            Serviço de notificação.
+            </summary>
+            <param name="hubContext"></param>
+            <param name="repository"></param>
+            <param name="fcmService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:NotificationService.Notification.Services.NotificationService.sendNotification(BDS.DataPack.SharedKernel.Protos.NotificationParams,Grpc.Core.ServerCallContext)">
+            <summary>
+            Método para enviar uma notificação.
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="T:NotificationService.User.Repository.IUserRepository">
             <summary>
             Interface para o repositório de usuários

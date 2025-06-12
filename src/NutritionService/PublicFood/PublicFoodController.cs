@@ -6,11 +6,13 @@ using NutritionService.PublicFood.CreatePublicFood;
 using NutritionService.PublicFood.DeletePublicFood;
 using NutritionService.PublicFood.EditPublicFood;
 using NutritionService.PublicFood.GetPublicFoodDetails;
+using NutritionService.PublicFood.ListPublicFoods;
+using NutritionService.PublicFood.ListRevisedPublicFoods;
 using NutritionService.PublicFood.ListUnrevisedPublicFoods;
 using NutritionService.UserFood;
-using NutritionService.UserFood.CreateUserFood;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
+using ProfileContext = SharedKernel.Utils.ProfileContext;
 
 namespace NutritionService.PublicFood;
 
@@ -21,12 +23,22 @@ namespace NutritionService.PublicFood;
 [Route("v{version:apiVersion}/[Controller]")]
 public class PublicFoodController : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> ListPublicFoods([FromQuery] ListPublicFoodsQuery query,
+        [FromServices] IHandler<IEnumerable<Food>, ListPublicFoodsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPublicFoodDetails(string id,
         [FromServices] IHandler<Food, GetPublicFoodDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
 
         return Ok(await handler.HandleAsync(new GetPublicFoodDetailsQuery(id), cancellationToken));
     }
@@ -36,7 +48,16 @@ public class PublicFoodController : ControllerBase
         [FromServices] IHandler<IEnumerable<Food>, ListUnrevisedPublicFoodsQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    [HttpGet("listRevisedFoods")]
+    public async Task<IActionResult> ListRevisedPublicFoods([FromQuery] ListRevisedPublicFoodsQuery query,
+        [FromServices] IHandler<IEnumerable<Food>, ListRevisedPublicFoodsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
@@ -46,7 +67,7 @@ public class PublicFoodController : ControllerBase
         [FromServices] IHandler<Food, CreatePublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         command.SetCreatedBy(ProfileContext.ProfileId);
         
 
@@ -57,7 +78,7 @@ public class PublicFoodController : ControllerBase
         [FromServices] IHandler<Food, EditPublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         command.SetId(id);
 
         return Ok(await handler.HandleAsync(command, cancellationToken));
@@ -68,10 +89,10 @@ public class PublicFoodController : ControllerBase
         [FromServices] IHandler<Food, DeletePublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         var command = new DeletePublicFoodCommand(id);
         
-        var result = await handler.HandleAsync(command, cancellationToken);
+        await handler.HandleAsync(command, cancellationToken);
 
         return NoContent();
     }

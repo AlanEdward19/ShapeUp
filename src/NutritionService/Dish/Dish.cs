@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using NutritionService.Common;
 using NutritionService.UserFood;
 
 namespace NutritionService.Dish;
@@ -15,6 +16,12 @@ public class Dish
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; private set; } =  "";
+    
+    /// <summary>
+    /// Identificador do perfil que criou o prato
+    /// </summary>
+    [BsonElement("createdBy")]
+    public string CreatedBy { get; private set; } = "";
 
     /// <summary>
     /// Nome do prato
@@ -24,12 +31,12 @@ public class Dish
     /// <summary>
     ///Lista de ingredientes (alimentos) do prato
     /// </summary>
-    public List<Food> Ingredients { get; set; }
+    public List<Food> Foods { get; set; }
     
-    public Dish(string name, List<Food> ingredients)
+    public Dish(string name, List<Food> foods)
     {
         Name = name;
-        Ingredients = ingredients;
+        Foods = foods;
     }
     
     /// <summary>
@@ -40,10 +47,24 @@ public class Dish
         Id = ObjectId.GenerateNewId().ToString();
     }
     
-    public void UpdateInfo(string name, List<Food> ingredients)
+    public void SetId(string id)
+    {
+        Id = id;
+    }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que criou o prato
+    /// </summary>
+    /// <param name="createdBy"></param>
+    public void SetCreatedBy(string createdBy)
+    {
+        CreatedBy = createdBy;
+    }
+    
+    public void UpdateInfo(string name, List<Food> foods)
     {
         Name = name;
-        Ingredients = ingredients;
+        Foods = foods;
     }
     
 }

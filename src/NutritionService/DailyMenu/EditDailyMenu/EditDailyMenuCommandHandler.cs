@@ -14,7 +14,7 @@ public class EditDailyMenuCommandHandler(IDailyMenuMongoRepository repository):
         if (existingDailyMenu == null)
             throw new NotFoundException(item.Id);
         
-        existingDailyMenu.UpdateInfo(existingDailyMenu.DayOfWeek, existingDailyMenu.Meals);
+        existingDailyMenu.UpdateInfo(item.DayOfWeek, item.Meals);
         
         await repository.UpdateDailyMenuAsync(existingDailyMenu);
 

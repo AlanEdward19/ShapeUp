@@ -1,6 +1,5 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using NutritionService.Common;
 using NutritionService.Common.Interfaces;
 using NutritionService.DailyMenu.CreateDailyMenu;
 using NutritionService.DailyMenu.DeleteDailyMenu;
@@ -9,6 +8,7 @@ using NutritionService.DailyMenu.GetDailyMenuDetails;
 using NutritionService.DailyMenu.ListDailyMenus;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
+using ProfileContext = SharedKernel.Utils.ProfileContext;
 
 namespace NutritionService.DailyMenu;
 
@@ -27,7 +27,7 @@ public class DailyMenuController : ControllerBase
         [FromServices] IHandler<DailyMenu, CreateDailyMenuCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         // Validators
         
@@ -39,7 +39,7 @@ public class DailyMenuController : ControllerBase
         [FromServices] IHandler<DailyMenu, DeleteDailyMenuCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validators
 
@@ -52,7 +52,7 @@ public class DailyMenuController : ControllerBase
         [FromServices] IHandler<DailyMenu, EditDailyMenuCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         command.SetId(id);
 
@@ -67,7 +67,7 @@ public class DailyMenuController : ControllerBase
         [FromServices] IHandler<DailyMenu, GetDailyMenuDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validation
 
@@ -76,10 +76,10 @@ public class DailyMenuController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetDailyMenus(
         [FromQuery] ListDailyMenuQuery query,
-        [FromServices] IHandler<DailyMenu, ListDailyMenuQuery> handler,
+        [FromServices] IHandler<IEnumerable<DailyMenu>, ListDailyMenuQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validation
 

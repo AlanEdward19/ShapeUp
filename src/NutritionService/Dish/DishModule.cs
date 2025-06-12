@@ -4,6 +4,7 @@ using NutritionService.Dish.CreateDish;
 using NutritionService.Dish.DeleteDish;
 using NutritionService.Dish.EditDish;
 using NutritionService.Dish.GetDishDetails;
+using NutritionService.Dish.ListDishes;
 
 namespace NutritionService.Dish;
 
@@ -31,6 +32,7 @@ public static class DishModule
         services.AddScoped<IHandler<Dish, CreateDishCommand>, CreateDishCommandHandler>();
         services.AddScoped<IHandler<Dish, EditDishCommand>, EditDishCommandHandler>();
         services.AddScoped<IHandler<Dish, DeleteDishCommand>, DeleteDishCommandHandler>();
+        services.AddScoped<IHandler<IEnumerable<Dish>, ListDishesQuery>, ListDishesQueryHandler>();
         return services;
     }
     private static IServiceCollection AddRepositories(this IServiceCollection services)

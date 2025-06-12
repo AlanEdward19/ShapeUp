@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using NutritionService.Connections;
+using SharedKernel.Utils;
 
 namespace NutritionService.DailyMenu.Common;
 
@@ -62,13 +63,22 @@ public class DailyMenuMongoRepository(NutritionDbContext context) : IDailyMenuMo
     /// <returns></returns>
     public async Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(DayOfWeek? dayOfWeek, int page, int size)
     {
-        var filter = dayOfWeek == null
-            ? Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.DayOfWeek), BsonNull.Value)
-            : Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.DayOfWeek), dayOfWeek);
+        var filters = new List<FilterDefinition<DailyMenu>>
+        {
+            // Filtro por dia da semana (pode ser nulo)
+            dayOfWeek == null
+                ? Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.DayOfWeek), BsonNull.Value)
+                : Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.DayOfWeek), dayOfWeek),
+            // Filtro por usuário atual
+            Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.CreatedBy), ProfileContext.ProfileId)
+        };
+
+        // Combinação dos filtros
+        var combinedFilter = Builders<DailyMenu>.Filter.And(filters);
 
 
         return await context.DailyMenus
-            .Find(filter)
+            .Find(combinedFilter)
             .Skip((page - 1) * size)
             .Limit(size)
             .ToListAsync();
@@ -85,5 +95,16 @@ public class DailyMenuMongoRepository(NutritionDbContext context) : IDailyMenuMo
             .Skip((page - 1) * size)
             .Limit(size)
             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<DailyMenu>> GetManyByIdsAsync(string[] itemDailyMenuIds, CancellationToken cancellationToken)
+    {
+        if (itemDailyMenuIds == null || itemDailyMenuIds.Length == 0)
+        {
+            return await Task.FromResult<IEnumerable<DailyMenu>>(Array.Empty<DailyMenu>());
+        }
+
+        var filter = Builders<DailyMenu>.Filter.In(d => d.Id, itemDailyMenuIds);
+        return await context.DailyMenus.Find(filter).ToListAsync(cancellationToken);
     }
 }

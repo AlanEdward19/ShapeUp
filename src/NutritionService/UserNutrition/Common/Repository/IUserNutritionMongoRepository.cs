@@ -7,4 +7,5 @@ public interface IUserNutritionMongoRepository
     Task UpdateUserNutritionAsync(UserNutrition updatedUserNutrition);
     Task DeleteUserNutritionAsync(string? userNutritionId);
     Task<List<UserNutrition>> ListUserNutritionAsync(string? userId);
+    Task<IEnumerable<UserNutrition>> ListUserNutritionsAsync(int itemPage, int itemRows, CancellationToken cancellationToken);
 }

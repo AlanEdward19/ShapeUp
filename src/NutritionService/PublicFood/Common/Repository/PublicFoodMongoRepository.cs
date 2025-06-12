@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using NutritionService.Common;
 using NutritionService.Connections;
 using NutritionService.UserFood;
 
@@ -38,13 +39,41 @@ public class PublicFoodMongoRepository(NutritionDbContext context) : IPublicFood
         return context.PublicFoods.DeleteOneAsync(filter);
     }
 
-    public async Task<IEnumerable<Food>> ListUnrevisedPublicFoodsAsync()
+    public async Task<IEnumerable<Food>> ListUnrevisedPublicFoodsAsync(int page, int size)
     {
-        return await context.PublicFoods.Find(food => !food.Revised).ToListAsync();
+        return await context.PublicFoods.Find(food => food.IsRevised == false)
+            .Skip((page - 1) * size)
+            .Limit(size)
+            .ToListAsync();
     }
 
-    public async Task<IEnumerable<Food>> ListPublicFoodsAsync()
+    public async Task<IEnumerable<Food>> ListPublicFoodsAsync(int page, int size)
     {
-        return await context.PublicFoods.Find(_ => true).ToListAsync();
+        return await context.PublicFoods.Find(_ => true)
+            .Skip((page - 1) * size)
+            .Limit(size)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Food>> ListRevisedPublicFoodsAsync(int page, int size)
+    {
+        return await context.PublicFoods.Find(food => food.IsRevised == true)
+            .Skip((page - 1) * size)
+            .Limit(size)
+            .ToListAsync();
+    }
+
+    public async Task<bool> PublicFoodExistsAsync(string? id)
+    {
+        return await context.PublicFoods.Find(f => f.Id == id).AnyAsync();
+    }
+
+    public async Task<IEnumerable<Food>> GetManyByIdsAsync(string[] itemPublicFoodIds, CancellationToken cancellationToken)
+    {
+        if (itemPublicFoodIds == null || itemPublicFoodIds.Length == 0)
+            return Enumerable.Empty<Food>();
+
+        var filter = Builders<Food>.Filter.In(f => f.Id, itemPublicFoodIds);
+        return await context.PublicFoods.Find(filter).ToListAsync(cancellationToken);
     }
 }

@@ -2,18 +2,13 @@
 
 public class CreateUserNutritionCommand
 {
-    public string UserId { get; set; }
     public string NutritionManagerId { get; set; }
-    public List<DailyMenu.DailyMenu> DailyMenus { get; set; }
+    public string[] DailyMenuIds { get; set; }
 
-    public UserNutrition ToUserNutrition()
+    
+    public CreateUserNutritionCommand(string nutritionManagerId, string[] dailyMenuIds)
     {
-        var userNutrition = new UserNutrition(
-            userId: UserId,
-            nutritionManagerId: NutritionManagerId,
-            dailyMenus: DailyMenus
-        );
-        userNutrition.SetId();
-        return userNutrition;
+        NutritionManagerId = nutritionManagerId;
+        DailyMenuIds = dailyMenuIds;
     }
 }

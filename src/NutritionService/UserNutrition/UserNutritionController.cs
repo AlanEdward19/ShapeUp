@@ -6,8 +6,10 @@ using NutritionService.UserNutrition.CreateUserNutrition;
 using NutritionService.UserNutrition.DeleteUserNutrition;
 using NutritionService.UserNutrition.EditUserNutrition;
 using NutritionService.UserNutrition.GetUserNutritionDetails;
+using NutritionService.UserNutrition.ListUserNutritions;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
+using ProfileContext = SharedKernel.Utils.ProfileContext;
 
 namespace NutritionService.UserNutrition;
 
@@ -22,11 +24,10 @@ public class UserNutritionController : ControllerBase
         [FromServices] IHandler<UserNutrition, CreateUserNutritionCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+        ProfileContext.ProfileId = User.GetObjectId();
         //Validation
         
-        return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     
     [HttpDelete("{id}")]
@@ -34,7 +35,7 @@ public class UserNutritionController : ControllerBase
         [FromServices] IHandler<UserNutrition, DeleteUserNutritionCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validation
 
@@ -49,7 +50,7 @@ public class UserNutritionController : ControllerBase
         [FromServices] IHandler<UserNutrition, EditUserNutritionCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         command.SetId(id);
         
         //Validation
@@ -61,11 +62,22 @@ public class UserNutritionController : ControllerBase
         [FromServices] IHandler<UserNutrition, GetUserNutritionDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validation
         
         return Ok(await handler.HandleAsync(new GetUserNutritionDetailsQuery(id), cancellationToken));
     }
     
+    [HttpGet]
+    public async Task<IActionResult> ListUserNutritions([FromQuery] ListUserNutritionsQuery query,
+        [FromServices] IHandler<IEnumerable<UserNutrition>, ListUserNutritionsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        
+        //Validation
+        
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
 }

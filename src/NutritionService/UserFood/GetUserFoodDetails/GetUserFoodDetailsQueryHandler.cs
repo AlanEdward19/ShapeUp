@@ -1,4 +1,5 @@
-﻿using NutritionService.Common.Interfaces;
+﻿using NutritionService.Common;
+using NutritionService.Common.Interfaces;
 using NutritionService.UserFood.Common.Repository;
 using SharedKernel.Exceptions;
 

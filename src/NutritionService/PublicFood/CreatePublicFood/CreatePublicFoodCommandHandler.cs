@@ -1,4 +1,5 @@
-﻿using NutritionService.Common.Interfaces;
+﻿using NutritionService.Common;
+using NutritionService.Common.Interfaces;
 using NutritionService.Exceptions;
 using NutritionService.PublicFood.Common.Repository;
 using NutritionService.UserFood;
@@ -14,7 +15,7 @@ public class CreatePublicFoodCommandHandler(IPublicFoodMongoRepository repositor
         if (existingFood != null)
             throw new FoodAlreadyExistsException(command.BarCode);
 
-        var food = command.ToFood();
+        var food = command.ToFood(command.CreatedBy);
         
         await repository.CreatePublicFoodAsync(food);
 

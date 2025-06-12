@@ -1,4 +1,5 @@
-﻿using NutritionService.Common.Interfaces;
+﻿using NutritionService.Common;
+using NutritionService.Common.Interfaces;
 using NutritionService.PublicFood.Common.Repository;
 using NutritionService.UserFood;
 
@@ -8,6 +9,6 @@ public class ListUnrevisedPublicFoodsQueryHandler(IPublicFoodMongoRepository rep
 {
     public async Task<IEnumerable<Food>> HandleAsync(ListUnrevisedPublicFoodsQuery query, CancellationToken cancellationToken)
     {
-        return await repository.ListUnrevisedPublicFoodsAsync();
+        return await repository.ListUnrevisedPublicFoodsAsync(query.Page, query.Rows);
     }
 }

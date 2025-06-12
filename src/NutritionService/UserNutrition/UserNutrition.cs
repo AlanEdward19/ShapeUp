@@ -9,27 +9,39 @@ namespace NutritionService.UserNutrition;
 public class UserNutrition
 {
     /// <summary>
-    /// Identificador do usuário no banco mongo
+    /// Identificador do gerenciamento de nutrição
     /// </summary>
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; } = ""; // ID do usuário
+    public string Id { get; set; } = ""; 
 
     /// <summary>
-    /// Identificador do usuário no banco externo
+    /// Identificador do perfil que criou o gerenciamento de nutrição
     /// </summary>
-    public string UserId { get; set; } // ID do usuário
+    public string CreatedBy { get; set; } = "";
 
-    public string NutritionManagerId { get; set; } // ID do responsável pela nutrição
+    /// <summary>
+    /// ID do responsável pela nutrição
+    /// </summary>
+    public string NutritionManagerId { get; set; }
     
     /// <summary>
     /// Lista de cardápios diários do usuário
     /// </summary>
-    public List<DailyMenu.DailyMenu> DailyMenus { get; set; } = [];
+    public List<DailyMenu.DailyMenu> DailyMenus { get; set; } 
     
     public void SetId()
     {
         Id = ObjectId.GenerateNewId().ToString();
+    }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que criou o gerenciamento de nutrição
+    /// </summary>
+    /// <param name="createdBy"></param>
+    public void SetCreatedBy(string createdBy)
+    {
+        CreatedBy = createdBy;
     }
     
     public void UpdateInfo(string nutritionManagerId, List<DailyMenu.DailyMenu> dailyMenus)
@@ -38,9 +50,8 @@ public class UserNutrition
         NutritionManagerId = nutritionManagerId;
     }
 
-    public UserNutrition(string userId, string nutritionManagerId, List<DailyMenu.DailyMenu> dailyMenus)
+    public UserNutrition(string nutritionManagerId, List<DailyMenu.DailyMenu> dailyMenus)
     {
-        UserId = userId;
         NutritionManagerId = nutritionManagerId;
         DailyMenus = dailyMenus;
     }

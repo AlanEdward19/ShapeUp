@@ -10,16 +10,16 @@ public class ListDailyMenuQueryHandler(IDailyMenuMongoRepository repository) : I
         switch (item.DayOfWeek)
         {
             case null:
-                await repository.ListDailyMenusAsync(item.Page, item.Size);
+                return await repository.ListDailyMenusAsync(item.Page, item.Size);
                 break;
             case "":
-                await repository.ListDailyMenusAsync(null, item.Page, item.Size);
+                return await repository.ListDailyMenusAsync(null, item.Page, item.Size);
                 break;
         }
 
         if (Enum.TryParse<DayOfWeek>(item.DayOfWeek, true, out var parsedDay))
         {
-            await repository.ListDailyMenusAsync(parsedDay, item.Page, item.Size);
+            return await repository.ListDailyMenusAsync(parsedDay, item.Page, item.Size);
         }
         throw new ArgumentException($"Invalid day of the week: {item.DayOfWeek}");
     }

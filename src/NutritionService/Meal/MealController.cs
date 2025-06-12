@@ -6,8 +6,10 @@ using NutritionService.Meal.CreateMeal;
 using NutritionService.Meal.DeleteMeal;
 using NutritionService.Meal.EditMeal;
 using NutritionService.Meal.GetMealDetails;
+using NutritionService.Meal.ListMeals;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
+using ProfileContext = SharedKernel.Utils.ProfileContext;
 
 namespace NutritionService.Meal;
 
@@ -33,13 +35,11 @@ public class MealController : ControllerBase
         [FromServices] IHandler<Meal, CreateMealCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
-        var result = await handler.HandleAsync(command, cancellationToken);
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validations
         
-        return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     
     /// <summary>
@@ -54,7 +54,7 @@ public class MealController : ControllerBase
         [FromServices] IHandler<Meal, DeleteMealCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         var command = new DeleteMealCommand(mealId);
         
@@ -79,7 +79,7 @@ public class MealController : ControllerBase
         [FromServices] IHandler<Meal, EditMealCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         command.SetId(mealId);
         
@@ -100,7 +100,7 @@ public class MealController : ControllerBase
         [FromServices] IHandler<Meal, GetMealDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         var query = new GetMealDetailsQuery(mealId);
         
@@ -110,5 +110,24 @@ public class MealController : ControllerBase
         
         
         return Ok(result);
+    }
+    
+    /// <summary>
+    /// Rota responsável por listar as refeições do usuário.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> ListMeals([FromQuery] ListMealsQuery query,
+        [FromServices] IHandler<IEnumerable<Meal>, ListMealsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        
+        //Validations
+        
+        return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 }

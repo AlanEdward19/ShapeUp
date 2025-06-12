@@ -6,8 +6,10 @@ using NutritionService.Dish.CreateDish;
 using NutritionService.Dish.DeleteDish;
 using NutritionService.Dish.EditDish;
 using NutritionService.Dish.GetDishDetails;
+using NutritionService.Dish.ListDishes;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
+using ProfileContext = SharedKernel.Utils.ProfileContext;
 
 namespace NutritionService.Dish;
 
@@ -33,11 +35,31 @@ public class DishController : ControllerBase
         [FromServices] IHandler<Dish, GetDishDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validation
 
         return Ok(await handler.HandleAsync(new GetDishDetailsQuery(id), cancellationToken));
+    }
+    
+    
+    /// <summary>
+    /// Rota para listar pratos
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> ListDishes([FromQuery] ListDishesQuery query,
+        [FromServices] IHandler<IEnumerable<Dish>, ListDishesQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        
+        //Validation
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
     /// <summary>
@@ -52,11 +74,10 @@ public class DishController : ControllerBase
         [FromServices] IHandler<Dish, CreateDishCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
-        
+        ProfileContext.ProfileId = User.GetObjectId();
         //Validation
         
-        return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
@@ -72,7 +93,7 @@ public class DishController : ControllerBase
         [FromServices] IHandler<Dish, EditDishCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         command.SetId(id);
 
@@ -95,7 +116,7 @@ public class DishController : ControllerBase
         [FromServices] IHandler<Dish, DeleteDishCommand> handler,
         CancellationToken cancellationToken)
     {
-        ProfileContext.ProfileId = Guid.Parse(User.GetObjectId());
+        ProfileContext.ProfileId = User.GetObjectId();
         
         //Validators
 

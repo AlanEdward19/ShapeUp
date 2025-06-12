@@ -10,6 +10,8 @@ public class ListUnrevisedPublicFoodsQuery
         Page = page ?? 1;
         Rows = rows ?? 10;
     }
-
-    public ListUnrevisedPublicFoodsQuery() { }
+    public ListUnrevisedPublicFoodsQuery()
+    {
+        
+    }
 }

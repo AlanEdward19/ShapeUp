@@ -1,22 +1,23 @@
-﻿using NutritionService.Meal.Common.Enums;
+﻿using NutritionService.Common;
+using NutritionService.Meal.Common.Enums;
 using NutritionService.UserFood;
 
 namespace NutritionService.Meal.EditMeal;
 
 public class EditMealCommand
 {
-    public string Id { get; set; } = "";
+    public string? Id { get; set; }
     public string Name { get; set; }
     public MealType Type { get; set; }
-    public List<Dish.Dish> Dishes { get; set; }
-    public List<Food> Foods { get; set; }
+    public string[] DishIds { get; set; }
+    public string[] FoodIds { get; set; }
     
-    public EditMealCommand(string id, string name, MealType type, List<Dish.Dish> dishes, List<Food> foods)
+    public EditMealCommand(string name, MealType type, string[] dishIds, string[] foodIds)
     {
         Name = name;
         Type = type;
-        Dishes = dishes;
-        Foods = foods;
+        DishIds = dishIds;
+        FoodIds = foodIds;
     }
 
     public void SetId(string id) => Id = id;
