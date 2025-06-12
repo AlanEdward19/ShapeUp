@@ -66,8 +66,6 @@ public class UserRepository(NotificationDbContext dbContext, ILogger<UserReposit
     /// <exception cref="NotFoundException"></exception>
     public async Task UserSignOutAsync(string userId, string deviceToken, CancellationToken cancellationToken)
     {
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-
         try
         {
             User? user = await dbContext.Users
@@ -85,12 +83,9 @@ public class UserRepository(NotificationDbContext dbContext, ILogger<UserReposit
             user.RemoveDevice(deviceToken);
 
             await dbContext.SaveChangesAsync(cancellationToken);
-
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
         }
         catch (Exception e)
         {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
             logger.LogError(e, "Error while logging in user {UserId}", userId);
             throw;
         }
