@@ -7,7 +7,9 @@ public class ListDailyMenuQueryHandler(IDailyMenuMongoRepository repository) : I
 {
     public async Task<IEnumerable<DailyMenu>> HandleAsync(ListDailyMenuQuery item, CancellationToken cancellationToken)
     {
-        switch (item.DayOfWeek)
+        var day = item.DayOfWeek?.Trim();
+        
+        switch (day)
         {
             case null:
                 return await repository.ListDailyMenusAsync(item.Page, item.Size);

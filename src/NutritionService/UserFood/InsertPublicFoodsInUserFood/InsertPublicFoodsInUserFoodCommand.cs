@@ -2,5 +2,5 @@
 
 public class InsertPublicFoodsInUserFoodCommand
 {
-    public string[] PublicFoodIds;
+    public string[] PublicFoodIds { get; set; }
 }

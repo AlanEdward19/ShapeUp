@@ -9,7 +9,7 @@ namespace NutritionService.UserFood.InsertPublicFoodsInUserFood;
 public class InsertPublicFoodsInUserFoodCommandHandler(IUserFoodMongoRepository userFoodMongoRepository, IPublicFoodMongoRepository publicFoodMongoRepository)
     : IHandler<IEnumerable<Food>, InsertPublicFoodsInUserFoodCommand>
 {
-    public async Task<IEnumerable<Food>?> HandleAsync(InsertPublicFoodsInUserFoodCommand item, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Food>> HandleAsync(InsertPublicFoodsInUserFoodCommand item, CancellationToken cancellationToken)
     {
         var publicFoods = await publicFoodMongoRepository.GetManyByIdsAsync(item.PublicFoodIds, cancellationToken);
         var existingUserFoods = await userFoodMongoRepository.GetAllByUserIdAsync(ProfileContext.ProfileId, cancellationToken);

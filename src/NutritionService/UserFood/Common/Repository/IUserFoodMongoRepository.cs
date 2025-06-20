@@ -8,7 +8,7 @@ public interface IUserFoodMongoRepository
     Task<Food?> GetUserFoodByBarCodeAsync(string? barCode);
     Task InsertUserFoodAsync(Food food);
     Task UpdateUserFoodAsync(Food updatedFood);
-    Task DeleteUserFoodAsync(string? barCode);
+    Task DeleteUserFoodAsync(string? id);
     Task<IEnumerable<Food>> ListFoodsAsync(int page, int size);
     Task<bool> UserFoodExistsAsync(string? id);
     Task<IEnumerable<Food>> GetManyByIdsAsync(string[] foodIds, CancellationToken cancellationToken);
