@@ -1,0 +1,777 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TrainingService</name>
+    </assembly>
+    <members>
+        <member name="T:TrainingService.Common.Interfaces.IHandler`2">
+            <summary>
+                Interface para padronizar handlers.
+            </summary>
+            <typeparam name="TResponse"></typeparam>
+            <typeparam name="TItem"></typeparam>
+        </member>
+        <member name="M:TrainingService.Common.Interfaces.IHandler`2.HandleAsync(`1,System.Threading.CancellationToken)">
+            <summary>
+                Método para lidar com operações.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Configuration.Authentication">
+            <summary>
+                Classe responsavel por configurar a autenticacao
+            </summary>
+        </member>
+        <member name="M:TrainingService.Configuration.Authentication.ConfigureAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Metodo responsavel por configurar a autenticacao
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Configuration.EndpointsConfiguration">
+            <summary>
+                Configuração dos Endpoints
+            </summary>
+        </member>
+        <member name="M:TrainingService.Configuration.EndpointsConfiguration.MapEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Mapeia os endpoint.
+            </summary>
+            <param name="app">The app.</param>
+            <param name="configuration">The configuration.</param>
+            <returns>An IEndpointRouteBuilder.</returns>
+        </member>
+        <member name="M:TrainingService.Configuration.EndpointsConfiguration.ConfigureEndpoints(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Configura os endpoints.
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter">
+            <summary>
+                Filtro para substituir a versão pela versão exata no path
+            </summary>
+        </member>
+        <member name="M:TrainingService.Configuration.Filters.ReplaceVersionWithExactValueInPathFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:TrainingService.Configuration.Filters.VersionHeaderFilter">
+            <summary>
+                Filtro para remover o parâmetro de versão da documentação
+            </summary>
+        </member>
+        <member name="M:TrainingService.Configuration.Filters.VersionHeaderFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Método para aplicar o filtro
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:TrainingService.Configuration.MiddlewareConfiguration">
+            <summary>
+                Classe para configuração de middlewares
+            </summary>
+        </member>
+        <member name="M:TrainingService.Configuration.MiddlewareConfiguration.ConfigureMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar os middlewares
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Configuration.ServiceDependencies">
+            <summary>
+                Classe para resolver as dependências de serviços
+            </summary>
+        </member>
+        <member name="M:TrainingService.Configuration.ServiceDependencies.SolveServiceDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Método para resolver as dependências de serviços
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Configuration.SwaggerConfiguration">
+            <summary>
+                Classe para configuração do Swagger
+            </summary>
+        </member>
+        <member name="M:TrainingService.Configuration.SwaggerConfiguration.ConfigureSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                Método para configurar o Swagger
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Connections.ConnectionsModule">
+            <summary>
+                Modulo de conexões externas
+            </summary>
+        </member>
+        <member name="M:TrainingService.Connections.ConnectionsModule.ConfigureConnections(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Método para configurar as conexões
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.Id">
+            <summary>
+            Identificador do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.Name">
+            <summary>
+            Nome do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.MuscleGroups">
+            <summary>
+            Grupos musculares ao qual o exercício pertence.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.RequiresWeight">
+            <summary>
+            Se o exercício requer peso.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.ImageUrl">
+            <summary>
+            Imagem do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.VideoUrl">
+            <summary>
+            Vídeo do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.CreatedAt">
+            <summary>
+            Data de criação do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Common.ExerciseDto.UpdatedAt">
+            <summary>
+            Data de atualização do exercício.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Exercises.CreateExercise.CreateExerciseCommand">
+            <summary>
+            Comando para criar um exercício.
+            </summary>
+            <param name="name"></param>
+            <param name="muscleGroups"></param>
+            <param name="requiresWeight"></param>
+        </member>
+        <member name="P:TrainingService.Exercises.CreateExercise.CreateExerciseCommand.Name">
+            <summary>
+            Nome do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.CreateExercise.CreateExerciseCommand.MuscleGroups">
+            <summary>
+            Grupos musculares ao qual o exercício pertence.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.CreateExercise.CreateExerciseCommand.RequiresWeight">
+            <summary>
+            Se o exercício requer peso.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Exercises.CreateExercise.CreateExerciseCommandHandler">
+            <summary>
+                Handler para criar um exercício
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.CreateExercise.CreateExerciseCommandHandler.#ctor(TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+                Handler para criar um exercício
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="T:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseByIdCommand">
+            <summary>
+            Comando para deletar um exercício.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseByIdCommand.#ctor">
+            <summary>
+            Comando para deletar um exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseByIdCommand.ExerciseId">
+            <summary>
+            Id do exercício.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseByIdCommand.SetExerciseId(System.Guid)">
+            <summary>
+            método para setar o id do exercício.
+            </summary>
+            <param name="exerciseId"></param>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.Id">
+            <summary>
+            Identificador do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.Name">
+            <summary>
+            Nome do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.MuscleGroups">
+            <summary>
+            Grupos musculares ao qual o exercício pertence.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.RequiresWeight">
+            <summary>
+            Se o exercício requer peso.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.ImageUrl">
+            <summary>
+            Imagem do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.VideoUrl">
+            <summary>
+            Vídeo do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.CreatedAt">
+            <summary>
+            Data de criação do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.Exercise.UpdatedAt">
+            <summary>
+            Data de atualização do exercício.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Exercises.ExerciseController">
+            <summary>
+            Controller responsável por gerenciar os exercícios
+            </summary>
+        </member>
+        <member name="T:TrainingService.Exercises.ExerciseModule">
+            <summary>
+            Modulo para resolver as dependências relacionadas a exercícios
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.ExerciseModule.ConfigureExerciseRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências relacionadas a exercícios
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Exercises.GetExerciseById.GetExerciseByIdQuery">
+            <summary>
+            Query para obter um exercício por Id.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.GetExerciseById.GetExerciseByIdQuery.ExerciseId">
+            <summary>
+            Id do exercício.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.GetExerciseById.GetExerciseByIdQuery.SetExerciseId(System.Guid)">
+            <summary>
+            método para setar o id do exercício.
+            </summary>
+            <param name="exerciseId"></param>
+        </member>
+        <member name="T:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery">
+            <summary>
+            Query para obter um exercício por grupo muscular.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery.MuscleGroup">
+            <summary>
+            Grupo muscular.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery.SetMuscleGroup(TrainingService.Exercises.Common.Enums.EMuscleGroup)">
+            <summary>
+            método para setar o grupo muscular do exercício.
+            </summary>
+            <param name="muscleGroup"></param>
+        </member>
+        <member name="T:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand">
+            <summary>
+            Comando para atualizar um exercício.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="muscleGroups"></param>
+            <param name="requiresWeight"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand.#ctor(System.Guid,System.String,System.Collections.Generic.IEnumerable{TrainingService.Exercises.Common.Enums.EMuscleGroup},System.Nullable{System.Boolean},System.String,System.String)">
+            <summary>
+            Comando para atualizar um exercício.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="muscleGroups"></param>
+            <param name="requiresWeight"></param>
+        </member>
+        <member name="P:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand.Id">
+            <summary>
+            Id do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand.Name">
+            <summary>
+            Nome do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand.MuscleGroups">
+            <summary>
+            Grupos musculares ao qual o exercício pertence.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand.RequiresWeight">
+            <summary>
+            Se o exercício requer peso.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand.ImageUrl">
+            <summary>
+            Imaegm do exercício.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand.VideoUrl">
+            <summary>
+            Video do exercício.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommandHandler">
+            <summary>
+                Handler para atualizar um exercício
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommandHandler.#ctor(TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+                Handler para atualizar um exercício
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="T:TrainingService.Migrations.InitialMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.InitialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.InitialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="F:TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus.InProgress">
+            <summary>
+                Sessão de treino em andamento
+            </summary>
+        </member>
+        <member name="F:TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus.Finished">
+            <summary>
+                Sessão de treino finalizada
+            </summary>
+        </member>
+        <member name="F:TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus.Canceled">
+            <summary>
+                Sessão de treino cancelada
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject.ExerciseId">
+            <summary>
+            Id do exercício
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject.Weight">
+            <summary>
+            Peso do exercício
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject.Repetitions">
+            <summary>
+            Repetições do exercício
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand">
+            <summary>
+            Comando para criar uma sessão de treino.
+            </summary>
+            <param name="userId"></param>
+            <param name="workoutId"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.#ctor(System.String,System.Guid,System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
+            <summary>
+            Comando para criar uma sessão de treino.
+            </summary>
+            <param name="userId"></param>
+            <param name="workoutId"></param>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.UserId">
+            <summary>
+            Id do usuário que está realizando o treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.WorkoutId">
+            <summary>
+            Id do treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.Exercises">
+            <summary>
+            Lista de exercícios do treino
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand">
+            <summary>
+            Comando para deletar uma sessão de treino por id.
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand.SessionId">
+            <summary>
+            Id da sessão de treino.
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand">
+            <summary>
+            Comando para atualizar uma sessão de treino por id.
+            </summary>
+            <param name="id"></param>
+            <param name="status"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.#ctor(System.String,System.Nullable{TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus},System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
+            <summary>
+            Comando para atualizar uma sessão de treino por id.
+            </summary>
+            <param name="id"></param>
+            <param name="status"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.SessionId">
+            <summary>
+            Id da sessão de treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.Status">
+            <summary>
+            Status da sessão de treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.Exercises">
+            <summary>
+            Exercícios da sessão de treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSession.SessionId">
+            <summary>
+            Id da sessão de treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSession.UserId">
+            <summary>
+            Id do usuário que está realizando o treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSession.WorkoutId">
+            <summary>
+            Id do treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSession.StartedAt">
+            <summary>
+            Data de início da sessão de treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSession.EndedAt">
+            <summary>
+            Data de término da sessão de treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSession.Status">
+            <summary>
+            Status da sessão de treino
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSession.Exercises">
+            <summary>
+            Exercícios da sessão de treino
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.WorkoutSessionController">
+            <summary>
+            Controller responsável por gerenciar as sessões de treino
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.WorkoutSessionModule">
+            <summary>
+            Modulo para resolver as dependências relacionadas a sessões de treino
+            </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionModule.ConfigureWorkoutSessionRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências relacionadas a sessões de treino
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="F:TrainingService.Workouts.Common.Enums.EWorkoutVisibility.Public">
+            <summary>
+                Visibilidade pública
+            </summary>
+        </member>
+        <member name="F:TrainingService.Workouts.Common.Enums.EWorkoutVisibility.FriendsOnly">
+            <summary>
+                Visibilidade somente para amigos
+            </summary>
+        </member>
+        <member name="F:TrainingService.Workouts.Common.Enums.EWorkoutVisibility.Private">
+            <summary>
+                Visibilidade privada
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Common.WorkoutDto.Id">
+            <summary>
+            Id do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Common.WorkoutDto.CreatorId">
+            <summary>
+            Id do usuário que criou o treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Common.WorkoutDto.UserId">
+            <summary>
+            Id do usuário para o qual o treino foi criado.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Common.WorkoutDto.Name">
+            <summary>
+            Nome do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Common.WorkoutDto.Visibility">
+            <summary>
+            Visibilidade do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Common.WorkoutDto.Exercises">
+            <summary>
+            Exercícios do treino.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand">
+            <summary>
+            Comando para criar um treino.
+            </summary>
+            <param name="userId"></param>
+            <param name="name"></param>
+            <param name="visibility"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.#ctor(System.String,System.String,System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            Comando para criar um treino.
+            </summary>
+            <param name="userId"></param>
+            <param name="name"></param>
+            <param name="visibility"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.CreatorId">
+            <summary>
+            Id do usuário criador do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.UserId">
+            <summary>
+            Id do usuário para o qual o treino foi criado. Caso não seja informado, será o usuário autenticado.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.Name">
+            <summary>
+            Nome do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.Visibility">
+            <summary>
+            Visibilidade do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.Exercises">
+            <summary>
+            Ids dos exercícios do treino.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand">
+            <summary>
+            Comando para deletar um treino por id.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.#ctor">
+            <summary>
+            Comando para deletar um treino por id.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="P:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.WorkoutId">
+            <summary>
+            Id do treino.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.SetWorkoutId(System.Guid)">
+            <summary>
+            método para setar o id do treino.
+            </summary>
+            <param name="workoutId"></param>
+        </member>
+        <member name="T:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQuery">
+            <summary>
+            Query para obter um treino por id.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQuery.WorkoutId">
+            <summary>
+            Id do treino.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQuery.SetWorkoutId(System.Guid)">
+            <summary>
+            método para setar o id do treino.
+            </summary>
+            <param name="workoutId"></param>
+        </member>
+        <member name="T:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQuery">
+            <summary>
+            Query para obter treinos por id do usuário.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQuery.UserId">
+            <summary>
+            Id do usuário.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQuery.SetUserId(System.String)">
+            <summary>
+            método para id do usuário.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="T:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand">
+            <summary>
+            Comando para atualizar um treino por id.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="visibility"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.#ctor(System.Guid,System.Guid,System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            Comando para atualizar um treino por id.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="visibility"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.Id">
+            <summary>
+            Id do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.UserId">
+            <summary>
+            Id usuario do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.Name">
+            <summary>
+            Nome do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.Visibility">
+            <summary>
+            Visibilidade do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.Exercises">
+            <summary>
+            Ids dos exercícios do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.Id">
+            <summary>
+            Id do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.CreatorId">
+            <summary>
+            Id do usuário que criou o treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.UserId">
+            <summary>
+            Id do usuário para o qual o treino foi criado.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.Name">
+            <summary>
+            Nome do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.Visibility">
+            <summary>
+            Visibilidade do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.Exercises">
+            <summary>
+            Exercícios do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.CreatedAt">
+            <summary>
+            Data de criação do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.UpdatedAt">
+            <summary>
+            Data de atualização do treino.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Workouts.WorkoutModule">
+            <summary>
+            Modulo para resolver as dependências relacionadas a treinos
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.WorkoutModule.ConfigureWorkoutRelatedDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para resolver as dependências relacionadas a treinos
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
