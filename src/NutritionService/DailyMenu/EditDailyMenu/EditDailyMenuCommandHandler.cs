@@ -1,22 +1,24 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.DailyMenu.Common;
+using NutritionService.Meal.Common;
 using SharedKernel.Exceptions;
 
 namespace NutritionService.DailyMenu.EditDailyMenu;
 
-public class EditDailyMenuCommandHandler(IDailyMenuMongoRepository repository):
+public class EditDailyMenuCommandHandler(IDailyMenuMongoRepository dailyMenuRepository, IMealMongoRepository mealRepository):
     IHandler<DailyMenu, EditDailyMenuCommand>
 {
     public async Task<DailyMenu> HandleAsync(EditDailyMenuCommand item, CancellationToken cancellationToken)
     {
-        var existingDailyMenu = await repository.GetDailyMenuDetailsAsync(item.Id);
+        var existingDailyMenu = await dailyMenuRepository.GetDailyMenuDetailsAsync(item.Id);
         
         if (existingDailyMenu == null)
             throw new NotFoundException(item.Id);
         
-        existingDailyMenu.UpdateInfo(item.DayOfWeek, item.Meals);
+        var builtMeal = await mealRepository.GetManyMealsByIdsAsync(item.MealIds, cancellationToken);
+        existingDailyMenu.UpdateInfo(item.DayOfWeek, builtMeal.ToList());
         
-        await repository.UpdateDailyMenuAsync(existingDailyMenu);
+        await dailyMenuRepository.UpdateDailyMenuAsync(existingDailyMenu);
 
         return existingDailyMenu;
     }

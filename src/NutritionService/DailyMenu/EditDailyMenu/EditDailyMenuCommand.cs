@@ -4,12 +4,12 @@ public class EditDailyMenuCommand
 {
     public string? Id { get; set; }
     public DayOfWeek? DayOfWeek { get; set; }
-    public List<Meal.Meal> Meals { get; set; }
+    public string[] MealIds { get; set; }
     
-    public EditDailyMenuCommand(DayOfWeek? dayOfWeek, List<Meal.Meal> meals)
+    public EditDailyMenuCommand(DayOfWeek? dayOfWeek, string[] mealIds)
     {
         DayOfWeek = dayOfWeek;
-        Meals = meals;
+        MealIds = mealIds;
     }
     public EditDailyMenuCommand() { }
     public void SetId(string id) => Id = id;

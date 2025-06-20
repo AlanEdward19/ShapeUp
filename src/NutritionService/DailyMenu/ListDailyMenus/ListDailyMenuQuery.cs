@@ -1,7 +1,11 @@
-﻿namespace NutritionService.DailyMenu.ListDailyMenus;
+﻿using Microsoft.AspNetCore.Mvc;
+using NutritionService.Configuration.Binders;
+
+namespace NutritionService.DailyMenu.ListDailyMenus;
 
 public class ListDailyMenuQuery
 {
+    [ModelBinder(BinderType = typeof(EmptyStringModelBinder))]
     public string? DayOfWeek { get; set; }
     public int Page { get; set; }
     public int Size { get; set; }

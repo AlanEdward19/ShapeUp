@@ -6,6 +6,7 @@ using NutritionService.UserFood.ApproveUserFood;
 using NutritionService.UserFood.CreateUserFood;
 using NutritionService.UserFood.DeleteUserFood;
 using NutritionService.UserFood.EditUserFood;
+using NutritionService.UserFood.GetUserFoodByBarCode;
 using NutritionService.UserFood.GetUserFoodDetails;
 using NutritionService.UserFood.InsertPublicFoodsInUserFood;
 using NutritionService.UserFood.ListFoods;
@@ -98,9 +99,9 @@ public class UserFoodController : ControllerBase
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("insertPublicFoods")]
     public async Task<IActionResult> InsertPublicFood(
-        [FromServices] IHandler<List<Food>, InsertPublicFoodsInUserFoodCommand> handler,
+        [FromServices] IHandler<IEnumerable<Food>, InsertPublicFoodsInUserFoodCommand> handler,
         [FromBody] InsertPublicFoodsInUserFoodCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -115,7 +116,7 @@ public class UserFoodController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPut("approveFood/{id}")]
+    [HttpPut("approve/{id}")]
     public async Task<IActionResult> ApproveUserFood(string id,
         [FromServices] IHandler<Food, ApproveUserFoodCommand> handler,
         CancellationToken cancellationToken)
@@ -142,5 +143,22 @@ public class UserFoodController : ControllerBase
         await handler.HandleAsync(command, cancellationToken);
 
         return NoContent();
+    }
+    
+    /// <summary>
+    /// Rota para buscar uma comida privada pelo código de barras
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("byBarCode")]
+    public async Task<IActionResult> GetUserFoodByBarCode([FromQuery] GetUserFoodByBarCodeQuery query,
+        [FromServices] IHandler<Food, GetUserFoodByBarCodeQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 }
