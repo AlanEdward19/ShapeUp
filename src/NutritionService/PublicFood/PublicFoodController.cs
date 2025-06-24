@@ -113,7 +113,6 @@ public class PublicFoodController : ControllerBase
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
-        command.SetCreatedBy(ProfileContext.ProfileId);
         
 
         return Created(HttpContext.Request.Path,
