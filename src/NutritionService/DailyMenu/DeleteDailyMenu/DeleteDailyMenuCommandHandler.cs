@@ -4,10 +4,21 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.DailyMenu.DeleteDailyMenu;
 
+/// <summary>
+/// Handles the deletion of a daily menu.
+/// </summary>
+/// <param name="repository"></param>
 public class DeleteDailyMenuCommandHandler(IDailyMenuMongoRepository repository) : 
-    IHandler<DailyMenu, DeleteDailyMenuCommand>
+    IHandler<bool, DeleteDailyMenuCommand>
 {
-    public async Task<DailyMenu> HandleAsync(DeleteDailyMenuCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the deletion of a daily menu by its ID.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(DeleteDailyMenuCommand item, CancellationToken cancellationToken)
     {
         var existingDailyMenu = await repository.GetDailyMenuDetailsAsync(item.Id);
         
@@ -17,6 +28,6 @@ public class DeleteDailyMenuCommandHandler(IDailyMenuMongoRepository repository)
         
         await repository.DeleteDailyMenuAsync(item.Id);
 
-        return existingDailyMenu;
+        return true;
     }
 }

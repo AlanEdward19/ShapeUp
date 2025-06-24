@@ -6,10 +6,6 @@ namespace NutritionService.Common;
 /// <summary>
 /// Classe que representa um alimento
 /// </summary>
-/// <param name="name"></param>
-/// <param name="brand"></param>
-/// <param name="barCode"></param>
-/// <param name="nutritionalInfo"></param>
 public class Food
 {
     /// <summary>
@@ -87,14 +83,6 @@ public class Food
         Id = ObjectId.GenerateNewId().ToString();
     }
     
-    /// <summary>
-    /// Método para definir o identificador do alimento
-    /// </summary>
-    /// <param name="id"></param>
-    public void SetId(string id)
-    {
-        Id = id;
-    }
     /// <summary>
     /// Método para definir o identificador do perfil que criou o alimento
     /// </summary>

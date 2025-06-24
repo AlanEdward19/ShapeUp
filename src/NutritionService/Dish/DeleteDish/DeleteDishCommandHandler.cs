@@ -4,9 +4,20 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.Dish.DeleteDish;
 
-public class DeleteDishCommandHandler(IDishMongoRepository repository) : IHandler<Dish, DeleteDishCommand>
+/// <summary>
+/// Handles the deletion of a dish.
+/// </summary>
+/// <param name="repository"></param>
+public class DeleteDishCommandHandler(IDishMongoRepository repository) : IHandler<bool, DeleteDishCommand>
 {
-    public async Task<Dish> HandleAsync(DeleteDishCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the deletion of a dish by its ID.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(DeleteDishCommand item, CancellationToken cancellationToken)
     {
         var existingDish = await repository.GetDishByIdAsync(item.Id);
         
@@ -15,6 +26,6 @@ public class DeleteDishCommandHandler(IDishMongoRepository repository) : IHandle
 
         await repository.DeleteDishAsync(item.Id);
         
-        return existingDish;
+        return true;
     }
 }

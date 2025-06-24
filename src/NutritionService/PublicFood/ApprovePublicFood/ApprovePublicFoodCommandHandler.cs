@@ -11,9 +11,16 @@ namespace NutritionService.PublicFood.ApprovePublicFood;
 /// </summary>
 /// <param name="repository"></param>
 public class ApprovePublicFoodCommandHandler(IPublicFoodMongoRepository repository)
-: IHandler<Food, ApprovePublicFoodCommand>
+: IHandler<bool, ApprovePublicFoodCommand>
 {
-    public async Task<Food> HandleAsync(ApprovePublicFoodCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the approval of a public food item.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(ApprovePublicFoodCommand item, CancellationToken cancellationToken)
     {
         var existingFood = await repository.GetPublicFoodByIdAsync(item.Id);
         
@@ -22,6 +29,6 @@ public class ApprovePublicFoodCommandHandler(IPublicFoodMongoRepository reposito
         
         existingFood.MarkAsRevised();
         await repository.UpdatePublicFoodAsync(existingFood);
-        return existingFood;
+        return true;
     }
 }

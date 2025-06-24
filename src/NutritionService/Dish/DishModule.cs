@@ -28,11 +28,11 @@ public static class DishModule
     }
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<Dish, GetDishDetailsQuery>, GetDishDetailsQueryHandler>();
-        services.AddScoped<IHandler<Dish, CreateDishCommand>, CreateDishCommandHandler>();
-        services.AddScoped<IHandler<Dish, EditDishCommand>, EditDishCommandHandler>();
-        services.AddScoped<IHandler<Dish, DeleteDishCommand>, DeleteDishCommandHandler>();
-        services.AddScoped<IHandler<IEnumerable<Dish>, ListDishesQuery>, ListDishesQueryHandler>();
+        services.AddScoped<IHandler<DishDto, GetDishDetailsQuery>, GetDishDetailsQueryHandler>();
+        services.AddScoped<IHandler<DishDto, CreateDishCommand>, CreateDishCommandHandler>();
+        services.AddScoped<IHandler<bool, EditDishCommand>, EditDishCommandHandler>();
+        services.AddScoped<IHandler<bool, DeleteDishCommand>, DeleteDishCommandHandler>();
+        services.AddScoped<IHandler<IEnumerable<DishDto>, ListDishesQuery>, ListDishesQueryHandler>();
         return services;
     }
     private static IServiceCollection AddRepositories(this IServiceCollection services)

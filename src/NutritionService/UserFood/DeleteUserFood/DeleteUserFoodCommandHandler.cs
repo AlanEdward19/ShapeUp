@@ -6,9 +6,9 @@ using SharedKernel.Exceptions;
 namespace NutritionService.UserFood.DeleteUserFood;
 
 public class DeleteUserFoodCommandHandler(IUserFoodMongoRepository repository)
-: IHandler<Food, DeleteUserFoodCommand>
+: IHandler<bool, DeleteUserFoodCommand>
 {
-    public async Task<Food> HandleAsync(DeleteUserFoodCommand item, CancellationToken cancellationToken)
+    public async Task<bool> HandleAsync(DeleteUserFoodCommand item, CancellationToken cancellationToken)
     {
         var existingFood = await repository.GetUserFoodByIdAsync(item.Id);
         
@@ -16,6 +16,6 @@ public class DeleteUserFoodCommandHandler(IUserFoodMongoRepository repository)
             throw new NotFoundException($"Food with id '{item.Id}' not found");
         
         await repository.DeleteUserFoodAsync(item.Id);
-        return existingFood;
+        return true;
     }
 }

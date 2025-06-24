@@ -8,8 +8,16 @@ using NutritionService.UserNutrition.ListUserNutritions;
 
 namespace NutritionService.UserNutrition;
 
+/// <summary>
+/// Módulo para resolver as dependências relacionadas à nutrição do usuário.
+/// </summary>
 public static class UserNutritionModule
 {
+    /// <summary>
+    /// Método de extensão para configurar as dependências do módulo de nutrição do usuário.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection ConfigureUserNutritionRelatedDependencies(this IServiceCollection services)
     {
         services.
@@ -26,11 +34,11 @@ public static class UserNutritionModule
     
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<UserNutrition, CreateUserNutritionCommand>, CreateUserNutritionCommandHandler>();
-        services.AddScoped<IHandler<UserNutrition, EditUserNutritionCommand>, EditUserNutritionCommandHandler>();
-        services.AddScoped<IHandler<UserNutrition, DeleteUserNutritionCommand>, DeleteUserNutritionCommandHandler>();
-        services.AddScoped<IHandler<UserNutrition, GetUserNutritionDetailsQuery>, GetUserNutritionDetailsQueryHandler>();
-        services.AddScoped<IHandler<IEnumerable<UserNutrition>, ListUserNutritionsQuery>, ListUserNutritionsQueryHandler>();
+        services.AddScoped<IHandler<UserNutritionDto, CreateUserNutritionCommand>, CreateUserNutritionCommandHandler>();
+        services.AddScoped<IHandler<bool, EditUserNutritionCommand>, EditUserNutritionCommandHandler>();
+        services.AddScoped<IHandler<bool, DeleteUserNutritionCommand>, DeleteUserNutritionCommandHandler>();
+        services.AddScoped<IHandler<UserNutritionDto, GetUserNutritionDetailsQuery>, GetUserNutritionDetailsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<UserNutritionDto>, ListUserNutritionsQuery>, ListUserNutritionQueryHandler>();
         return services;
     }
 }

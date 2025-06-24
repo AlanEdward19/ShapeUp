@@ -5,7 +5,7 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.UserFood.EditUserFood;
 
-public class EditUserFoodCommandHandler(IUserFoodMongoRepository repository) : IHandler<Food, EditUserFoodCommand>
+public class EditUserFoodCommandHandler(IUserFoodMongoRepository repository) : IHandler<bool, EditUserFoodCommand>
 {
     /// <summary>
     /// 
@@ -15,7 +15,7 @@ public class EditUserFoodCommandHandler(IUserFoodMongoRepository repository) : I
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="NotFoundException"></exception>
-    public async Task<Food> HandleAsync(EditUserFoodCommand command, CancellationToken cancellationToken)
+    public async Task<bool> HandleAsync(EditUserFoodCommand command, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(command.Id))
         {
@@ -31,6 +31,6 @@ public class EditUserFoodCommandHandler(IUserFoodMongoRepository repository) : I
         
         await repository.UpdateUserFoodAsync(existingFood);
 
-        return existingFood;
+        return true;
     }
 }

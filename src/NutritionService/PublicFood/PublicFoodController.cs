@@ -36,8 +36,9 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPublicFoods([FromQuery] ListPublicFoodsQuery query,
-        [FromServices] IHandler<IEnumerable<Food>, ListPublicFoodsQuery> handler,
+        [FromServices] IHandler<IEnumerable<FoodDto>, ListPublicFoodsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -53,8 +54,9 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(FoodDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPublicFoodDetails(string id,
-        [FromServices] IHandler<Food, GetPublicFoodDetailsQuery> handler,
+        [FromServices] IHandler<FoodDto, GetPublicFoodDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -70,8 +72,9 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("listUnrevisedFoods")]
+    [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListUnrevisedPublicFoods([FromQuery] ListUnrevisedPublicFoodsQuery query,
-        [FromServices] IHandler<IEnumerable<Food>, ListUnrevisedPublicFoodsQuery> handler,
+        [FromServices] IHandler<IEnumerable<FoodDto>, ListUnrevisedPublicFoodsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -86,8 +89,9 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("listRevisedFoods")]
+    [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListRevisedPublicFoods([FromQuery] ListRevisedPublicFoodsQuery query,
-        [FromServices] IHandler<IEnumerable<Food>, ListRevisedPublicFoodsQuery> handler,
+        [FromServices] IHandler<IEnumerable<FoodDto>, ListRevisedPublicFoodsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -103,15 +107,17 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(FoodDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> CreatePublicFood([FromBody] CreatePublicFoodCommand command,
-        [FromServices] IHandler<Food, CreatePublicFoodCommand> handler,
+        [FromServices] IHandler<FoodDto, CreatePublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         command.SetCreatedBy(ProfileContext.ProfileId);
         
 
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path,
+            await handler.HandleAsync(command, cancellationToken));
     }
     /// <summary>
     /// Rota para editar uma comida pública
@@ -122,14 +128,15 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> EditPublicFood(string id, [FromBody] EditPublicFoodCommand command,
-        [FromServices] IHandler<Food, EditPublicFoodCommand> handler,
+        [FromServices] IHandler<bool, EditPublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         command.SetId(id);
-
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
     
     /// <summary>
@@ -140,8 +147,9 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeletePublicFood(string id,
-        [FromServices] IHandler<Food, DeletePublicFoodCommand> handler,
+        [FromServices] IHandler<bool, DeletePublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -160,14 +168,15 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("approve/{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> ApprovePublicFood(string id,
-        [FromServices] IHandler<Food, ApprovePublicFoodCommand> handler,
+        [FromServices] IHandler<bool, ApprovePublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         var command = new ApprovePublicFoodCommand(id);
-        
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
     
     /// <summary>
@@ -178,8 +187,9 @@ public class PublicFoodController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("byBarCode")]
+    [ProducesResponseType(typeof(FoodDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPublicFoodByBarCode([FromQuery] GetPublicFoodByBarCodeQuery query,
-        [FromServices] IHandler<Food, GetPublicFoodByBarCodeQuery> handler,
+        [FromServices] IHandler<FoodDto, GetPublicFoodByBarCodeQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();

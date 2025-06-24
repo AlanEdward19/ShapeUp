@@ -3,11 +3,23 @@ using NutritionService.Dish.Common.Repository;
 
 namespace NutritionService.Dish.ListDishes;
 
+/// <summary>
+/// ListDishesQueryHandler handles the query to list dishes.
+/// </summary>
+/// <param name="repository"></param>
 public class ListDishesQueryHandler(IDishMongoRepository repository)
-: IHandler<IEnumerable<Dish>, ListDishesQuery>
+: IHandler<IEnumerable<DishDto>, ListDishesQuery>
 {
-    public async Task<IEnumerable<Dish>> HandleAsync(ListDishesQuery item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the retrieval of dishes based on pagination parameters.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<DishDto>> HandleAsync(ListDishesQuery item, CancellationToken cancellationToken)
     {
-        return await repository.ListDihesAsync(item.Page, item.Rows, cancellationToken);
+        var dishes = await repository.ListDihesAsync(item.Page, item.Rows, cancellationToken);
+        var dishesDto = dishes.Select(dish => new DishDto(dish));
+        return dishesDto;
     }
 }

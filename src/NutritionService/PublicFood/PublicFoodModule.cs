@@ -30,15 +30,15 @@ public static class PublicFoodModule
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<IEnumerable<Food>, ListUnrevisedPublicFoodsQuery>, ListUnrevisedPublicFoodsQueryHandler>();
-        services.AddScoped<IHandler<IEnumerable<Food>, ListPublicFoodsQuery>, ListPublicFoodsQueryHandler>();
-        services.AddScoped<IHandler<IEnumerable<Food>, ListRevisedPublicFoodsQuery>, ListRevisedPublicFoodsQueryHandler>();
-        services.AddScoped<IHandler<Food, GetPublicFoodDetailsQuery>, GetPublicFoodDetailsQueryHandler>();
-        services.AddScoped<IHandler<Food, CreatePublicFoodCommand>, CreatePublicFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, EditPublicFoodCommand>, EditPublicFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, DeletePublicFoodCommand>, DeletePublicFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, ApprovePublicFoodCommand>, ApprovePublicFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, GetPublicFoodByBarCodeQuery>, GetPublicFoodByBarCodeQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<FoodDto>, ListUnrevisedPublicFoodsQuery>, ListUnrevisedPublicFoodsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<FoodDto>, ListPublicFoodsQuery>, ListPublicFoodsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<FoodDto>, ListRevisedPublicFoodsQuery>, ListRevisedPublicFoodsQueryHandler>();
+        services.AddScoped<IHandler<FoodDto, GetPublicFoodDetailsQuery>, GetPublicFoodDetailsQueryHandler>();
+        services.AddScoped<IHandler<FoodDto, CreatePublicFoodCommand>, CreatePublicFoodCommandHandler>();
+        services.AddScoped<IHandler<bool, EditPublicFoodCommand>, EditPublicFoodCommandHandler>();
+        services.AddScoped<IHandler<bool, DeletePublicFoodCommand>, DeletePublicFoodCommandHandler>();
+        services.AddScoped<IHandler<bool, ApprovePublicFoodCommand>, ApprovePublicFoodCommandHandler>();
+        services.AddScoped<IHandler<FoodDto, GetPublicFoodByBarCodeQuery>, GetPublicFoodByBarCodeQueryHandler>();
         return services;
     }
 

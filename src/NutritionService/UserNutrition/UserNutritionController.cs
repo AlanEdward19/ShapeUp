@@ -13,26 +13,45 @@ using ProfileContext = SharedKernel.Utils.ProfileContext;
 
 namespace NutritionService.UserNutrition;
 
+/// <summary>
+/// Controlar para gerenciar a nutrição do usuário.
+/// </summary>
 [ApiVersion("1.0")]
 [ApiController]
 [TokenValidatorFilter]
 [Route("v{version:apiVersion}/[Controller]")]
 public class UserNutritionController : ControllerBase
 {
+    /// <summary>
+    /// Rota responsável por criar uma nutrição do usuário.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(UserNutritionDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateUserNutrition(CreateUserNutritionCommand command,
-        [FromServices] IHandler<UserNutrition, CreateUserNutritionCommand> handler,
+        [FromServices] IHandler<UserNutritionDto, CreateUserNutritionCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         //Validation
         
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path ,await handler.HandleAsync(command, cancellationToken));
     }
     
+    /// <summary>
+    /// Rota responsável por deletar uma nutrição do usuário.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteUserNutrition(string id,
-        [FromServices] IHandler<UserNutrition, DeleteUserNutritionCommand> handler,
+        [FromServices] IHandler<bool, DeleteUserNutritionCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -44,22 +63,39 @@ public class UserNutritionController : ControllerBase
         return NoContent();
     }
     
+    /// <summary>
+    /// Rota responsável por editar uma nutrição do usuário.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="command"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> EditUserNutrition(string id,
         [FromBody] EditUserNutritionCommand command,
-        [FromServices] IHandler<UserNutrition, EditUserNutritionCommand> handler,
+        [FromServices] IHandler<bool, EditUserNutritionCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         command.SetId(id);
         
         //Validation
-        
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
+    /// <summary>
+    /// Rota responsável por obter os detalhes de uma nutrição do usuário.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(UserNutritionDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetUserNutrition(string id,
-        [FromServices] IHandler<UserNutrition, GetUserNutritionDetailsQuery> handler,
+        [FromServices] IHandler<UserNutritionDto, GetUserNutritionDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -69,9 +105,17 @@ public class UserNutritionController : ControllerBase
         return Ok(await handler.HandleAsync(new GetUserNutritionDetailsQuery(id), cancellationToken));
     }
     
+    /// <summary>
+    /// Rota responsável por listar as nutrições do usuário.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> ListUserNutritions([FromQuery] ListUserNutritionsQuery query,
-        [FromServices] IHandler<IEnumerable<UserNutrition>, ListUserNutritionsQuery> handler,
+    [ProducesResponseType(typeof(IEnumerable<UserNutritionDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> ListUserNutrition([FromQuery] ListUserNutritionsQuery query,
+        [FromServices] IHandler<IEnumerable<UserNutritionDto>, ListUserNutritionsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();

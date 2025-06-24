@@ -5,22 +5,34 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.UserNutrition.EditUserNutrition;
 
-public class EditUserNutritionCommandHandler(IUserNutritionMongoRepository UserNutritionRepository, IDailyMenuMongoRepository DailyMenuRepository): 
-    IHandler<UserNutrition, EditUserNutritionCommand>
+/// <summary>
+/// Handles the editing of user nutrition details.
+/// </summary>
+/// <param name="userNutritionRepository"></param>
+/// <param name="dailyMenuRepository"></param>
+public class EditUserNutritionCommandHandler(IUserNutritionMongoRepository userNutritionRepository, IDailyMenuMongoRepository dailyMenuRepository): 
+    IHandler<bool, EditUserNutritionCommand>
 {
-    public async Task<UserNutrition> HandleAsync(EditUserNutritionCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the editing of user nutrition details based on the provided command.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(EditUserNutritionCommand item, CancellationToken cancellationToken)
     {
-        var existingUserNutrition = await UserNutritionRepository.GetUserNutritionDetailsAsync(item.Id);
+        var existingUserNutrition = await userNutritionRepository.GetUserNutritionDetailsAsync(item.Id);
         
         if (existingUserNutrition == null)
-            throw new NotFoundException(item.Id);
+            throw new NotFoundException(item.Id!);
 
-        var builtDailyMenus = await DailyMenuRepository.GetManyByIdsAsync(item.DailyMenus, cancellationToken);
+        var builtDailyMenus = await dailyMenuRepository.GetManyByIdsAsync(item.DailyMenus, cancellationToken);
         
         existingUserNutrition.UpdateInfo(item.NutritionManagerId, builtDailyMenus.ToList());
         
-        await UserNutritionRepository.UpdateUserNutritionAsync(existingUserNutrition);
+        await userNutritionRepository.UpdateUserNutritionAsync(existingUserNutrition);
 
-        return existingUserNutrition;
+        return true;
     }
 }

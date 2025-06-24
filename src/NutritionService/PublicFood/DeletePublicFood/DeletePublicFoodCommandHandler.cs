@@ -6,10 +6,21 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.PublicFood.DeletePublicFood;
 
+/// <summary>
+/// Handles the deletion of public food items.
+/// </summary>
+/// <param name="repository"></param>
 public class DeletePublicFoodCommandHandler(IPublicFoodMongoRepository repository)
- : IHandler<Food, DeletePublicFoodCommand>
+ : IHandler<bool, DeletePublicFoodCommand>
 { 
-    public async Task<Food> HandleAsync(DeletePublicFoodCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the deletion of a public food item by its ID.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(DeletePublicFoodCommand item, CancellationToken cancellationToken)
     {
         var existingFood = await repository.GetPublicFoodByIdAsync(item.Id);
         
@@ -18,6 +29,6 @@ public class DeletePublicFoodCommandHandler(IPublicFoodMongoRepository repositor
         
         await repository.DeletePublicFoodAsync(item.Id);
         
-        return existingFood;
+        return true;
     }
 }

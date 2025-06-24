@@ -7,9 +7,21 @@ using SharedKernel.Utils;
 
 namespace NutritionService.Dish.EditDish;
 
-public class EditDishCommandHandler(IDishMongoRepository dishRepository, IUserFoodMongoRepository foodRepository) : IHandler<Dish, EditDishCommand>
+/// <summary>
+/// Handles the command to edit an existing dish.
+/// </summary>
+/// <param name="dishRepository"></param>
+/// <param name="foodRepository"></param>
+public class EditDishCommandHandler(IDishMongoRepository dishRepository, IUserFoodMongoRepository foodRepository) : IHandler<bool, EditDishCommand>
 {
-    public async Task<Dish> HandleAsync(EditDishCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the command to edit an existing dish by updating its name and associated food items.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(EditDishCommand item, CancellationToken cancellationToken)
     {
         var existingDish = await dishRepository.GetDishByIdAsync(item.Id);
         
@@ -21,9 +33,7 @@ public class EditDishCommandHandler(IDishMongoRepository dishRepository, IUserFo
         existingDish.UpdateInfo(item.Name, foodItems.ToList());
         
         await dishRepository.UpdateDishAsync(existingDish);
-
         
-
-        return existingDish;
+        return true;
     }
 }

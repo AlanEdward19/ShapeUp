@@ -13,6 +13,11 @@ namespace NutritionService.Meal;
 /// </summary>
 public static class MealModule
 {
+    /// <summary>
+    /// Método de extensão para configurar as dependências relacionadas a refeições.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection ConfigureMealRelatedDependencies(this IServiceCollection services)
     {
         services.AddRepositories()
@@ -27,11 +32,11 @@ public static class MealModule
     
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<Meal, CreateMealCommand>, CreateMealCommandHandler>();
-        services.AddScoped<IHandler<Meal, EditMealCommand>, EditMealCommandHandler>();
-        services.AddScoped<IHandler<Meal, DeleteMealCommand>, DeleteMealCommandHandler>();
-        services.AddScoped<IHandler<Meal, GetMealDetailsQuery>, GetMealDetailsQueryHandler>();
-        services.AddScoped<IHandler<IEnumerable<Meal>, ListMealsQuery>, ListMealsQueryHandler>();
+        services.AddScoped<IHandler<MealDto, CreateMealCommand>, CreateMealCommandHandler>();
+        services.AddScoped<IHandler<bool, EditMealCommand>, EditMealCommandHandler>();
+        services.AddScoped<IHandler<bool, DeleteMealCommand>, DeleteMealCommandHandler>();
+        services.AddScoped<IHandler<MealDto, GetMealDetailsQuery>, GetMealDetailsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<MealDto>, ListMealsQuery>, ListMealsQueryHandler>();
         return services;
     }
 }

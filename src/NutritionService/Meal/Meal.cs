@@ -87,4 +87,17 @@ public class Meal
         Dishes = dishes;
         Foods = foods;
     }
+    
+    /// <summary>
+    /// Clona a refeição atual, criando uma nova instância com os mesmos valores.
+    /// </summary>
+    /// <returns></returns>
+    public Meal Clone()
+    {
+        return new Meal(Type, Name, Dishes.Select(d => d.Clone()).ToList(), Foods.Select(f => f.Clone()).ToList())
+        {
+            Id = Id,
+            CreatedBy = CreatedBy
+        };
+    }
 }

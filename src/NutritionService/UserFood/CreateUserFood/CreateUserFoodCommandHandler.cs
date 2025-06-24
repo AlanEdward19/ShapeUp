@@ -5,9 +5,9 @@ using NutritionService.UserFood.Common.Repository;
 
 namespace NutritionService.UserFood.CreateUserFood;
 
-public class CreateUserFoodCommandHandler(IUserFoodMongoRepository repository) : IHandler<Food, CreateUserFoodCommand>
+public class CreateUserFoodCommandHandler(IUserFoodMongoRepository repository) : IHandler<FoodDto, CreateUserFoodCommand>
 {
-    public async Task<Food> HandleAsync(CreateUserFoodCommand command, CancellationToken cancellationToken)
+    public async Task<FoodDto> HandleAsync(CreateUserFoodCommand command, CancellationToken cancellationToken)
     {
         var existingFood = await repository.GetUserFoodByBarCodeAsync(command.BarCode);
         
@@ -18,6 +18,6 @@ public class CreateUserFoodCommandHandler(IUserFoodMongoRepository repository) :
         
         await repository.InsertUserFoodAsync(food);
 
-        return food;
+        return new FoodDto(food);
     }
 }

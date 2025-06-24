@@ -4,10 +4,21 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.UserNutrition.DeleteUserNutrition;
 
+/// <summary>
+/// Handles the deletion of a user's nutrition record.
+/// </summary>
+/// <param name="repository"></param>
 public class DeleteUserNutritionCommandHandler(IUserNutritionMongoRepository repository) : 
-    IHandler<UserNutrition, DeleteUserNutritionCommand>
+    IHandler<bool, DeleteUserNutritionCommand>
 {
-    public async Task<UserNutrition> HandleAsync(DeleteUserNutritionCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the deletion of a user's nutrition record based on the provided command.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(DeleteUserNutritionCommand item, CancellationToken cancellationToken)
     {
         var existingUserNutrition = await repository.GetUserNutritionDetailsAsync(item.Id);
         if (existingUserNutrition == null)
@@ -18,6 +29,6 @@ public class DeleteUserNutritionCommandHandler(IUserNutritionMongoRepository rep
         // Delete the UserNutrition
         await repository.DeleteUserNutritionAsync(item.Id);
 
-        return existingUserNutrition;
+        return true;
     }
 }
