@@ -71,7 +71,6 @@ public class UserFoodController : ControllerBase
         [FromBody] CreateUserFoodCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
-        command.SetCreatedBy(ProfileContext.ProfileId);
 
         return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
     }

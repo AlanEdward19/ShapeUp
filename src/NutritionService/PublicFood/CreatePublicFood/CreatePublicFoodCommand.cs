@@ -6,25 +6,18 @@ namespace NutritionService.PublicFood.CreatePublicFood;
 
 public class CreatePublicFoodCommand
 {
-    public string? CreatedBy { get; set; }
     public string Name { get; set; }
     public string? Brand { get; set; }
     public string? BarCode { get; set; }
     public NutritionalInfo NutritionalInfo { get; set; }
 
-    public Food ToFood(string? createdBy)
+    public Food ToFood()
     {
-        if (string.IsNullOrWhiteSpace(createdBy))
-            throw new ArgumentException("CreatedBy is required", nameof(createdBy));
         
         Food food = new(Name, Brand, BarCode, NutritionalInfo);
         
-        food.SetId();
-        food.SetCreatedBy(CreatedBy);
-        
         return food;
     }
-    public void SetCreatedBy(string createdBy) => CreatedBy = createdBy;
     public CreatePublicFoodCommand(string name, string? brand, string? barCode, NutritionalInfo nutritionalInfo)
     {
         Name = name;
