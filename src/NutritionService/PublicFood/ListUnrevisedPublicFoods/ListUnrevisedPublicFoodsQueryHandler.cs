@@ -5,10 +5,22 @@ using NutritionService.UserFood;
 
 namespace NutritionService.PublicFood.ListUnrevisedPublicFoods;
 
-public class ListUnrevisedPublicFoodsQueryHandler(IPublicFoodMongoRepository repository) : IHandler<IEnumerable<Food>, ListUnrevisedPublicFoodsQuery>
+/// <summary>
+/// Handles the listing of unrevised public food items.
+/// </summary>
+/// <param name="repository"></param>
+public class ListUnrevisedPublicFoodsQueryHandler(IPublicFoodMongoRepository repository) : IHandler<IEnumerable<FoodDto>, ListUnrevisedPublicFoodsQuery>
 {
-    public async Task<IEnumerable<Food>> HandleAsync(ListUnrevisedPublicFoodsQuery query, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the retrieval of unrevised public food items based on pagination parameters.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<FoodDto>> HandleAsync(ListUnrevisedPublicFoodsQuery query, CancellationToken cancellationToken)
     {
-        return await repository.ListUnrevisedPublicFoodsAsync(query.Page, query.Rows);
+        var foods = await repository.ListUnrevisedPublicFoodsAsync(query.Page, query.Rows);
+        var foodsDto = foods.Select(food => new FoodDto(food));
+        return foodsDto;
     }
 }

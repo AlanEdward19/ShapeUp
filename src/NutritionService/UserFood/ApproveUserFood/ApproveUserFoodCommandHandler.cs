@@ -6,9 +6,9 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.UserFood.ApproveUserFood;
 
-public class ApproveUserFoodCommandHandler(IUserFoodMongoRepository userFoodRepository, IPublicFoodMongoRepository publicFoodRepository) : IHandler<Food, ApproveUserFoodCommand>
+public class ApproveUserFoodCommandHandler(IUserFoodMongoRepository userFoodRepository, IPublicFoodMongoRepository publicFoodRepository) : IHandler<bool, ApproveUserFoodCommand>
 {
-    public async Task<Food> HandleAsync(ApproveUserFoodCommand command, CancellationToken cancellationToken)
+    public async Task<bool> HandleAsync(ApproveUserFoodCommand command, CancellationToken cancellationToken)
     {
         var existingFood = await userFoodRepository.GetUserFoodByIdAsync(command.Id);
         
@@ -21,6 +21,6 @@ public class ApproveUserFoodCommandHandler(IUserFoodMongoRepository userFoodRepo
         
         await userFoodRepository.DeleteUserFoodAsync(command.Id);
 
-        return existingFood;
+        return true;
     }
 }

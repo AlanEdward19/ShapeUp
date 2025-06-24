@@ -31,8 +31,9 @@ public class DishController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(DishDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetDishDetails(string id,
-        [FromServices] IHandler<Dish, GetDishDetailsQuery> handler,
+        [FromServices] IHandler<DishDto, GetDishDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -51,8 +52,9 @@ public class DishController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<DishDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListDishes([FromQuery] ListDishesQuery query,
-        [FromServices] IHandler<IEnumerable<Dish>, ListDishesQuery> handler,
+        [FromServices] IHandler<IEnumerable<DishDto>, ListDishesQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -70,14 +72,15 @@ public class DishController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(DishDto))]
     public async Task<IActionResult> CreateDish(CreateDishCommand command,
-        [FromServices] IHandler<Dish, CreateDishCommand> handler,
+        [FromServices] IHandler<DishDto, CreateDishCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         //Validation
         
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path , await handler.HandleAsync(command, cancellationToken));
     }
 
     /// <summary>
@@ -89,8 +92,9 @@ public class DishController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> EditDish(string id, EditDishCommand command,
-        [FromServices] IHandler<Dish, EditDishCommand> handler,
+        [FromServices] IHandler<bool, EditDishCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -101,7 +105,7 @@ public class DishController : ControllerBase
         
         //Validation
         
-        return Ok(result);
+        return NoContent();
     }
     
     /// <summary>
@@ -112,8 +116,9 @@ public class DishController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteDish(string id,
-        [FromServices] IHandler<Dish, DeleteDishCommand> handler,
+        [FromServices] IHandler<bool, DeleteDishCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();

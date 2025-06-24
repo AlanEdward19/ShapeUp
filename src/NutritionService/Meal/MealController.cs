@@ -31,15 +31,16 @@ public class MealController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(MealDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Post([FromBody] CreateMealCommand command,
-        [FromServices] IHandler<Meal, CreateMealCommand> handler,
+        [FromServices] IHandler<MealDto, CreateMealCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         
         //Validations
         
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
     }
     
     /// <summary>
@@ -50,8 +51,9 @@ public class MealController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("{mealId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Delete([FromRoute] string mealId,
-        [FromServices] IHandler<Meal, DeleteMealCommand> handler,
+        [FromServices] IHandler<bool, DeleteMealCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -60,7 +62,7 @@ public class MealController : ControllerBase
         
         //Validations
         
-        var result = await handler.HandleAsync(command, cancellationToken);
+        await handler.HandleAsync(command, cancellationToken);
         
         return NoContent();
     }
@@ -74,9 +76,10 @@ public class MealController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{mealId}")]
-    public async Task<IActionResult> Put([FromRoute] string mealId,
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> EditMeal([FromRoute] string mealId,
         [FromBody] EditMealCommand command,
-        [FromServices] IHandler<Meal, EditMealCommand> handler,
+        [FromServices] IHandler<bool, EditMealCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -84,8 +87,8 @@ public class MealController : ControllerBase
         command.SetId(mealId);
         
         //Validations
-        
-        return Ok(await handler.HandleAsync(command, cancellationToken));
+        await handler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
     
     /// <summary>
@@ -96,8 +99,9 @@ public class MealController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("{mealId}")]
-    public async Task<IActionResult> Get([FromRoute] string mealId,
-        [FromServices] IHandler<Meal, GetMealDetailsQuery> handler,
+    [ProducesResponseType(typeof(MealDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetMealDetails([FromRoute] string mealId,
+        [FromServices] IHandler<MealDto, GetMealDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -120,8 +124,9 @@ public class MealController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<MealDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListMeals([FromQuery] ListMealsQuery query,
-        [FromServices] IHandler<IEnumerable<Meal>, ListMealsQuery> handler,
+        [FromServices] IHandler<IEnumerable<MealDto>, ListMealsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();

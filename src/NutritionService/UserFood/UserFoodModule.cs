@@ -33,16 +33,16 @@ public static class UserFoodModule
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<IEnumerable<Food>, ListFoodsQuery>, ListFoodsQueryHandler>();
-        services.AddScoped<IHandler<Food, GetUserFoodDetailsQuery>, GetUserFoodDetailsQueryHandler>();
-        services.AddScoped<IHandler<Food, CreateUserFoodCommand>, CreateUserFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, EditUserFoodCommand>, EditUserFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, ApproveUserFoodCommand>, ApproveUserFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, DeleteUserFoodCommand>, DeleteUserFoodCommandHandler>();
+        services.AddScoped<IHandler<IEnumerable<FoodDto>, ListFoodsQuery>, ListFoodsQueryHandler>();
+        services.AddScoped<IHandler<FoodDto, GetUserFoodDetailsQuery>, GetUserFoodDetailsQueryHandler>();
+        services.AddScoped<IHandler<FoodDto, CreateUserFoodCommand>, CreateUserFoodCommandHandler>();
+        services.AddScoped<IHandler<bool, EditUserFoodCommand>, EditUserFoodCommandHandler>();
+        services.AddScoped<IHandler<bool, ApproveUserFoodCommand>, ApproveUserFoodCommandHandler>();
+        services.AddScoped<IHandler<bool, DeleteUserFoodCommand>, DeleteUserFoodCommandHandler>();
         services
-            .AddScoped<IHandler<IEnumerable<Food>, InsertPublicFoodsInUserFoodCommand>,
+            .AddScoped<IHandler<IEnumerable<FoodDto>, InsertPublicFoodsInUserFoodCommand>,
                 InsertPublicFoodsInUserFoodCommandHandler>();
-        services.AddScoped<IHandler<Food, GetUserFoodByBarCodeQuery>, GetUserFoodByBarCodeQueryHandler>();
+        services.AddScoped<IHandler<FoodDto, GetUserFoodByBarCodeQuery>, GetUserFoodByBarCodeQueryHandler>();
         return services;
     }
 

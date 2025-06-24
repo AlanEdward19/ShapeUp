@@ -5,15 +5,15 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.UserFood.GetUserFoodByBarCode;
 
-public class GetUserFoodByBarCodeQueryHandler(IUserFoodMongoRepository repository) : IHandler<Food, GetUserFoodByBarCodeQuery>
+public class GetUserFoodByBarCodeQueryHandler(IUserFoodMongoRepository repository) : IHandler<FoodDto, GetUserFoodByBarCodeQuery>
 {
-    public async Task<Food> HandleAsync(GetUserFoodByBarCodeQuery query, CancellationToken cancellationToken)
+    public async Task<FoodDto> HandleAsync(GetUserFoodByBarCodeQuery query, CancellationToken cancellationToken)
     {
         var food = await repository.GetUserFoodByBarCodeAsync(query.BarCode);
         
         if (food == null)
             throw new NotFoundException($"Food with barCode '{query.BarCode}' not found");
 
-        return food;
+        return new FoodDto(food);
     }
 }

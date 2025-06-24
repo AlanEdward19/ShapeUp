@@ -6,9 +6,22 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.Meal.EditMeal;
 
-public class EditMealCommandHandler(IMealMongoRepository repository, IUserFoodMongoRepository userFoodRepository, IDishMongoRepository dishRepository) : IHandler<Meal, EditMealCommand>
+/// <summary>
+/// Handles the editing of an existing meal.
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="userFoodRepository"></param>
+/// <param name="dishRepository"></param>
+public class EditMealCommandHandler(IMealMongoRepository repository, IUserFoodMongoRepository userFoodRepository, IDishMongoRepository dishRepository) : IHandler<bool, EditMealCommand>
 {
-    public async Task<Meal> HandleAsync(EditMealCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the command to edit an existing meal by updating its type, name, dishes, and foods.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(EditMealCommand item, CancellationToken cancellationToken)
     {
         var existingMeal = await repository.GetMealByIdAsync(item.Id);
         
@@ -22,6 +35,6 @@ public class EditMealCommandHandler(IMealMongoRepository repository, IUserFoodMo
         
         await repository.UpdateMealAsync(existingMeal);
 
-        return existingMeal;
+        return true;
     }
 }

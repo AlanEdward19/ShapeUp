@@ -13,6 +13,11 @@ namespace NutritionService.DailyMenu;
 /// </summary>
 public static class DailyMenuModule
 {
+    /// <summary>
+    /// Método de extensão para configurar as dependências do módulo de Cardápio Diário.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection ConfigureDailyMenuRelatedDependencies(this IServiceCollection services)
     {
         services
@@ -29,11 +34,11 @@ public static class DailyMenuModule
     }
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<DailyMenu, CreateDailyMenuCommand>, CreateDailyMenuCommandHandler>();
-        services.AddScoped<IHandler<DailyMenu, DeleteDailyMenuCommand>, DeleteDailyMenuCommandHandler>();
-        services.AddScoped<IHandler<DailyMenu, EditDailyMenuCommand>, EditDailyMenuCommandHandler>();
-        services.AddScoped<IHandler<DailyMenu, GetDailyMenuDetailsQuery>, GetDailyMenuDetailsQueryHandler>();
-        services.AddScoped<IHandler<IEnumerable<DailyMenu>, ListDailyMenuQuery>, ListDailyMenuQueryHandler>();
+        services.AddScoped<IHandler<DailyMenuDto, CreateDailyMenuCommand>, CreateDailyMenuCommandHandler>();
+        services.AddScoped<IHandler<bool, DeleteDailyMenuCommand>, DeleteDailyMenuCommandHandler>();
+        services.AddScoped<IHandler<bool, EditDailyMenuCommand>, EditDailyMenuCommandHandler>();
+        services.AddScoped<IHandler<DailyMenuDto, GetDailyMenuDetailsQuery>, GetDailyMenuDetailsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<DailyMenuDto>, ListDailyMenuQuery>, ListDailyMenuQueryHandler>();
         return services;
     }
 }

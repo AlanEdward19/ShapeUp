@@ -5,9 +5,20 @@ using SharedKernel.Utils;
 
 namespace NutritionService.Dish.CreateDish;
 
-public class CreateDishCommandHandler(IDishMongoRepository dishRepository, IUserFoodMongoRepository userFoodRepository) : IHandler<Dish, CreateDishCommand>
+/// <summary>
+/// Handles the creation of a new dish.
+/// </summary>
+/// <param name="dishRepository"></param>
+/// <param name="userFoodRepository"></param>
+public class CreateDishCommandHandler(IDishMongoRepository dishRepository, IUserFoodMongoRepository userFoodRepository) : IHandler<DishDto, CreateDishCommand>
 {
-    public async Task<Dish> HandleAsync(CreateDishCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the creation of a new dish based on the provided command.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<DishDto> HandleAsync(CreateDishCommand item, CancellationToken cancellationToken)
     {
         var builtFoods = await userFoodRepository.GetManyByIdsAsync(item.FoodIds, cancellationToken);
         
@@ -17,6 +28,6 @@ public class CreateDishCommandHandler(IDishMongoRepository dishRepository, IUser
         
         await dishRepository.InsertDishAsync(dish);
 
-        return dish;
+        return new DishDto(dish);
     }
 }

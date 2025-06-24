@@ -4,10 +4,13 @@ using NutritionService.UserFood.Common.Repository;
 
 namespace NutritionService.UserFood.ListFoods;
 
-public class ListFoodsQueryHandler(IUserFoodMongoRepository repository) : IHandler<IEnumerable<Food>, ListFoodsQuery>
+public class ListFoodsQueryHandler(IUserFoodMongoRepository repository) : IHandler<IEnumerable<FoodDto>, ListFoodsQuery>
 {
-    public async Task<IEnumerable<Food>> HandleAsync(ListFoodsQuery query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<FoodDto>> HandleAsync(ListFoodsQuery query, CancellationToken cancellationToken)
     {
-        return await repository.ListFoodsAsync(query.Page, query.Rows);
+        var foods = await repository.ListFoodsAsync(query.Page, query.Rows);
+        
+        var foodsDto = foods.Select(food => new FoodDto(food));
+        return foodsDto;
     }
 }

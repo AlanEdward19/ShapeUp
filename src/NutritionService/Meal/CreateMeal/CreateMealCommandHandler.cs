@@ -6,9 +6,21 @@ using SharedKernel.Utils;
 
 namespace NutritionService.Meal.CreateMeal;
 
-public class CreateMealCommandHandler(IMealMongoRepository mealRepository, IUserFoodMongoRepository userFoodRepository, IDishMongoRepository dishRepository) : IHandler<Meal, CreateMealCommand>
+/// <summary>
+/// Handles the creation of a new meal.
+/// </summary>
+/// <param name="mealRepository"></param>
+/// <param name="userFoodRepository"></param>
+/// <param name="dishRepository"></param>
+public class CreateMealCommandHandler(IMealMongoRepository mealRepository, IUserFoodMongoRepository userFoodRepository, IDishMongoRepository dishRepository) : IHandler<MealDto, CreateMealCommand>
 {
-    public async Task<Meal> HandleAsync(CreateMealCommand item, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the creation of a new meal based on the provided command.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<MealDto> HandleAsync(CreateMealCommand item, CancellationToken cancellationToken)
     {
         var builtDishes = await dishRepository.GetManyByIdsAsync(item.DishIds, cancellationToken);
         var builtFoods = await userFoodRepository.GetManyByIdsAsync(item.FoodIds, cancellationToken);
@@ -19,6 +31,6 @@ public class CreateMealCommandHandler(IMealMongoRepository mealRepository, IUser
         
         await mealRepository.InsertMealAsync(meal);
 
-        return meal;
+        return new MealDto(meal);
     }
 }

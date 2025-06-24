@@ -11,7 +11,7 @@ namespace NutritionService.DailyMenu.CreateDailyMenu;
 /// <param name="dailyMenuRepository"></param>
 /// <param name="mealRepository"></param>
 public class CreateDailyMenuCommandHandler(IDailyMenuMongoRepository dailyMenuRepository, IMealMongoRepository mealRepository) : 
-    IHandler<DailyMenu, CreateDailyMenuCommand>
+    IHandler<DailyMenuDto, CreateDailyMenuCommand>
 {
     /// <summary>
     /// Handles the creation of a daily menu.
@@ -19,7 +19,7 @@ public class CreateDailyMenuCommandHandler(IDailyMenuMongoRepository dailyMenuRe
     /// <param name="item"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<DailyMenu> HandleAsync(CreateDailyMenuCommand item, CancellationToken cancellationToken)
+    public async Task<DailyMenuDto> HandleAsync(CreateDailyMenuCommand item, CancellationToken cancellationToken)
     {
         var builtMeal = await mealRepository.GetManyMealsByIdsAsync(item.MealIds, cancellationToken);
         var dailyMenu = new DailyMenu(item.DayOfWeek, builtMeal.ToList());
@@ -28,6 +28,6 @@ public class CreateDailyMenuCommandHandler(IDailyMenuMongoRepository dailyMenuRe
         
         await dailyMenuRepository.InsertDailyMenuAsync(dailyMenu);
 
-        return dailyMenu;
+        return new DailyMenuDto(dailyMenu);
     }
 }

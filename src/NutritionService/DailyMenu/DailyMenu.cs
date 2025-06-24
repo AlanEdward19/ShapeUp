@@ -69,4 +69,17 @@ public class DailyMenu
         DayOfWeek = dayOfWeek;
         Meals = meals;
     }
+    
+    /// <summary>
+    /// Método para clonar o cardápio diário
+    /// </summary>
+    /// <returns></returns>
+    public DailyMenu Clone()
+    {
+        return new DailyMenu(DayOfWeek, Meals.Select(m => m.Clone()).ToList())
+        {
+            Id = Id,
+            CreatedBy = CreatedBy
+        };
+    }
 }

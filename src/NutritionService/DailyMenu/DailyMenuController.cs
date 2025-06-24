@@ -22,9 +22,17 @@ namespace NutritionService.DailyMenu;
 [Route("v{version:apiVersion}/[Controller]")]
 public class DailyMenuController : ControllerBase
 {
+    /// <summary>
+    /// Rota para criar um novo cardápio diário.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(DailyMenuDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateDailyMenu(CreateDailyMenuCommand command,
-        [FromServices] IHandler<DailyMenu, CreateDailyMenuCommand> handler,
+        [FromServices] IHandler<DailyMenuDto, CreateDailyMenuCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -34,9 +42,17 @@ public class DailyMenuController : ControllerBase
         return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
     }
     
+    /// <summary>
+    /// Rota para deletar um cardápio diário.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteDailyMenu(string id,
-        [FromServices] IHandler<DailyMenu, DeleteDailyMenuCommand> handler,
+        [FromServices] IHandler<bool, DeleteDailyMenuCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -47,24 +63,41 @@ public class DailyMenuController : ControllerBase
 
         return NoContent();
     }
+    /// <summary>
+    /// Rota para editar um cardápio diário.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="command"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> EditDailyMenu(string id, [FromBody] EditDailyMenuCommand command,
-        [FromServices] IHandler<DailyMenu, EditDailyMenuCommand> handler,
+        [FromServices] IHandler<bool, EditDailyMenuCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         
         command.SetId(id);
 
-        var result = await handler.HandleAsync(command, cancellationToken);
+        await handler.HandleAsync(command, cancellationToken);
         
         //Validation
         
-        return Ok(result);
+        return NoContent();
     }
+    /// <summary>
+    /// Rota para obter os detalhes de um cardápio diário específico.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(DailyMenuDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetDailyMenuDetails(string id,
-        [FromServices] IHandler<DailyMenu, GetDailyMenuDetailsQuery> handler,
+        [FromServices] IHandler<DailyMenuDto, GetDailyMenuDetailsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -73,10 +106,18 @@ public class DailyMenuController : ControllerBase
 
         return Ok(await handler.HandleAsync(new GetDailyMenuDetailsQuery(id), cancellationToken));
     }
+    /// <summary>
+    /// Rota para listar os cardápios diários com base em critérios de pesquisa.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<DailyMenuDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetDailyMenus(
         [FromQuery] ListDailyMenuQuery query,
-        [FromServices] IHandler<IEnumerable<DailyMenu>, ListDailyMenuQuery> handler,
+        [FromServices] IHandler<IEnumerable<DailyMenuDto>, ListDailyMenuQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();

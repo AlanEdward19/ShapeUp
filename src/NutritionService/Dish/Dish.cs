@@ -47,10 +47,6 @@ public class Dish
         Id = ObjectId.GenerateNewId().ToString();
     }
     
-    public void SetId(string id)
-    {
-        Id = id;
-    }
     
     /// <summary>
     /// Método para definir o identificador do perfil que criou o prato
@@ -67,4 +63,16 @@ public class Dish
         Foods = foods;
     }
     
+    /// <summary>
+    /// Método para clonar o prato
+    /// </summary>
+    /// <returns></returns>
+    public Dish Clone()
+    {
+        return new Dish(Name, Foods.Select(f => f.Clone()).ToList())
+        {
+            Id = Id,
+            CreatedBy = CreatedBy
+        };
+    }
 }

@@ -6,9 +6,21 @@ using SharedKernel.Exceptions;
 
 namespace NutritionService.PublicFood.EditPublicFood;
 
-public class EditPublicFoodCommandHandler(IPublicFoodMongoRepository repository) : IHandler<Food, EditPublicFoodCommand>
+/// <summary>
+/// Command handler for editing public food items.
+/// </summary>
+/// <param name="repository"></param>
+public class EditPublicFoodCommandHandler(IPublicFoodMongoRepository repository) : IHandler<bool, EditPublicFoodCommand>
 {
-    public async Task<Food> HandleAsync(EditPublicFoodCommand command, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the command to edit a public food item.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task<bool> HandleAsync(EditPublicFoodCommand command, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(command.Id))
         {
@@ -24,6 +36,6 @@ public class EditPublicFoodCommandHandler(IPublicFoodMongoRepository repository)
         
         await repository.UpdatePublicFoodAsync(existingFood);
 
-        return existingFood;
+        return true;
     }
 }
