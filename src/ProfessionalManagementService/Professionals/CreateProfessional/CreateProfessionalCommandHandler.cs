@@ -15,6 +15,7 @@ public class CreateProfessionalCommandHandler(DatabaseContext dbContext)
         try
         {
             await dbContext.Professionals.AddAsync(professional, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
             await dbContext.Database.CommitTransactionAsync(cancellationToken);
 
             return new ProfessionalDto(professional);

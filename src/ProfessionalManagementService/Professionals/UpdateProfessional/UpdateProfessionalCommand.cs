@@ -10,7 +10,7 @@ public class UpdateProfessionalCommand
     /// <summary>
     /// Id do profissional
     /// </summary>
-    public string Id { get; private set; }
+    private string Id { get; set; }
     
     /// <summary>
     /// Nome completo do profissional
@@ -35,4 +35,10 @@ public class UpdateProfessionalCommand
     {
         Id = id;
     }
+    
+    /// <summary>
+    /// Método para ler o id do profissional
+    /// </summary>
+    /// <returns></returns>
+    public string GetId() => Id;
 }

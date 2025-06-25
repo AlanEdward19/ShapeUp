@@ -15,12 +15,12 @@ public class CreateProfessionalCommand
     /// <summary>
     /// Nome completo do profissional
     /// </summary>
-    public string FullName { get; private set; }
+    private string FullName { get; set; }
     
     /// <summary>
     /// Email do profissional
     /// </summary>
-    public string Email { get; private set; }
+    private string Email { get; set; }
     
     /// <summary>
     /// Tipo de profissional
@@ -60,6 +60,6 @@ public class CreateProfessionalCommand
     /// <returns></returns>
     public Professional ToProfessional()
     {
-        return new Professional(Id, FullName, Email, Type, false);
+        return new Professional(Id, FullName, Email.ToLower(), Type, false);
     }
 }

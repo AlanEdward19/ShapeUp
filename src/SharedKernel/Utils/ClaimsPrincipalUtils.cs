@@ -47,6 +47,11 @@ public static class ClaimsPrincipalUtils
         return user.FindFirst("lastName")!.Value;
     }
     
+    public static string GetFullName(this ClaimsPrincipal user)
+    {
+        return $"{user.GetFirstName()} {user.GetLastName()}";
+    }
+    
     /// <summary>
     /// Método para obter o nome de exibição do usuário
     /// </summary>

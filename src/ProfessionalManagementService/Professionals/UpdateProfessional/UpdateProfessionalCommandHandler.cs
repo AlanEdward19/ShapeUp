@@ -11,10 +11,10 @@ public class UpdateProfessionalCommandHandler(DatabaseContext dbContext)
     public async Task<ProfessionalDto> HandleAsync(UpdateProfessionalCommand command,
         CancellationToken cancellationToken)
     {
-        var professional = await dbContext.Professionals.FirstOrDefaultAsync(x=> x.Id == command.Id, cancellationToken);
+        var professional = await dbContext.Professionals.FirstOrDefaultAsync(x=> x.Id == command.GetId(), cancellationToken);
         
         if (professional == null)
-            throw new NotFoundException($"Professional with Id: '{command.Id}' not found.");
+            throw new NotFoundException($"Professional with Id: '{command.GetId()}' not found.");
 
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         try

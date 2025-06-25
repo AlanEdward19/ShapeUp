@@ -34,7 +34,12 @@ public class ProfessionalController : ControllerBase
         CancellationToken cancellationToken)
     {
         string userId = User.GetObjectId();
+        string email = User.GetEmail();
+        string fullName = User.GetFullName();
+        
         command.SetId(userId);
+        command.SetEmail(email);
+        command.SetFullName(fullName);
         
         var professional = await handler.HandleAsync(command, cancellationToken);
         return Created(HttpContext.Request.GetDisplayUrl(), professional);
