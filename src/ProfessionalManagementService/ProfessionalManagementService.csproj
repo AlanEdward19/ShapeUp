@@ -4,10 +4,20 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>55f0d7d9-f5df-4c90-afad-39991cd8de51</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
+      <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
     </ItemGroup>
 
 </Project>

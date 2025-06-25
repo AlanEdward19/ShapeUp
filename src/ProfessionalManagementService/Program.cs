@@ -1,23 +1,37 @@
+using System.Globalization;
+using ProfessionalManagementService.Configuration;
+using ServiceDefaults;
+using SharedKernel.Utils;
+
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// Add services to the container.
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost8080",
+        builder => builder.WithOrigins("http://localhost:8080")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+AuthenticationUtils.GetIssuerSigningKey(configuration);
+builder.AddServiceDefaults();
+builder.Services.SolveServiceDependencies(configuration);
+builder.Services.ConfigureEndpoints();
+
+var cultureInfo = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+// Use CORS policy
+app.UseCors("AllowLocalhost8080");
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.ConfigureSwagger();
+app.MapEndpoints(configuration);
+app.ConfigureMiddleware();
 
 app.Run();
+app.Logger.LogInformation("Application instance is ready to handle incoming requests");

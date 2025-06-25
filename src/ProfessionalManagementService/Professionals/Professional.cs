@@ -14,39 +14,39 @@ public class Professional
     /// </summary>
     [Key]
     public string Id { get; private set; }
-    
+
     /// <summary>
     /// Nome completo do profissional
     /// </summary>
     public string FullName { get; private set; }
-    
+
     /// <summary>
     /// Email do profissional
     /// </summary>
     public string Email { get; private set; }
-    
+
     /// <summary>
     /// Tipo de profissional
     /// </summary>
     public EProfessionalType Type { get; private set; }
-    
+
     /// <summary>
     /// Se o profissional está verificado
     /// </summary>
     public bool IsVerified { get; private set; }
-    
+
     /// <summary>
     /// Data de criação do profissional
     /// </summary>
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
-    
+
     /// <summary>
     /// Data de atualização do profissional
     /// </summary>
     public DateTime UpdatedAt { get; private set; } = DateTime.Now;
-    
-    public virtual ICollection<ServicePlan> ServicePlans { get; set; } = new List<ServicePlan>();
-    
+
+    public virtual ICollection<ServicePlan> ServicePlans { get; init; } = new List<ServicePlan>();
+
     /// <summary>
     /// Método para adicionar um plano de serviço ao profissional.
     /// </summary>
@@ -56,8 +56,57 @@ public class Professional
     {
         if (servicePlan == null)
             throw new ArgumentNullException(nameof(servicePlan), "Service plan cannot be null.");
-        
+
         servicePlan.SetProfessional(this);
         ServicePlans.Add(servicePlan);
+    }
+
+    /// <summary>
+    /// Construtor padrão para o EF Core
+    /// </summary>
+    public Professional()
+    {
+    }
+
+    /// <summary>
+    /// Construtor para criar um profissional
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="fullName"></param>
+    /// <param name="email"></param>
+    /// <param name="type"></param>
+    /// <param name="isVerified"></param>
+    public Professional(string id, string fullName, string email, EProfessionalType type, bool isVerified)
+    {
+        Id = id;
+        FullName = fullName;
+        Email = email;
+        Type = type;
+        IsVerified = isVerified;
+    }
+
+    public void UpdateFullName(string? fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName) ||
+            fullName.ToLower().Replace(" ", "").Equals(FullName.ToLower().Replace(" ", ""))) return;
+
+        FullName = fullName;
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void UpdateEmail(string? email)
+    {
+        if (string.IsNullOrWhiteSpace(email) || email.Equals(Email)) return;
+
+        Email = email;
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void UpdateType(EProfessionalType? type)
+    {
+        if (type == null || Type == type) return;
+
+        Type = type.Value;
+        UpdatedAt = DateTime.Now;
     }
 }
