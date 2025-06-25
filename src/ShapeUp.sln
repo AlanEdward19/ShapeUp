@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfessionalManagementService", "ProfessionalManagementService\ProfessionalManagementService.csproj", "{09A98DD7-F089-45FE-9270-CE2E2B0B1547}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0743712C-CB06-4C7D-8EA0-9EAB95DD5328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A98DD7-F089-45FE-9270-CE2E2B0B1547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A98DD7-F089-45FE-9270-CE2E2B0B1547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A98DD7-F089-45FE-9270-CE2E2B0B1547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A98DD7-F089-45FE-9270-CE2E2B0B1547}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
