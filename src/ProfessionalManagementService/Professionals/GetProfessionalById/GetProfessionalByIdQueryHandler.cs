@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
+using SharedKernel.Exceptions;
 
 namespace ProfessionalManagementService.Professionals.GetProfessionalById;
 
@@ -14,7 +15,7 @@ public class GetProfessionalByIdQueryHandler(DatabaseContext dbContext) : IHandl
             .FirstOrDefaultAsync(x=> x.Id == query.Id, cancellationToken);
         
         if (professional == null)
-            throw new KeyNotFoundException($"Professional with Id: '{query.Id}' not found.");
+            throw new NotFoundException($"Professional with Id: '{query.Id}' not found.");
         
         return new ProfessionalDto(professional);
     }

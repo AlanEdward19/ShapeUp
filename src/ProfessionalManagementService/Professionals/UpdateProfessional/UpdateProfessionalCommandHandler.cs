@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
+using SharedKernel.Exceptions;
 
 namespace ProfessionalManagementService.Professionals.UpdateProfessional;
 
@@ -13,7 +14,7 @@ public class UpdateProfessionalCommandHandler(DatabaseContext dbContext)
         var professional = await dbContext.Professionals.FirstOrDefaultAsync(x=> x.Id == command.Id, cancellationToken);
         
         if (professional == null)
-            throw new KeyNotFoundException($"Professional with Id: '{command.Id}' not found.");
+            throw new NotFoundException($"Professional with Id: '{command.Id}' not found.");
 
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         try

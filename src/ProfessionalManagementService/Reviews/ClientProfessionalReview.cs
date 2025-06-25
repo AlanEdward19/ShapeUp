@@ -24,7 +24,7 @@ public class ClientProfessionalReview
     /// <summary>
     /// Id do profissional avaliado
     /// </summary>
-    public string ProfessionalId { get; private set; }
+    public string? ProfessionalId { get; private set; }
     
     /// <summary>
     /// Id do plano de serviço associado à avaliação
@@ -62,7 +62,7 @@ public class ClientProfessionalReview
     /// Profissional avaliado
     /// </summary>
     [ForeignKey(nameof(ProfessionalId))]
-    public virtual Professional Professional { get; private set; }
+    public virtual Professional? Professional { get; private set; }
     
     /// <summary>
     /// Plano de serviço do cliente associado à avaliação

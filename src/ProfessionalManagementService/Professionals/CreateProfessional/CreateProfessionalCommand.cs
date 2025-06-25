@@ -10,7 +10,7 @@ public class CreateProfessionalCommand
     /// <summary>
     /// Id do profissional
     /// </summary>
-    public string Id { get; private set; }
+    private string Id { get; set; }
     
     /// <summary>
     /// Nome completo do profissional
