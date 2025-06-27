@@ -9,15 +9,30 @@ namespace ProfessionalManagementService.Clients;
 /// </summary>
 public class Client
 {
+    /// <summary>
+    /// Id do cliente
+    /// </summary>
     [Key]
     public string Id { get; private set; }
     
+    /// <summary>
+    /// Nome completo do cliente
+    /// </summary>
     public string FullName { get; private set; }
     
+    /// <summary>
+    /// Email do cliente
+    /// </summary>
     public string Email { get; private set; }
     
+    /// <summary>
+    /// Data de criação do cliente
+    /// </summary>
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
     
+    /// <summary>
+    /// Data da última atualização do cliente
+    /// </summary>
     public DateTime UpdatedAt { get; private set; } = DateTime.Now;
     
     /// <summary>
@@ -25,6 +40,9 @@ public class Client
     /// </summary>
     public virtual ICollection<ClientServicePlan> ClientServicePlans { get; set; } = new List<ClientServicePlan>();
     
+    /// <summary>
+    /// Reviews feitas pelo cliente sobre profissionais
+    /// </summary>
     public virtual ICollection<ClientProfessionalReview> ClientProfessionalReviews { get; set; } = new List<ClientProfessionalReview>();
     
     /// <summary>

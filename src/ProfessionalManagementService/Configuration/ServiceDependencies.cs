@@ -1,5 +1,6 @@
 ﻿using ProfessionalManagementService.Connections;
 using ProfessionalManagementService.Professionals;
+using ProfessionalManagementService.ServicePlans;
 
 namespace ProfessionalManagementService.Configuration;
 
@@ -19,6 +20,7 @@ public static class ServiceDependencies
     {
         services
             .ConfigureProfessionalServices()
+            .ConfigureServicePlanServices()
             .ConfigureConnections(configuration);
 
         return services;

@@ -1,0 +1,78 @@
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using ProfessionalManagementService.Common.Interfaces;
+using ProfessionalManagementService.ServicePlans.CreateServicePlan;
+using ProfessionalManagementService.ServicePlans.DeleteServicePlan;
+using ProfessionalManagementService.ServicePlans.GetServicePlanById;
+using ProfessionalManagementService.ServicePlans.GetServicePlansByProfessionalId;
+using ProfessionalManagementService.ServicePlans.UpdateServicePlan;
+using SharedKernel.Filters;
+using SharedKernel.Utils;
+
+namespace ProfessionalManagementService.ServicePlans;
+
+[ApiVersion("1.0")]
+[ApiController]
+[TokenValidatorFilter]
+[Route("v{version:apiVersion}/[Controller]")]
+public class ServicePlanController : ControllerBase
+{
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetServicePlanById(Guid id,
+        [FromServices] IHandler<ServicePlanDto, GetServicePlanByIdQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetServicePlanByIdQuery(id);
+        var servicePlan = await handler.HandleAsync(query, cancellationToken);
+
+        return Ok(servicePlan);
+    }
+    
+    [HttpGet("/Professional/{professionalId}/ServicePlan")]
+    public async Task<IActionResult> GetServicePlanByProfessionalId(string professionalId,
+        [FromServices] IHandler<List<ServicePlanDto>, GetServicePlansByProfessionalIdQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetServicePlansByProfessionalIdQuery(professionalId);
+        var servicePlans = await handler.HandleAsync(query, cancellationToken);
+
+        return Ok(servicePlans);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> CreateServicePlan([FromBody] CreateServicePlanCommand command,
+        [FromServices] IHandler<ServicePlanDto, CreateServicePlanCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        string userId = User.GetObjectId();
+        command.SetProfessionalId(userId);
+        
+        var servicePlan = await handler.HandleAsync(command, cancellationToken);
+        return Created(HttpContext.Request.GetDisplayUrl(), servicePlan);
+    }
+    
+    [HttpPatch("{id:guid}")]
+    public async Task<IActionResult> UpdateServicePlan(Guid id,
+        [FromBody] UpdateServicePlanCommand command,
+        [FromServices] IHandler<ServicePlanDto, UpdateServicePlanCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        command.SetId(id);
+        var servicePlan = await handler.HandleAsync(command, cancellationToken);
+        
+        return Ok(servicePlan);
+    }
+    
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteServicePlan(Guid id,
+        [FromServices] IHandler<bool, DeleteServicePlanCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteServicePlanCommand(id);
+        
+        await handler.HandleAsync(command, cancellationToken);
+
+        return NoContent();
+    }
+}

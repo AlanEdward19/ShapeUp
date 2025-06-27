@@ -66,4 +66,77 @@ public class ServicePlan
         Professional = professional ?? throw new ArgumentNullException(nameof(professional), "Professional cannot be null.");
         ProfessionalId = professional.Id;
     }
+
+    /// <summary>
+    /// Construtor padrão para o EF Core
+    /// </summary>
+    public ServicePlan() { }
+
+    /// <summary>
+    /// Construtor para criar um novo plano de serviço
+    /// </summary>
+    /// <param name="professionalId"></param>
+    /// <param name="title"></param>
+    /// <param name="description"></param>
+    /// <param name="durationInDays"></param>
+    /// <param name="price"></param>
+    public ServicePlan(string professionalId, string title, string description, int durationInDays, double price)
+    {
+        Id = Guid.NewGuid();
+        ProfessionalId = professionalId;
+        Title = title;
+        Description = description;
+        DurationInDays = durationInDays;
+        Price = price;
+    }
+    
+    /// <summary>
+    /// Método para atualizar o titulo do plano de serviço
+    /// </summary>
+    /// <param name="title"></param>
+    public void UpdateTitle(string? title)
+    {
+        if (string.IsNullOrWhiteSpace(title) ||
+            title.ToLower().Replace(" ", "").Equals(Title.ToLower().Replace(" ", ""))) return;
+        
+        Title = title;
+        UpdatedAt = DateTime.Now;
+    }
+    
+    /// <summary>
+    /// Método para atualizar a descrição do plano de serviço
+    /// </summary>
+    /// <param name="description"></param>
+    public void UpdateDescription(string? description)
+    {
+        if (string.IsNullOrWhiteSpace(description) ||
+            description.ToLower().Replace(" ", "").Equals(Description.ToLower().Replace(" ", ""))) return;
+        
+        Description = description;
+        UpdatedAt = DateTime.Now;
+    }
+    
+    /// <summary>
+    /// Método para atualizar a duração do plano de serviço em dias
+    /// </summary>
+    /// <param name="durationInDays"></param>
+    public void UpdateDurationInDays(int? durationInDays)
+    {
+        if (durationInDays == null || DurationInDays == durationInDays) return;
+        
+        DurationInDays = durationInDays.Value;
+        UpdatedAt = DateTime.Now;
+    }
+    
+    /// <summary>
+    /// Método para atualizar o preço do plano de serviço
+    /// </summary>
+    /// <param name="price"></param>
+    public void UpdatePrice(double? price)
+    {
+        if (price == null || Price.Equals(price)) return;
+        
+        Price = price.Value;
+        UpdatedAt = DateTime.Now;
+    }
 }
