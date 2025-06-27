@@ -9,11 +9,11 @@ public class GetServicePlansByProfessionalIdQueryHandler(DatabaseContext dbConte
 {
     public async Task<List<ServicePlanDto>> HandleAsync(GetServicePlansByProfessionalIdQuery query, CancellationToken cancellationToken)
     {
-        var professional = await dbContext.Professionals
+        var professionalExists = await dbContext.Professionals
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == query.ProfessionalId, cancellationToken);
+            .AnyAsync(x => x.Id == query.ProfessionalId, cancellationToken);
         
-        if (professional == null)
+        if (!professionalExists)
             throw new NotFoundException($"Professional with Id: '{query.ProfessionalId}' not found.");
         
         var servicePlans = dbContext.ServicePlans

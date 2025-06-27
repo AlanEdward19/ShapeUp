@@ -1,7 +1,9 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using ProfessionalManagementService.Clients;
 using ProfessionalManagementService.Common.Interfaces;
+using ProfessionalManagementService.ServicePlans.AddServicePlanToClient;
 using ProfessionalManagementService.ServicePlans.CreateServicePlan;
 using ProfessionalManagementService.ServicePlans.DeleteServicePlan;
 using ProfessionalManagementService.ServicePlans.GetServicePlanById;
@@ -50,6 +52,18 @@ public class ServicePlanController : ControllerBase
         
         var servicePlan = await handler.HandleAsync(command, cancellationToken);
         return Created(HttpContext.Request.GetDisplayUrl(), servicePlan);
+    }
+    
+    [HttpPost("{id:guid}/Client/{clientId}")]
+    public async Task<IActionResult> AddServicePlanToClient(Guid id, string clientId,
+        [FromServices] IHandler<ClientDto, AddServicePlanToClientCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new AddServicePlanToClientCommand(clientId, id);
+        
+        var client = await handler.HandleAsync(command, cancellationToken);
+        
+        return Ok(client);
     }
     
     [HttpPatch("{id:guid}")]

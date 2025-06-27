@@ -1,4 +1,5 @@
-﻿using ProfessionalManagementService.Connections;
+﻿using ProfessionalManagementService.Clients;
+using ProfessionalManagementService.Connections;
 using ProfessionalManagementService.Professionals;
 using ProfessionalManagementService.ServicePlans;
 
@@ -21,6 +22,7 @@ public static class ServiceDependencies
         services
             .ConfigureProfessionalServices()
             .ConfigureServicePlanServices()
+            .AddClientServices()
             .ConfigureConnections(configuration);
 
         return services;

@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ProfessionalManagementService.Common.Enums;
 using ProfessionalManagementService.Professionals;
 using ProfessionalManagementService.Reviews;
+using ProfessionalManagementService.ServicePlans;
 
 namespace ProfessionalManagementService.Clients;
 
@@ -14,11 +16,6 @@ public class Client
     /// </summary>
     [Key]
     public string Id { get; private set; }
-    
-    /// <summary>
-    /// Nome completo do cliente
-    /// </summary>
-    public string FullName { get; private set; }
     
     /// <summary>
     /// Email do cliente
@@ -44,7 +41,37 @@ public class Client
     /// Reviews feitas pelo cliente sobre profissionais
     /// </summary>
     public virtual ICollection<ClientProfessionalReview> ClientProfessionalReviews { get; set; } = new List<ClientProfessionalReview>();
-    
+
+    /// <summary>
+    /// Construtor para o EF Core
+    /// </summary>
+    public Client() { }
+
+    /// <summary>
+    /// Construtor com paramêtros
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="email"></param>
+    public Client(string id, string email)
+    {
+        Id = id;
+        Email = email;
+    }
+
+    /// <summary>
+    /// Método para atualizar o email de um cliente.
+    /// </summary>
+    /// <param name="email"></param>
+    public void UpdateEmail(string? email)
+    {
+        if (string.IsNullOrWhiteSpace(email) ||
+            email.ToLower().Replace(" ", "").Equals(Email.ToLower().Replace(" ", "")))
+            return;
+        
+        Email = email;
+        UpdatedAt = DateTime.Now;
+    }
+
     /// <summary>
     /// Método para adicionar um plano de serviço ao cliente.
     /// </summary>

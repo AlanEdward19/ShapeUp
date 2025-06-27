@@ -11,11 +11,6 @@ public class ProfessionalDto(Professional professional)
     public string Id { get; private set; } = professional.Id;
 
     /// <summary>
-    /// Nome completo do profissional
-    /// </summary>
-    public string FullName { get; private set; } = professional.FullName;
-
-    /// <summary>
     /// Email do profissional
     /// </summary>
     public string Email { get; private set; } = professional.Email;

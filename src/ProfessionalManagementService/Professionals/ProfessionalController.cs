@@ -39,7 +39,6 @@ public class ProfessionalController : ControllerBase
         
         command.SetId(userId);
         command.SetEmail(email);
-        command.SetFullName(fullName);
         
         var professional = await handler.HandleAsync(command, cancellationToken);
         return Created(HttpContext.Request.GetDisplayUrl(), professional);

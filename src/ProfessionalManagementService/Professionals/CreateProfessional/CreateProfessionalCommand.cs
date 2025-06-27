@@ -13,11 +13,6 @@ public class CreateProfessionalCommand
     private string Id { get; set; }
     
     /// <summary>
-    /// Nome completo do profissional
-    /// </summary>
-    private string FullName { get; set; }
-    
-    /// <summary>
     /// Email do profissional
     /// </summary>
     private string Email { get; set; }
@@ -37,15 +32,6 @@ public class CreateProfessionalCommand
     }
     
     /// <summary>
-    /// Método para definir o nome completo do profissional
-    /// </summary>
-    /// <param name="fullName"></param>
-    public void SetFullName(string fullName)
-    {
-        FullName = fullName;
-    }
-    
-    /// <summary>
     /// Método para definir o email do profissional
     /// </summary>
     /// <param name="email"></param>
@@ -60,6 +46,6 @@ public class CreateProfessionalCommand
     /// <returns></returns>
     public Professional ToProfessional()
     {
-        return new Professional(Id, FullName, Email.ToLower(), Type, false);
+        return new Professional(Id, Email.ToLower(), Type, false);
     }
 }

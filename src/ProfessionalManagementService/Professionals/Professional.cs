@@ -16,11 +16,6 @@ public class Professional
     public string Id { get; private set; }
 
     /// <summary>
-    /// Nome completo do profissional
-    /// </summary>
-    public string FullName { get; private set; }
-
-    /// <summary>
     /// Email do profissional
     /// </summary>
     public string Email { get; private set; }
@@ -76,22 +71,12 @@ public class Professional
     /// <param name="email"></param>
     /// <param name="type"></param>
     /// <param name="isVerified"></param>
-    public Professional(string id, string fullName, string email, EProfessionalType type, bool isVerified)
+    public Professional(string id, string email, EProfessionalType type, bool isVerified)
     {
         Id = id;
-        FullName = fullName;
         Email = email;
         Type = type;
         IsVerified = isVerified;
-    }
-
-    public void UpdateFullName(string? fullName)
-    {
-        if (string.IsNullOrWhiteSpace(fullName) ||
-            fullName.ToLower().Replace(" ", "").Equals(FullName.ToLower().Replace(" ", ""))) return;
-
-        FullName = fullName;
-        UpdatedAt = DateTime.Now;
     }
 
     public void UpdateEmail(string? email)

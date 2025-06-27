@@ -20,7 +20,6 @@ public class UpdateProfessionalCommandHandler(DatabaseContext dbContext)
         try
         {
             professional.UpdateEmail(command.Email);
-            professional.UpdateFullName(command.FullName);
             professional.UpdateType(command.Type);
             
             dbContext.Professionals.Update(professional);
