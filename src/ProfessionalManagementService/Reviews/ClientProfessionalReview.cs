@@ -102,4 +102,42 @@ public class ClientProfessionalReview
         ClientServicePlan = clientServicePlan ?? throw new ArgumentNullException(nameof(clientServicePlan), "Client service plan cannot be null.");
         ClientServicePlanId = clientServicePlan.Id;
     }
+    
+    public void UpdateRating(int? rating)
+    {
+        if (rating == null || rating == Rating)
+            return;
+        
+        if (rating is < 1 or > 5)
+            throw new ArgumentOutOfRangeException(nameof(rating), "Rating must be between 1 and 5.");
+        
+        Rating = rating.Value;
+        UpdatedAt = DateTime.Now;
+    }
+    
+    public void UpdateComment(string? comment)
+    {
+        if (comment == null || comment.Equals(Comment))
+            return;
+
+        Comment = comment;
+        UpdatedAt = DateTime.Now;
+    }
+    
+    /// <summary>
+    /// Constructor padrão para o EF Core
+    /// </summary>
+    public ClientProfessionalReview() { }
+
+    /// <summary>
+    /// Constructor para criar uma nova avaliação de profissional pelo cliente.
+    /// </summary>
+    /// <param name="rating"></param>
+    /// <param name="comment"></param>
+    public ClientProfessionalReview(int rating, string? comment)
+    {
+        Id = Guid.NewGuid();
+        Rating = rating;
+        Comment = comment;
+    }
 }
