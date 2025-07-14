@@ -1,0 +1,3 @@
+﻿namespace ProfessionalManagementService.Professionals.GetProfessionals;
+
+public class GetProfessionalsQuery;

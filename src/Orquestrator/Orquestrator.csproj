@@ -25,6 +25,7 @@
       <ProjectReference Include="..\ChatService\ChatService.csproj" />
       <ProjectReference Include="..\NotificationService\NotificationService.csproj" />
       <ProjectReference Include="..\NutritionService\NutritionService.csproj" />
+      <ProjectReference Include="..\ProfessionalManagementService\ProfessionalManagementService.csproj" />
       <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
       <ProjectReference Include="..\SocialService\SocialService.csproj" />
       <ProjectReference Include="..\TrainingService\TrainingService.csproj" />

@@ -12,6 +12,10 @@ var sqlServer = builder
         .AddSqlServer("SqlServer")
         .WithDataVolume();
 
+var sqlServerProfessionalManagement = builder
+        .AddSqlServer("SqlServerProfessionalManagement")
+        .WithDataVolume();
+
 var storage = builder
         .AddAzureStorage("Storage")
         .RunAsEmulator(c => c
@@ -25,7 +29,6 @@ var socialService = builder
         .AddProject<Projects.SocialService>("SocialService")
         .WaitFor(redis)
         .WaitFor(storage)
-        // .WaitFor(search)
         .WithReference(storage.AddBlobs("BlobStorage"))
         .WithReference(redis)
         .WithReference(search);
@@ -61,6 +64,13 @@ var trainingService = builder
         .WaitFor(sqlServer)
         .WaitFor(mongo)
         .WithReference(sqlServer)
-        .WithReference(mongo);
+        .WithReference(mongo)
+        .WithExternalHttpEndpoints();
+
+var professionalManagementService = builder
+        .AddProject<Projects.ProfessionalManagementService>("ProfessionalManagementService")
+        .WaitFor(sqlServerProfessionalManagement)
+        .WithReference(sqlServerProfessionalManagement)
+        .WithExternalHttpEndpoints();
 
 builder.Build().Run();
