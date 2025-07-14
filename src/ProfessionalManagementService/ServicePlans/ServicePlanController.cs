@@ -31,7 +31,7 @@ public class ServicePlanController : ControllerBase
         return Ok(servicePlan);
     }
     
-    [HttpGet("/Professional/{professionalId}/ServicePlan")]
+    [HttpGet("/v{version:apiVersion}/Professional/{professionalId}/ServicePlan")]
     public async Task<IActionResult> GetServicePlanByProfessionalId(string professionalId,
         [FromServices] IHandler<List<ServicePlanDto>, GetServicePlansByProfessionalIdQuery> handler,
         CancellationToken cancellationToken)

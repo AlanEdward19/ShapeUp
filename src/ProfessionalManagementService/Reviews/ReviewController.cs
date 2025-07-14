@@ -17,7 +17,7 @@ namespace ProfessionalManagementService.Reviews;
 [Route("v{version:apiVersion}/[Controller]")]
 public class ReviewController : ControllerBase
 {
-    [HttpGet("Professional/{professionalId}/Review")]
+    [HttpGet("/v{version:apiVersion}/Professional/{professionalId}/Review")]
     public async Task<IActionResult> GetReviewsByProfessionalIdAsync(
         [FromRoute] string professionalId,
         [FromServices] IHandler<List<ClientProfessionalReviewDto>, GetReviewsByProfessionalIdQuery> handler,
@@ -29,7 +29,7 @@ public class ReviewController : ControllerBase
         return Ok(reviews);
     }
 
-    [HttpPost("Professional/{professionalId}/ServicePlan/{servicePlanId:guid}/Review")]
+    [HttpPost("/v{version:apiVersion}/Professional/{professionalId}/ServicePlan/{servicePlanId:guid}/Review")]
     public async Task<IActionResult> CreateReviewAsync(
         [FromRoute] string professionalId,
         [FromRoute] Guid servicePlanId,
