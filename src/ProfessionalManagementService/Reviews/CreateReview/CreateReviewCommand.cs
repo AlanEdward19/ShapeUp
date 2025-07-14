@@ -2,9 +2,9 @@
 
 public class CreateReviewCommand(int rating, string? comment)
 {
-    public string ClientId { get; private set; }
+    public string ClientId { get; private set; } = "";
     
-    public string ProfessionalId { get; private set; }
+    public string ProfessionalId { get; private set; } = "";
     
     public Guid ServicePlanId { get; private set; }
     

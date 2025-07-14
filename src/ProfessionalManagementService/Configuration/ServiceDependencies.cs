@@ -1,6 +1,7 @@
 ﻿using ProfessionalManagementService.Clients;
 using ProfessionalManagementService.Connections;
 using ProfessionalManagementService.Professionals;
+using ProfessionalManagementService.Reviews;
 using ProfessionalManagementService.ServicePlans;
 
 namespace ProfessionalManagementService.Configuration;
@@ -22,6 +23,7 @@ public static class ServiceDependencies
         services
             .ConfigureProfessionalServices()
             .ConfigureServicePlanServices()
+            .ConfigureReviewServices()
             .AddClientServices()
             .ConfigureConnections(configuration);
 

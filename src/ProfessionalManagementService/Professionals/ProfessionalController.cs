@@ -5,6 +5,7 @@ using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Professionals.CreateProfessional;
 using ProfessionalManagementService.Professionals.DeleteProfessional;
 using ProfessionalManagementService.Professionals.GetProfessionalById;
+using ProfessionalManagementService.Professionals.GetProfessionals;
 using ProfessionalManagementService.Professionals.UpdateProfessional;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
@@ -17,6 +18,16 @@ namespace ProfessionalManagementService.Professionals;
 [Route("v{version:apiVersion}/[Controller]")]
 public class ProfessionalController : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetProfessionals([FromServices] IHandler<List<ProfessionalDto>, GetProfessionalsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetProfessionalsQuery();
+        var professionals = await handler.HandleAsync(query, cancellationToken);
+
+        return Ok(professionals);
+    }
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProfessionalById(string id,
         [FromServices] IHandler<ProfessionalDto, GetProfessionalByIdQuery> handler,
