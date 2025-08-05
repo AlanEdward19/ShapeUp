@@ -8,6 +8,11 @@ public class ServicePlanDto(ServicePlan servicePlan)
     public Guid Id { get; private set; } = servicePlan.Id;
     
     /// <summary>
+    /// Id do profissional associado ao plano de serviço
+    /// </summary>
+    public string ProfessionalId { get; private set; } = servicePlan.ProfessionalId;
+    
+    /// <summary>
     /// Título do plano de serviço
     /// </summary>
     public string Title { get; private set; } = servicePlan.Title;

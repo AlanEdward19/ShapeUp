@@ -9,6 +9,11 @@ public class ProfessionalDto(Professional professional)
     /// Id do profissional
     /// </summary>
     public string Id { get; private set; } = professional.Id;
+    
+    /// <summary>
+    /// Nome completo do profissional
+    /// </summary>
+    public string Name { get; private set; } = professional.Name;
 
     /// <summary>
     /// Email do profissional

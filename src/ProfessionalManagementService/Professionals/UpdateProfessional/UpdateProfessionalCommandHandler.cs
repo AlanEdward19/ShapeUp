@@ -19,6 +19,7 @@ public class UpdateProfessionalCommandHandler(DatabaseContext dbContext)
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         try
         {
+            professional.UpdateName(command.Name);
             professional.UpdateEmail(command.Email);
             professional.UpdateType(command.Type);
             
