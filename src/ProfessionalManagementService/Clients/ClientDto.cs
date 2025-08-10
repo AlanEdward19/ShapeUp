@@ -7,6 +7,8 @@ public class ClientDto(Client client, bool isNutritionist = false, bool isTraine
     public string Id { get; private set; } = client.Id;
 
     public string Email { get; private set; } = client.Email;
+    
+    public string Name { get; private set; } = client.Name;
 
     public bool IsNutritionist { get; private set; } = isNutritionist;
     

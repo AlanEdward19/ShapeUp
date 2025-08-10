@@ -47,7 +47,7 @@ public class ClientController : ControllerBase
         return Ok(client);
     }
 
-    [HttpGet("/Professional/{professionalId}/Client")]
+    [HttpGet("/v{version:apiVersion}/Professional/{professionalId}/Client")]
     public async Task<IActionResult> GetClientsByProfessionalId(string professionalId,
         [FromServices] IHandler<List<ClientDto>, GetClientsByProfessionalIdQuery> handler,
         CancellationToken cancellationToken)

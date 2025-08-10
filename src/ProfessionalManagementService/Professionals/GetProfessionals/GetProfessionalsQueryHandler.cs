@@ -13,6 +13,7 @@ public class GetProfessionalsQueryHandler(DatabaseContext dbContext) : IHandler<
         var professionals = await dbContext.Professionals
             .Include(x => x.ServicePlans)
             .AsNoTracking()
+            .Where(x => !x.Id.Equals(query.LoggedInUserId))
             .Select(x => new ProfessionalDto(x))
             .ToListAsync(cancellationToken);
 
