@@ -2,6 +2,7 @@
 using ProfessionalManagementService.Clients;
 using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
+using ProfessionalManagementService.Reviews;
 using SharedKernel.Exceptions;
 
 namespace ProfessionalManagementService.ServicePlans.DeleteServicePlanFromClient;
@@ -13,6 +14,7 @@ public class DeleteServicePlanFromClientCommandHandler(DatabaseContext dbContext
         var client = await dbContext.Clients
             .Include(x => x.ClientServicePlans)
             .ThenInclude(x => x.ServicePlan)
+            .Include(x => x.ClientProfessionalReviews)
             .FirstOrDefaultAsync(x => x.Id == command.ClientId, cancellationToken);
         
         if (client == null)
@@ -35,7 +37,12 @@ public class DeleteServicePlanFromClientCommandHandler(DatabaseContext dbContext
         {
             ClientServicePlan clientServicePlan = client.ClientServicePlans.First(x => x.ServicePlanId == command.ServicePlanId);
             client.RemoveServicePlan(clientServicePlan);
-            
+
+            ClientProfessionalReview? review = client.ClientProfessionalReviews
+                .FirstOrDefault(x => x.ClientServicePlanId == clientServicePlan.Id);
+
+            review?.RemoveClientServicePlan();
+
             dbContext.Clients.Update(client);
             
             await dbContext.SaveChangesAsync(cancellationToken);

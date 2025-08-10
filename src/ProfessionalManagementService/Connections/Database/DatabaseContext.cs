@@ -23,12 +23,18 @@ public partial class DatabaseContext : DbContext
             .WithMany()
             .HasForeignKey(r => r.ProfessionalId)
             .OnDelete(DeleteBehavior.SetNull);
-
+        
         modelBuilder.Entity<ClientProfessionalReview>()
             .HasOne(r => r.ClientServicePlan)
             .WithMany()
             .HasForeignKey(r => r.ClientServicePlanId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ClientServicePlan>()
+            .HasOne(csp => csp.ServicePlan)
+            .WithMany()
+            .HasForeignKey(csp => csp.ServicePlanId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         base.OnModelCreating(modelBuilder);
     }

@@ -10,7 +10,7 @@ public class ClientProfessionalReviewDto(ClientProfessionalReview clientProfessi
     
     public string? ProfessionalId { get; private set; } = clientProfessionalReview.ProfessionalId;
     
-    public Guid ClientServicePlanId { get; private set; } = clientProfessionalReview.ClientServicePlanId;
+    public Guid? ClientServicePlanId { get; private set; } = clientProfessionalReview.ClientServicePlanId;
     
     public int Rating { get; private set; } = clientProfessionalReview.Rating;
     
