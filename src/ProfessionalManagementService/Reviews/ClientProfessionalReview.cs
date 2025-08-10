@@ -29,7 +29,7 @@ public class ClientProfessionalReview
     /// <summary>
     /// Id do plano de serviço associado à avaliação
     /// </summary>
-    public Guid ClientServicePlanId { get; private set; }
+    public Guid? ClientServicePlanId { get; private set; }
     
     /// <summary>
     /// Avaliação do profissional pelo cliente
@@ -68,7 +68,7 @@ public class ClientProfessionalReview
     /// Plano de serviço do cliente associado à avaliação
     /// </summary>
     [ForeignKey(nameof(ClientServicePlanId))]
-    public virtual ClientServicePlan ClientServicePlan { get; private set; }
+    public virtual ClientServicePlan? ClientServicePlan { get; private set; }
     
     /// <summary>
     /// Método para definir o cliente que fez a avaliação.
@@ -101,6 +101,15 @@ public class ClientProfessionalReview
     {
         ClientServicePlan = clientServicePlan ?? throw new ArgumentNullException(nameof(clientServicePlan), "Client service plan cannot be null.");
         ClientServicePlanId = clientServicePlan.Id;
+    }
+    
+    /// <summary>
+    /// Método para remover o plano de serviço do cliente associado à avaliação.
+    /// </summary>
+    public void RemoveClientServicePlan()
+    {
+        ClientServicePlan = null;
+        ClientServicePlanId = null;
     }
     
     public void UpdateRating(int? rating)

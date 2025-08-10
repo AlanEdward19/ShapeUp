@@ -25,6 +25,9 @@ public class AddServicePlanToClientCommandHandler(DatabaseContext dbContext) : I
         if (servicePlan == null)
             throw new NotFoundException($"ServicePlan with Id: '{command.ServicePlanId}' not found.");
         
+        if(!client.Id.Equals(command.LoggedInUserId))
+            throw new UnauthorizedAccessException("You do not have permission to add this service plan to the client.");
+        
         if (client.ClientServicePlans.Any(x => x.ServicePlanId == command.ServicePlanId))
             throw new InvalidOperationException($"Client with Id: '{command.ClientId}' already has ServicePlan with Id: '{command.ServicePlanId}'.");
         

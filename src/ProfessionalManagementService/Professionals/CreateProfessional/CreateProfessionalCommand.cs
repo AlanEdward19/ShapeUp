@@ -18,6 +18,11 @@ public class CreateProfessionalCommand
     private string Email { get; set; }
     
     /// <summary>
+    /// Nome do profissional
+    /// </summary>
+    private string Name { get; set; }
+    
+    /// <summary>
     /// Tipo de profissional
     /// </summary>
     public EProfessionalType Type { get; set; }
@@ -41,11 +46,20 @@ public class CreateProfessionalCommand
     }
     
     /// <summary>
+    /// Método para definir o nome do profissional
+    /// </summary>
+    /// <param name="name"></param>
+    public void SetName(string name)
+    {
+        Name = name;
+    }
+    
+    /// <summary>
     /// Método para converter o comando em um objeto Professional
     /// </summary>
     /// <returns></returns>
     public Professional ToProfessional()
     {
-        return new Professional(Id, Email.ToLower(), Type, false);
+        return new Professional(Id, Email.ToLower(), Name, Type, false);
     }
 }

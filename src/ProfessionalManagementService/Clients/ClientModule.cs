@@ -21,7 +21,7 @@ public static class ClientModule
     {
         services.AddScoped<IHandler<ClientDto, CreateClientCommand>, CreateClientCommandHandler>();
         services.AddScoped<IHandler<ClientDto, UpdateClientCommand>, UpdateClientCommandHandler>();
-        services.AddScoped<IHandler<ClientDto, GetClientByIdQuery>, GetClientByIdQueryHandler>();
+        services.AddScoped<IHandler<ClientDto?, GetClientByIdQuery>, GetClientByIdQueryHandler>();
         services.AddScoped<IHandler<List<ClientDto>, GetClientsByProfessionalIdQuery>, GetClientsByProfessionalIdQueryHandler>();
         services.AddScoped<IHandler<bool, DeleteClientCommand>, DeleteClientCommandHandler>();
 

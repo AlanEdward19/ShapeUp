@@ -10,6 +10,7 @@ public class UpdateReviewCommandHandler(DatabaseContext dbContext) : IHandler<Cl
     public async Task<ClientProfessionalReviewDto> HandleAsync(UpdateReviewCommand command, CancellationToken cancellationToken)
     {
         var review = await dbContext.ClientProfessionalReviews
+            .Include(x => x.Client)
             .FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
         if (review == null)
             throw new NotFoundException($"Review with ID '{command.Id}' does not exist.");

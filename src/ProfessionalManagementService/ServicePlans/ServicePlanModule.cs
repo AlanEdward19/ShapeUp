@@ -3,6 +3,7 @@ using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.ServicePlans.AddServicePlanToClient;
 using ProfessionalManagementService.ServicePlans.CreateServicePlan;
 using ProfessionalManagementService.ServicePlans.DeleteServicePlan;
+using ProfessionalManagementService.ServicePlans.DeleteServicePlanFromClient;
 using ProfessionalManagementService.ServicePlans.GetServicePlanById;
 using ProfessionalManagementService.ServicePlans.GetServicePlansByProfessionalId;
 using ProfessionalManagementService.ServicePlans.UpdateServicePlan;
@@ -26,6 +27,7 @@ public static class ServicePlanModule
     {
         services.AddScoped<IHandler<ServicePlanDto, CreateServicePlanCommand>, CreateServicePlanCommandHandler>();
         services.AddScoped<IHandler<ClientDto, AddServicePlanToClientCommand>, AddServicePlanToClientCommandHandler>();
+        services.AddScoped<IHandler<ClientDto, DeleteServicePlanFromClientCommand>, DeleteServicePlanFromClientCommandHandler>();
         services.AddScoped<IHandler<ServicePlanDto, UpdateServicePlanCommand>, UpdateServicePlanCommandHandler>();
         services.AddScoped<IHandler<List<ServicePlanDto>, GetServicePlansByProfessionalIdQuery>, GetServicePlansByProfessionalIdQueryHandler>();
         services.AddScoped<IHandler<ServicePlanDto, GetServicePlanByIdQuery>, GetServicePlanByIdQueryHandler>();

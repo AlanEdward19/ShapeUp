@@ -19,6 +19,11 @@ public class Professional
     /// Email do profissional
     /// </summary>
     public string Email { get; private set; }
+    
+    /// <summary>
+    /// Nome do profissional
+    /// </summary>
+    public string Name { get; private set; }
 
     /// <summary>
     /// Tipo de profissional
@@ -67,16 +72,25 @@ public class Professional
     /// Construtor para criar um profissional
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="fullName"></param>
+    /// <param name="name"></param>
     /// <param name="email"></param>
     /// <param name="type"></param>
     /// <param name="isVerified"></param>
-    public Professional(string id, string email, EProfessionalType type, bool isVerified)
+    public Professional(string id, string email, string name, EProfessionalType type, bool isVerified)
     {
         Id = id;
         Email = email;
+        Name = name;
         Type = type;
         IsVerified = isVerified;
+    }
+    
+    public void UpdateName(string? name)
+    {
+        if (string.IsNullOrWhiteSpace(name) || name.Equals(Name)) return;
+
+        Name = name;
+        UpdatedAt = DateTime.Now;
     }
 
     public void UpdateEmail(string? email)

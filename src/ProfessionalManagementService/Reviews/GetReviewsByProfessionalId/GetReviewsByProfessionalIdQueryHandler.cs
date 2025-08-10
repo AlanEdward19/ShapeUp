@@ -16,7 +16,9 @@ public class GetReviewsByProfessionalIdQueryHandler(DatabaseContext dbContext) :
             throw new NotFoundException($"Professional with ID '{command.ProfessionalId}' does not exist.");
         
         var reviews = await dbContext.ClientProfessionalReviews
+            .Include(x => x.Client)
             .Where(x => x.ProfessionalId == command.ProfessionalId)
+            .AsNoTracking()
             .Select(x => new ClientProfessionalReviewDto(x))
             .ToListAsync(cancellationToken);
 

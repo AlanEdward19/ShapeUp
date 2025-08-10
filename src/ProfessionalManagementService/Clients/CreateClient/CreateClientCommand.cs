@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="id"></param>
 /// <param name="email"></param>
-public class CreateClientCommand(string id, string email)
+public class CreateClientCommand(string id, string email, string name)
 {
     /// <summary>
     /// Id do cliente
@@ -18,11 +18,16 @@ public class CreateClientCommand(string id, string email)
     public string Email { get; private set; } = email;
     
     /// <summary>
+    /// Nome do cliente
+    /// </summary>
+    public string Name { get; private set; } = name;
+    
+    /// <summary>
     /// Método para converter o comando em um objeto Client
     /// </summary>
     /// <returns></returns>
     public Client ToClient()
     {
-        return new Client(Id, Email);
+        return new Client(Id, Email, Name);
     }
 }

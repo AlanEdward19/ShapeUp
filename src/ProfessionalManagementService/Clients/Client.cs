@@ -18,6 +18,11 @@ public class Client
     public string Id { get; private set; }
     
     /// <summary>
+    /// Nome do cliente
+    /// </summary>
+    public string Name { get; private set; }
+    
+    /// <summary>
     /// Email do cliente
     /// </summary>
     public string Email { get; private set; }
@@ -52,10 +57,12 @@ public class Client
     /// </summary>
     /// <param name="id"></param>
     /// <param name="email"></param>
-    public Client(string id, string email)
+    /// <param name="name"></param>
+    public Client(string id, string email, string name)
     {
         Id = id;
         Email = email;
+        Name = name;
     }
 
     /// <summary>
@@ -71,6 +78,16 @@ public class Client
         Email = email;
         UpdatedAt = DateTime.Now;
     }
+    
+    public void UpdateName(string? name)
+    {
+        if (string.IsNullOrWhiteSpace(name) ||
+            name.ToLower().Replace(" ", "").Equals(Name.ToLower().Replace(" ", "")))
+            return;
+        
+        Name = name;
+        UpdatedAt = DateTime.Now;
+    }
 
     /// <summary>
     /// Método para adicionar um plano de serviço ao cliente.
@@ -84,6 +101,15 @@ public class Client
         
         servicePlan.SetClient(this);
         ClientServicePlans.Add(servicePlan);
+    }
+    
+    public void RemoveServicePlan(ClientServicePlan servicePlan)
+    {
+        if (servicePlan == null)
+            throw new ArgumentNullException(nameof(servicePlan), "Service plan cannot be null.");
+        
+        if (!ClientServicePlans.Remove(servicePlan))
+            throw new InvalidOperationException("Service plan not found in client's service plans.");
     }
     
     /// <summary>

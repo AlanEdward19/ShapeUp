@@ -7,6 +7,7 @@ using ProfessionalManagementService.Clients.GetClientById;
 using ProfessionalManagementService.Clients.GetClientsByProfessionalId;
 using ProfessionalManagementService.Clients.UpdateClient;
 using ProfessionalManagementService.Common.Interfaces;
+using SharedKernel.Exceptions;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
 
@@ -20,15 +21,33 @@ public class ClientController : ControllerBase
 {
     [HttpGet("{id}")]
     public async Task<IActionResult> GetClientById(string id,
-        [FromServices] IHandler<ClientDto, GetClientByIdQuery> handler,
+        [FromServices] IHandler<ClientDto?, GetClientByIdQuery> queryHandler,
+        [FromServices] IHandler<ClientDto, CreateClientCommand> commandHandler,
         CancellationToken cancellationToken)
     {
+        string userId = User.GetObjectId();
+        
         var query = new GetClientByIdQuery(id);
+        
+        var client = await queryHandler.HandleAsync(query, cancellationToken);
 
-        return Ok(await handler.HandleAsync(query, cancellationToken));
+        if (client != null) return Ok(client);
+        
+        if (id.Equals(userId))
+        {
+            string email = User.GetEmail();
+            string name = User.GetFullName();
+
+            var command = new CreateClientCommand(userId, email, name);
+            client = await commandHandler.HandleAsync(command, cancellationToken);
+        }
+        else
+            throw new NotFoundException($"Client with Id: '{query.Id}' not found.");
+
+        return Ok(client);
     }
 
-    [HttpGet("/Professional/{professionalId}/Client")]
+    [HttpGet("/v{version:apiVersion}/Professional/{professionalId}/Client")]
     public async Task<IActionResult> GetClientsByProfessionalId(string professionalId,
         [FromServices] IHandler<List<ClientDto>, GetClientsByProfessionalIdQuery> handler,
         CancellationToken cancellationToken)
@@ -36,18 +55,6 @@ public class ClientController : ControllerBase
         var query = new GetClientsByProfessionalIdQuery(professionalId);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CreateClient([FromServices] IHandler<ClientDto, CreateClientCommand> handler,
-        CancellationToken cancellationToken)
-    {
-        string userId = User.GetObjectId();
-        string email = User.GetEmail();
-
-        var command = new CreateClientCommand(userId, email);
-
-        return Created(HttpContext.Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
     
     [HttpPut("{id}")]

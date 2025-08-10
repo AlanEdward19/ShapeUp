@@ -22,7 +22,9 @@ public class ProfessionalController : ControllerBase
     public async Task<IActionResult> GetProfessionals([FromServices] IHandler<List<ProfessionalDto>, GetProfessionalsQuery> handler,
         CancellationToken cancellationToken)
     {
-        var query = new GetProfessionalsQuery();
+        string userId = User.GetObjectId();
+        
+        var query = new GetProfessionalsQuery(userId);
         var professionals = await handler.HandleAsync(query, cancellationToken);
 
         return Ok(professionals);
@@ -50,6 +52,7 @@ public class ProfessionalController : ControllerBase
         
         command.SetId(userId);
         command.SetEmail(email);
+        command.SetName(fullName);
         
         var professional = await handler.HandleAsync(command, cancellationToken);
         return Created(HttpContext.Request.GetDisplayUrl(), professional);

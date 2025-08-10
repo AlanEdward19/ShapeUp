@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProfessionalManagementService.Connections.Database;
 
@@ -11,9 +12,11 @@ using ProfessionalManagementService.Connections.Database;
 namespace ProfessionalManagementService.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250805141853_New Property on entity")]
+    partial class NewPropertyonentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,10 +34,6 @@ namespace ProfessionalManagementService.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -126,7 +125,7 @@ namespace ProfessionalManagementService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid?>("ClientServicePlanId")
+                    b.Property<Guid>("ClientServicePlanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
@@ -222,7 +221,8 @@ namespace ProfessionalManagementService.Migrations
                     b.HasOne("ProfessionalManagementService.Clients.ClientServicePlan", "ClientServicePlan")
                         .WithMany()
                         .HasForeignKey("ClientServicePlanId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ProfessionalManagementService.Professionals.Professional", "Professional")
                         .WithMany()

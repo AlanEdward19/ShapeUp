@@ -15,7 +15,7 @@ public class UpdateProfessionalCommand
     /// <summary>
     /// Nome completo do profissional
     /// </summary>
-    public string? FullName { get; set; }
+    public string? Name { get; set; }
     
     /// <summary>
     /// Email do profissional
