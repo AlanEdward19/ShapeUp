@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProfessionalManagementService.Clients;
-using ProfessionalManagementService.Common.Enums;
 using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
 using SharedKernel.Exceptions;
 
-namespace ProfessionalManagementService.ServicePlans.AddServicePlanToClient;
+namespace ProfessionalManagementService.ServicePlans.DeleteServicePlanFromClient;
 
-public class AddServicePlanToClientCommandHandler(DatabaseContext dbContext) : IHandler<ClientDto, AddServicePlanToClientCommand>
+public class DeleteServicePlanFromClientCommandHandler(DatabaseContext dbContext) : IHandler<ClientDto, DeleteServicePlanFromClientCommand>
 {
-    public async Task<ClientDto> HandleAsync(AddServicePlanToClientCommand command, CancellationToken cancellationToken)
+    public async Task<ClientDto> HandleAsync(DeleteServicePlanFromClientCommand command, CancellationToken cancellationToken)
     {
         var client = await dbContext.Clients
             .Include(x => x.ClientServicePlans)
@@ -25,23 +24,19 @@ public class AddServicePlanToClientCommandHandler(DatabaseContext dbContext) : I
         if (servicePlan == null)
             throw new NotFoundException($"ServicePlan with Id: '{command.ServicePlanId}' not found.");
         
-        if(!client.Id.Equals(command.LoggedInUserId))
-            throw new UnauthorizedAccessException("You do not have permission to add this service plan to the client.");
+        if(!client.Id.Equals(command.LoggedInUserId) && !servicePlan.ProfessionalId.Equals(command.LoggedInUserId))
+            throw new UnauthorizedAccessException("You do not have permission to remove this service plan from the client.");
         
-        if (client.ClientServicePlans.Any(x => x.ServicePlanId == command.ServicePlanId))
-            throw new InvalidOperationException($"Client with Id: '{command.ClientId}' already has ServicePlan with Id: '{command.ServicePlanId}'.");
+        if (client.ClientServicePlans.All(x => x.ServicePlanId != command.ServicePlanId))
+            throw new InvalidOperationException($"Client with Id: '{command.ClientId}' doesn't have ServicePlan with Id: '{command.ServicePlanId}'.");
         
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            ClientServicePlan clientServicePlan = new(servicePlan.Id, DateTime.Today,
-                DateTime.Today.AddDays(servicePlan.DurationInDays), ESubscriptionStatus.Active, null);
-            
-            clientServicePlan.SetServicePlan(servicePlan);
-            client.AddServicePlan(clientServicePlan);
+            ClientServicePlan clientServicePlan = client.ClientServicePlans.First(x => x.ServicePlanId == command.ServicePlanId);
+            client.RemoveServicePlan(clientServicePlan);
             
             dbContext.Clients.Update(client);
-            await dbContext.ClientServicePlans.AddAsync(clientServicePlan, cancellationToken);
             
             await dbContext.SaveChangesAsync(cancellationToken);
             await dbContext.Database.CommitTransactionAsync(cancellationToken);
@@ -51,7 +46,7 @@ public class AddServicePlanToClientCommandHandler(DatabaseContext dbContext) : I
         catch (Exception e)
         {
             await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw new InvalidOperationException($"An error occurred while adding ServicePlan to Client: {e.Message}", e);
+            throw new InvalidOperationException($"An error occurred while removing ServicePlan from Client: {e.Message}", e);
         }
     }
 }

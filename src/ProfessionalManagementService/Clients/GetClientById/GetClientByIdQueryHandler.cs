@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProfessionalManagementService.Common.Enums;
 using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
 using SharedKernel.Exceptions;
@@ -19,7 +20,21 @@ public class GetClientByIdQueryHandler(DatabaseContext dbContext) : IHandler<Cli
 
         if (client == null)
             throw new NotFoundException($"Client with Id: '{query.Id}' not found.");
-        
-        return new ClientDto(client);
+
+        var professional = await dbContext.Professionals
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == query.Id, cancellationToken: cancellationToken);
+
+        if (professional == null) return new ClientDto(client);
+
+        var (isNutritionist, isTrainer) = professional.Type switch
+        {
+            EProfessionalType.Nutritionist => (true, false),
+            EProfessionalType.Trainer => (false, true),
+            EProfessionalType.Both => (true, true),
+            _ => (false, false)
+        };
+
+        return new ClientDto(client, isNutritionist, isTrainer);
     }
 }

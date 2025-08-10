@@ -23,7 +23,7 @@ public class GetClientsByProfessionalIdQueryHandler(DatabaseContext dbContext) :
             .ThenInclude(x => x.ServicePlan)
             .Include(x => x.ClientProfessionalReviews)
             .Where(x => x.ClientServicePlans.Any(y => y.ServicePlan.ProfessionalId == query.ProfessionalId))
-            .Select(x => new ClientDto(x))
+            .Select(x => new ClientDto(x, false, false))
             .ToListAsync(cancellationToken);
 
         return clients;

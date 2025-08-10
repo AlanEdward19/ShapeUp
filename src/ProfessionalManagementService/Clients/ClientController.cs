@@ -44,8 +44,9 @@ public class ClientController : ControllerBase
     {
         string userId = User.GetObjectId();
         string email = User.GetEmail();
+        string name = User.GetFullName();
 
-        var command = new CreateClientCommand(userId, email);
+        var command = new CreateClientCommand(userId, email, name);
 
         return Created(HttpContext.Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }

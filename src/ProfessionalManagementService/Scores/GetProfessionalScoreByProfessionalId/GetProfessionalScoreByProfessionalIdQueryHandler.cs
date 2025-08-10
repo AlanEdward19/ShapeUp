@@ -18,7 +18,7 @@ public class GetProfessionalScoreByProfessionalIdQueryHandler(DatabaseContext db
                 .ToListAsync(cancellationToken);
 
         if (!reviews.Any())
-            throw new NotFoundException($"No Reviews found for Professional with Id: '{query.ProfessionalId}'.");
+            return new ProfessionalScore(query.ProfessionalId, 0, 0, DateTime.Now);
 
         ProfessionalScore professionalScore = new(
             query.ProfessionalId,

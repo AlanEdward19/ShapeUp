@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="clientId"></param>
 /// <param name="servicePlanId"></param>
-public class AddServicePlanToClientCommand(string clientId, Guid servicePlanId)
+public class AddServicePlanToClientCommand(string clientId, Guid servicePlanId, string  loggedInUserId)
 {
     /// <summary>
     /// Id do cliente ao qual o plano de serviço será adicionado
@@ -16,4 +16,9 @@ public class AddServicePlanToClientCommand(string clientId, Guid servicePlanId)
     /// Id do plano de serviço a ser adicionado ao cliente
     /// </summary>
     public Guid ServicePlanId { get; private set; } = servicePlanId;
+
+    /// <summary>
+    /// Id do usuário logado que está realizando a operação
+    /// </summary>
+    public string LoggedInUserId { get; set; } = loggedInUserId;
 }
