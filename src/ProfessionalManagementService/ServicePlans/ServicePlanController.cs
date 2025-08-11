@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using ProfessionalManagementService.Clients;
+using ProfessionalManagementService.Common.Enums;
 using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.ServicePlans.AddServicePlanToClient;
+using ProfessionalManagementService.ServicePlans.ChangeServicePlanStatusFromClient;
 using ProfessionalManagementService.ServicePlans.CreateServicePlan;
 using ProfessionalManagementService.ServicePlans.DeleteServicePlan;
 using ProfessionalManagementService.ServicePlans.DeleteServicePlanFromClient;
@@ -69,12 +71,26 @@ public class ServicePlanController : ControllerBase
     }
 
     [HttpDelete("{id:guid}/Client/{clientId}")]
-    public async Task<IActionResult> DeleteServicePlanToClient(Guid id, string clientId,
+    public async Task<IActionResult> DeleteServicePlanFromClient(Guid id, string clientId,
         [FromServices] IHandler<ClientDto, DeleteServicePlanFromClientCommand> handler,
         CancellationToken cancellationToken)
     {
         string userId = User.GetObjectId();
         var command = new DeleteServicePlanFromClientCommand(clientId, id, userId);
+
+        var client = await handler.HandleAsync(command, cancellationToken);
+
+        return Ok(client);
+    }
+
+    [HttpPut("{id:guid}/Client/{clientId}")]
+    public async Task<IActionResult> ChangeServicePlanStatusFromClient(Guid id, string clientId,
+        [FromBody] ChangeServicePlanStatusFromClientValueObject changeServicePlanStatusFromClientValueObject,
+        [FromServices] IHandler<ClientDto, ChangeServicePlanStatusFromClientCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        string userId = User.GetObjectId();
+        var command = new ChangeServicePlanStatusFromClientCommand(clientId, id, userId, changeServicePlanStatusFromClientValueObject.Status, changeServicePlanStatusFromClientValueObject.Reason);
 
         var client = await handler.HandleAsync(command, cancellationToken);
 

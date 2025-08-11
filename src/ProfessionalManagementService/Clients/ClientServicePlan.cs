@@ -45,6 +45,16 @@ public class ClientServicePlan
     public string? Feedback { get; private set; }
     
     /// <summary>
+    /// Razão do cancelamento do plano de serviço, se aplicável
+    /// </summary>
+    public string? CancelReason { get; private set; }
+    
+    /// <summary>
+    /// Id do usuário que cancelou o plano de serviço, se aplicável
+    /// </summary>
+    public string? CancelledBy { get; private set; }
+    
+    /// <summary>
     /// Data de criação do plano de serviço do cliente
     /// </summary>
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
@@ -104,5 +114,23 @@ public class ClientServicePlan
     {
         ServicePlan = servicePlan ?? throw new ArgumentNullException(nameof(servicePlan), "ServicePlan cannot be null.");
         ServicePlanId = servicePlan.Id;
+    }
+    
+    public void UpdateStatus(ESubscriptionStatus status, string reason, string authorId)
+    {
+        Status = status;
+        
+        if (status is ESubscriptionStatus.Canceled or ESubscriptionStatus.Expired)
+        {
+            CancelReason = reason;
+            CancelledBy = authorId;
+        }
+        else
+        {
+            CancelReason = null;
+            CancelledBy = null;
+        }
+        
+        UpdatedAt = DateTime.Now;
     }
 }
