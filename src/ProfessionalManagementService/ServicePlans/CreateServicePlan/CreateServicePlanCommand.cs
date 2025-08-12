@@ -1,4 +1,6 @@
-﻿namespace ProfessionalManagementService.ServicePlans.CreateServicePlan;
+﻿using ProfessionalManagementService.ServicePlans.Common.Enums;
+
+namespace ProfessionalManagementService.ServicePlans.CreateServicePlan;
 
 /// <summary>
 /// Comando para criar um novo plano de serviço
@@ -31,6 +33,11 @@ public class CreateServicePlanCommand
     public double Price { get; set; }
     
     /// <summary>
+    /// Tipo do plano de serviço
+    /// </summary>
+    public EServicePlanType Type { get; set; }
+    
+    /// <summary>
     /// Método para definir o Id do profissional
     /// </summary>
     /// <param name="professionalId"></param>
@@ -45,6 +52,6 @@ public class CreateServicePlanCommand
     /// <returns></returns>
     public ServicePlan ToServicePlan()
     {
-        return new ServicePlan(ProfessionalId, Title, Description, DurationInDays, Price);
+        return new ServicePlan(ProfessionalId, Title, Description, DurationInDays, Price, Type);
     }
 }
