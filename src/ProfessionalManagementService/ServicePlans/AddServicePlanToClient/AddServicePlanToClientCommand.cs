@@ -20,5 +20,5 @@ public class AddServicePlanToClientCommand(string clientId, Guid servicePlanId, 
     /// <summary>
     /// Id do usuário logado que está realizando a operação
     /// </summary>
-    public string LoggedInUserId { get; private set; } = loggedInUserId;
+    public string LoggedInUserId { get; set; } = loggedInUserId;
 }

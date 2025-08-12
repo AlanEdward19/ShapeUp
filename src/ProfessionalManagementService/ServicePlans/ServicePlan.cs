@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ProfessionalManagementService.Professionals;
-using ProfessionalManagementService.ServicePlans.Common.Enums;
 
 namespace ProfessionalManagementService.ServicePlans;
 
@@ -40,11 +39,6 @@ public class ServicePlan
     /// Preço do plano de serviço
     /// </summary>
     public double Price { get; private set; }
-    
-    /// <summary>
-    /// Tipo do plano de serviço
-    /// </summary>
-    public EServicePlanType Type { get; private set; }
     
     /// <summary>
     /// Data de criação do plano de serviço
@@ -86,8 +80,7 @@ public class ServicePlan
     /// <param name="description"></param>
     /// <param name="durationInDays"></param>
     /// <param name="price"></param>
-    /// <param name="type"></param>
-    public ServicePlan(string professionalId, string title, string description, int durationInDays, double price, EServicePlanType type)
+    public ServicePlan(string professionalId, string title, string description, int durationInDays, double price)
     {
         Id = Guid.NewGuid();
         ProfessionalId = professionalId;
@@ -95,19 +88,6 @@ public class ServicePlan
         Description = description;
         DurationInDays = durationInDays;
         Price = price;
-        Type = type;
-    }
-    
-    /// <summary>
-    /// Método para atualizar o tipo do plano de serviço
-    /// </summary>
-    /// <param name="type"></param>
-    public void UpdateType(EServicePlanType? type)
-    {
-        if (type == null || Type == type) return;
-        
-        Type = type.Value;
-        UpdatedAt = DateTime.Now;
     }
     
     /// <summary>

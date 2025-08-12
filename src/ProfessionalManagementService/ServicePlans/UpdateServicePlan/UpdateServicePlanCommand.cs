@@ -1,6 +1,4 @@
-﻿using ProfessionalManagementService.ServicePlans.Common.Enums;
-
-namespace ProfessionalManagementService.ServicePlans.UpdateServicePlan;
+﻿namespace ProfessionalManagementService.ServicePlans.UpdateServicePlan;
 
 /// <summary>
 /// Comando para atualizar um plano de serviço
@@ -31,11 +29,6 @@ public class UpdateServicePlanCommand
     /// Preço do plano de serviço
     /// </summary>
     public double? Price { get; set; }
-    
-    /// <summary>
-    /// Tipo do plano de serviço
-    /// </summary>
-    public EServicePlanType? Type { get; set; }
     
     /// <summary>
     /// Método para definir o id do plano de serviço

@@ -19,7 +19,6 @@ public class UpdateServicePlanCommandHandler(DatabaseContext dbContext)
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            servicePlan.UpdateType(command.Type);
             servicePlan.UpdateTitle(command.Title);
             servicePlan.UpdateDescription(command.Description);
             servicePlan.UpdateDurationInDays(command.DurationInDays);
