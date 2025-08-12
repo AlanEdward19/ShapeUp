@@ -1,4 +1,6 @@
-﻿namespace ProfessionalManagementService.ServicePlans;
+﻿using ProfessionalManagementService.ServicePlans.Common.Enums;
+
+namespace ProfessionalManagementService.ServicePlans;
 
 public class ServicePlanDto(ServicePlan servicePlan)
 {
@@ -31,4 +33,9 @@ public class ServicePlanDto(ServicePlan servicePlan)
     /// Preço do plano de serviço
     /// </summary>
     public double Price { get; private set; } = servicePlan.Price;
+    
+    /// <summary>
+    /// Tipo do plano de serviço
+    /// </summary>
+    public EServicePlanType Type { get; private set; } = servicePlan.Type;
 }

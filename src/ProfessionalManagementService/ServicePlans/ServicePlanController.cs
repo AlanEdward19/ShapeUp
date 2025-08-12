@@ -6,6 +6,7 @@ using ProfessionalManagementService.Common.Enums;
 using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.ServicePlans.AddServicePlanToClient;
 using ProfessionalManagementService.ServicePlans.ChangeServicePlanStatusFromClient;
+using ProfessionalManagementService.ServicePlans.Common.Enums;
 using ProfessionalManagementService.ServicePlans.CreateServicePlan;
 using ProfessionalManagementService.ServicePlans.DeleteServicePlan;
 using ProfessionalManagementService.ServicePlans.DeleteServicePlanFromClient;
@@ -37,9 +38,9 @@ public class ServicePlanController : ControllerBase
     [HttpGet("/v{version:apiVersion}/Professional/{professionalId}/ServicePlan")]
     public async Task<IActionResult> GetServicePlanByProfessionalId(string professionalId,
         [FromServices] IHandler<List<ServicePlanDto>, GetServicePlansByProfessionalIdQuery> handler,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,[FromQuery] EServicePlanType? type = null)
     {
-        var query = new GetServicePlansByProfessionalIdQuery(professionalId);
+        var query = new GetServicePlansByProfessionalIdQuery(professionalId, type);
         var servicePlans = await handler.HandleAsync(query, cancellationToken);
 
         return Ok(servicePlans);

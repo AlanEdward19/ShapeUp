@@ -16,10 +16,15 @@ public class GetServicePlansByProfessionalIdQueryHandler(DatabaseContext dbConte
         if (!professionalExists)
             throw new NotFoundException($"Professional with Id: '{query.ProfessionalId}' not found.");
         
-        var servicePlans = dbContext.ServicePlans
-            .Where(x => x.ProfessionalId == query.ProfessionalId)
+        IQueryable<ServicePlan> servicePlanQuery = dbContext.ServicePlans
             .AsNoTracking()
-            .ToList();
+            .Where(x => x.ProfessionalId == query.ProfessionalId);
+        
+        if(query.Type != null)
+            servicePlanQuery = servicePlanQuery.Where(x => x.Type == query.Type);
+        
+        var servicePlans = await servicePlanQuery
+            .ToListAsync(cancellationToken);
 
         return servicePlans
             .Select(x => new ServicePlanDto(x))
