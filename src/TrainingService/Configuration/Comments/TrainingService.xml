@@ -746,7 +746,7 @@
             <param name="visibility"></param>
             <param name="exercises"></param>
         </member>
-        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.#ctor(System.Guid,System.Guid,System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.#ctor(System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
             <summary>
             Comando para atualizar um treino por id.
             </summary>
@@ -758,11 +758,6 @@
         <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.Id">
             <summary>
             Id do treino.
-            </summary>
-        </member>
-        <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.UserId">
-            <summary>
-            Id usuario do treino.
             </summary>
         </member>
         <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.Name">

@@ -30,19 +30,19 @@ public class CreateWorkoutCommand(string name, EWorkoutVisibility visibility, IE
     /// <summary>
     /// Id do usuário para o qual o treino foi criado. Caso não seja informado, será o usuário autenticado.
     /// </summary>
-    private string? UserId { get; set; }
+    private string UserId { get; set; }
     
     /// <summary>
     /// Método para definir o Id do usuário para o qual o treino foi criado.
     /// </summary>
     /// <param name="userId"></param>
-    public void SetUserId(string? userId) => UserId = userId;
+    public void SetUserId(string userId) => UserId = userId;
     
     /// <summary>
     /// Método para obter o Id do usuário para o qual o treino foi criado.
     /// </summary>
     /// <returns></returns>
-    public string? GetUserId() => UserId;
+    public string GetUserId() => UserId;
 
     /// <summary>
     /// Nome do treino.

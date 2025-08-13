@@ -32,7 +32,7 @@ public class WorkoutController : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
-    [HttpGet("/User/{userId}/Workout")]
+    [HttpGet("/v{version:apiVersion}/User/{userId}/Workout")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<WorkoutDto>))]
     public async Task<IActionResult> GetWorkoutsByUserId([FromServices] IHandler<ICollection<WorkoutDto>, GetWorkoutsByUserIdQuery> handler,
         string userId, CancellationToken cancellationToken)
@@ -54,7 +54,7 @@ public class WorkoutController : ControllerBase
         return Created(Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
     
-    [HttpPost("/User/{userId}/Workout")]
+    [HttpPost("/v{version:apiVersion}/User/{userId}/Workout")]
     public async Task<IActionResult> CreateWorkout([FromBody] CreateWorkoutCommand command, string userId,
         [FromServices] IHandler<WorkoutDto, CreateWorkoutCommand> handler, CancellationToken cancellationToken)
     {
@@ -65,10 +65,14 @@ public class WorkoutController : ControllerBase
         return Created(Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
     
-    [HttpPut]
-    public async Task<IActionResult> UpdateWorkout([FromBody] UpdateWorkoutByIdCommand command,
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateWorkout(Guid id, [FromBody] UpdateWorkoutByIdCommand command,
         [FromServices] IHandler<WorkoutDto, UpdateWorkoutByIdCommand> handler, CancellationToken cancellationToken)
     {
+        string loggedUser = User.GetObjectId();
+        command.SetUserId(loggedUser);
+        command.SetWorkoutId(id);
+        
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     

@@ -9,7 +9,7 @@ public class Workout
 {
     protected Workout() {}
     
-    public Workout(string creatorId, string? userId, string name, EWorkoutVisibility visibility)
+    public Workout(string creatorId, string userId, string name, EWorkoutVisibility visibility)
     {
         CreatorId = creatorId;
         UserId = userId;
@@ -31,7 +31,7 @@ public class Workout
     /// <summary>
     /// Id do usuário para o qual o treino foi criado.
     /// </summary>
-    public string? UserId { get; private set; }
+    public string UserId { get; private set; }
     
     /// <summary>
     /// Nome do treino.

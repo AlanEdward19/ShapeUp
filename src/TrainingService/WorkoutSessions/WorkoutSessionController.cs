@@ -54,7 +54,7 @@ public class WorkoutSessionController : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 
-    [HttpGet("/User/{userId}/WorkoutSession")]
+    [HttpGet("/v{version:apiVersion}/User/{userId}/WorkoutSession")]
     public async Task<IActionResult> GetWorkoutSessionsByUserId(string userId,
         [FromServices] IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByUserIdQuery> handler,
         CancellationToken cancellationToken)

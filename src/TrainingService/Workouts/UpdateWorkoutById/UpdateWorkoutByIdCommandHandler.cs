@@ -10,7 +10,7 @@ public class UpdateWorkoutByIdCommandHandler(IWorkoutRepository repository, IExe
 {
     public async Task<WorkoutDto> HandleAsync(UpdateWorkoutByIdCommand command, CancellationToken cancellationToken)
     {
-        Workout? workout = await repository.GetWorkoutAsync(command.Id, cancellationToken);
+        Workout? workout = await repository.GetWorkoutAsync(command.GetWorkoutId(), cancellationToken);
         ArgumentNullException.ThrowIfNull(workout);
         
         workout.UpdateWorkout(command);
