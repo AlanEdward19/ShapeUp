@@ -1,8 +1,10 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Filters;
+using SharedKernel.Utils;
 using TrainingService.Common.Interfaces;
 using TrainingService.Workouts.Common;
 using TrainingService.Workouts.CreateWorkout;
@@ -19,7 +21,7 @@ namespace TrainingService.Workouts;
 [Route("v{version:apiVersion}/[Controller]")]
 public class WorkoutController : ControllerBase
 {
-    [HttpGet("{id:guid}/getWorkout")]
+    [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WorkoutDto))]
     public async Task<IActionResult> GetWorkoutById([FromServices] IHandler<WorkoutDto, GetWorkoutByIdQuery> handler,
         Guid id, CancellationToken cancellationToken)
@@ -30,7 +32,7 @@ public class WorkoutController : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
-    [HttpGet]
+    [HttpGet("/User/{userId}/Workout")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<WorkoutDto>))]
     public async Task<IActionResult> GetWorkoutsByUserId([FromServices] IHandler<ICollection<WorkoutDto>, GetWorkoutsByUserIdQuery> handler,
         string userId, CancellationToken cancellationToken)
@@ -42,22 +44,35 @@ public class WorkoutController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateWorkout([FromBody] CreateWorkoutCommand command,
-        [FromServices] IHandler<bool, CreateWorkoutCommand> handler, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateForOwnUserWorkout([FromBody] CreateWorkoutCommand command,
+        [FromServices] IHandler<WorkoutDto, CreateWorkoutCommand> handler, CancellationToken cancellationToken)
     {
-        await handler.HandleAsync(command, cancellationToken);
-        return Created();
+        string userId = User.GetObjectId();
+        command.SetCreatorId(userId);
+        command.SetUserId(userId);
+        
+        return Created(Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
+    }
+    
+    [HttpPost("/User/{userId}/Workout")]
+    public async Task<IActionResult> CreateWorkout([FromBody] CreateWorkoutCommand command, string userId,
+        [FromServices] IHandler<WorkoutDto, CreateWorkoutCommand> handler, CancellationToken cancellationToken)
+    {
+        string loggedUser = User.GetObjectId();
+        command.SetCreatorId(loggedUser);
+        command.SetUserId(userId);
+        
+        return Created(Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
     
     [HttpPut]
     public async Task<IActionResult> UpdateWorkout([FromBody] UpdateWorkoutByIdCommand command,
-        [FromServices] IHandler<bool, UpdateWorkoutByIdCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<WorkoutDto, UpdateWorkoutByIdCommand> handler, CancellationToken cancellationToken)
     {
-        await handler.HandleAsync(command, cancellationToken);
-        return Created();
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     
-    [HttpDelete("{id:guid}/deleteWorkout")]
+    [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteWorkout([FromServices] IHandler<bool, DeleteWorkoutByIdCommand> handler,
         Guid id, CancellationToken cancellationToken)

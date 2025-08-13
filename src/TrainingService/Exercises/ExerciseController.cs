@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Filters;
 using TrainingService.Common.Interfaces;
@@ -21,7 +22,7 @@ namespace TrainingService.Exercises;
 [Route("v{version:apiVersion}/[Controller]")]
 public class ExerciseController : ControllerBase
 {
-    [HttpGet("{id:guid}/getExercise")]
+    [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExerciseDto))]
     public async Task<IActionResult> GetExerciseById([FromServices] IHandler<ExerciseDto, GetExerciseByIdQuery> handler,
         Guid id, CancellationToken cancellationToken)
@@ -34,8 +35,8 @@ public class ExerciseController : ControllerBase
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<ExerciseDto>))]
-    public async Task<IActionResult> GetExerciseByMuscleGroup([FromServices] IHandler<ICollection<ExerciseDto>, GetExerciseByMuscleGroupQuery> handler,
-        EMuscleGroup muscleGroup, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetExercises([FromServices] IHandler<ICollection<ExerciseDto>, GetExerciseByMuscleGroupQuery> handler,
+        EMuscleGroup? muscleGroup, CancellationToken cancellationToken)
     {
         GetExerciseByMuscleGroupQuery query = new();
         query.SetMuscleGroup(muscleGroup);
@@ -45,21 +46,19 @@ public class ExerciseController : ControllerBase
     
     [HttpPost]
     public async Task<IActionResult> CreateExercise([FromBody] CreateExerciseCommand command,
-        [FromServices] IHandler<bool, CreateExerciseCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<ExerciseDto, CreateExerciseCommand> handler, CancellationToken cancellationToken)
     {
-        await handler.HandleAsync(command, cancellationToken);
-        return Created();
+        return Created(Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
     
     [HttpPut]
     public async Task<IActionResult> UpdateExercise([FromBody] UpdateExerciseCommand command,
-        [FromServices] IHandler<bool, UpdateExerciseCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<ExerciseDto, UpdateExerciseCommand> handler, CancellationToken cancellationToken)
     {
-        await handler.HandleAsync(command, cancellationToken);
-        return Created();
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     
-    [HttpDelete("{id:guid}/deleteExercise")]
+    [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteExercise([FromServices] IHandler<bool, DeleteExerciseByIdCommand> handler,
         Guid id, CancellationToken cancellationToken)

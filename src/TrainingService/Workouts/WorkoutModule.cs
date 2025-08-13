@@ -37,11 +37,11 @@ public static class WorkoutModule
     
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<bool, CreateWorkoutCommand>, CreateWorkoutCommandHandler>();
+        services.AddScoped<IHandler<WorkoutDto, CreateWorkoutCommand>, CreateWorkoutCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteWorkoutByIdCommand>, DeleteWorkoutByIdCommandHandler>();
         services.AddScoped<IHandler<ICollection<WorkoutDto>, GetWorkoutsByUserIdQuery>, GetWorkoutsByUserIdQueryHandler>();
         services.AddScoped<IHandler<WorkoutDto, GetWorkoutByIdQuery>, GetWorkoutByIdQueryHandler>();
-        services.AddScoped<IHandler<bool, UpdateWorkoutByIdCommand>, UpdateWorkoutByIdCommandHandler>();
+        services.AddScoped<IHandler<WorkoutDto, UpdateWorkoutByIdCommand>, UpdateWorkoutByIdCommandHandler>();
         return services;
     }
 }

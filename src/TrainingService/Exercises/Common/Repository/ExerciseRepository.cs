@@ -29,7 +29,15 @@ public class ExerciseRepository(TrainingDbContext dbContext) : IExerciseReposito
 
         return exercises;
     }
-    
+
+    public async Task<ICollection<Exercise>> GetExercisesAsync(CancellationToken cancellationToken)
+    {
+        List<Exercise> exercises = await dbContext.Exercises.AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return exercises;
+    }
+
     public async Task AddAsync(Exercise exercise, CancellationToken cancellationToken)
     {
         await dbContext.Database.BeginTransactionAsync(cancellationToken);

@@ -11,10 +11,16 @@ public class WorkoutSessionMongoRepository : IWorkoutSessionMongoRepository
         _collection = database.GetCollection<WorkoutSession>("WorkoutSessions");
     }
 
-    public async Task<WorkoutSession?> GetWorkoutSessionByIdAsync(string sessionId, CancellationToken cancellationToken)
+    public async Task<WorkoutSession> GetWorkoutSessionByIdAsync(string sessionId, CancellationToken cancellationToken)
     {
         var filter = Builders<WorkoutSession>.Filter.Eq(x => x.SessionId, sessionId);
         return await _collection.Find(filter).FirstOrDefaultAsync(cancellationToken);
+    }
+    
+    public async Task<ICollection<WorkoutSession>?> GetWorkoutSessionsByUserIdAsync(string userId, CancellationToken cancellationToken)
+    {
+        var filter = Builders<WorkoutSession>.Filter.Eq(x => x.UserId, userId);
+        return await _collection.Find(filter).ToListAsync(cancellationToken);
     }
     
     public async Task CreateWorkoutSessionAsync(WorkoutSession session, CancellationToken cancellationToken)

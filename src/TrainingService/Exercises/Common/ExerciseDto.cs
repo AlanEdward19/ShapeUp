@@ -17,7 +17,7 @@ public class ExerciseDto(Exercise exercise)
     /// <summary>
     /// Grupos musculares ao qual o exercício pertence.
     /// </summary>
-    public EMuscleGroup MuscleGroups { get; private set; } = exercise.MuscleGroups;
+    public ICollection<EMuscleGroup> MuscleGroups { get; private set; } = GetMuscleGroups(exercise.MuscleGroups);
     
     /// <summary>
     /// Se o exercício requer peso.
@@ -43,4 +43,12 @@ public class ExerciseDto(Exercise exercise)
     /// Data de atualização do exercício.
     /// </summary>
     public DateTime UpdatedAt { get; private set; } = exercise.UpdatedAt;
+    
+    public static ICollection<EMuscleGroup> GetMuscleGroups(EMuscleGroup muscleGroup)
+    {
+        return Enum.GetValues(typeof(EMuscleGroup))
+            .Cast<EMuscleGroup>()
+            .Where(flag => flag != 0 && muscleGroup.HasFlag(flag))
+            .ToList();
+    }
 }

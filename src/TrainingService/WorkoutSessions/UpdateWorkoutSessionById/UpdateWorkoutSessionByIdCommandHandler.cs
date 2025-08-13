@@ -5,25 +5,21 @@ using TrainingService.WorkoutSessions.Common.Repository;
 namespace TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 
 public class UpdateWorkoutSessionByIdCommandHandler(IWorkoutSessionMongoRepository repository)
-    : IHandler<bool, UpdateWorkoutSessionByIdCommand>
+    : IHandler<WorkoutSession, UpdateWorkoutSessionByIdCommand>
 {
-    public async Task<bool> HandleAsync(UpdateWorkoutSessionByIdCommand command, CancellationToken cancellationToken)
+    public async Task<WorkoutSession> HandleAsync(UpdateWorkoutSessionByIdCommand command, CancellationToken cancellationToken)
     {
-        WorkoutSession? workoutSession = await repository.GetWorkoutSessionByIdAsync(command.SessionId.ToString(), cancellationToken);
+        WorkoutSession? workoutSession = await repository.GetWorkoutSessionByIdAsync(command.GetSessionId(), cancellationToken);
         ArgumentNullException.ThrowIfNull(workoutSession);
 
         if (command.Status != null)
-        {
             workoutSession.UpdateStatus(command.Status.Value);
-        }
         
         if (command.Exercises != null)
-        {
             workoutSession.UpdateExercises(command.Exercises);
-        }
         
-        await repository.UpdateWorkoutSessionByIdAsync(command.SessionId, workoutSession, cancellationToken);
+        await repository.UpdateWorkoutSessionByIdAsync(command.GetSessionId(), workoutSession, cancellationToken);
         
-        return true;
+        return workoutSession;
     }
 }

@@ -37,11 +37,11 @@ public static class ExerciseModule
     
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<bool, CreateExerciseCommand>, CreateExerciseCommandHandler>();
+        services.AddScoped<IHandler<ExerciseDto, CreateExerciseCommand>, CreateExerciseCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteExerciseByIdCommand>, DeleteExerciseCommandHandler>();
         services.AddScoped<IHandler<ICollection<ExerciseDto>, GetExerciseByMuscleGroupQuery>, GetExerciseByMuscleGroupQueryHandler>();
         services.AddScoped<IHandler<ExerciseDto, GetExerciseByIdQuery>, GetExerciseByIdQueryHandler>();
-        services.AddScoped<IHandler<bool, UpdateExerciseCommand>, UpdateExerciseCommandHandler>();
+        services.AddScoped<IHandler<ExerciseDto, UpdateExerciseCommand>, UpdateExerciseCommandHandler>();
         return services;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using TrainingService.Common.Interfaces;
+using TrainingService.Exercises.Common;
 using TrainingService.Exercises.Common.Enums;
 using TrainingService.Exercises.Common.Repository;
 
@@ -9,9 +10,9 @@ namespace TrainingService.Exercises.CreateExercise;
 /// </summary>
 /// <param name="repository"></param>
 public class CreateExerciseCommandHandler(IExerciseRepository repository)
-    : IHandler<bool, CreateExerciseCommand>
+    : IHandler<ExerciseDto, CreateExerciseCommand>
 {
-    public async Task<bool> HandleAsync(CreateExerciseCommand command, CancellationToken cancellationToken)
+    public async Task<ExerciseDto> HandleAsync(CreateExerciseCommand command, CancellationToken cancellationToken)
     {
         var muscleGroups = command.MuscleGroups?.ToList() ?? new List<EMuscleGroup>();
 
@@ -33,6 +34,6 @@ public class CreateExerciseCommandHandler(IExerciseRepository repository)
 
         await repository.AddAsync(exercise, cancellationToken);
         
-        return true;
+        return new ExerciseDto(exercise);
     }
 }

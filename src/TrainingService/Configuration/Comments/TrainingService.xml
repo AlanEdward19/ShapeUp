@@ -305,7 +305,7 @@
             Grupo muscular.
             </summary>
         </member>
-        <member name="M:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery.SetMuscleGroup(TrainingService.Exercises.Common.Enums.EMuscleGroup)">
+        <member name="M:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery.SetMuscleGroup(System.Nullable{TrainingService.Exercises.Common.Enums.EMuscleGroup})">
             <summary>
             método para setar o grupo muscular do exercício.
             </summary>
@@ -417,20 +417,30 @@
             <summary>
             Comando para criar uma sessão de treino.
             </summary>
-            <param name="userId"></param>
             <param name="workoutId"></param>
         </member>
-        <member name="M:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.#ctor(System.String,System.Guid,System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
+        <member name="M:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.#ctor(System.Guid,System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
             <summary>
             Comando para criar uma sessão de treino.
             </summary>
-            <param name="userId"></param>
             <param name="workoutId"></param>
         </member>
         <member name="P:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.UserId">
             <summary>
             Id do usuário que está realizando o treino
             </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.SetUserId(System.String)">
+            <summary>
+            Método para definir o Id do usuário
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.GetUserId">
+            <summary>
+            Método para obter o Id do usuário
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand.WorkoutId">
             <summary>
@@ -460,7 +470,7 @@
             <param name="status"></param>
             <param name="exercises"></param>
         </member>
-        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.#ctor(System.String,System.Nullable{TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus},System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.#ctor(System.Nullable{TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus},System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
             <summary>
             Comando para atualizar uma sessão de treino por id.
             </summary>
@@ -472,6 +482,18 @@
             <summary>
             Id da sessão de treino
             </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.SetSessionId(System.String)">
+            <summary>
+            Método para definir o id da sessão de treino
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.GetSessionId">
+            <summary>
+            Método para obter o id da sessão de treino
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.Status">
             <summary>
@@ -584,16 +606,14 @@
             <summary>
             Comando para criar um treino.
             </summary>
-            <param name="userId"></param>
             <param name="name"></param>
             <param name="visibility"></param>
             <param name="exercises"></param>
         </member>
-        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.#ctor(System.String,System.String,System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.#ctor(System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
             <summary>
             Comando para criar um treino.
             </summary>
-            <param name="userId"></param>
             <param name="name"></param>
             <param name="visibility"></param>
             <param name="exercises"></param>
@@ -603,10 +623,34 @@
             Id do usuário criador do treino.
             </summary>
         </member>
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.SetCreatorId(System.String)">
+            <summary>
+            Método para definir o Id do usuário criador do treino.
+            </summary>
+            <param name="creatorId"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.GetCreatorId">
+            <summary>
+            Método para obter o Id do usuário criador do treino.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.UserId">
             <summary>
             Id do usuário para o qual o treino foi criado. Caso não seja informado, será o usuário autenticado.
             </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.SetUserId(System.String)">
+            <summary>
+            Método para definir o Id do usuário para o qual o treino foi criado.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.GetUserId">
+            <summary>
+            Método para obter o Id do usuário para o qual o treino foi criado.
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.Name">
             <summary>
@@ -658,7 +702,7 @@
         </member>
         <member name="M:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQuery.SetWorkoutId(System.Guid)">
             <summary>
-            método para setar o id do treino.
+            Método para setar o id do treino.
             </summary>
             <param name="workoutId"></param>
         </member>

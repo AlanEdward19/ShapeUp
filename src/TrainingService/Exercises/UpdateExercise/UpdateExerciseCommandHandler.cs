@@ -1,4 +1,5 @@
 ﻿using TrainingService.Common.Interfaces;
+using TrainingService.Exercises.Common;
 using TrainingService.Exercises.Common.Enums;
 using TrainingService.Exercises.Common.Repository;
 
@@ -9,9 +10,9 @@ namespace TrainingService.Exercises.UpdateExercise;
 /// </summary>
 /// <param name="repository"></param>
 public class UpdateExerciseCommandHandler(IExerciseRepository repository)
-    : IHandler<bool, UpdateExerciseCommand>
+    : IHandler<ExerciseDto, UpdateExerciseCommand>
 {
-    public async Task<bool> HandleAsync(UpdateExerciseCommand command, CancellationToken cancellationToken)
+    public async Task<ExerciseDto> HandleAsync(UpdateExerciseCommand command, CancellationToken cancellationToken)
     {
         Exercise? exercise = await repository.GetExerciseAsync(command.Id, cancellationToken);
         ArgumentNullException.ThrowIfNull(exercise);
@@ -20,6 +21,6 @@ public class UpdateExerciseCommandHandler(IExerciseRepository repository)
         
         await repository.UpdateAsync(exercise, cancellationToken);
         
-        return true;
+        return new ExerciseDto(exercise);
     }
 }

@@ -5,14 +5,14 @@ using TrainingService.WorkoutSessions.Common.Repository;
 namespace TrainingService.WorkoutSessions.CreateWorkoutSession;
 
 public class CreateWorkoutSessionCommandHandler(IWorkoutSessionMongoRepository repository)
-    : IHandler<bool, CreateWorkoutSessionCommand>
+    : IHandler<WorkoutSession, CreateWorkoutSessionCommand>
 {
-    public async Task<bool> HandleAsync(CreateWorkoutSessionCommand command, CancellationToken cancellationToken)
+    public async Task<WorkoutSession> HandleAsync(CreateWorkoutSessionCommand command, CancellationToken cancellationToken)
     {
-        WorkoutSession workoutSession = new WorkoutSession(command.UserId, command.WorkoutId, EWorkoutStatus.InProgress, command.Exercises);
+        WorkoutSession workoutSession = new WorkoutSession(command.GetUserId(), command.WorkoutId, EWorkoutStatus.InProgress, command.Exercises);
         
         await repository.CreateWorkoutSessionAsync(workoutSession, cancellationToken);
         
-        return true;
+        return workoutSession;
     }
 }

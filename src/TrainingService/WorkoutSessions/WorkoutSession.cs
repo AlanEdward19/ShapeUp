@@ -1,4 +1,6 @@
-﻿using TrainingService.WorkoutSessions.Common.Enums;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using TrainingService.WorkoutSessions.Common.Enums;
 using TrainingService.WorkoutSessions.Common.ValueObjects;
 
 namespace TrainingService.WorkoutSessions;
@@ -8,6 +10,8 @@ public class WorkoutSession
     /// <summary>
     /// Id da sessão de treino
     /// </summary>
+    [BsonId]
+    [BsonRepresentation(BsonType.String)]
     public string SessionId { get; init; } = Guid.NewGuid().ToString();
     
     /// <summary>
@@ -18,7 +22,7 @@ public class WorkoutSession
     /// <summary>
     /// Id do treino
     /// </summary>
-    public Guid WorkoutId { get; private set; }
+    public string WorkoutId { get; private set; }
     
     /// <summary>
     /// Data de início da sessão de treino
@@ -45,7 +49,7 @@ public class WorkoutSession
     public WorkoutSession(string userId, Guid workoutId, EWorkoutStatus status, List<WorkoutSessionExerciseValueObject> exercises)
     {
         UserId = userId;
-        WorkoutId = workoutId;
+        WorkoutId = workoutId.ToString();
         Status = status;
         Exercises = exercises;
     }
@@ -79,6 +83,12 @@ public class WorkoutSession
     public void UpdateStatus(EWorkoutStatus status)
     {
         Status = status;
+        
+        if (status is EWorkoutStatus.Finished or EWorkoutStatus.Canceled)
+            EndedAt = DateTime.UtcNow;
+        
+        else
+            EndedAt = null;
     }
     
 }

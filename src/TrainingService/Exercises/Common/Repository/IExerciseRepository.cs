@@ -8,6 +8,8 @@ public interface IExerciseRepository
     
     Task<ICollection<Exercise>> GetExercisesByMuscleGroupAsync(EMuscleGroup muscleGroup, CancellationToken cancellationToken);
     
+    Task<ICollection<Exercise>> GetExercisesAsync(CancellationToken cancellationToken);
+    
     Task AddAsync(Exercise exercise, CancellationToken cancellationToken);
     
     Task DeleteAsync(Exercise exercise, CancellationToken cancellationToken);

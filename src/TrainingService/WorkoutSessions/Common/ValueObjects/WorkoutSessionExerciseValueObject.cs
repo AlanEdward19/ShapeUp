@@ -5,7 +5,7 @@ public class WorkoutSessionExerciseValueObject
     /// <summary>
     /// Id do exercício
     /// </summary>
-    public Guid ExerciseId { get; set; }
+    public string ExerciseId { get; set; }
     
     /// <summary>
     /// Peso do exercício

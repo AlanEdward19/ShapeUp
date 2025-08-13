@@ -1,11 +1,15 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Filters;
+using SharedKernel.Utils;
 using TrainingService.Common.Interfaces;
 using TrainingService.WorkoutSessions.CreateWorkoutSession;
 using TrainingService.WorkoutSessions.DeleteWorkoutSessionById;
+using TrainingService.WorkoutSessions.GetWorkoutSessionById;
+using TrainingService.WorkoutSessions.GetWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 
 namespace TrainingService.WorkoutSessions;
@@ -21,28 +25,51 @@ public class WorkoutSessionController : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreateWorkoutSession([FromBody] CreateWorkoutSessionCommand command,
-        [FromServices] IHandler<bool, CreateWorkoutSessionCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<WorkoutSession, CreateWorkoutSessionCommand> handler,
+        CancellationToken cancellationToken)
     {
-        await handler.HandleAsync(command, cancellationToken);
-        return Created();
+        string userId = User.GetObjectId();
+        command.SetUserId(userId);
+
+        return Created(Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
-    
-    [HttpPut]
-    public async Task<IActionResult> UpdateWorkoutSessionById([FromBody] UpdateWorkoutSessionByIdCommand command,
-        [FromServices] IHandler<bool, UpdateWorkoutSessionByIdCommand> handler, CancellationToken cancellationToken)
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetWorkoutSessionById(Guid id,
+        [FromServices] IHandler<WorkoutSession, GetWorkoutSessionByIdQuery> handler,
+        CancellationToken cancellationToken)
     {
-        await handler.HandleAsync(command, cancellationToken);
-        return Created();
+        GetWorkoutSessionByIdQuery query = new(id.ToString());
+        return Ok(await handler.HandleAsync(query, cancellationToken));
     }
-    
-    [HttpDelete("{id:guid}/deleteWorkoutSession")]
+
+    [HttpGet("/User/{userId}/WorkoutSession")]
+    public async Task<IActionResult> GetWorkoutSessionsByUserId(string userId,
+        [FromServices] IHandler<ICollection<WorkoutSession>, GetWorkoutSessionsByUserIdQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        GetWorkoutSessionsByUserIdQuery query = new(userId);
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateWorkoutSessionById(Guid id, [FromBody] UpdateWorkoutSessionByIdCommand command,
+        [FromServices] IHandler<WorkoutSession, UpdateWorkoutSessionByIdCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        command.SetSessionId(id.ToString());
+        return Ok(await handler.HandleAsync(command, cancellationToken));
+    }
+
+    [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> DeleteWorkoutSessionById([FromServices] IHandler<bool, DeleteWorkoutSessionByIdCommand> handler,
+    public async Task<IActionResult> DeleteWorkoutSessionById(
+        [FromServices] IHandler<bool, DeleteWorkoutSessionByIdCommand> handler,
         Guid id, CancellationToken cancellationToken)
     {
         DeleteWorkoutSessionByIdCommand command = new();
         command.SetSessionId(id);
-        
+
         await handler.HandleAsync(command, cancellationToken);
         return NoContent();
     }

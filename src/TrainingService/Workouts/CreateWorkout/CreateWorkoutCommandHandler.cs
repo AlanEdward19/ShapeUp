@@ -1,16 +1,17 @@
 ﻿using TrainingService.Common.Interfaces;
 using TrainingService.Exercises;
 using TrainingService.Exercises.Common.Repository;
+using TrainingService.Workouts.Common;
 using TrainingService.Workouts.Common.Repository;
 
 namespace TrainingService.Workouts.CreateWorkout;
 
 public class CreateWorkoutCommandHandler(IWorkoutRepository repository, IExerciseRepository exerciseRepository)
-    : IHandler<bool, CreateWorkoutCommand>
+    : IHandler<WorkoutDto, CreateWorkoutCommand>
 {
-    public async Task<bool> HandleAsync(CreateWorkoutCommand command, CancellationToken cancellationToken)
+    public async Task<WorkoutDto> HandleAsync(CreateWorkoutCommand command, CancellationToken cancellationToken)
     {
-        Workout workout = new Workout(command.CreatorId, command.UserId, command.Name, command.Visibility);
+        Workout workout = new Workout(command.GetCreatorId(), command.GetUserId(), command.Name, command.Visibility);
         
         if (command.Exercises.Any())
         {
@@ -27,6 +28,6 @@ public class CreateWorkoutCommandHandler(IWorkoutRepository repository, IExercis
         
         await repository.AddAsync(workout, cancellationToken);
         
-        return true;
+        return new WorkoutDto(workout);
     }
 }
