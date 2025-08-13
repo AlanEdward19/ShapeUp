@@ -7,7 +7,7 @@ namespace TrainingService.Exercises.Common.Repository;
 
 public class ExerciseRepository(TrainingDbContext dbContext) : IExerciseRepository
 {
-    public async Task<Exercise?> GetExerciseAsync(Guid exerciseId, CancellationToken cancellationToken)
+    public async Task<Exercise?> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken)
     {
         Exercise? exercise = await dbContext.Exercises
             .FirstOrDefaultAsync(x => x.Id == exerciseId, cancellationToken);
@@ -17,7 +17,17 @@ public class ExerciseRepository(TrainingDbContext dbContext) : IExerciseReposito
 
         return exercise;
     }
-    
+
+    public async Task<ICollection<Exercise>> GetExercisesByIdsAsync(List<Guid> exerciseIds, CancellationToken cancellationToken)
+    {
+        if (exerciseIds is null || !exerciseIds.Any())
+            throw new ArgumentException("Exercise IDs cannot be null or empty.", nameof(exerciseIds));
+
+        return await dbContext.Exercises.AsNoTracking()
+            .Where(x => exerciseIds.Contains(x.Id))
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<ICollection<Exercise>> GetExercisesByMuscleGroupAsync(EMuscleGroup muscleGroup, CancellationToken cancellationToken)
     {
         List<Exercise> exercises = await dbContext.Exercises.AsNoTracking()

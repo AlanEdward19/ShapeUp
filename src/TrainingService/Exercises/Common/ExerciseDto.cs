@@ -34,16 +34,6 @@ public class ExerciseDto(Exercise exercise)
     /// </summary>
     public string? VideoUrl { get; private set; } = exercise.VideoUrl;
     
-    /// <summary>
-    /// Data de criação do exercício.
-    /// </summary>
-    public DateTime CreatedAt { get; private set; } = exercise.CreatedAt;
-    
-    /// <summary>
-    /// Data de atualização do exercício.
-    /// </summary>
-    public DateTime UpdatedAt { get; private set; } = exercise.UpdatedAt;
-    
     public static ICollection<EMuscleGroup> GetMuscleGroups(EMuscleGroup muscleGroup)
     {
         return Enum.GetValues(typeof(EMuscleGroup))

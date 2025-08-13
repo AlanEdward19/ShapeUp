@@ -156,16 +156,6 @@
             Vídeo do exercício.
             </summary>
         </member>
-        <member name="P:TrainingService.Exercises.Common.ExerciseDto.CreatedAt">
-            <summary>
-            Data de criação do exercício.
-            </summary>
-        </member>
-        <member name="P:TrainingService.Exercises.Common.ExerciseDto.UpdatedAt">
-            <summary>
-            Data de atualização do exercício.
-            </summary>
-        </member>
         <member name="T:TrainingService.Exercises.CreateExercise.CreateExerciseCommand">
             <summary>
             Comando para criar um exercício.
@@ -383,6 +373,26 @@
         <member name="M:TrainingService.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Weight">
+            <summary>
+            Quantidade de peso do exercício
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Repetitions">
+            <summary>
+            Quantidade de repetições do exercício
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.MeasureUnit">
+            <summary>
+            Unidade de medida do exercício
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Metadata">
+            <summary>
+            Metadados do exercício.
+            </summary>
+        </member>
         <member name="F:TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus.InProgress">
             <summary>
                 Sessão de treino em andamento
@@ -411,6 +421,11 @@
         <member name="P:TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject.Repetitions">
             <summary>
             Repetições do exercício
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject.MeasureUnit">
+            <summary>
+            Unidade de medida do exercício
             </summary>
         </member>
         <member name="T:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand">

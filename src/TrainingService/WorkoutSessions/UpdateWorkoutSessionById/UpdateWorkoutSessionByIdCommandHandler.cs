@@ -1,13 +1,14 @@
 ﻿using TrainingService.Common.Interfaces;
+using TrainingService.Exercises.Common.Repository;
 using TrainingService.WorkoutSessions.Common.Enums;
 using TrainingService.WorkoutSessions.Common.Repository;
 
 namespace TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 
-public class UpdateWorkoutSessionByIdCommandHandler(IWorkoutSessionMongoRepository repository)
-    : IHandler<WorkoutSession, UpdateWorkoutSessionByIdCommand>
+public class UpdateWorkoutSessionByIdCommandHandler(IWorkoutSessionMongoRepository repository, IExerciseRepository exerciseRepository)
+    : IHandler<WorkoutSessionDto, UpdateWorkoutSessionByIdCommand>
 {
-    public async Task<WorkoutSession> HandleAsync(UpdateWorkoutSessionByIdCommand command, CancellationToken cancellationToken)
+    public async Task<WorkoutSessionDto> HandleAsync(UpdateWorkoutSessionByIdCommand command, CancellationToken cancellationToken)
     {
         WorkoutSession? workoutSession = await repository.GetWorkoutSessionByIdAsync(command.GetSessionId(), cancellationToken);
         ArgumentNullException.ThrowIfNull(workoutSession);
@@ -20,6 +21,10 @@ public class UpdateWorkoutSessionByIdCommandHandler(IWorkoutSessionMongoReposito
         
         await repository.UpdateWorkoutSessionByIdAsync(command.GetSessionId(), workoutSession, cancellationToken);
         
-        return workoutSession;
+        var exerciseIds = workoutSession.Exercises.Select(e => Guid.Parse(e.ExerciseId)).ToList();
+        
+        var exercises = await exerciseRepository.GetExercisesByIdsAsync(exerciseIds, cancellationToken);
+        
+        return new(workoutSession, exercises);
     }
 }

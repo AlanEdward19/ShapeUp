@@ -4,7 +4,9 @@ namespace TrainingService.Exercises.Common.Repository;
 
 public interface IExerciseRepository
 {
-    Task<Exercise?> GetExerciseAsync(Guid exerciseId, CancellationToken cancellationToken);
+    Task<Exercise?> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken);
+    
+    Task<ICollection<Exercise>> GetExercisesByIdsAsync(List<Guid> exerciseIds, CancellationToken cancellationToken);
     
     Task<ICollection<Exercise>> GetExercisesByMuscleGroupAsync(EMuscleGroup muscleGroup, CancellationToken cancellationToken);
     

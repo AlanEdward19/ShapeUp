@@ -8,6 +8,7 @@ using SharedKernel.Utils;
 using TrainingService.Common.Interfaces;
 using TrainingService.WorkoutSessions.CreateWorkoutSession;
 using TrainingService.WorkoutSessions.DeleteWorkoutSessionById;
+using TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.GetWorkoutSessionById;
 using TrainingService.WorkoutSessions.GetWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
@@ -25,7 +26,7 @@ public class WorkoutSessionController : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreateWorkoutSession([FromBody] CreateWorkoutSessionCommand command,
-        [FromServices] IHandler<WorkoutSession, CreateWorkoutSessionCommand> handler,
+        [FromServices] IHandler<WorkoutSessionDto, CreateWorkoutSessionCommand> handler,
         CancellationToken cancellationToken)
     {
         string userId = User.GetObjectId();
@@ -36,16 +37,26 @@ public class WorkoutSessionController : ControllerBase
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetWorkoutSessionById(Guid id,
-        [FromServices] IHandler<WorkoutSession, GetWorkoutSessionByIdQuery> handler,
+        [FromServices] IHandler<WorkoutSessionDto, GetWorkoutSessionByIdQuery> handler,
         CancellationToken cancellationToken)
     {
         GetWorkoutSessionByIdQuery query = new(id.ToString());
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
+    
+    [HttpGet("CurrentWorkoutSession")]
+    public async Task<IActionResult> GetCurrentWorkoutSessionByUserId(
+        [FromServices] IHandler<WorkoutSessionDto, GetCurrentWorkoutSessionByUserIdQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        string userId = User.GetObjectId();
+        GetCurrentWorkoutSessionByUserIdQuery query = new(userId);
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
 
     [HttpGet("/User/{userId}/WorkoutSession")]
     public async Task<IActionResult> GetWorkoutSessionsByUserId(string userId,
-        [FromServices] IHandler<ICollection<WorkoutSession>, GetWorkoutSessionsByUserIdQuery> handler,
+        [FromServices] IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByUserIdQuery> handler,
         CancellationToken cancellationToken)
     {
         GetWorkoutSessionsByUserIdQuery query = new(userId);
@@ -54,7 +65,7 @@ public class WorkoutSessionController : ControllerBase
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateWorkoutSessionById(Guid id, [FromBody] UpdateWorkoutSessionByIdCommand command,
-        [FromServices] IHandler<WorkoutSession, UpdateWorkoutSessionByIdCommand> handler,
+        [FromServices] IHandler<WorkoutSessionDto, UpdateWorkoutSessionByIdCommand> handler,
         CancellationToken cancellationToken)
     {
         command.SetSessionId(id.ToString());

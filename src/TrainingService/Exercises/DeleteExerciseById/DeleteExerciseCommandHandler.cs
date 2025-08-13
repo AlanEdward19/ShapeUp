@@ -8,7 +8,7 @@ public class DeleteExerciseCommandHandler(IExerciseRepository repository)
 {
     public async Task<bool> HandleAsync(DeleteExerciseByIdCommand command, CancellationToken cancellationToken)
     {
-        Exercise? exercise = await repository.GetExerciseAsync(command.ExerciseId, cancellationToken);
+        Exercise? exercise = await repository.GetExerciseByIdAsync(command.ExerciseId, cancellationToken);
         ArgumentNullException.ThrowIfNull(exercise);
         
         await repository.DeleteAsync(exercise, cancellationToken);

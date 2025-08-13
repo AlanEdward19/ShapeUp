@@ -2,6 +2,7 @@
 using TrainingService.WorkoutSessions.Common.Repository;
 using TrainingService.WorkoutSessions.CreateWorkoutSession;
 using TrainingService.WorkoutSessions.DeleteWorkoutSessionById;
+using TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.GetWorkoutSessionById;
 using TrainingService.WorkoutSessions.GetWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
@@ -28,11 +29,12 @@ public static class WorkoutSessionModule
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<WorkoutSession, CreateWorkoutSessionCommand>, CreateWorkoutSessionCommandHandler>();
+        services.AddScoped<IHandler<WorkoutSessionDto, CreateWorkoutSessionCommand>, CreateWorkoutSessionCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteWorkoutSessionByIdCommand>, DeleteWorkoutSessionByIdCommandHandler>();
-        services.AddScoped<IHandler<WorkoutSession, UpdateWorkoutSessionByIdCommand>, UpdateWorkoutSessionByIdCommandHandler>();
-        services.AddScoped<IHandler<WorkoutSession, GetWorkoutSessionByIdQuery>, GetWorkoutSessionByIdQueryHandler>();
-        services.AddScoped<IHandler<ICollection<WorkoutSession>, GetWorkoutSessionsByUserIdQuery>, GetWorkoutSessionsByUserIdQueryHandler>();
+        services.AddScoped<IHandler<WorkoutSessionDto, UpdateWorkoutSessionByIdCommand>, UpdateWorkoutSessionByIdCommandHandler>();
+        services.AddScoped<IHandler<WorkoutSessionDto, GetWorkoutSessionByIdQuery>, GetWorkoutSessionByIdQueryHandler>();
+        services.AddScoped<IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByUserIdQuery>, GetWorkoutSessionsByUserIdQueryHandler>();
+        services.AddScoped<IHandler<WorkoutSessionDto, GetCurrentWorkoutSessionByUserIdQuery>, GetCurrentWorkoutSessionByUserIdQueryHandler>();
 
         return services;
     }

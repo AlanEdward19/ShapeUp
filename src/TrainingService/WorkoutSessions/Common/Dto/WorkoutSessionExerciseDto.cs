@@ -1,0 +1,29 @@
+﻿using TrainingService.Exercises;
+using TrainingService.Exercises.Common;
+using TrainingService.Workouts.Common.Enums;
+using TrainingService.WorkoutSessions.Common.ValueObjects;
+
+namespace TrainingService.WorkoutSessions;
+
+public class WorkoutSessionExerciseDto(WorkoutSessionExerciseValueObject workoutSessionExerciseValueObject, Exercise exercise)
+{
+    /// <summary>
+    /// Quantidade de peso do exercício
+    /// </summary>
+    public int? Weight { get; set; } = workoutSessionExerciseValueObject.Weight;
+    
+    /// <summary>
+    /// Quantidade de repetições do exercício
+    /// </summary>
+    public int? Repetitions { get; set; } = workoutSessionExerciseValueObject.Repetitions;
+    
+    /// <summary>
+    /// Unidade de medida do exercício
+    /// </summary>
+    public EMeasureUnit MeasureUnit { get; set; } = workoutSessionExerciseValueObject.MeasureUnit;
+
+    /// <summary>
+    /// Metadados do exercício.
+    /// </summary>
+    public ExerciseDto Metadata { get; set; } = new(exercise);
+}

@@ -14,7 +14,7 @@ public class UpdateExerciseCommandHandler(IExerciseRepository repository)
 {
     public async Task<ExerciseDto> HandleAsync(UpdateExerciseCommand command, CancellationToken cancellationToken)
     {
-        Exercise? exercise = await repository.GetExerciseAsync(command.Id, cancellationToken);
+        Exercise? exercise = await repository.GetExerciseByIdAsync(command.Id, cancellationToken);
         ArgumentNullException.ThrowIfNull(exercise);
         
         exercise.UpdateExercise(command);

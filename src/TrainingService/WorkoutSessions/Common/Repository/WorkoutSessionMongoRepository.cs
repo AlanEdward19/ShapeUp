@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using TrainingService.WorkoutSessions.Common.Enums;
 
 namespace TrainingService.WorkoutSessions.Common.Repository;
 
@@ -22,7 +23,17 @@ public class WorkoutSessionMongoRepository : IWorkoutSessionMongoRepository
         var filter = Builders<WorkoutSession>.Filter.Eq(x => x.UserId, userId);
         return await _collection.Find(filter).ToListAsync(cancellationToken);
     }
-    
+
+    public async Task<WorkoutSession?> GetCurrentWorkoutSessionByUserIdAsync(string userId, CancellationToken cancellationToken)
+    {
+        var filter = Builders<WorkoutSession>.Filter.And(
+            Builders<WorkoutSession>.Filter.Eq(x => x.UserId, userId),
+            Builders<WorkoutSession>.Filter.Eq(x => x.Status, EWorkoutStatus.InProgress)
+        );
+
+        return await _collection.Find(filter).FirstOrDefaultAsync(cancellationToken);
+    }
+
     public async Task CreateWorkoutSessionAsync(WorkoutSession session, CancellationToken cancellationToken)
     {
         await _collection.InsertOneAsync(session, cancellationToken: cancellationToken);

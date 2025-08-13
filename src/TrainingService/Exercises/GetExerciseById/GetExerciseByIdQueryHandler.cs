@@ -9,7 +9,7 @@ public class GetExerciseByIdQueryHandler(IExerciseRepository repository)
 {
     public async Task<ExerciseDto> HandleAsync(GetExerciseByIdQuery query, CancellationToken cancellationToken)
     {
-        Exercise? exercise = await repository.GetExerciseAsync(query.ExerciseId, cancellationToken);
+        Exercise? exercise = await repository.GetExerciseByIdAsync(query.ExerciseId, cancellationToken);
         ArgumentNullException.ThrowIfNull(exercise, nameof(exercise));
         
         return new ExerciseDto(exercise);

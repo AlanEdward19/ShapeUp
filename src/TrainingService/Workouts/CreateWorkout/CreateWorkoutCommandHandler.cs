@@ -12,22 +12,21 @@ public class CreateWorkoutCommandHandler(IWorkoutRepository repository, IExercis
     public async Task<WorkoutDto> HandleAsync(CreateWorkoutCommand command, CancellationToken cancellationToken)
     {
         Workout workout = new Workout(command.GetCreatorId(), command.GetUserId(), command.Name, command.Visibility);
-        
+
         if (command.Exercises.Any())
         {
-            List<Exercise> exercises = new List<Exercise>();
-            foreach (var exerciseId in command.Exercises)
-            {
-                var exercise = await exerciseRepository.GetExerciseAsync(exerciseId, cancellationToken);
-                if (exercise != null)
-                    exercises.Add(exercise);
-            }
-            
+            var exercises =
+                (await exerciseRepository.GetExercisesByIdsAsync(command.Exercises.ToList(), cancellationToken))
+                .ToList();
+
             workout.AddWorkoutExercises(exercises);
         }
-        
+        else
+            throw new ArgumentException("At least one exercise must be provided to create a workout.",
+                nameof(command.Exercises));
+
         await repository.AddAsync(workout, cancellationToken);
-        
+
         return new WorkoutDto(workout);
     }
 }

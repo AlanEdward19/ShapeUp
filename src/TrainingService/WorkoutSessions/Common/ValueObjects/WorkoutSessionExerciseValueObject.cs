@@ -1,4 +1,6 @@
-﻿namespace TrainingService.WorkoutSessions.Common.ValueObjects;
+﻿using TrainingService.Workouts.Common.Enums;
+
+namespace TrainingService.WorkoutSessions.Common.ValueObjects;
 
 public class WorkoutSessionExerciseValueObject
 {
@@ -16,4 +18,9 @@ public class WorkoutSessionExerciseValueObject
     /// Repetições do exercício
     /// </summary>
     public int? Repetitions { get; set; }
+    
+    /// <summary>
+    /// Unidade de medida do exercício
+    /// </summary>
+    public EMeasureUnit MeasureUnit { get; set; }
 }
