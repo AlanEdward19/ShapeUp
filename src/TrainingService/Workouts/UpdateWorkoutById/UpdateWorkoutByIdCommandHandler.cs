@@ -18,7 +18,7 @@ public class UpdateWorkoutByIdCommandHandler(IWorkoutRepository repository, IExe
         if (command.Exercises.Any())
         {
             var exercises =
-                (await exerciseRepository.GetExercisesByIdsAsync(command.Exercises.ToList(), cancellationToken))
+                (await exerciseRepository.GetExercisesByIdsAsync(command.Exercises.ToList(), cancellationToken, true))
                 .ToList();
             
             workout.UpdateWorkoutExercises(exercises);

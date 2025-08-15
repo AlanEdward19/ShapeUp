@@ -5,6 +5,7 @@ public interface IWorkoutSessionMongoRepository
     Task<WorkoutSession?> GetWorkoutSessionByIdAsync(string sessionId, CancellationToken cancellationToken);
     
     Task<ICollection<WorkoutSession>> GetWorkoutSessionsByUserIdAsync(string userId, CancellationToken cancellationToken);
+    Task<ICollection<WorkoutSession>> GetWorkoutSessionsByWorkoutIdIdAsync(Guid workoutId, CancellationToken cancellationToken);
     
     Task<WorkoutSession?> GetCurrentWorkoutSessionByUserIdAsync(string userId, CancellationToken cancellationToken);
     

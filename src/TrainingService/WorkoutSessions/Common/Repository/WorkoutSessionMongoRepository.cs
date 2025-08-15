@@ -24,6 +24,12 @@ public class WorkoutSessionMongoRepository : IWorkoutSessionMongoRepository
         return await _collection.Find(filter).ToListAsync(cancellationToken);
     }
 
+    public async Task<ICollection<WorkoutSession>> GetWorkoutSessionsByWorkoutIdIdAsync(Guid workoutId, CancellationToken cancellationToken)
+    {
+        var filter = Builders<WorkoutSession>.Filter.Eq(x => x.WorkoutId, workoutId.ToString());
+        return await _collection.Find(filter).ToListAsync(cancellationToken);
+    }
+
     public async Task<WorkoutSession?> GetCurrentWorkoutSessionByUserIdAsync(string userId, CancellationToken cancellationToken)
     {
         var filter = Builders<WorkoutSession>.Filter.And(

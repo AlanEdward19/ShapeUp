@@ -11,6 +11,7 @@ using TrainingService.WorkoutSessions.DeleteWorkoutSessionById;
 using TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.GetWorkoutSessionById;
 using TrainingService.WorkoutSessions.GetWorkoutSessionByUserId;
+using TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId;
 using TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 
 namespace TrainingService.WorkoutSessions;
@@ -60,6 +61,15 @@ public class WorkoutSessionController : ControllerBase
         CancellationToken cancellationToken)
     {
         GetWorkoutSessionsByUserIdQuery query = new(userId);
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
+    [HttpGet("/v{version:apiVersion}/Workout/{workoutId:guid}/WorkoutSession")]
+    public async Task<IActionResult> GetWorkoutSessionsByUserId(Guid workoutId,
+        [FromServices] IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByWorkoutIdQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        GetWorkoutSessionsByWorkoutIdQuery query = new(workoutId);
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
 

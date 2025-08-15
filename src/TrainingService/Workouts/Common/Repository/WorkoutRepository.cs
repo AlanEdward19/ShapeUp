@@ -25,9 +25,6 @@ public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
             .Include(x => x.Exercises)
             .ToListAsync(cancellationToken);
 
-        if (workouts is null || !workouts.Any())
-            throw new NotFoundException($"No workouts for user id '{userId}' were found.");
-
         return workouts;
     }
     

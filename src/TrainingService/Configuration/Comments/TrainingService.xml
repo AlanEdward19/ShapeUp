@@ -373,6 +373,18 @@
         <member name="M:TrainingService.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:TrainingService.Migrations.ManyToManyRelationshipBetweenExerciseAndWorkout">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.ManyToManyRelationshipBetweenExerciseAndWorkout.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.ManyToManyRelationshipBetweenExerciseAndWorkout.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.ManyToManyRelationshipBetweenExerciseAndWorkout.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Weight">
             <summary>
             Quantidade de peso do exercício

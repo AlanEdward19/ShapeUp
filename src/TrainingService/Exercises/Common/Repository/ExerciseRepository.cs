@@ -18,13 +18,19 @@ public class ExerciseRepository(TrainingDbContext dbContext) : IExerciseReposito
         return exercise;
     }
 
-    public async Task<ICollection<Exercise>> GetExercisesByIdsAsync(List<Guid> exerciseIds, CancellationToken cancellationToken)
+    public async Task<ICollection<Exercise>> GetExercisesByIdsAsync(List<Guid> exerciseIds, CancellationToken cancellationToken, bool track = false)
     {
         if (exerciseIds is null || !exerciseIds.Any())
             throw new ArgumentException("Exercise IDs cannot be null or empty.", nameof(exerciseIds));
+        
+        var exerciseQueryable = dbContext.Exercises.AsQueryable();
+        
+        if (!track)
+            exerciseQueryable = exerciseQueryable.AsNoTracking();
 
-        return await dbContext.Exercises.AsNoTracking()
-            .Where(x => exerciseIds.Contains(x.Id))
+        exerciseQueryable = exerciseQueryable.Where(x => exerciseIds.Contains(x.Id));
+        
+        return await exerciseQueryable
             .ToListAsync(cancellationToken);
     }
 
