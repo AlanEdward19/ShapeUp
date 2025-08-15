@@ -21,7 +21,7 @@ public class ExerciseRepository(TrainingDbContext dbContext) : IExerciseReposito
     public async Task<ICollection<Exercise>> GetExercisesByIdsAsync(List<Guid> exerciseIds, CancellationToken cancellationToken, bool track = false)
     {
         if (exerciseIds is null || !exerciseIds.Any())
-            throw new ArgumentException("Exercise IDs cannot be null or empty.", nameof(exerciseIds));
+            return [];
         
         var exerciseQueryable = dbContext.Exercises.AsQueryable();
         

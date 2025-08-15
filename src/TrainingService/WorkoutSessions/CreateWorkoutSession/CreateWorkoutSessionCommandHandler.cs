@@ -21,7 +21,7 @@ public class CreateWorkoutSessionCommandHandler(
 
         var exerciseIds = command.Exercises.Select(e => Guid.Parse(e.ExerciseId)).ToList();
 
-        var exercises = exerciseIds.Any() ? await exerciseRepository.GetExercisesByIdsAsync(exerciseIds, cancellationToken) : [];
+        var exercises = await exerciseRepository.GetExercisesByIdsAsync(exerciseIds, cancellationToken);
 
         return new(workoutSession, exercises);
     }
