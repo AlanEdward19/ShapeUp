@@ -1,8 +1,8 @@
 using Refit;
 
-namespace SocialService.Common.Services.BrasilApi;
+namespace SocialService.Common.Services.CepAwesomeApi;
 
-public interface IBrasilApi
+public interface ICepAwesomeApi
 {
     [Get("/json/{postalCode}")]
     Task<LocationInfoDto> GetLocationInfoByPostalCodeAsync(string postalCode);

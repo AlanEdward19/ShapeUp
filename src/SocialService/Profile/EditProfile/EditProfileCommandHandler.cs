@@ -1,5 +1,5 @@
 ﻿using SharedKernel.Utils;
-using SocialService.Common.Services.BrasilApi;
+using SocialService.Common.Services.CepAwesomeApi;
 using SocialService.Profile.Common.Repository;
 
 namespace SocialService.Profile.EditProfile;
@@ -8,7 +8,7 @@ namespace SocialService.Profile.EditProfile;
 ///     Handler para o comando de edição de perfil
 /// </summary>
 /// <param name="graphRepository"></param>
-public class EditProfileCommandHandler(IProfileGraphRepository graphRepository, IBrasilApi brasilApi)
+public class EditProfileCommandHandler(IProfileGraphRepository graphRepository, ICepAwesomeApi cepAwesomeApi)
     : IHandler<ProfileDto, EditProfileCommand>
 {
     /// <summary>
@@ -26,7 +26,7 @@ public class EditProfileCommandHandler(IProfileGraphRepository graphRepository, 
 
         await graphRepository.UpdateProfileAsync(profile);
         
-        var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
+        var locationInfo = await cepAwesomeApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
 
         return new(profile, locationInfo.State, locationInfo.City);
     }

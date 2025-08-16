@@ -11,10 +11,10 @@ var mongo = builder
 var sqlServer = builder
         .AddSqlServer("SqlServer")
         .WithDataVolume();
-//
-// var sqlServerProfessionalManagement = builder
-//         .AddSqlServer("SqlServerProfessionalManagement")
-//         .WithDataVolume();
+
+var sqlServerProfessionalManagement = builder
+        .AddSqlServer("SqlServerProfessionalManagement")
+        .WithDataVolume();
 
 var storage = builder
         .AddAzureStorage("Storage")
@@ -33,19 +33,19 @@ var socialService = builder
         .WithReference(redis)
         .WithReference(search);
 
-// var notificationService = builder
-//         .AddProject<Projects.NotificationService>("NotificationService")
-//         .WaitFor(mongo)
-//         .WithReference(mongo)
-//         .WithExternalHttpEndpoints();
-//
-// var chatService = builder
-//         .AddProject<Projects.ChatService>("ChatService")
-//         .WaitFor(redis)
-//         .WaitFor(mongo)
-//         .WithReference(redis)
-//         .WithReference(mongo)
-//         .WithExternalHttpEndpoints();
+var notificationService = builder
+        .AddProject<Projects.NotificationService>("NotificationService")
+        .WaitFor(mongo)
+        .WithReference(mongo)
+        .WithExternalHttpEndpoints();
+
+var chatService = builder
+        .AddProject<Projects.ChatService>("ChatService")
+        .WaitFor(redis)
+        .WaitFor(mongo)
+        .WithReference(redis)
+        .WithReference(mongo)
+        .WithExternalHttpEndpoints();
 
 var nutritionService = builder
         .AddProject<Projects.NutritionService>("NutritionService")
@@ -59,18 +59,18 @@ var authService = builder
         .WithReference(sqlServer)
         .WithExternalHttpEndpoints();
 
-// var trainingService = builder
-//         .AddProject<Projects.TrainingService>("TrainingService")
-//         .WaitFor(sqlServer)
-//         .WaitFor(mongo)
-//         .WithReference(sqlServer)
-//         .WithReference(mongo)
-//         .WithExternalHttpEndpoints();
-//
-// var professionalManagementService = builder
-//         .AddProject<Projects.ProfessionalManagementService>("ProfessionalManagementService")
-//         .WaitFor(sqlServerProfessionalManagement)
-//         .WithReference(sqlServerProfessionalManagement)
-//         .WithExternalHttpEndpoints();
+var trainingService = builder
+        .AddProject<Projects.TrainingService>("TrainingService")
+        .WaitFor(sqlServer)
+        .WaitFor(mongo)
+        .WithReference(sqlServer)
+        .WithReference(mongo)
+        .WithExternalHttpEndpoints();
+
+var professionalManagementService = builder
+        .AddProject<Projects.ProfessionalManagementService>("ProfessionalManagementService")
+        .WaitFor(sqlServerProfessionalManagement)
+        .WithReference(sqlServerProfessionalManagement)
+        .WithExternalHttpEndpoints();
 
 builder.Build().Run();

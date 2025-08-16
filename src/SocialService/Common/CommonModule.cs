@@ -1,6 +1,6 @@
 using Refit;
 using SocialService.Common.Services;
-using SocialService.Common.Services.BrasilApi;
+using SocialService.Common.Services.CepAwesomeApi;
 
 namespace SocialService.Common;
 
@@ -24,7 +24,7 @@ public static class CommonModule
 
     private static IServiceCollection AddExternalApis(this IServiceCollection services)
     {
-        services.AddRefitClient<IBrasilApi>()
+        services.AddRefitClient<ICepAwesomeApi>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://cep.awesomeapi.com.br"));
         
         return services;

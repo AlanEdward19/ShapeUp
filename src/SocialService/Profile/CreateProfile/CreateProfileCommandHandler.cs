@@ -1,5 +1,5 @@
 ﻿using SharedKernel.Utils;
-using SocialService.Common.Services.BrasilApi;
+using SocialService.Common.Services.CepAwesomeApi;
 using SocialService.Connections.Search;
 using SocialService.Profile.Common.Repository;
 
@@ -9,7 +9,7 @@ namespace SocialService.Profile.CreateProfile;
 ///     Handler para o comando de criação de perfil.
 /// </summary>
 /// <param name="graphRepository"></param>
-public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository, IBrasilApi brasilApi, IAzureSearchProvider searchProvider)
+public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository, ICepAwesomeApi cepAwesomeApi, IAzureSearchProvider searchProvider)
     : IHandler<ProfileDto, CreateProfileCommand>
 {
     /// <summary>
@@ -20,7 +20,7 @@ public class CreateProfileCommandHandler(IProfileGraphRepository graphRepository
     /// <returns></returns>
     public async Task<ProfileDto> HandleAsync(CreateProfileCommand command, CancellationToken cancellationToken)
     {
-        var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(command.PostalCode);
+        var locationInfo = await cepAwesomeApi.GetLocationInfoByPostalCodeAsync(command.PostalCode);
         
         Profile profile = new(command, ProfileContext.ProfileId, locationInfo);
 

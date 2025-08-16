@@ -1,4 +1,4 @@
-namespace SocialService.Common.Services.BrasilApi;
+namespace SocialService.Common.Services.CepAwesomeApi;
 
 public class LocationInfoDto
 {
@@ -7,6 +7,5 @@ public class LocationInfoDto
     public string? Lng { get; set; }
     public string State { get; set; }
     public string City { get; set; }
-    public string Adress { get; set; }
 
 }

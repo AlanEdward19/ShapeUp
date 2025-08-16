@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using SocialService.Common.Services.BrasilApi;
+using SocialService.Common.Services.CepAwesomeApi;
 using SocialService.Profile.Common.Enums;
 using SocialService.Profile.CreateProfile;
 

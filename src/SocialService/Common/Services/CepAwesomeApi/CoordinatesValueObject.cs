@@ -1,4 +1,4 @@
-namespace SocialService.Common.Services.BrasilApi;
+namespace SocialService.Common.Services.CepAwesomeApi;
 
 public class CoordinatesValueObject
 {

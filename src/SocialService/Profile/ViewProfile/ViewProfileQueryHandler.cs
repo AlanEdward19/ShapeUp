@@ -1,5 +1,5 @@
 ﻿using SharedKernel.Utils;
-using SocialService.Common.Services.BrasilApi;
+using SocialService.Common.Services.CepAwesomeApi;
 using SocialService.Profile.Common.Repository;
 using SocialService.Profile.CreateProfile;
 
@@ -11,7 +11,7 @@ namespace SocialService.Profile.ViewProfile;
 /// <param name="repository"></param>
 public class ViewProfileQueryHandler(
     IProfileGraphRepository repository,
-    IBrasilApi brasilApi,
+    ICepAwesomeApi cepAwesomeApi,
     IBlobStorageProvider blobStorageProvider)
     : IHandler<ProfileDto?, ViewProfileQuery>
 {
@@ -31,7 +31,7 @@ public class ViewProfileQueryHandler(
         string state = "", city = "";
         try
         {
-            var locationInfo = await brasilApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
+            var locationInfo = await cepAwesomeApi.GetLocationInfoByPostalCodeAsync(profile.PostalCode);
             city = locationInfo.City;
             state = locationInfo.State;
         }
