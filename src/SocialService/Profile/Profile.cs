@@ -35,8 +35,8 @@ public class Profile
         UpdateBirthDate(command.BirthDate, false);
         UpdateBio(command.Bio, false);
         UpdateEmail(command.Email, false);
-        UpdateLatitude(double.Parse(locationInfo.Location.Coordinates.Latitude), false);
-        UpdateLongitude(double.Parse(locationInfo.Location.Coordinates.Longitude), false);
+        UpdateLatitude(double.Parse(locationInfo.Lat?? "0") , false);
+        UpdateLongitude(double.Parse(locationInfo.Lng ?? "0"), false);
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }

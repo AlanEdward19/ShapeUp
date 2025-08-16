@@ -25,7 +25,7 @@ public static class CommonModule
     private static IServiceCollection AddExternalApis(this IServiceCollection services)
     {
         services.AddRefitClient<IBrasilApi>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://brasilapi.com.br"));
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://cep.awesomeapi.com.br"));
         
         return services;
     }

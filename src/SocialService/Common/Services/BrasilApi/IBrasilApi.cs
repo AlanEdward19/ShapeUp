@@ -4,6 +4,6 @@ namespace SocialService.Common.Services.BrasilApi;
 
 public interface IBrasilApi
 {
-    [Get("/api/cep/v2/{postalCode}")]
+    [Get("/json/{postalCode}")]
     Task<LocationInfoDto> GetLocationInfoByPostalCodeAsync(string postalCode);
 }
