@@ -34,4 +34,9 @@ public class WorkoutDto(Workout workout)
     /// Exercícios do treino.
     /// </summary>
     public ICollection<ExerciseDto> Exercises { get; private set; } = workout.Exercises.Select(x => new ExerciseDto(x)).ToList();
+    
+    /// <summary>
+    /// Tempo de descanso entre os exercícios, em segundos.
+    /// </summary>
+    public int RestingTimeInSeconds { get; private set; } = workout.RestingTimeInSeconds;
 }

@@ -641,6 +641,11 @@
             Exercícios do treino.
             </summary>
         </member>
+        <member name="P:TrainingService.Workouts.Common.WorkoutDto.RestingTimeInSeconds">
+            <summary>
+            Tempo de descanso entre os exercícios, em segundos.
+            </summary>
+        </member>
         <member name="T:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand">
             <summary>
             Comando para criar um treino.
