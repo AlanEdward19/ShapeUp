@@ -385,6 +385,18 @@
         <member name="M:TrainingService.Migrations.ManyToManyRelationshipBetweenExerciseAndWorkout.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:TrainingService.Migrations.AddedRestingTimeToWorkout">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.AddedRestingTimeToWorkout.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.AddedRestingTimeToWorkout.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.AddedRestingTimeToWorkout.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Weight">
             <summary>
             Quantidade de peso do exercício
@@ -637,7 +649,7 @@
             <param name="visibility"></param>
             <param name="exercises"></param>
         </member>
-        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.#ctor(System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.#ctor(System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid},System.Int32)">
             <summary>
             Comando para criar um treino.
             </summary>
@@ -692,6 +704,11 @@
         <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.Exercises">
             <summary>
             Ids dos exercícios do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand.RestingTimeInSeconds">
+            <summary>
+            Tempo de descanso entre as séries do treino, em segundos.
             </summary>
         </member>
         <member name="T:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand">
@@ -758,7 +775,7 @@
             <param name="visibility"></param>
             <param name="exercises"></param>
         </member>
-        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.#ctor(System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid})">
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.#ctor(System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Collections.Generic.IEnumerable{System.Guid},System.Int32)">
             <summary>
             Comando para atualizar um treino por id.
             </summary>
@@ -787,6 +804,11 @@
             Ids dos exercícios do treino.
             </summary>
         </member>
+        <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.RestingTimeInSeconds">
+            <summary>
+            Tempo de descanso entre os exercícios, em segundos.
+            </summary>
+        </member>
         <member name="P:TrainingService.Workouts.Workout.Id">
             <summary>
             Id do treino.
@@ -810,6 +832,11 @@
         <member name="P:TrainingService.Workouts.Workout.Visibility">
             <summary>
             Visibilidade do treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.Workouts.Workout.RestingTimeInSeconds">
+            <summary>
+            Tempo de descanso entre os exercícios do treino, em segundos.
             </summary>
         </member>
         <member name="P:TrainingService.Workouts.Workout.Exercises">

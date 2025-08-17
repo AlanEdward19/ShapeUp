@@ -11,7 +11,8 @@ public class CreateWorkoutCommandHandler(IWorkoutRepository repository, IExercis
 {
     public async Task<WorkoutDto> HandleAsync(CreateWorkoutCommand command, CancellationToken cancellationToken)
     {
-        Workout workout = new Workout(command.GetCreatorId(), command.GetUserId(), command.Name, command.Visibility);
+        Workout workout = new Workout(command.GetCreatorId(), command.GetUserId(), command.Name, command.Visibility,
+            command.RestingTimeInSeconds);
 
         if (command.Exercises.Any())
         {

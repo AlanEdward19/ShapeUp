@@ -9,7 +9,7 @@ namespace TrainingService.Workouts.UpdateWorkoutById;
 /// <param name="name"></param>
 /// <param name="visibility"></param>
 /// <param name="exercises"></param>
-public class UpdateWorkoutByIdCommand(string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises)
+public class UpdateWorkoutByIdCommand(string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises, int restingTimeInSeconds)
 {
     /// <summary>
     /// Id do treino.
@@ -40,4 +40,9 @@ public class UpdateWorkoutByIdCommand(string name, EWorkoutVisibility visibility
     /// Ids dos exercícios do treino.
     /// </summary>
     public IEnumerable<Guid> Exercises { get; set; } = exercises;
+    
+    /// <summary>
+    /// Tempo de descanso entre os exercícios, em segundos.
+    /// </summary>
+    public int RestingTimeInSeconds { get; set; } = restingTimeInSeconds;
 }

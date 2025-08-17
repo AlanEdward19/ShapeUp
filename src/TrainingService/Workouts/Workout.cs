@@ -11,12 +11,13 @@ public class Workout
     {
     }
 
-    public Workout(string creatorId, string userId, string name, EWorkoutVisibility visibility)
+    public Workout(string creatorId, string userId, string name, EWorkoutVisibility visibility, int restingTimeInSeconds)
     {
         CreatorId = creatorId;
         UserId = userId;
         Name = name;
         Visibility = visibility;
+        RestingTimeInSeconds = restingTimeInSeconds;
     }
 
     /// <summary>
@@ -44,6 +45,11 @@ public class Workout
     /// Visibilidade do treino.
     /// </summary>
     public EWorkoutVisibility Visibility { get; private set; } = EWorkoutVisibility.Public;
+    
+    /// <summary>
+    /// Tempo de descanso entre os exercícios do treino, em segundos.
+    /// </summary>
+    public int RestingTimeInSeconds { get; set; }
 
     /// <summary>
     /// Exercícios do treino.
@@ -60,29 +66,12 @@ public class Workout
     /// </summary>
     public DateTime UpdatedAt { get; private set; } = DateTime.Now;
 
-    public void ChangeVisibility(EWorkoutVisibility visibility)
-    {
-        Visibility = visibility;
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void AddExercise(Exercise exercise)
-    {
-        Exercises.Add(exercise);
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void RemoveExercise(Exercise exercise)
-    {
-        Exercises.Remove(exercise);
-        UpdatedAt = DateTime.Now;
-    }
-
     public void UpdateWorkout(UpdateWorkoutByIdCommand command)
     {
         Name = command.Name ?? Name;
         Visibility = command.Visibility;
         UpdatedAt = DateTime.Now;
+        RestingTimeInSeconds = command.RestingTimeInSeconds;
     }
 
     public void AddWorkoutExercises(List<Exercise> exercises)
