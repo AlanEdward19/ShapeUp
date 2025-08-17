@@ -7,15 +7,17 @@ namespace TrainingService.Workouts.Common.Repository;
 
 public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
 {
-    public async Task<Workout?> GetWorkoutAsync(Guid workoutId, CancellationToken cancellationToken)
+    public async Task<Workout?> GetWorkoutAsync(Guid workoutId, CancellationToken cancellationToken,bool track = false)
     {
-        Workout? workout = await dbContext.Workouts.AsNoTracking().Include(x => x.Exercises)
+        IQueryable<Workout> query = dbContext
+            .Workouts
+            .Include(x => x.Exercises);
+        
+        if(!track)
+            query = query.AsNoTracking();
+
+        return await query
             .FirstOrDefaultAsync(x => x.Id == workoutId, cancellationToken);
-
-        if (workout is null)
-            throw new NotFoundException($"Workout with id '{workoutId}' not found.");
-
-        return workout;
     }
     
     public async Task<ICollection<Workout>> GetWorkoutsByUserIdAsync(string userId, CancellationToken cancellationToken)

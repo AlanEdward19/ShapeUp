@@ -8,7 +8,7 @@ public class DeleteWorkoutByIdCommandHandler(IWorkoutRepository repository)
 {
     public async Task<bool> HandleAsync(DeleteWorkoutByIdCommand command, CancellationToken cancellationToken)
     {
-        Workout? workout = await repository.GetWorkoutAsync(command.WorkoutId, cancellationToken);
+        Workout? workout = await repository.GetWorkoutAsync(command.WorkoutId, cancellationToken, true);
         ArgumentNullException.ThrowIfNull(workout);
         
         await repository.DeleteAsync(workout, cancellationToken);

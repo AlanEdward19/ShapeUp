@@ -2,7 +2,7 @@
 
 public interface IWorkoutRepository
 {
-    Task<Workout?> GetWorkoutAsync(Guid workoutId, CancellationToken cancellationToken);
+    Task<Workout?> GetWorkoutAsync(Guid workoutId, CancellationToken cancellationToken,bool track = false);
     
     Task<ICollection<Workout>> GetWorkoutsByUserIdAsync(string userId, CancellationToken cancellationToken);
     
