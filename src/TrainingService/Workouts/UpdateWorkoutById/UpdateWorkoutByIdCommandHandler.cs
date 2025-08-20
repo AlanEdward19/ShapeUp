@@ -5,9 +5,20 @@ using TrainingService.Workouts.Common.Repository;
 
 namespace TrainingService.Workouts.UpdateWorkoutById;
 
+/// <summary>
+/// Handler para o comando de atualização de treino por id.
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="exerciseRepository"></param>
 public class UpdateWorkoutByIdCommandHandler(IWorkoutRepository repository, IExerciseRepository exerciseRepository)
     : IHandler<WorkoutDto, UpdateWorkoutByIdCommand>
 {
+    /// <summary>
+    /// Método para tratar o comando de atualização de treino por id.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<WorkoutDto> HandleAsync(UpdateWorkoutByIdCommand command, CancellationToken cancellationToken)
     {
         Workout? workout = await repository.GetWorkoutAsync(command.GetWorkoutId(), cancellationToken, true);

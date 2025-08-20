@@ -5,12 +5,26 @@ using TrainingService.Workouts.UpdateWorkoutById;
 
 namespace TrainingService.Workouts;
 
+/// <summary>
+/// Entidade que representa um treino.
+/// </summary>
 public class Workout
 {
+    /// <summary>
+    /// Construtor padrão para o EF Core.
+    /// </summary>
     protected Workout()
     {
     }
 
+    /// <summary>
+    /// Construtor para criar um novo treino.
+    /// </summary>
+    /// <param name="creatorId"></param>
+    /// <param name="userId"></param>
+    /// <param name="name"></param>
+    /// <param name="visibility"></param>
+    /// <param name="restingTimeInSeconds"></param>
     public Workout(string creatorId, string userId, string name, EWorkoutVisibility visibility, int restingTimeInSeconds)
     {
         CreatorId = creatorId;
@@ -66,19 +80,31 @@ public class Workout
     /// </summary>
     public DateTime UpdatedAt { get; private set; } = DateTime.Now;
 
+    /// <summary>
+    /// Método para atualizar o treino com base em um comando.
+    /// </summary>
+    /// <param name="command"></param>
     public void UpdateWorkout(UpdateWorkoutByIdCommand command)
     {
-        Name = command.Name ?? Name;
+        Name = command.Name;
         Visibility = command.Visibility;
         UpdatedAt = DateTime.Now;
         RestingTimeInSeconds = command.RestingTimeInSeconds;
     }
 
+    /// <summary>
+    /// Método para adicionar exercícios ao treino.
+    /// </summary>
+    /// <param name="exercises"></param>
     public void AddWorkoutExercises(List<Exercise> exercises)
     {
         Exercises = exercises ?? new List<Exercise>();
     }
 
+    /// <summary>
+    /// Método para atualizar os exercícios do treino, substituindo os existentes.
+    /// </summary>
+    /// <param name="exercises"></param>
     public void UpdateWorkoutExercises(List<Exercise> exercises)
     {
         Exercises.Clear();

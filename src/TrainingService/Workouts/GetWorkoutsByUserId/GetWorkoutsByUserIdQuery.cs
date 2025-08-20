@@ -11,7 +11,7 @@ public class GetWorkoutsByUserIdQuery
     public string UserId { get; private set; }
     
     /// <summary>
-    /// método para id do usuário.
+    /// Método para id do usuário.
     /// </summary>
     /// <param name="userId"></param>
     public void SetUserId(string userId)

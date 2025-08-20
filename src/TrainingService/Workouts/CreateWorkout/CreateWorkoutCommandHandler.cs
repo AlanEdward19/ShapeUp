@@ -5,9 +5,21 @@ using TrainingService.Workouts.Common.Repository;
 
 namespace TrainingService.Workouts.CreateWorkout;
 
+/// <summary>
+/// Handler para o comando de criação de treino.
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="exerciseRepository"></param>
 public class CreateWorkoutCommandHandler(IWorkoutRepository repository, IExerciseRepository exerciseRepository)
     : IHandler<WorkoutDto, CreateWorkoutCommand>
 {
+    /// <summary>
+    /// Método para tratar o comando de criação de treino.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public async Task<WorkoutDto> HandleAsync(CreateWorkoutCommand command, CancellationToken cancellationToken)
     {
         Workout workout = new Workout(command.GetCreatorId(), command.GetUserId(), command.Name, command.Visibility,
