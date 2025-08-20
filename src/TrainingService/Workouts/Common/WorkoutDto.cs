@@ -3,6 +3,10 @@ using TrainingService.Workouts.Common.Enums;
 
 namespace TrainingService.Workouts.Common;
 
+/// <summary>
+/// DTO para representar um treino.
+/// </summary>
+/// <param name="workout"></param>
 public class WorkoutDto(Workout workout)
 {
     /// <summary>
@@ -34,4 +38,9 @@ public class WorkoutDto(Workout workout)
     /// Exercícios do treino.
     /// </summary>
     public ICollection<ExerciseDto> Exercises { get; private set; } = workout.Exercises.Select(x => new ExerciseDto(x)).ToList();
+    
+    /// <summary>
+    /// Tempo de descanso entre os exercícios, em segundos.
+    /// </summary>
+    public int RestingTimeInSeconds { get; private set; } = workout.RestingTimeInSeconds;
 }

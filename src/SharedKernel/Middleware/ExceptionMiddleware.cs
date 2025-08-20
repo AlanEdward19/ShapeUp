@@ -49,6 +49,11 @@ public class ExceptionMiddleware(
                     response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     logger.LogWarning($"[Unauthorized request] {error.Message}");
                     break;
+                
+                case ForbiddenException e:
+                    response.StatusCode = (int)HttpStatusCode.Forbidden;
+                    logger.LogWarning($"[Forbidden request] {error.Message}");
+                    break;
 
                 default:
                     // unhandled error

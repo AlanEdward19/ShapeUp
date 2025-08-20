@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrainingService.Exercises;
 using TrainingService.Workouts;
-using TrainingService.WorkoutSessions;
-using TrainingService.WorkoutSessions.Common.ValueObjects;
 
 namespace TrainingService.Connections.Database;
 

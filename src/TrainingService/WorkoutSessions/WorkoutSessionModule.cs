@@ -1,10 +1,12 @@
 ﻿using TrainingService.Common.Interfaces;
+using TrainingService.WorkoutSessions.Common.Dto;
 using TrainingService.WorkoutSessions.Common.Repository;
 using TrainingService.WorkoutSessions.CreateWorkoutSession;
 using TrainingService.WorkoutSessions.DeleteWorkoutSessionById;
 using TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.GetWorkoutSessionById;
-using TrainingService.WorkoutSessions.GetWorkoutSessionByUserId;
+using TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId;
+using TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId;
 using TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 
 namespace TrainingService.WorkoutSessions;
@@ -35,6 +37,7 @@ public static class WorkoutSessionModule
         services.AddScoped<IHandler<WorkoutSessionDto, GetWorkoutSessionByIdQuery>, GetWorkoutSessionByIdQueryHandler>();
         services.AddScoped<IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByUserIdQuery>, GetWorkoutSessionsByUserIdQueryHandler>();
         services.AddScoped<IHandler<WorkoutSessionDto, GetCurrentWorkoutSessionByUserIdQuery>, GetCurrentWorkoutSessionByUserIdQueryHandler>();
+        services.AddScoped<IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByWorkoutIdQuery>, GetWorkoutSessionsByWorkoutIdQueryHandler>();
 
         return services;
     }

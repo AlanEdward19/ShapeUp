@@ -1,29 +1,36 @@
-﻿using TrainingService.Common.Interfaces;
+﻿using SharedKernel.Exceptions;
+using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common.Repository;
+using TrainingService.Workouts.Common.Repository;
 using TrainingService.WorkoutSessions.Common.Dto;
 using TrainingService.WorkoutSessions.Common.Repository;
 
-namespace TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId;
+namespace TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId;
 
 /// <summary>
-/// Handler para a consulta de sessões de treino por ID de usuário.
+/// Handler para a consulta de sessões de treino por ID de treino.
 /// </summary>
 /// <param name="repository"></param>
+/// <param name="workoutRepository"></param>
 /// <param name="exerciseRepository"></param>
-public class GetWorkoutSessionsByUserIdQueryHandler(
+public class GetWorkoutSessionsByWorkoutIdQueryHandler(
     IWorkoutSessionMongoRepository repository,
-    IExerciseRepository exerciseRepository) : IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByUserIdQuery>
+    IWorkoutRepository workoutRepository,
+    IExerciseRepository exerciseRepository) : IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByWorkoutIdQuery>
 {
     /// <summary>
-    /// Método para lidar com a consulta de sessões de treino por ID de usuário.
+    /// Método para lidar com a consulta de sessões de treino por ID de treino.
     /// </summary>
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<ICollection<WorkoutSessionDto>> HandleAsync(GetWorkoutSessionsByUserIdQuery query,
+    public async Task<ICollection<WorkoutSessionDto>> HandleAsync(GetWorkoutSessionsByWorkoutIdQuery query,
         CancellationToken cancellationToken)
     {
-        var workoutSessions = await repository.GetWorkoutSessionsByUserIdAsync(query.UserId, cancellationToken);
+        if(!await workoutRepository.WorkoutExistsAsync(query.WorkoutId, cancellationToken))
+            throw new NotFoundException($"Workout with ID {query.WorkoutId} does not exist.");
+        
+        var workoutSessions = await repository.GetWorkoutSessionsByWorkoutIdIdAsync(query.WorkoutId, cancellationToken);
         List<WorkoutSessionDto> workoutSessionDtos = new(workoutSessions.Count);
         var exerciseIds = workoutSessions.SelectMany(x => x.Exercises.Select(e => Guid.Parse(e.ExerciseId)))
             .ToList();
@@ -35,7 +42,6 @@ public class GetWorkoutSessionsByUserIdQueryHandler(
             var workoutExerciseIds = workoutSession
                 .Exercises.Select(e => Guid.Parse(e.ExerciseId))
                 .ToList();
-            
             var workoutExercises = exercises.Where(x => workoutExerciseIds.Contains(x.Id)).ToList();
             workoutSessionDtos.Add(new WorkoutSessionDto(workoutSession, workoutExercises));
         }

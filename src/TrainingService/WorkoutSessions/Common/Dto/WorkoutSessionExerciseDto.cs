@@ -3,14 +3,19 @@ using TrainingService.Exercises.Common;
 using TrainingService.Workouts.Common.Enums;
 using TrainingService.WorkoutSessions.Common.ValueObjects;
 
-namespace TrainingService.WorkoutSessions;
+namespace TrainingService.WorkoutSessions.Common.Dto;
 
+/// <summary>
+/// DTO para representar um exercício em uma sessão de treino.
+/// </summary>
+/// <param name="workoutSessionExerciseValueObject"></param>
+/// <param name="exercise"></param>
 public class WorkoutSessionExerciseDto(WorkoutSessionExerciseValueObject workoutSessionExerciseValueObject, Exercise exercise)
 {
     /// <summary>
     /// Quantidade de peso do exercício
     /// </summary>
-    public int? Weight { get; set; } = workoutSessionExerciseValueObject.Weight;
+    public double? Weight { get; set; } = workoutSessionExerciseValueObject.Weight;
     
     /// <summary>
     /// Quantidade de repetições do exercício

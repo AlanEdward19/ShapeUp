@@ -2,6 +2,10 @@
 
 namespace TrainingService.Exercises.Common;
 
+/// <summary>
+/// DTO para representar um exercício.
+/// </summary>
+/// <param name="exercise"></param>
 public class ExerciseDto(Exercise exercise)
 {
     /// <summary>

@@ -12,6 +12,13 @@ namespace TrainingService.Exercises.CreateExercise;
 public class CreateExerciseCommandHandler(IExerciseRepository repository)
     : IHandler<ExerciseDto, CreateExerciseCommand>
 {
+    /// <summary>
+    /// Método para criar um exercício.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public async Task<ExerciseDto> HandleAsync(CreateExerciseCommand command, CancellationToken cancellationToken)
     {
         var muscleGroups = command.MuscleGroups?.ToList() ?? new List<EMuscleGroup>();

@@ -8,7 +8,7 @@ namespace TrainingService.Workouts.CreateWorkout;
 /// <param name="name"></param>
 /// <param name="visibility"></param>
 /// <param name="exercises"></param>
-public class CreateWorkoutCommand(string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises)
+public class CreateWorkoutCommand(string name, EWorkoutVisibility visibility, IEnumerable<Guid> exercises, int restingTimeInSeconds)
 {
     /// <summary>
     /// Id do usuário criador do treino.
@@ -30,19 +30,19 @@ public class CreateWorkoutCommand(string name, EWorkoutVisibility visibility, IE
     /// <summary>
     /// Id do usuário para o qual o treino foi criado. Caso não seja informado, será o usuário autenticado.
     /// </summary>
-    private string? UserId { get; set; }
+    private string UserId { get; set; }
     
     /// <summary>
     /// Método para definir o Id do usuário para o qual o treino foi criado.
     /// </summary>
     /// <param name="userId"></param>
-    public void SetUserId(string? userId) => UserId = userId;
+    public void SetUserId(string userId) => UserId = userId;
     
     /// <summary>
     /// Método para obter o Id do usuário para o qual o treino foi criado.
     /// </summary>
     /// <returns></returns>
-    public string? GetUserId() => UserId;
+    public string GetUserId() => UserId;
 
     /// <summary>
     /// Nome do treino.
@@ -58,4 +58,9 @@ public class CreateWorkoutCommand(string name, EWorkoutVisibility visibility, IE
     /// Ids dos exercícios do treino.
     /// </summary>
     public IEnumerable<Guid> Exercises { get; set; } = exercises;
+
+    /// <summary>
+    /// Tempo de descanso entre as séries do treino, em segundos.
+    /// </summary>
+    public int RestingTimeInSeconds { get; set; } = restingTimeInSeconds;
 }

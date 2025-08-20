@@ -1,17 +1,35 @@
-﻿using TrainingService.Common.Interfaces;
+﻿using SharedKernel.Exceptions;
+using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common.Repository;
-using TrainingService.WorkoutSessions.Common.Enums;
+using TrainingService.WorkoutSessions.Common.Dto;
 using TrainingService.WorkoutSessions.Common.Repository;
 
 namespace TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 
+/// <summary>
+/// Handler para o comando de atualização de uma sessão de treino por ID.
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="exerciseRepository"></param>
 public class UpdateWorkoutSessionByIdCommandHandler(IWorkoutSessionMongoRepository repository, IExerciseRepository exerciseRepository)
     : IHandler<WorkoutSessionDto, UpdateWorkoutSessionByIdCommand>
 {
+    /// <summary>
+    /// Handler para o comando de atualização de uma sessão de treino por ID.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<WorkoutSessionDto> HandleAsync(UpdateWorkoutSessionByIdCommand command, CancellationToken cancellationToken)
     {
         WorkoutSession? workoutSession = await repository.GetWorkoutSessionByIdAsync(command.GetSessionId(), cancellationToken);
-        ArgumentNullException.ThrowIfNull(workoutSession);
+        
+        if(workoutSession == null)
+            throw new NotFoundException($"Workout session with ID {command.GetSessionId()} does not exist.");
+
+        if (workoutSession.UserId != command.GetUserId())
+            throw new ForbiddenException(
+                $"User {command.GetUserId()} is not authorized to update this workout session.");
 
         if (command.Status != null)
             workoutSession.UpdateStatus(command.Status.Value);

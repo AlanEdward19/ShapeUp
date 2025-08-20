@@ -19,6 +19,11 @@ public class UpdateWorkoutSessionByIdCommand(
     private string SessionId { get; set; }
     
     /// <summary>
+    /// Id do usuário logado
+    /// </summary>
+    private string UserId { get; set; }
+    
+    /// <summary>
     /// Método para definir o id da sessão de treino
     /// </summary>
     /// <param name="id"></param>
@@ -29,6 +34,18 @@ public class UpdateWorkoutSessionByIdCommand(
     /// </summary>
     /// <returns></returns>
     public string GetSessionId() => SessionId;
+    
+    /// <summary>
+    /// Método para definir o id do usuário logado
+    /// </summary>
+    /// <param name="userId"></param>
+    public void SetUserId(string userId) => UserId = userId;
+    
+    /// <summary>
+    /// Método para obter o id do usuário logado
+    /// </summary>
+    /// <returns></returns>
+    public string GetUserId() => UserId;
 
     /// <summary>
     /// Status da sessão de treino
