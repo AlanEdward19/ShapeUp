@@ -6,6 +6,14 @@
 public interface IWorkoutRepository
 {
     /// <summary>
+    /// Método para verificar se um treino existe pelo ID.
+    /// </summary>
+    /// <param name="workoutId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> WorkoutExistsAsync(Guid workoutId, CancellationToken cancellationToken);
+    
+    /// <summary>
     /// Método para obter um treino por ID.
     /// </summary>
     /// <param name="workoutId"></param>

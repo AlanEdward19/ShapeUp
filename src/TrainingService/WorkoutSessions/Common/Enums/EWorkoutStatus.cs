@@ -1,5 +1,8 @@
 ﻿namespace TrainingService.WorkoutSessions.Common.Enums;
 
+/// <summary>
+/// Status da sessão de treino
+/// </summary>
 public enum EWorkoutStatus
 {
     /// <summary>

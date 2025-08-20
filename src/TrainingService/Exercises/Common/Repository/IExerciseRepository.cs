@@ -8,6 +8,22 @@ namespace TrainingService.Exercises.Common.Repository;
 public interface IExerciseRepository
 {
     /// <summary>
+    /// Método para verificar se um exercício existe pelo ID.
+    /// </summary>
+    /// <param name="exerciseId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> ExerciseExistsAsync(Guid exerciseId, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Método para verificar se um ou mais exercícios existem por uma lista de IDs.
+    /// </summary>
+    /// <param name="exerciseId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task ExerciseExistsAsync(ICollection<Guid> exerciseId, CancellationToken cancellationToken);
+    
+    /// <summary>
     /// Método para obter um exercício por ID.
     /// </summary>
     /// <param name="exerciseId"></param>

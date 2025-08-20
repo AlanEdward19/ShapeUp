@@ -10,6 +10,19 @@ namespace TrainingService.Workouts.Common.Repository;
 public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
 {
     /// <summary>
+    /// Método para verificar se um treino existe pelo ID.
+    /// </summary>
+    /// <param name="workoutId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<bool> WorkoutExistsAsync(Guid workoutId, CancellationToken cancellationToken)
+    {
+        return await dbContext.Workouts
+            .AsNoTracking()
+            .AnyAsync(x => x.Id == workoutId, cancellationToken);
+    }
+
+    /// <summary>
     /// Método para obter um treino por ID.
     /// </summary>
     /// <param name="workoutId"></param>

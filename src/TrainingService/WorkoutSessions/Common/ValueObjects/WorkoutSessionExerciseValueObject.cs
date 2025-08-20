@@ -2,6 +2,9 @@
 
 namespace TrainingService.WorkoutSessions.Common.ValueObjects;
 
+/// <summary>
+/// Value Object que representa um exercício em uma sessão de treino
+/// </summary>
 public class WorkoutSessionExerciseValueObject
 {
     /// <summary>

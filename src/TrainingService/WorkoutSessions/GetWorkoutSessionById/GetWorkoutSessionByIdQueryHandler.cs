@@ -1,5 +1,6 @@
 ﻿using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common.Repository;
+using TrainingService.WorkoutSessions.Common.Dto;
 using TrainingService.WorkoutSessions.Common.Repository;
 
 namespace TrainingService.WorkoutSessions.GetWorkoutSessionById;

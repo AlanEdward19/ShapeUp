@@ -1,10 +1,11 @@
 ﻿using TrainingService.Common.Interfaces;
+using TrainingService.WorkoutSessions.Common.Dto;
 using TrainingService.WorkoutSessions.Common.Repository;
 using TrainingService.WorkoutSessions.CreateWorkoutSession;
 using TrainingService.WorkoutSessions.DeleteWorkoutSessionById;
 using TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId;
 using TrainingService.WorkoutSessions.GetWorkoutSessionById;
-using TrainingService.WorkoutSessions.GetWorkoutSessionByUserId;
+using TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId;
 using TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId;
 using TrainingService.WorkoutSessions.UpdateWorkoutSessionById;
 

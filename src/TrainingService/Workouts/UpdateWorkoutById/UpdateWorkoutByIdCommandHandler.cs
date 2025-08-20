@@ -1,4 +1,5 @@
-﻿using TrainingService.Common.Interfaces;
+﻿using SharedKernel.Exceptions;
+using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common.Repository;
 using TrainingService.Workouts.Common;
 using TrainingService.Workouts.Common.Repository;
@@ -22,7 +23,13 @@ public class UpdateWorkoutByIdCommandHandler(IWorkoutRepository repository, IExe
     public async Task<WorkoutDto> HandleAsync(UpdateWorkoutByIdCommand command, CancellationToken cancellationToken)
     {
         Workout? workout = await repository.GetWorkoutAsync(command.GetWorkoutId(), cancellationToken, true);
-        ArgumentNullException.ThrowIfNull(workout);
+        
+        if(workout == null)
+            throw new NotFoundException($"Workout with ID {command.GetWorkoutId()} does not exist.");
+        
+        if (workout.CreatorId != command.GetUserId())
+            throw new ForbiddenException(
+                $"User {command.GetUserId()} is not authorized to update this workout.");
         
         workout.UpdateWorkout(command);
         

@@ -1,14 +1,25 @@
 ﻿using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common.Repository;
+using TrainingService.WorkoutSessions.Common.Dto;
 using TrainingService.WorkoutSessions.Common.Repository;
-using TrainingService.WorkoutSessions.GetWorkoutSessionByUserId;
 
-namespace TrainingService.WorkoutSessions.GetWorkoutSessionById;
+namespace TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId;
 
+/// <summary>
+/// Handler para a consulta de sessões de treino por ID de usuário.
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="exerciseRepository"></param>
 public class GetWorkoutSessionsByUserIdQueryHandler(
     IWorkoutSessionMongoRepository repository,
     IExerciseRepository exerciseRepository) : IHandler<ICollection<WorkoutSessionDto>, GetWorkoutSessionsByUserIdQuery>
 {
+    /// <summary>
+    /// Método para lidar com a consulta de sessões de treino por ID de usuário.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<ICollection<WorkoutSessionDto>> HandleAsync(GetWorkoutSessionsByUserIdQuery query,
         CancellationToken cancellationToken)
     {
@@ -24,6 +35,7 @@ public class GetWorkoutSessionsByUserIdQueryHandler(
             var workoutExerciseIds = workoutSession
                 .Exercises.Select(e => Guid.Parse(e.ExerciseId))
                 .ToList();
+            
             var workoutExercises = exercises.Where(x => workoutExerciseIds.Contains(x.Id)).ToList();
             workoutSessionDtos.Add(new WorkoutSessionDto(workoutSession, workoutExercises));
         }

@@ -12,6 +12,44 @@ namespace TrainingService.Exercises.Common.Repository;
 public class ExerciseRepository(TrainingDbContext dbContext) : IExerciseRepository
 {
     /// <summary>
+    /// Método para verificar se um exercício existe pelo ID.
+    /// </summary>
+    /// <param name="exerciseId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<bool> ExerciseExistsAsync(Guid exerciseId, CancellationToken cancellationToken)
+    {
+        return await dbContext.Exercises
+            .AsNoTracking()
+            .AnyAsync(x => x.Id == exerciseId, cancellationToken);
+    }
+
+    /// <summary>
+    /// Método para verificar se uma coleção de exercícios existe pelo ID.
+    /// </summary>
+    /// <param name="exerciseId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <exception cref="NotFoundException"></exception>
+    public async Task ExerciseExistsAsync(ICollection<Guid> exerciseId, CancellationToken cancellationToken)
+    {
+        if (exerciseId is null || !exerciseId.Any())
+            return;
+
+        List<Guid> existingIds = await dbContext.Exercises
+            .AsNoTracking()
+            .Where(x => exerciseId.Contains(x.Id))
+            .Select(x => x.Id)
+            .ToListAsync(cancellationToken);
+        
+        List<Guid> notFoundIds = exerciseId
+            .Where(id => !existingIds.Contains(id))
+            .ToList();
+        
+        if (notFoundIds.Any())
+            throw new NotFoundException($"Exercises with IDs '{string.Join(", ", notFoundIds)}' not found.");
+    }
+
+    /// <summary>
     /// Método para obter um exercício por ID.
     /// </summary>
     /// <param name="exerciseId"></param>
