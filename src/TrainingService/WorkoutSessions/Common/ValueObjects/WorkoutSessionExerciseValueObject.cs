@@ -12,7 +12,7 @@ public class WorkoutSessionExerciseValueObject
     /// <summary>
     /// Peso do exercício
     /// </summary>
-    public int? Weight { get; set; }
+    public double? Weight { get; set; }
     
     /// <summary>
     /// Repetições do exercício

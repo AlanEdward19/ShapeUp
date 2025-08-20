@@ -10,7 +10,7 @@ public class WorkoutSessionExerciseDto(WorkoutSessionExerciseValueObject workout
     /// <summary>
     /// Quantidade de peso do exercício
     /// </summary>
-    public int? Weight { get; set; } = workoutSessionExerciseValueObject.Weight;
+    public double? Weight { get; set; } = workoutSessionExerciseValueObject.Weight;
     
     /// <summary>
     /// Quantidade de repetições do exercício
