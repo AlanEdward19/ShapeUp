@@ -1,5 +1,8 @@
 ﻿namespace TrainingService.Exercises.Common.Enums;
 
+/// <summary>
+/// Grupos musculares utilizados nos exercícios.
+/// </summary>
 [Flags]
 public enum EMuscleGroup
 {

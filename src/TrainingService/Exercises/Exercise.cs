@@ -4,10 +4,27 @@ using TrainingService.Exercises.UpdateExercise;
 
 namespace TrainingService.Exercises;
 
+/// <summary>
+/// Entidade que representa um exercício físico.
+/// </summary>
 public class Exercise
 {
+    /// <summary>
+    /// Construtor padrão para o Entity Framework.
+    /// </summary>
     protected Exercise() {}
 
+    /// <summary>
+    /// Construtor para criar um novo exercício.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="name"></param>
+    /// <param name="muscleGroups"></param>
+    /// <param name="requiresWeight"></param>
+    /// <param name="imageUrl"></param>
+    /// <param name="videoUrl"></param>
+    /// <param name="createdAt"></param>
+    /// <param name="updatedAt"></param>
     public Exercise(Guid id, string name, EMuscleGroup muscleGroups, bool? requiresWeight, string? imageUrl,
         string? videoUrl, DateTime createdAt, DateTime updatedAt)
     {
@@ -62,6 +79,10 @@ public class Exercise
     /// </summary>
     public DateTime UpdatedAt { get; private set; }
 
+    /// <summary>
+    /// Método para atualizar um exercício através de um command.
+    /// </summary>
+    /// <param name="exercise"></param>
     public void UpdateExercise(UpdateExerciseCommand exercise)
     {
         Name = exercise.Name ?? Name;

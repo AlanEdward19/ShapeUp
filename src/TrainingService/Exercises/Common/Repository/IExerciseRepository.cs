@@ -4,7 +4,7 @@ namespace TrainingService.Exercises.Common.Repository;
 
 public interface IExerciseRepository
 {
-    Task<Exercise?> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken);
+    Task<Exercise> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken);
 
     Task<ICollection<Exercise>> GetExercisesByIdsAsync(List<Guid> exerciseIds, CancellationToken cancellationToken,
         bool track = false);

@@ -1,5 +1,4 @@
 ﻿using TrainingService.Common.Interfaces;
-using TrainingService.Exercises;
 using TrainingService.Exercises.Common.Repository;
 using TrainingService.Workouts.Common;
 using TrainingService.Workouts.Common.Repository;

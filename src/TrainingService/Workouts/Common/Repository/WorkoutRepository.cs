@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedKernel.Exceptions;
 using TrainingService.Connections.Database;
-using TrainingService.Exercises.Common.Enums;
 
 namespace TrainingService.Workouts.Common.Repository;
 

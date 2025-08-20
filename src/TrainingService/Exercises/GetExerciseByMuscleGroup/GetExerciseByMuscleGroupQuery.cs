@@ -13,7 +13,7 @@ public class GetExerciseByMuscleGroupQuery
     public EMuscleGroup? MuscleGroup { get; private set; }
     
     /// <summary>
-    /// método para setar o grupo muscular do exercício.
+    /// Método para setar o grupo muscular do exercício.
     /// </summary>
     /// <param name="muscleGroup"></param>
     public void SetMuscleGroup(EMuscleGroup? muscleGroup)

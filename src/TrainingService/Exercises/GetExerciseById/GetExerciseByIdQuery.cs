@@ -1,6 +1,4 @@
-﻿using TrainingService.Exercises.Common.Enums;
-
-namespace TrainingService.Exercises.GetExerciseById;
+﻿namespace TrainingService.Exercises.GetExerciseById;
 
 /// <summary>
 /// Query para obter um exercício por Id.

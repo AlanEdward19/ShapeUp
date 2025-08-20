@@ -1,6 +1,6 @@
-﻿using TrainingService.Common.Interfaces;
+﻿using SharedKernel.Exceptions;
+using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common;
-using TrainingService.Exercises.Common.Enums;
 using TrainingService.Exercises.Common.Repository;
 
 namespace TrainingService.Exercises.UpdateExercise;
@@ -12,10 +12,19 @@ namespace TrainingService.Exercises.UpdateExercise;
 public class UpdateExerciseCommandHandler(IExerciseRepository repository)
     : IHandler<ExerciseDto, UpdateExerciseCommand>
 {
+    /// <summary>
+    /// Método para atualizar um exercício.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
     public async Task<ExerciseDto> HandleAsync(UpdateExerciseCommand command, CancellationToken cancellationToken)
     {
         Exercise? exercise = await repository.GetExerciseByIdAsync(command.Id, cancellationToken);
-        ArgumentNullException.ThrowIfNull(exercise);
+        
+        if (exercise is null)
+            throw new NotFoundException($"Exercise with ID '{command.Id}' not found.");
         
         exercise.UpdateExercise(command);
         

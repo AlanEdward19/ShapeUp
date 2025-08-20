@@ -1,6 +1,5 @@
 ﻿using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common.Repository;
-using TrainingService.WorkoutSessions.Common.Enums;
 using TrainingService.WorkoutSessions.Common.Repository;
 
 namespace TrainingService.WorkoutSessions.UpdateWorkoutSessionById;

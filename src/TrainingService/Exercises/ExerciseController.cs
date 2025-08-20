@@ -22,6 +22,13 @@ namespace TrainingService.Exercises;
 [Route("v{version:apiVersion}/[Controller]")]
 public class ExerciseController : ControllerBase
 {
+    /// <summary>
+    /// Rota para obter um exercício por ID.
+    /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExerciseDto))]
     public async Task<IActionResult> GetExerciseById([FromServices] IHandler<ExerciseDto, GetExerciseByIdQuery> handler,
@@ -33,6 +40,13 @@ public class ExerciseController : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
+    /// <summary>
+    /// Rota para obter exercícios por grupo muscular (ou todos os exercícios se nenhum grupo for especificado).
+    /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="muscleGroup"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<ExerciseDto>))]
     public async Task<IActionResult> GetExercises([FromServices] IHandler<ICollection<ExerciseDto>, GetExerciseByMuscleGroupQuery> handler,
@@ -44,20 +58,43 @@ public class ExerciseController : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
+    /// <summary>
+    /// Rota para criar um novo exercício.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ExerciseDto))]
     public async Task<IActionResult> CreateExercise([FromBody] CreateExerciseCommand command,
         [FromServices] IHandler<ExerciseDto, CreateExerciseCommand> handler, CancellationToken cancellationToken)
     {
         return Created(Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
     
-    [HttpPut]
+    /// <summary>
+    /// Rota para atualizar um exercício existente.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExerciseDto))]
     public async Task<IActionResult> UpdateExercise([FromBody] UpdateExerciseCommand command,
         [FromServices] IHandler<ExerciseDto, UpdateExerciseCommand> handler, CancellationToken cancellationToken)
     {
         return Ok(await handler.HandleAsync(command, cancellationToken));
     }
     
+    /// <summary>
+    /// Rota para deletar um exercício pelo ID.
+    /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteExercise([FromServices] IHandler<bool, DeleteExerciseByIdCommand> handler,
