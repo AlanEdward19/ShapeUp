@@ -11,6 +11,11 @@ public class GetRecentMessagesQuery
     public string ProfileId { get; private set; }
     
     /// <summary>
+    /// Se a mensagem é de um chat de um profissional
+    /// </summary>
+    public bool IsProfessionalChat { get; set; }
+    
+    /// <summary>
     /// Página que deseja obter as mensagens
     /// </summary>
     public int Page { get; private set; }
@@ -26,4 +31,10 @@ public class GetRecentMessagesQuery
     /// </summary>
     /// <param name="page"></param>
     public void SetPage(int page) => Page = page;
+    
+    /// <summary>
+    /// Método para definir se a mensagem é de um chat de um profissional
+    /// </summary>
+    /// <param name="isProfessionalChat"></param>
+    public void SetIsProfessionalChat(bool isProfessionalChat) => IsProfessionalChat = isProfessionalChat;
 }

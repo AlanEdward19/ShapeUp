@@ -18,6 +18,6 @@ public class GetRecentMessagesQueryHandler(IChatMongoRepository repository) : IH
     /// <returns></returns>
     public async Task<IEnumerable<ChatMessage>> HandleAsync(GetRecentMessagesQuery query, CancellationToken cancellationToken)
     {
-        return await repository.GetRecentMessagesAsync(query.ProfileId, query.Page);
+        return await repository.GetRecentMessagesAsync(query.ProfileId, query.Page, query.IsProfessionalChat);
     }
 }

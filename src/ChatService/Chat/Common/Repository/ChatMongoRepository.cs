@@ -15,32 +15,40 @@ public class ChatMongoRepository(IMongoDatabase database, IHubContext<ChatHub> h
 {
     private readonly IMongoCollection<ChatMessage> _chatMessages = database.GetCollection<ChatMessage>("chatMessages");
 
+    private readonly IMongoCollection<ChatMessage> _professionalChatMessages =
+        database.GetCollection<ChatMessage>("professionalChatMessages");
+
     /// <summary>
     /// Método para obter mensagens recentes
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="page"></param>
+    /// <param name="isProfessionalChat"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<ChatMessage>> GetRecentMessagesAsync(string userId, int page)
+    public async Task<IEnumerable<ChatMessage>> GetRecentMessagesAsync(string userId, int page, bool isProfessionalChat)
     {
-        var result = await _chatMessages
+        var chatMessages = isProfessionalChat ? _professionalChatMessages : _chatMessages;
+
+        var result = await chatMessages
             .Aggregate()
             .Match(message => message.ReceiverId == userId || message.SenderId == userId)
             .Sort(new BsonDocument("Timestamp", -1))
             .Group(
                 new BsonDocument
                 {
-                    { "_id", new BsonDocument
+                    {
+                        "_id", new BsonDocument
                         {
-                            { "Participants", new BsonArray 
-                                { 
-                                    new BsonDocument("$cond", new BsonArray 
-                                    { 
-                                        new BsonDocument("$lt", new BsonArray { "$SenderId", "$ReceiverId" }), 
-                                        new BsonArray { "$SenderId", "$ReceiverId" }, 
-                                        new BsonArray { "$ReceiverId", "$SenderId" } 
-                                    }) 
-                                } 
+                            {
+                                "Participants", new BsonArray
+                                {
+                                    new BsonDocument("$cond", new BsonArray
+                                    {
+                                        new BsonDocument("$lt", new BsonArray { "$SenderId", "$ReceiverId" }),
+                                        new BsonArray { "$SenderId", "$ReceiverId" },
+                                        new BsonArray { "$ReceiverId", "$SenderId" }
+                                    })
+                                }
                             }
                         }
                     },
@@ -60,10 +68,14 @@ public class ChatMongoRepository(IMongoDatabase database, IHubContext<ChatHub> h
     /// <param name="userId"></param>
     /// <param name="otherUserId"></param>
     /// <param name="page"></param>
+    /// <param name="isProfessionalChat"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<ChatMessage>> GetMessagesAsync(string userId, string otherUserId, int page)
+    public async Task<IEnumerable<ChatMessage>> GetMessagesAsync(string userId, string otherUserId, int page,
+        bool isProfessionalChat)
     {
-        return await _chatMessages
+        var chatMessages = isProfessionalChat ? _professionalChatMessages : _chatMessages;
+
+        return await chatMessages
             .Find(message => (message.ReceiverId == userId && message.SenderId == otherUserId) ||
                              (message.ReceiverId == otherUserId && message.SenderId == userId))
             .SortByDescending(message => message.Timestamp)
@@ -78,22 +90,30 @@ public class ChatMongoRepository(IMongoDatabase database, IHubContext<ChatHub> h
     /// <param name="senderId"></param>
     /// <param name="receiverId"></param>
     /// <param name="message"></param>
+    /// <param name="isProfessionalChat"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public async Task SendMessageAsync(string senderId, string receiverId, string message)
+    public async Task SendMessageAsync(string senderId, string receiverId, string message, bool isProfessionalChat)
     {
         string encryptionKey = configuration["EncryptionKey"] ?? throw new ArgumentNullException("EncryptionKey");
         ChatMessage chatMessage = new(senderId, receiverId, encryptionKey, message);
 
-        await _chatMessages.InsertOneAsync(chatMessage);
-        
-        string groupName = GetGroupName(senderId.ToString(), receiverId.ToString());
-        
+        if (isProfessionalChat)
+            await _professionalChatMessages.InsertOneAsync(chatMessage);
+        else
+            await _chatMessages.InsertOneAsync(chatMessage);
+
+        string groupName = GetGroupName(senderId.ToString(), receiverId.ToString(), isProfessionalChat);
+
         await hubContext.Clients.Group(groupName).SendAsync("ReceiveMessage", chatMessage);
     }
-    
-    private string GetGroupName(string userId1, string userId2)
+
+    private string GetGroupName(string userId1, string userId2, bool isProfessionalChat)
     {
         var orderedIds = new[] { userId1, userId2 }.OrderBy(id => id);
+        
+        if (isProfessionalChat)
+            return $"professional-chat-{string.Join("-", orderedIds)}";
+        
         return string.Join("-", orderedIds);
     }
 }

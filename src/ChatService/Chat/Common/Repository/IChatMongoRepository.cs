@@ -10,8 +10,9 @@ public interface IChatMongoRepository
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="page"></param>
+    /// <param name="isProfessionalChat"></param>
     /// <returns></returns>
-    Task<IEnumerable<ChatMessage>> GetRecentMessagesAsync(string userId, int page);
+    Task<IEnumerable<ChatMessage>> GetRecentMessagesAsync(string userId, int page, bool isProfessionalChat);
     
     /// <summary>
     /// Método para obter mensagens entre dois perfis
@@ -19,8 +20,9 @@ public interface IChatMongoRepository
     /// <param name="userId"></param>
     /// <param name="otherUserId"></param>
     /// <param name="page"></param>
+    /// <param name="isProfessionalChat"></param>
     /// <returns></returns>
-    Task<IEnumerable<ChatMessage>> GetMessagesAsync(string userId, string otherUserId, int page);
+    Task<IEnumerable<ChatMessage>> GetMessagesAsync(string userId, string otherUserId, int page, bool isProfessionalChat);
     
     /// <summary>
     /// Método para enviar mensagem
@@ -28,6 +30,7 @@ public interface IChatMongoRepository
     /// <param name="senderId"></param>
     /// <param name="receiverId"></param>
     /// <param name="message"></param>
+    /// <param name="isProfessionalChat"></param>
     /// <returns></returns>
-    Task SendMessageAsync(string senderId, string receiverId, string message);
+    Task SendMessageAsync(string senderId, string receiverId, string message, bool isProfessionalChat);
 }

@@ -21,7 +21,7 @@ public class SendMessageCommandHandler(IChatMongoRepository repository, IGrpcPro
     /// <returns></returns>
     public async Task<bool> HandleAsync(SendMessageCommand command, CancellationToken cancellationToken)
     {
-        await repository.SendMessageAsync(command.GetSenderId(), command.ReceiverId, command.Message);
+        await repository.SendMessageAsync(command.GetSenderId(), command.ReceiverId, command.Message, command.GetIsProfessionalChat());
         
         NotificationDto notificationDto = new()
         {
