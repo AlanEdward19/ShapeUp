@@ -16,6 +16,11 @@ public class GetMessagesQuery
     public string ProfileBId { get; private set; }
     
     /// <summary>
+    /// Se a mensagem é de um chat de um profissional
+    /// </summary>
+    public bool IsProfessionalChat { get; set; }
+    
+    /// <summary>
     /// Número da página
     /// </summary>
     public int Page { get; private set; }
@@ -37,4 +42,10 @@ public class GetMessagesQuery
     /// </summary>
     /// <param name="page"></param>
     public void SetPage(int page) => Page = page;
+    
+    /// <summary>
+    /// Método para definir se a mensagem é de um chat de um profissional
+    /// </summary>
+    /// <param name="isProfessionalChat"></param>
+    public void SetIsProfessionalChat(bool isProfessionalChat) => IsProfessionalChat = isProfessionalChat;
 }

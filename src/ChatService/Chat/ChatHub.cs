@@ -62,12 +62,15 @@ public class ChatHub(IConfiguration configuration) : Hub
     public override async Task OnConnectedAsync()
     {
         var userId = GetUserId();
-        var profileId = Context.GetHttpContext()?.Request.Query["profileId"].ToString();
+        var queryParameters = Context.GetHttpContext()?.Request.Query;
+        var profileId = queryParameters["profileId"].ToString();
+        bool isProfessionalChat = queryParameters.ContainsKey("isProfessionalChat") && 
+            bool.TryParse(queryParameters["isProfessionalChat"].ToString(), out bool isProfessional) && isProfessional;
         
         
         if (userId != null && profileId != null)
         {
-            string groupName = GetGroupName(userId, profileId);
+            string groupName = GetGroupName(userId, profileId, isProfessionalChat);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
         
@@ -77,21 +80,27 @@ public class ChatHub(IConfiguration configuration) : Hub
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var userId = GetUserId();
-        var profileId = Context.GetHttpContext()?.Request.Query["profileId"].ToString();
-        
+        var queryParameters = Context.GetHttpContext()?.Request.Query;
+        var profileId = queryParameters["profileId"].ToString();
+        bool isProfessionalChat = queryParameters.ContainsKey("isProfessionalChat") && 
+                                  bool.TryParse(queryParameters["isProfessionalChat"].ToString(), out bool isProfessional) && isProfessional;
         
         if (userId != null && profileId != null)
         {
-            string groupName = GetGroupName(userId, profileId);
+            string groupName = GetGroupName(userId, profileId, isProfessionalChat);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
         
         await base.OnDisconnectedAsync(exception);
     }
     
-    private string GetGroupName(string userId1, string userId2)
+    private string GetGroupName(string userId1, string userId2, bool isProfessionalChat)
     {
         var orderedIds = new[] { userId1, userId2 }.OrderBy(id => id);
+        
+        if (isProfessionalChat)
+            return $"professional-chat-{string.Join("-", orderedIds)}";
+        
         return string.Join("-", orderedIds);
     }
 }
