@@ -18,6 +18,15 @@
             <param name="page"></param>
             <returns></returns>
         </member>
+        <member name="M:ChatService.Chat.ChatController.GetProfessionalRecentMessages(ChatService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{ChatService.Chat.Common.ChatMessage},ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery},System.Threading.CancellationToken,System.Int32)">
+            <summary>
+            Rota para obter as mensagens recentes de um profissional
+            </summary>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
         <member name="M:ChatService.Chat.ChatController.GetMessages(System.String,ChatService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{ChatService.Chat.Common.ChatMessage},ChatService.Chat.GetMessages.GetMessagesQuery},System.Threading.CancellationToken,System.Int32)">
             <summary>
             Rota para obter as mensagens entre dois perfis
@@ -28,9 +37,28 @@
             <param name="page"></param>
             <returns></returns>
         </member>
+        <member name="M:ChatService.Chat.ChatController.GetProfessionalMessages(System.String,ChatService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{ChatService.Chat.Common.ChatMessage},ChatService.Chat.GetMessages.GetMessagesQuery},System.Threading.CancellationToken,System.Int32)">
+            <summary>
+            Rota para obter as mensagens entre dois perfis um sendo um profissional
+            </summary>
+            <param name="profileBId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
         <member name="M:ChatService.Chat.ChatController.SendMessage(ChatService.Chat.SendMessage.SendMessageCommand,ChatService.Common.Interfaces.IHandler{System.Boolean,ChatService.Chat.SendMessage.SendMessageCommand},System.Threading.CancellationToken)">
             <summary>
             Rota para enviar uma mensagem
+            </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.ChatController.SendMessageToProfessional(ChatService.Chat.SendMessage.SendMessageCommand,ChatService.Common.Interfaces.IHandler{System.Boolean,ChatService.Chat.SendMessage.SendMessageCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para enviar uma mensagem para um profissional
             </summary>
             <param name="command"></param>
             <param name="handler"></param>
@@ -102,30 +130,33 @@
             <param name="database"></param>
             <param name="configuration"></param>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.GetRecentMessagesAsync(System.String,System.Int32)">
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.GetRecentMessagesAsync(System.String,System.Int32,System.Boolean)">
             <summary>
             Método para obter mensagens recentes
             </summary>
             <param name="userId"></param>
             <param name="page"></param>
+            <param name="isProfessionalChat"></param>
             <returns></returns>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.GetMessagesAsync(System.String,System.String,System.Int32)">
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.GetMessagesAsync(System.String,System.String,System.Int32,System.Boolean)">
             <summary>
             Método para obter mensagens entre dois perfis
             </summary>
             <param name="userId"></param>
             <param name="otherUserId"></param>
             <param name="page"></param>
+            <param name="isProfessionalChat"></param>
             <returns></returns>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.SendMessageAsync(System.String,System.String,System.String)">
+        <member name="M:ChatService.Chat.Common.Repository.ChatMongoRepository.SendMessageAsync(System.String,System.String,System.String,System.Boolean)">
             <summary>
             Método para enviar uma mensagem
             </summary>
             <param name="senderId"></param>
             <param name="receiverId"></param>
             <param name="message"></param>
+            <param name="isProfessionalChat"></param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="T:ChatService.Chat.Common.Repository.IChatMongoRepository">
@@ -133,30 +164,33 @@
             Interface para o repositório de chat
             </summary>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.GetRecentMessagesAsync(System.String,System.Int32)">
+        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.GetRecentMessagesAsync(System.String,System.Int32,System.Boolean)">
             <summary>
             Método para obter mensagens recentes
             </summary>
             <param name="userId"></param>
             <param name="page"></param>
+            <param name="isProfessionalChat"></param>
             <returns></returns>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.GetMessagesAsync(System.String,System.String,System.Int32)">
+        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.GetMessagesAsync(System.String,System.String,System.Int32,System.Boolean)">
             <summary>
             Método para obter mensagens entre dois perfis
             </summary>
             <param name="userId"></param>
             <param name="otherUserId"></param>
             <param name="page"></param>
+            <param name="isProfessionalChat"></param>
             <returns></returns>
         </member>
-        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.SendMessageAsync(System.String,System.String,System.String)">
+        <member name="M:ChatService.Chat.Common.Repository.IChatMongoRepository.SendMessageAsync(System.String,System.String,System.String,System.Boolean)">
             <summary>
             Método para enviar mensagem
             </summary>
             <param name="senderId"></param>
             <param name="receiverId"></param>
             <param name="message"></param>
+            <param name="isProfessionalChat"></param>
             <returns></returns>
         </member>
         <member name="T:ChatService.Chat.GetMessages.GetMessagesQuery">
@@ -172,6 +206,11 @@
         <member name="P:ChatService.Chat.GetMessages.GetMessagesQuery.ProfileBId">
             <summary>
             Id do perfil B
+            </summary>
+        </member>
+        <member name="P:ChatService.Chat.GetMessages.GetMessagesQuery.IsProfessionalChat">
+            <summary>
+            Se a mensagem é de um chat de um profissional
             </summary>
         </member>
         <member name="P:ChatService.Chat.GetMessages.GetMessagesQuery.Page">
@@ -196,6 +235,12 @@
             Método para definir a página
             </summary>
             <param name="page"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetMessages.GetMessagesQuery.SetIsProfessionalChat(System.Boolean)">
+            <summary>
+            Método para definir se a mensagem é de um chat de um profissional
+            </summary>
+            <param name="isProfessionalChat"></param>
         </member>
         <member name="T:ChatService.Chat.GetMessages.GetMessagesQueryHandler">
             <summary>
@@ -227,6 +272,11 @@
             Id do perfil que deseja obter as mensagens
             </summary>
         </member>
+        <member name="P:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.IsProfessionalChat">
+            <summary>
+            Se a mensagem é de um chat de um profissional
+            </summary>
+        </member>
         <member name="P:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.Page">
             <summary>
             Página que deseja obter as mensagens
@@ -243,6 +293,12 @@
             Método para definir a página que deseja obter as mensagens
             </summary>
             <param name="page"></param>
+        </member>
+        <member name="M:ChatService.Chat.GetRecentMessages.GetRecentMessagesQuery.SetIsProfessionalChat(System.Boolean)">
+            <summary>
+            Método para definir se a mensagem é de um chat de um profissional
+            </summary>
+            <param name="isProfessionalChat"></param>
         </member>
         <member name="T:ChatService.Chat.GetRecentMessages.GetRecentMessagesQueryHandler">
             <summary>
@@ -293,11 +349,34 @@
             Mensagem a ser enviada
             </summary>
         </member>
+        <member name="P:ChatService.Chat.SendMessage.SendMessageCommand.IsProfessionalChat">
+            <summary>
+            Se a mensagem é de um chat de um profissional
+            </summary>
+        </member>
         <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.SetSenderId(System.String)">
             <summary>
             Método para definir o Id do perfil que enviou a mensagem
             </summary>
             <param name="senderId"></param>
+        </member>
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.GetSenderId">
+            <summary>
+            Método para obter o Id do perfil que enviou a mensagem
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.SetIsProfessionalChat(System.Boolean)">
+            <summary>
+            Método para definir se a mensagem é de um chat de um profissional
+            </summary>
+            <param name="isProfessionalChat"></param>
+        </member>
+        <member name="M:ChatService.Chat.SendMessage.SendMessageCommand.GetIsProfessionalChat">
+            <summary>
+            Método para obter se a mensagem é de um chat de um profissional
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:ChatService.Chat.SendMessage.SendMessageCommandHandler">
             <summary>

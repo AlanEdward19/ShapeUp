@@ -3207,7 +3207,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi,SocialService.Connections.Search.IAzureSearchProvider)">
+        <member name="M:SocialService.Profile.CreateProfile.CreateProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.CepAwesomeApi.ICepAwesomeApi,SocialService.Connections.Search.IAzureSearchProvider)">
             <summary>
                 Handler para o comando de criação de perfil.
             </summary>
@@ -3315,7 +3315,7 @@
             </summary>
             <param name="graphRepository"></param>
         </member>
-        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi)">
+        <member name="M:SocialService.Profile.EditProfile.EditProfileCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.CepAwesomeApi.ICepAwesomeApi)">
             <summary>
                 Handler para o comando de edição de perfil
             </summary>
@@ -3430,7 +3430,7 @@
                 Construtor padrão.
             </summary>
         </member>
-        <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.String,SocialService.Common.Services.BrasilApi.LocationInfoDto)">
+        <member name="M:SocialService.Profile.Profile.#ctor(SocialService.Profile.CreateProfile.CreateProfileCommand,System.String,SocialService.Common.Services.CepAwesomeApi.LocationInfoDto)">
             <summary>
                 Construtor para criação de um novo perfil através de um comando.
             </summary>
@@ -3638,13 +3638,14 @@
                 Controller responsavel por gerenciar funções relacionadas ao perfil do usuario
             </summary>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.String,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.String,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},System.Threading.CancellationToken)">
             <summary>
                 Rota para visualizar um perfil
             </summary>
             <param name="profileId"></param>
             <param name="viewProfilehandler"></param>
             <param name="createProfileHandler"></param>
+            <param name="uploadProfilePictureHandler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -3907,6 +3908,14 @@
             <param name="imageFileName"></param>
             <param name="cancellationToken"></param>
         </member>
+        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand.SetImage(System.IO.Stream,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para setar a imagem.
+            </summary>
+            <param name="image"></param>
+            <param name="imageFileName"></param>
+            <param name="cancellationToken"></param>
+        </member>
         <member name="T:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler">
             <summary>
                 Handler para o comando de upload de foto de perfil.
@@ -3995,7 +4004,7 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.BrasilApi.IBrasilApi,SocialService.Connections.Storage.IBlobStorageProvider)">
+        <member name="M:SocialService.Profile.ViewProfile.ViewProfileQueryHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Common.Services.CepAwesomeApi.ICepAwesomeApi,SocialService.Connections.Storage.IBlobStorageProvider)">
             <summary>
                 Handler para a query de visualização de perfil.
             </summary>
@@ -4151,19 +4160,19 @@
         <member name="T:Refit.Implementation.Generated">
             <inheritdoc />
         </member>
-        <member name="T:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi">
+        <member name="T:Refit.Implementation.Generated.SocialServiceCommonServicesCepAwesomeApiICepAwesomeApi">
             <inheritdoc />
         </member>
-        <member name="P:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.Client">
+        <member name="P:Refit.Implementation.Generated.SocialServiceCommonServicesCepAwesomeApiICepAwesomeApi.Client">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesCepAwesomeApiICepAwesomeApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.GetLocationInfoByPostalCodeAsync(System.String)">
+        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesCepAwesomeApiICepAwesomeApi.GetLocationInfoByPostalCodeAsync(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesBrasilApiIBrasilApi.SocialService#Common#Services#BrasilApi#IBrasilApi#GetLocationInfoByPostalCodeAsync(System.String)">
+        <member name="M:Refit.Implementation.Generated.SocialServiceCommonServicesCepAwesomeApiICepAwesomeApi.SocialService#Common#Services#CepAwesomeApi#ICepAwesomeApi#GetLocationInfoByPostalCodeAsync(System.String)">
             <inheritdoc />
         </member>
     </members>

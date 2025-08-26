@@ -35,6 +35,22 @@ public class UploadProfilePictureCommand
 
         ImageHash = SetImageHash(Image);
     }
+    
+    /// <summary>
+    /// Método para setar a imagem.
+    /// </summary>
+    /// <param name="image"></param>
+    /// <param name="imageFileName"></param>
+    /// <param name="cancellationToken"></param>
+    public async Task SetImage(Stream image, string imageFileName, CancellationToken cancellationToken)
+    {
+        Image = new MemoryStream();
+
+        await image.CopyToAsync(Image, cancellationToken);
+        ImageFileName = imageFileName;
+
+        ImageHash = SetImageHash(Image);
+    }
 
     private string SetImageHash(MemoryStream content)
     {

@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Text.Json;
 
 namespace SharedKernel.Utils;
 
@@ -34,6 +35,22 @@ public static class ClaimsPrincipalUtils
     /// <returns></returns>
     public static string GetFirstName(this ClaimsPrincipal user)
     {
+        var provider = GetSignInProvider(user);
+        
+        switch (provider)
+        {
+            case "google.com":
+                return user.FindFirst("name")!.Value.Split(" ").First();
+            case "Facebook":
+                // Facebook logic
+                break;
+            case "Microsoft":
+                // Microsoft logic
+                break;
+            default:
+                break;
+        }
+        
         return user.FindFirst("firstName")!.Value;
     }
 
@@ -44,7 +61,55 @@ public static class ClaimsPrincipalUtils
     /// <returns></returns>
     public static string GetLastName(this ClaimsPrincipal user)
     {
+        var provider = GetSignInProvider(user);
+        
+        switch (provider)
+        {
+            case "google.com":
+                return user.FindFirst("name")!.Value.Split(" ").Last();
+            case "Facebook":
+                // Facebook logic
+                break;
+            case "Microsoft":
+                // Microsoft logic
+                break;
+            default:
+                break;
+        }
+        
         return user.FindFirst("lastName")!.Value;
+    }
+    
+    public static string GetSignInProvider(this ClaimsPrincipal user)
+    {
+        var firebaseClaim = user.FindFirst("firebase")?.Value;
+        if (string.IsNullOrEmpty(firebaseClaim))
+            return string.Empty;
+
+        using var doc = JsonDocument.Parse(firebaseClaim);
+        if (doc.RootElement.TryGetProperty("sign_in_provider", out var provider))
+            return provider.GetString() ?? string.Empty;
+
+        return string.Empty;
+    }
+    
+    public static string GetPictureUrl(this ClaimsPrincipal user)
+    {
+        var provider = GetSignInProvider(user);
+        
+        switch (provider)
+        {
+            case "google.com":
+                return user.FindFirst("picture")!.Value;
+            case "Facebook":
+                // Facebook logic
+                break;
+            case "Microsoft":
+                // Microsoft logic
+                break;
+        }
+        
+        return "";
     }
     
     public static string GetFullName(this ClaimsPrincipal user)
