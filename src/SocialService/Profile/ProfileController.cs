@@ -28,6 +28,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     /// <param name="profileId"></param>
     /// <param name="viewProfilehandler"></param>
     /// <param name="createProfileHandler"></param>
+    /// <param name="uploadProfilePictureHandler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("viewProfile/{profileId:}")]
@@ -37,6 +38,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     public async Task<IActionResult> ViewProfile(string profileId,
         [FromServices] IHandler<ProfileDto?, ViewProfileQuery> viewProfilehandler,
         [FromServices] IHandler<ProfileDto, CreateProfileCommand> createProfileHandler,
+        [FromServices] IHandler<bool, UploadProfilePictureCommand> uploadProfilePictureHandler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -62,6 +64,20 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
             profile = await createProfileHandler.HandleAsync(command, cancellationToken);
 
             return Created(HttpContext.Request.Path, profile);
+        }
+
+        string tokenProvider = User.GetSignInProvider();
+
+        if (string.IsNullOrWhiteSpace(profile!.ImageUrl) && tokenProvider == "google.com")
+        {
+            var imageUrl = User.GetPictureUrl();
+            using var httpClient = new HttpClient();
+            var imageBytes = await httpClient.GetByteArrayAsync(imageUrl, cancellationToken);
+            var stream = new MemoryStream(imageBytes);
+            
+            UploadProfilePictureCommand command = new();
+            await command.SetImage(stream, "Google downloaded image file", cancellationToken);
+            await uploadProfilePictureHandler.HandleAsync(command, cancellationToken);
         }
 
         return Ok(profile);

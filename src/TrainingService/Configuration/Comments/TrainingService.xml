@@ -126,6 +126,23 @@
             <param name="configuration"></param>
             <returns></returns>
         </member>
+        <member name="T:TrainingService.Exercises.Common.Enums.EMuscleGroup">
+            <summary>
+            Grupos musculares utilizados nos exercícios.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Exercises.Common.ExerciseDto">
+            <summary>
+            DTO para representar um exercício.
+            </summary>
+            <param name="exercise"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.ExerciseDto.#ctor(TrainingService.Exercises.Exercise)">
+            <summary>
+            DTO para representar um exercício.
+            </summary>
+            <param name="exercise"></param>
+        </member>
         <member name="P:TrainingService.Exercises.Common.ExerciseDto.Id">
             <summary>
             Identificador do exercício.
@@ -155,6 +172,166 @@
             <summary>
             Vídeo do exercício.
             </summary>
+        </member>
+        <member name="T:TrainingService.Exercises.Common.Repository.ExerciseRepository">
+            <summary>
+            Repositório para gerenciar operações relacionadas a exercícios no banco de dados.
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.#ctor(TrainingService.Connections.Database.TrainingDbContext)">
+            <summary>
+            Repositório para gerenciar operações relacionadas a exercícios no banco de dados.
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.ExerciseExistsAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para verificar se um exercício existe pelo ID.
+            </summary>
+            <param name="exerciseId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.ExerciseExistsAsync(System.Collections.Generic.ICollection{System.Guid},System.Threading.CancellationToken)">
+            <summary>
+            Método para verificar se uma coleção de exercícios existe pelo ID.
+            </summary>
+            <param name="exerciseId"></param>
+            <param name="cancellationToken"></param>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.GetExerciseByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter um exercício por ID.
+            </summary>
+            <param name="exerciseId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.GetExercisesByIdsAsync(System.Collections.Generic.List{System.Guid},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Método para obter exercícios por uma lista de IDs.
+            </summary>
+            <param name="exerciseIds"></param>
+            <param name="cancellationToken"></param>
+            <param name="track"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.GetExercisesByMuscleGroupAsync(TrainingService.Exercises.Common.Enums.EMuscleGroup,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter exercícios por grupo muscular.
+            </summary>
+            <param name="muscleGroup"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.GetExercisesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Método para obter todos os exercícios.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.AddAsync(TrainingService.Exercises.Exercise,System.Threading.CancellationToken)">
+            <summary>
+            Método para adicionar um exercício.
+            </summary>
+            <param name="exercise"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.UpdateAsync(TrainingService.Exercises.Exercise,System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar um exercício.
+            </summary>
+            <param name="exercise"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.ExerciseRepository.DeleteAsync(TrainingService.Exercises.Exercise,System.Threading.CancellationToken)">
+            <summary>
+            Método para deletar um exercício.
+            </summary>
+            <param name="exercise"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="T:TrainingService.Exercises.Common.Repository.IExerciseRepository">
+            <summary>
+            Interface para o repositório de exercícios, definindo os métodos necessários para gerenciar operações relacionadas a exercícios.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.ExerciseExistsAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para verificar se um exercício existe pelo ID.
+            </summary>
+            <param name="exerciseId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.ExerciseExistsAsync(System.Collections.Generic.ICollection{System.Guid},System.Threading.CancellationToken)">
+            <summary>
+            Método para verificar se um ou mais exercícios existem por uma lista de IDs.
+            </summary>
+            <param name="exerciseId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.GetExerciseByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter um exercício por ID.
+            </summary>
+            <param name="exerciseId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.GetExercisesByIdsAsync(System.Collections.Generic.List{System.Guid},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Método para obter exercícios por uma lista de IDs.
+            </summary>
+            <param name="exerciseIds"></param>
+            <param name="cancellationToken"></param>
+            <param name="track"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.GetExercisesByMuscleGroupAsync(TrainingService.Exercises.Common.Enums.EMuscleGroup,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter exercícios por grupo muscular.
+            </summary>
+            <param name="muscleGroup"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.GetExercisesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Método para obter todos os exercícios.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.AddAsync(TrainingService.Exercises.Exercise,System.Threading.CancellationToken)">
+            <summary>
+            Método para adicionar um novo exercício.
+            </summary>
+            <param name="exercise"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.DeleteAsync(TrainingService.Exercises.Exercise,System.Threading.CancellationToken)">
+            <summary>
+            Método para excluir um exercício.
+            </summary>
+            <param name="exercise"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.Common.Repository.IExerciseRepository.UpdateAsync(TrainingService.Exercises.Exercise,System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar um exercício.
+            </summary>
+            <param name="exercise"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.Exercises.CreateExercise.CreateExerciseCommand">
             <summary>
@@ -191,6 +368,15 @@
             </summary>
             <param name="repository"></param>
         </member>
+        <member name="M:TrainingService.Exercises.CreateExercise.CreateExerciseCommandHandler.HandleAsync(TrainingService.Exercises.CreateExercise.CreateExerciseCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para criar um exercício.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseByIdCommand">
             <summary>
             Comando para deletar um exercício.
@@ -211,6 +397,49 @@
             método para setar o id do exercício.
             </summary>
             <param name="exerciseId"></param>
+        </member>
+        <member name="T:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseCommandHandler">
+            <summary>
+            Handler para deletar um exercício pelo ID
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseCommandHandler.#ctor(TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para deletar um exercício pelo ID
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.DeleteExerciseById.DeleteExerciseCommandHandler.HandleAsync(TrainingService.Exercises.DeleteExerciseById.DeleteExerciseByIdCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para deletar um exercício pelo ID.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Exercises.Exercise">
+            <summary>
+            Entidade que representa um exercício físico.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.Exercise.#ctor">
+            <summary>
+            Construtor padrão para o Entity Framework.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.Exercise.#ctor(System.Guid,System.String,TrainingService.Exercises.Common.Enums.EMuscleGroup,System.Nullable{System.Boolean},System.String,System.String,System.DateTime,System.DateTime)">
+            <summary>
+            Construtor para criar um novo exercício.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="muscleGroups"></param>
+            <param name="requiresWeight"></param>
+            <param name="imageUrl"></param>
+            <param name="videoUrl"></param>
+            <param name="createdAt"></param>
+            <param name="updatedAt"></param>
         </member>
         <member name="P:TrainingService.Exercises.Exercise.Id">
             <summary>
@@ -252,10 +481,61 @@
             Data de atualização do exercício.
             </summary>
         </member>
+        <member name="M:TrainingService.Exercises.Exercise.UpdateExercise(TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand)">
+            <summary>
+            Método para atualizar um exercício através de um command.
+            </summary>
+            <param name="exercise"></param>
+        </member>
         <member name="T:TrainingService.Exercises.ExerciseController">
             <summary>
             Controller responsável por gerenciar os exercícios
             </summary>
+        </member>
+        <member name="M:TrainingService.Exercises.ExerciseController.GetExerciseById(TrainingService.Common.Interfaces.IHandler{TrainingService.Exercises.Common.ExerciseDto,TrainingService.Exercises.GetExerciseById.GetExerciseByIdQuery},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter um exercício por ID.
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.ExerciseController.GetExercises(TrainingService.Common.Interfaces.IHandler{System.Collections.Generic.ICollection{TrainingService.Exercises.Common.ExerciseDto},TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery},System.Nullable{TrainingService.Exercises.Common.Enums.EMuscleGroup},System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter exercícios por grupo muscular (ou todos os exercícios se nenhum grupo for especificado).
+            </summary>
+            <param name="handler"></param>
+            <param name="muscleGroup"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.ExerciseController.CreateExercise(TrainingService.Exercises.CreateExercise.CreateExerciseCommand,TrainingService.Common.Interfaces.IHandler{TrainingService.Exercises.Common.ExerciseDto,TrainingService.Exercises.CreateExercise.CreateExerciseCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para criar um novo exercício.
+            </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.ExerciseController.UpdateExercise(TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand,TrainingService.Common.Interfaces.IHandler{TrainingService.Exercises.Common.ExerciseDto,TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para atualizar um exercício existente.
+            </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Exercises.ExerciseController.DeleteExercise(TrainingService.Common.Interfaces.IHandler{System.Boolean,TrainingService.Exercises.DeleteExerciseById.DeleteExerciseByIdCommand},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Rota para deletar um exercício pelo ID.
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.Exercises.ExerciseModule">
             <summary>
@@ -285,6 +565,26 @@
             </summary>
             <param name="exerciseId"></param>
         </member>
+        <member name="T:TrainingService.Exercises.GetExerciseById.GetExerciseByIdQueryHandler">
+            <summary>
+            Handler para obter um exercício pelo ID
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.GetExerciseById.GetExerciseByIdQueryHandler.#ctor(TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para obter um exercício pelo ID
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.GetExerciseById.GetExerciseByIdQueryHandler.HandleAsync(TrainingService.Exercises.GetExerciseById.GetExerciseByIdQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter um exercício pelo ID.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery">
             <summary>
             Query para obter um exercício por grupo muscular.
@@ -297,9 +597,29 @@
         </member>
         <member name="M:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery.SetMuscleGroup(System.Nullable{TrainingService.Exercises.Common.Enums.EMuscleGroup})">
             <summary>
-            método para setar o grupo muscular do exercício.
+            Método para setar o grupo muscular do exercício.
             </summary>
             <param name="muscleGroup"></param>
+        </member>
+        <member name="T:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQueryHandler">
+            <summary>
+            Handler para obter exercícios por grupo muscular.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQueryHandler.#ctor(TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para obter exercícios por grupo muscular.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQueryHandler.HandleAsync(TrainingService.Exercises.GetExerciseByMuscleGroup.GetExerciseByMuscleGroupQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter exercícios por grupo muscular.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand">
             <summary>
@@ -361,6 +681,15 @@
             </summary>
             <param name="repository"></param>
         </member>
+        <member name="M:TrainingService.Exercises.UpdateExercise.UpdateExerciseCommandHandler.HandleAsync(TrainingService.Exercises.UpdateExercise.UpdateExerciseCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar um exercício.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
         <member name="T:TrainingService.Migrations.InitialMigration">
             <inheritdoc />
         </member>
@@ -397,24 +726,92 @@
         <member name="M:TrainingService.Migrations.AddedRestingTimeToWorkout.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Weight">
+        <member name="T:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto">
+            <summary>
+            DTO para representar uma sessão de treino.
+            </summary>
+            <param name="workoutSession"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.#ctor(TrainingService.WorkoutSessions.WorkoutSession,System.Collections.Generic.ICollection{TrainingService.Exercises.Exercise})">
+            <summary>
+            DTO para representar uma sessão de treino.
+            </summary>
+            <param name="workoutSession"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.SessionId">
+            <summary>
+            Id da sessão de treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.UserId">
+            <summary>
+            Id do usuário que criou a sessão de treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.WorkoutId">
+            <summary>
+            Id do treino associado a esta sessão de treino.
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.StartedAt">
+            <summary>
+            Data e hora em que a sessão de treino foi iniciada.
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.EndedAt">
+            <summary>
+            Data e hora em que a sessão de treino foi finalizada, se aplicável.
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.Status">
+            <summary>
+            Status da sessão de treino, indicando se está em andamento, concluída ou cancelada.
+            </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto.Exercises">
+            <summary>
+            Lista de exercícios associados a esta sessão de treino, cada um representado por um DTO que inclui detalhes do exercício e do desempenho na sessão.
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionExerciseDto">
+            <summary>
+            DTO para representar um exercício em uma sessão de treino.
+            </summary>
+            <param name="workoutSessionExerciseValueObject"></param>
+            <param name="exercise"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionExerciseDto.#ctor(TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject,TrainingService.Exercises.Exercise)">
+            <summary>
+            DTO para representar um exercício em uma sessão de treino.
+            </summary>
+            <param name="workoutSessionExerciseValueObject"></param>
+            <param name="exercise"></param>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionExerciseDto.Weight">
             <summary>
             Quantidade de peso do exercício
             </summary>
         </member>
-        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Repetitions">
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionExerciseDto.Repetitions">
             <summary>
             Quantidade de repetições do exercício
             </summary>
         </member>
-        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.MeasureUnit">
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionExerciseDto.MeasureUnit">
             <summary>
             Unidade de medida do exercício
             </summary>
         </member>
-        <member name="P:TrainingService.WorkoutSessions.WorkoutSessionExerciseDto.Metadata">
+        <member name="P:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionExerciseDto.Metadata">
             <summary>
             Metadados do exercício.
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus">
+            <summary>
+            Status da sessão de treino
             </summary>
         </member>
         <member name="F:TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus.InProgress">
@@ -430,6 +827,138 @@
         <member name="F:TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus.Canceled">
             <summary>
                 Sessão de treino cancelada
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository">
+            <summary>
+            Interface para o repositório de sessões de treino no MongoDB.
+            </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository.GetWorkoutSessionByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="sessionId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository.GetWorkoutSessionsByUserIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter todas as sessões de treino de um usuário pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository.GetWorkoutSessionsByWorkoutIdIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter todas as sessões de treino associadas a um treino específico pelo ID do treino.
+            </summary>
+            <param name="workoutId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository.GetCurrentWorkoutSessionByUserIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter a sessão de treino atual de um usuário pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository.CreateWorkoutSessionAsync(TrainingService.WorkoutSessions.WorkoutSession,System.Threading.CancellationToken)">
+            <summary>
+            Método para criar uma nova sessão de treino no MongoDB.
+            </summary>
+            <param name="session"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository.DeleteWorkoutSessionByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para deletar uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="sessionId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository.UpdateWorkoutSessionByIdAsync(System.String,TrainingService.WorkoutSessions.WorkoutSession,System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="sessionId"></param>
+            <param name="updatedSession"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository">
+            <summary>
+            Repositório para gerenciar sessões de treino no MongoDB.
+            </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.#ctor(MongoDB.Driver.IMongoDatabase)">
+            <summary>
+            Construtor do repositório de sessões de treino.
+            </summary>
+            <param name="database"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.GetWorkoutSessionByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="sessionId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.GetWorkoutSessionsByUserIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter todas as sessões de treino de um usuário pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.GetWorkoutSessionsByWorkoutIdIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter todas as sessões de treino associadas a um treino específico pelo ID do treino.
+            </summary>
+            <param name="workoutId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.GetCurrentWorkoutSessionByUserIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter a sessão de treino atual de um usuário pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.CreateWorkoutSessionAsync(TrainingService.WorkoutSessions.WorkoutSession,System.Threading.CancellationToken)">
+            <summary>
+            Método para criar uma nova sessão de treino no MongoDB.
+            </summary>
+            <param name="session"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.DeleteWorkoutSessionByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para deletar uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="sessionId"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.Common.Repository.WorkoutSessionMongoRepository.UpdateWorkoutSessionByIdAsync(System.String,TrainingService.WorkoutSessions.WorkoutSession,System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="sessionId"></param>
+            <param name="updatedSession"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject">
+            <summary>
+            Value Object que representa um exercício em uma sessão de treino
             </summary>
         </member>
         <member name="P:TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject.ExerciseId">
@@ -491,6 +1020,31 @@
             Lista de exercícios do treino
             </summary>
         </member>
+        <member name="T:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommandHandler">
+            <summary>
+            Handler para o comando de criação de uma sessão de treino.
+            </summary>
+            <param name="repository"></param>
+            <param name="workoutRepository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommandHandler.#ctor(TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository,TrainingService.Workouts.Common.Repository.IWorkoutRepository,TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para o comando de criação de uma sessão de treino.
+            </summary>
+            <param name="repository"></param>
+            <param name="workoutRepository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommandHandler.HandleAsync(TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com o comando de criação de uma sessão de treino.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand">
             <summary>
             Comando para deletar uma sessão de treino por id.
@@ -500,6 +1054,148 @@
             <summary>
             Id da sessão de treino.
             </summary>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand.UserId">
+            <summary>
+            Id do usuário logado que está realizando a ação de deletar a sessão de treino.
+            </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand.SetUserId(System.String)">
+            <summary>
+            Método para definir o id do usuário logado que está realizando a ação de deletar a sessão de treino.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand.SetSessionId(System.Guid)">
+            <summary>
+            Método para definir o id da sessão de treino que será deletada.
+            </summary>
+            <param name="sessionId"></param>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommandHandler">
+            <summary>
+            Handler para o comando de deleção de uma sessão de treino por ID.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommandHandler.#ctor(TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository)">
+            <summary>
+            Handler para o comando de deleção de uma sessão de treino por ID.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommandHandler.HandleAsync(TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com o comando de deleção de uma sessão de treino por ID.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+            <exception cref="T:SharedKernel.Exceptions.ForbiddenException"></exception>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId.GetCurrentWorkoutSessionByUserIdQueryHandler">
+            <summary>
+            Handler para a consulta de uma sessão de treino atual por ID de usuário.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId.GetCurrentWorkoutSessionByUserIdQueryHandler.#ctor(TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository,TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para a consulta de uma sessão de treino atual por ID de usuário.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId.GetCurrentWorkoutSessionByUserIdQueryHandler.HandleAsync(TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId.GetCurrentWorkoutSessionByUserIdQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com a consulta de uma sessão de treino atual por ID de usuário.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQuery">
+            <summary>
+            Query para obter todas as sessões de treino de um usuário pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQuery.#ctor(System.String)">
+            <summary>
+            Query para obter todas as sessões de treino de um usuário pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQuery.UserId">
+            <summary>
+            Id do usuário cujas sessões de treino serão obtidas.
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQueryHandler">
+            <summary>
+            Handler para a consulta de sessões de treino por ID de usuário.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQueryHandler.#ctor(TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository,TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para a consulta de sessões de treino por ID de usuário.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQueryHandler.HandleAsync(TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com a consulta de sessões de treino por ID de usuário.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQuery">
+            <summary>
+            Query para obter todas as sessões de treino de um treino pelo ID do treino.
+            </summary>
+            <param name="workoutId"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQuery.#ctor(System.Guid)">
+            <summary>
+            Query para obter todas as sessões de treino de um treino pelo ID do treino.
+            </summary>
+            <param name="workoutId"></param>
+        </member>
+        <member name="P:TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQuery.WorkoutId">
+            <summary>
+            Id do treino cujas sessões de treino serão obtidas.
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQueryHandler">
+            <summary>
+            Handler para a consulta de sessões de treino por ID de treino.
+            </summary>
+            <param name="repository"></param>
+            <param name="workoutRepository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQueryHandler.#ctor(TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository,TrainingService.Workouts.Common.Repository.IWorkoutRepository,TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para a consulta de sessões de treino por ID de treino.
+            </summary>
+            <param name="repository"></param>
+            <param name="workoutRepository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQueryHandler.HandleAsync(TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para lidar com a consulta de sessões de treino por ID de treino.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand">
             <summary>
@@ -522,6 +1218,11 @@
             Id da sessão de treino
             </summary>
         </member>
+        <member name="P:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.UserId">
+            <summary>
+            Id do usuário logado
+            </summary>
+        </member>
         <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.SetSessionId(System.String)">
             <summary>
             Método para definir o id da sessão de treino
@@ -534,6 +1235,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.SetUserId(System.String)">
+            <summary>
+            Método para definir o id do usuário logado
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.GetUserId">
+            <summary>
+            Método para obter o id do usuário logado
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.Status">
             <summary>
             Status da sessão de treino
@@ -542,6 +1255,33 @@
         <member name="P:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand.Exercises">
             <summary>
             Exercícios da sessão de treino
+            </summary>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommandHandler">
+            <summary>
+            Handler para o comando de atualização de uma sessão de treino por ID.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommandHandler.#ctor(TrainingService.WorkoutSessions.Common.Repository.IWorkoutSessionMongoRepository,TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para o comando de atualização de uma sessão de treino por ID.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommandHandler.HandleAsync(TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand,System.Threading.CancellationToken)">
+            <summary>
+            Handler para o comando de atualização de uma sessão de treino por ID.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.WorkoutSessions.WorkoutSession">
+            <summary>
+            Entidade que representa uma sessão de treino
             </summary>
         </member>
         <member name="P:TrainingService.WorkoutSessions.WorkoutSession.SessionId">
@@ -579,10 +1319,105 @@
             Exercícios da sessão de treino
             </summary>
         </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSession.#ctor">
+            <summary>
+            Construtor padrão para o MongoDB
+            </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSession.#ctor(System.String,System.Guid,TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus,System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
+            <summary>
+            Construtor da sessão de treino
+            </summary>
+            <param name="userId"></param>
+            <param name="workoutId"></param>
+            <param name="status"></param>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSession.AddExercises(System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
+            <summary>
+            Método para adicionar exercícios à sessão de treino
+            </summary>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSession.UpdateExercises(System.Collections.Generic.List{TrainingService.WorkoutSessions.Common.ValueObjects.WorkoutSessionExerciseValueObject})">
+            <summary>
+            Método para atualizar os exercícios da sessão de treino
+            </summary>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSession.UpdateStatus(TrainingService.WorkoutSessions.Common.Enums.EWorkoutStatus)">
+            <summary>
+            Método para atualizar o status da sessão de treino
+            </summary>
+            <param name="status"></param>
+        </member>
         <member name="T:TrainingService.WorkoutSessions.WorkoutSessionController">
             <summary>
             Controller responsável por gerenciar as sessões de treino
             </summary>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionController.CreateWorkoutSession(TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand,TrainingService.Common.Interfaces.IHandler{TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto,TrainingService.WorkoutSessions.CreateWorkoutSession.CreateWorkoutSessionCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para criar uma nova sessão de treino.
+            </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionController.GetWorkoutSessionById(System.Guid,TrainingService.Common.Interfaces.IHandler{TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto,TrainingService.WorkoutSessions.GetWorkoutSessionById.GetWorkoutSessionByIdQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter uma sessão de treino específica pelo ID da sessão.
+            </summary>
+            <param name="id"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionController.GetCurrentWorkoutSessionByUserId(TrainingService.Common.Interfaces.IHandler{TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto,TrainingService.WorkoutSessions.GetCurrentWorkoutSessionByUserId.GetCurrentWorkoutSessionByUserIdQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter a sessão de treino atual associada ao usuário autenticado.
+            </summary>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionController.GetWorkoutSessionsByUserId(System.String,TrainingService.Common.Interfaces.IHandler{System.Collections.Generic.ICollection{TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto},TrainingService.WorkoutSessions.GetWorkoutSessionsByUserId.GetWorkoutSessionsByUserIdQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter as sessões de treino associadas a um usuário específico pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionController.GetWorkoutSessionsByUserId(System.Guid,TrainingService.Common.Interfaces.IHandler{System.Collections.Generic.ICollection{TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto},TrainingService.WorkoutSessions.GetWorkoutSessionsByWorkoutId.GetWorkoutSessionsByWorkoutIdQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter as sessões de treino associadas a um treino específico pelo ID do treino.
+            </summary>
+            <param name="workoutId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionController.UpdateWorkoutSessionById(System.Guid,TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand,TrainingService.Common.Interfaces.IHandler{TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto,TrainingService.WorkoutSessions.UpdateWorkoutSessionById.UpdateWorkoutSessionByIdCommand},System.Threading.CancellationToken)">
+            <summary>
+            Route para atualizar uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="id"></param>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.WorkoutSessions.WorkoutSessionController.DeleteWorkoutSessionById(TrainingService.Common.Interfaces.IHandler{System.Boolean,TrainingService.WorkoutSessions.DeleteWorkoutSessionById.DeleteWorkoutSessionByIdCommand},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Route para deletar uma sessão de treino pelo ID da sessão.
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.WorkoutSessions.WorkoutSessionModule">
             <summary>
@@ -595,6 +1430,16 @@
             </summary>
             <param name="services"></param>
             <returns></returns>
+        </member>
+        <member name="T:TrainingService.Workouts.Common.Enums.EMeasureUnit">
+            <summary>
+            Unidade de medida para peso e distância.
+            </summary>
+        </member>
+        <member name="T:TrainingService.Workouts.Common.Enums.EWorkoutVisibility">
+            <summary>
+            Visibilidade do treino.
+            </summary>
         </member>
         <member name="F:TrainingService.Workouts.Common.Enums.EWorkoutVisibility.Public">
             <summary>
@@ -610,6 +1455,130 @@
             <summary>
                 Visibilidade privada
             </summary>
+        </member>
+        <member name="T:TrainingService.Workouts.Common.Repository.IWorkoutRepository">
+            <summary>
+            Interface para o repositório de treinos.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.IWorkoutRepository.WorkoutExistsAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para verificar se um treino existe pelo ID.
+            </summary>
+            <param name="workoutId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.IWorkoutRepository.GetWorkoutAsync(System.Guid,System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Método para obter um treino por ID.
+            </summary>
+            <param name="workoutId"></param>
+            <param name="cancellationToken"></param>
+            <param name="track"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.IWorkoutRepository.GetWorkoutsByUserIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter treinos pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.IWorkoutRepository.AddAsync(TrainingService.Workouts.Workout,System.Threading.CancellationToken)">
+            <summary>
+            Método para adicionar um novo treino.
+            </summary>
+            <param name="workout"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.IWorkoutRepository.DeleteAsync(TrainingService.Workouts.Workout,System.Threading.CancellationToken)">
+            <summary>
+            Método para deletar um treino existente.
+            </summary>
+            <param name="workout"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.IWorkoutRepository.UpdateAsync(TrainingService.Workouts.Workout,System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar um treino existente.
+            </summary>
+            <param name="workout"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Workouts.Common.Repository.WorkoutRepository">
+            <summary>
+            Repositório para gerenciar operações relacionadas a treinos no banco de dados.
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.WorkoutRepository.#ctor(TrainingService.Connections.Database.TrainingDbContext)">
+            <summary>
+            Repositório para gerenciar operações relacionadas a treinos no banco de dados.
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.WorkoutRepository.WorkoutExistsAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para verificar se um treino existe pelo ID.
+            </summary>
+            <param name="workoutId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.WorkoutRepository.GetWorkoutAsync(System.Guid,System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Método para obter um treino por ID.
+            </summary>
+            <param name="workoutId"></param>
+            <param name="cancellationToken"></param>
+            <param name="track"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.WorkoutRepository.GetWorkoutsByUserIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Método para obter treinos pelo ID do usuário.
+            </summary>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.WorkoutRepository.AddAsync(TrainingService.Workouts.Workout,System.Threading.CancellationToken)">
+            <summary>
+            Método para adicionar um novo treino.
+            </summary>
+            <param name="workout"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.WorkoutRepository.UpdateAsync(TrainingService.Workouts.Workout,System.Threading.CancellationToken)">
+            <summary>
+            Método para deletar um treino existente.
+            </summary>
+            <param name="workout"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.Repository.WorkoutRepository.DeleteAsync(TrainingService.Workouts.Workout,System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar um treino existente.
+            </summary>
+            <param name="workout"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="T:TrainingService.Workouts.Common.WorkoutDto">
+            <summary>
+            DTO para representar um treino.
+            </summary>
+            <param name="workout"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.Common.WorkoutDto.#ctor(TrainingService.Workouts.Workout)">
+            <summary>
+            DTO para representar um treino.
+            </summary>
+            <param name="workout"></param>
         </member>
         <member name="P:TrainingService.Workouts.Common.WorkoutDto.Id">
             <summary>
@@ -716,28 +1685,80 @@
             Tempo de descanso entre as séries do treino, em segundos.
             </summary>
         </member>
+        <member name="T:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommandHandler">
+            <summary>
+            Handler para o comando de criação de treino.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommandHandler.#ctor(TrainingService.Workouts.Common.Repository.IWorkoutRepository,TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para o comando de criação de treino.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.CreateWorkout.CreateWorkoutCommandHandler.HandleAsync(TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para tratar o comando de criação de treino.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand">
             <summary>
             Comando para deletar um treino por id.
             </summary>
-            <param name="id"></param>
         </member>
         <member name="M:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.#ctor">
             <summary>
             Comando para deletar um treino por id.
             </summary>
-            <param name="id"></param>
         </member>
         <member name="P:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.WorkoutId">
             <summary>
             Id do treino.
             </summary>
         </member>
+        <member name="P:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.UserId">
+            <summary>
+            Id do usuário que está solicitando a exclusão do treino.
+            </summary>
+        </member>
         <member name="M:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.SetWorkoutId(System.Guid)">
             <summary>
-            método para setar o id do treino.
+            Método para setar o id do treino.
             </summary>
             <param name="workoutId"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand.SetUserId(System.String)">
+            <summary>
+            Método para setar o id do usuário que está solicitando a exclusão do treino.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="T:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommandHandler">
+            <summary>
+            Handler para o comando de exclusão de treino por id.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommandHandler.#ctor(TrainingService.Workouts.Common.Repository.IWorkoutRepository)">
+            <summary>
+            Handler para o comando de exclusão de treino por id.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommandHandler.HandleAsync(TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para tratar o comando de exclusão de treino por id.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQuery">
             <summary>
@@ -755,6 +1776,27 @@
             </summary>
             <param name="workoutId"></param>
         </member>
+        <member name="T:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQueryHandler">
+            <summary>
+            Handler para a query de obtenção de treino por id.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQueryHandler.#ctor(TrainingService.Workouts.Common.Repository.IWorkoutRepository)">
+            <summary>
+            Handler para a query de obtenção de treino por id.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQueryHandler.HandleAsync(TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para tratar a query de obtenção de treino por id.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
+        </member>
         <member name="T:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQuery">
             <summary>
             Query para obter treinos por id do usuário.
@@ -767,9 +1809,29 @@
         </member>
         <member name="M:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQuery.SetUserId(System.String)">
             <summary>
-            método para id do usuário.
+            Método para id do usuário.
             </summary>
             <param name="userId"></param>
+        </member>
+        <member name="T:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQueryHandler">
+            <summary>
+            Handler para a query de obtenção de treinos por id do usuário.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQueryHandler.#ctor(TrainingService.Workouts.Common.Repository.IWorkoutRepository)">
+            <summary>
+            Handler para a query de obtenção de treinos por id do usuário.
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQueryHandler.HandleAsync(TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQuery,System.Threading.CancellationToken)">
+            <summary>
+            Método para tratar a query de obtenção de treinos por id do usuário.
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand">
             <summary>
@@ -794,6 +1856,30 @@
             Id do treino.
             </summary>
         </member>
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.SetWorkoutId(System.Guid)">
+            <summary>
+            Método para definir o Id do treino.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.GetWorkoutId">
+            <summary>
+            Método para obter o Id do treino.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.SetUserId(System.String)">
+            <summary>
+            Método para definir o Id do usuário que está atualizando o treino.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.GetUserId">
+            <summary>
+            Método para obter o Id do usuário que está atualizando o treino.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand.Name">
             <summary>
             Nome do treino.
@@ -813,6 +1899,48 @@
             <summary>
             Tempo de descanso entre os exercícios, em segundos.
             </summary>
+        </member>
+        <member name="T:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommandHandler">
+            <summary>
+            Handler para o comando de atualização de treino por id.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommandHandler.#ctor(TrainingService.Workouts.Common.Repository.IWorkoutRepository,TrainingService.Exercises.Common.Repository.IExerciseRepository)">
+            <summary>
+            Handler para o comando de atualização de treino por id.
+            </summary>
+            <param name="repository"></param>
+            <param name="exerciseRepository"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommandHandler.HandleAsync(TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand,System.Threading.CancellationToken)">
+            <summary>
+            Método para tratar o comando de atualização de treino por id.
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TrainingService.Workouts.Workout">
+            <summary>
+            Entidade que representa um treino.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.Workout.#ctor">
+            <summary>
+            Construtor padrão para o EF Core.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.Workout.#ctor(System.String,System.String,System.String,TrainingService.Workouts.Common.Enums.EWorkoutVisibility,System.Int32)">
+            <summary>
+            Construtor para criar um novo treino.
+            </summary>
+            <param name="creatorId"></param>
+            <param name="userId"></param>
+            <param name="name"></param>
+            <param name="visibility"></param>
+            <param name="restingTimeInSeconds"></param>
         </member>
         <member name="P:TrainingService.Workouts.Workout.Id">
             <summary>
@@ -858,6 +1986,85 @@
             <summary>
             Data de atualização do treino.
             </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.Workout.UpdateWorkout(TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand)">
+            <summary>
+            Método para atualizar o treino com base em um comando.
+            </summary>
+            <param name="command"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.Workout.AddWorkoutExercises(System.Collections.Generic.List{TrainingService.Exercises.Exercise})">
+            <summary>
+            Método para adicionar exercícios ao treino.
+            </summary>
+            <param name="exercises"></param>
+        </member>
+        <member name="M:TrainingService.Workouts.Workout.UpdateWorkoutExercises(System.Collections.Generic.List{TrainingService.Exercises.Exercise})">
+            <summary>
+            Método para atualizar os exercícios do treino, substituindo os existentes.
+            </summary>
+            <param name="exercises"></param>
+        </member>
+        <member name="T:TrainingService.Workouts.WorkoutController">
+            <summary>
+            Controller para gerenciar treinos.
+            </summary>
+        </member>
+        <member name="M:TrainingService.Workouts.WorkoutController.GetWorkoutById(TrainingService.Common.Interfaces.IHandler{TrainingService.Workouts.Common.WorkoutDto,TrainingService.Workouts.GetWorkoutById.GetWorkoutByIdQuery},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter um treino por id.
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.WorkoutController.GetWorkoutsByUserId(TrainingService.Common.Interfaces.IHandler{System.Collections.Generic.ICollection{TrainingService.Workouts.Common.WorkoutDto},TrainingService.Workouts.GetWorkoutsByUserId.GetWorkoutsByUserIdQuery},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Rota para obter treinos por id do usuário autenticado.
+            </summary>
+            <param name="handler"></param>
+            <param name="userId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.WorkoutController.CreateForOwnUserWorkout(TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand,TrainingService.Common.Interfaces.IHandler{TrainingService.Workouts.Common.WorkoutDto,TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand},System.Threading.CancellationToken)">
+            <summary>
+            Método para criar um treino para o usuário autenticado.
+            </summary>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.WorkoutController.CreateWorkout(TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand,System.String,TrainingService.Common.Interfaces.IHandler{TrainingService.Workouts.Common.WorkoutDto,TrainingService.Workouts.CreateWorkout.CreateWorkoutCommand},System.Threading.CancellationToken)">
+            <summary>
+            Método para criar um treino para um usuário específico.
+            </summary>
+            <param name="command"></param>
+            <param name="userId"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.WorkoutController.UpdateWorkout(System.Guid,TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand,TrainingService.Common.Interfaces.IHandler{TrainingService.Workouts.Common.WorkoutDto,TrainingService.Workouts.UpdateWorkoutById.UpdateWorkoutByIdCommand},System.Threading.CancellationToken)">
+            <summary>
+            Método para atualizar um treino por id.
+            </summary>
+            <param name="id"></param>
+            <param name="command"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TrainingService.Workouts.WorkoutController.DeleteWorkout(TrainingService.Common.Interfaces.IHandler{System.Boolean,TrainingService.Workouts.DeleteWorkoutById.DeleteWorkoutByIdCommand},System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Método para deletar um treino por id.
+            </summary>
+            <param name="handler"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:TrainingService.Workouts.WorkoutModule">
             <summary>
