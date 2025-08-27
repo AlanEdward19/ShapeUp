@@ -3638,7 +3638,7 @@
                 Controller responsavel por gerenciar funções relacionadas ao perfil do usuario
             </summary>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.String,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.ViewProfile(System.String,SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.ViewProfile.ViewProfileQuery},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.CreateProfile.CreateProfileCommand},SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},System.Threading.CancellationToken)">
             <summary>
                 Rota para visualizar um perfil
             </summary>
@@ -3922,13 +3922,15 @@
             </summary>
             <param name="repository"></param>
             <param name="blobStorageProvider"></param>
+            <param name="cepAwesomeApi"></param>
         </member>
-        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider)">
+        <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.#ctor(SocialService.Profile.Common.Repository.IProfileGraphRepository,SocialService.Connections.Storage.IBlobStorageProvider,SocialService.Common.Services.CepAwesomeApi.ICepAwesomeApi)">
             <summary>
                 Handler para o comando de upload de foto de perfil.
             </summary>
             <param name="repository"></param>
             <param name="blobStorageProvider"></param>
+            <param name="cepAwesomeApi"></param>
         </member>
         <member name="M:SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommandHandler.HandleAsync(SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand,System.Threading.CancellationToken)">
             <summary>
