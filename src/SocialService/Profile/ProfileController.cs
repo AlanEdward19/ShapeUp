@@ -38,7 +38,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     public async Task<IActionResult> ViewProfile(string profileId,
         [FromServices] IHandler<ProfileDto?, ViewProfileQuery> viewProfilehandler,
         [FromServices] IHandler<ProfileDto, CreateProfileCommand> createProfileHandler,
-        [FromServices] IHandler<bool, UploadProfilePictureCommand> uploadProfilePictureHandler,
+        [FromServices] IHandler<ProfileDto, UploadProfilePictureCommand> uploadProfilePictureHandler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
@@ -49,35 +49,50 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
 
         if (profile is null && profileId == ProfileContext.ProfileId)
         {
-            CreateProfileCommand command = new();
+            CreateProfileCommand createProfileCommand = new();
 
-            command.SetEmail(User.GetEmail());
-            command.SetFirstName(User.GetFirstName());
-            command.SetLastName(User.GetLastName());
-            command.SetCountry(User.GetCountry());
-            command.SetPostalCode(User.GetPostalCode());
-            command.SetDisplayName(User.GetDisplayName());
+            createProfileCommand.SetEmail(User.GetEmail());
+            createProfileCommand.SetFirstName(User.GetFirstName());
+            createProfileCommand.SetLastName(User.GetLastName());
+            createProfileCommand.SetCountry(User.GetCountry());
+            createProfileCommand.SetPostalCode(User.GetPostalCode());
+            createProfileCommand.SetDisplayName(User.GetDisplayName());
 
             CreateProfileCommandValidator createProfileValidator = new();
-            await createProfileValidator.ValidateAndThrowAsync(command, cancellationToken);
+            await createProfileValidator.ValidateAndThrowAsync(createProfileCommand, cancellationToken);
 
-            profile = await createProfileHandler.HandleAsync(command, cancellationToken);
+            profile = await createProfileHandler.HandleAsync(createProfileCommand, cancellationToken);
+            
+            var imageUrl = User.GetPictureUrl();
+            
+            if (!string.IsNullOrWhiteSpace(imageUrl))
+            {
+                using var httpClient = new HttpClient();
+                var imageBytes = await httpClient.GetByteArrayAsync(imageUrl, cancellationToken);
+                var stream = new MemoryStream(imageBytes);
+            
+                UploadProfilePictureCommand uploadProfilePictureCommand = new();
+                await uploadProfilePictureCommand.SetImage(stream, "Google downloaded image file", cancellationToken);
+                profile = await uploadProfilePictureHandler.HandleAsync(uploadProfilePictureCommand, cancellationToken);
+            }
 
             return Created(HttpContext.Request.Path, profile);
         }
 
-        string tokenProvider = User.GetSignInProvider();
-
-        if (string.IsNullOrWhiteSpace(profile!.ImageUrl) && tokenProvider == "google.com")
+        if (string.IsNullOrWhiteSpace(profile!.ImageUrl))
         {
             var imageUrl = User.GetPictureUrl();
-            using var httpClient = new HttpClient();
-            var imageBytes = await httpClient.GetByteArrayAsync(imageUrl, cancellationToken);
-            var stream = new MemoryStream(imageBytes);
+
+            if (!string.IsNullOrWhiteSpace(imageUrl))
+            {
+                using var httpClient = new HttpClient();
+                var imageBytes = await httpClient.GetByteArrayAsync(imageUrl, cancellationToken);
+                var stream = new MemoryStream(imageBytes);
             
-            UploadProfilePictureCommand command = new();
-            await command.SetImage(stream, "Google downloaded image file", cancellationToken);
-            await uploadProfilePictureHandler.HandleAsync(command, cancellationToken);
+                UploadProfilePictureCommand uploadProfilePictureCommand = new();
+                await uploadProfilePictureCommand.SetImage(stream, "Google downloaded image file", cancellationToken);
+                profile = await uploadProfilePictureHandler.HandleAsync(uploadProfilePictureCommand, cancellationToken);
+            }
         }
 
         return Ok(profile);

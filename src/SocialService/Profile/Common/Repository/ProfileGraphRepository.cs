@@ -30,8 +30,8 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         gender: '{profile.Gender}',
         birthDate: {birthDateValue},
         bio: '{profile.Bio}',
-        latitude: {profile.Latitude},
-        longitude: {profile.Longitude}
+        latitude: {profile.Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture)},
+        longitude: {profile.Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture)}
     }})";
 
         await graphContext.ExecuteQueryAsync(query);
@@ -136,8 +136,8 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
         p.gender = '{profile.Gender}',
         p.birthDate = {birthDateValue},
         p.bio = '{profile.Bio}',
-        p.latitude = {profile.Latitude},
-        p.longitude = {profile.Longitude}
+        p.latitude = {profile.Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture)},
+        p.longitude = {profile.Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture)}
     RETURN p";
 
         await graphContext.ExecuteQueryAsync(query);

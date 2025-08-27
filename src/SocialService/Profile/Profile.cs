@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using SocialService.Common.Services.CepAwesomeApi;
 using SocialService.Profile.Common.Enums;
 using SocialService.Profile.CreateProfile;
@@ -35,8 +36,8 @@ public class Profile
         UpdateBirthDate(command.BirthDate, false);
         UpdateBio(command.Bio, false);
         UpdateEmail(command.Email, false);
-        UpdateLatitude(double.Parse(locationInfo.Lat?? "0") , false);
-        UpdateLongitude(double.Parse(locationInfo.Lng ?? "0"), false);
+        UpdateLatitude(double.Parse(locationInfo.Lat ?? "0", CultureInfo.InvariantCulture), false);
+        UpdateLongitude(double.Parse(locationInfo.Lng ?? "0", CultureInfo.InvariantCulture), false);
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }

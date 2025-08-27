@@ -34,7 +34,7 @@ public static class ProfileModule
         services.AddScoped<IHandler<ProfileDto, CreateProfileCommand>, CreateProfileCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteProfileCommand>, DeleteProfileCommandHandler>();
         services.AddScoped<IHandler<ProfileDto, EditProfileCommand>, EditProfileCommandHandler>();
-        services.AddScoped<IHandler<bool, UploadProfilePictureCommand>, UploadProfilePictureCommandHandler>();
+        services.AddScoped<IHandler<ProfileDto, UploadProfilePictureCommand>, UploadProfilePictureCommandHandler>();
         services.AddScoped<IHandler<ProfileDto?, ViewProfileQuery>, ViewProfileQueryHandler>();
         services.AddScoped<IHandler<ProfileSimplifiedDto, ViewProfileSimplifiedQuery>, ViewProfileSimplifiedQueryHandler>();
         services
