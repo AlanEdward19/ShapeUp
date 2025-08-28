@@ -131,6 +131,7 @@ public class WorkoutController : ControllerBase
     {
         DeleteWorkoutByIdCommand command = new();
         command.SetWorkoutId(id);
+        command.SetUserId(User.GetObjectId());
         
         await handler.HandleAsync(command, cancellationToken);
         return NoContent();
