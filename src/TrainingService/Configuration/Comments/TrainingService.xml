@@ -726,6 +726,18 @@
         <member name="M:TrainingService.Migrations.AddedRestingTimeToWorkout.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:TrainingService.Migrations.SeedExercises">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.SeedExercises.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.SeedExercises.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TrainingService.Migrations.SeedExercises.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:TrainingService.WorkoutSessions.Common.Dto.WorkoutSessionDto">
             <summary>
             DTO para representar uma sessão de treino.
