@@ -7,6 +7,7 @@ using ProfessionalManagementService.Professionals.DeleteProfessional;
 using ProfessionalManagementService.Professionals.GetProfessionalById;
 using ProfessionalManagementService.Professionals.GetProfessionals;
 using ProfessionalManagementService.Professionals.UpdateProfessional;
+using SharedKernel.Enums;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
 
@@ -42,6 +43,7 @@ public class ProfessionalController : ControllerBase
     }
     
     [HttpPost]
+    [AuthFilter(EPermissionAction.Write, "professional")]
     public async Task<IActionResult> CreateProfessional([FromBody] CreateProfessionalCommand command,
         [FromServices] IHandler<ProfessionalDto, CreateProfessionalCommand> handler,
         CancellationToken cancellationToken)
@@ -59,6 +61,7 @@ public class ProfessionalController : ControllerBase
     }
     
     [HttpPatch("{id}")]
+    [AuthFilter(EPermissionAction.Update, "professional")]
     public async Task<IActionResult> UpdateProfessional(string id,
         [FromBody] UpdateProfessionalCommand command,
         [FromServices] IHandler<ProfessionalDto, UpdateProfessionalCommand> handler,
@@ -71,6 +74,7 @@ public class ProfessionalController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [AuthFilter(EPermissionAction.Delete, "professional")]
     public async Task<IActionResult> DeleteProfessional(string id,
         [FromServices] IHandler<bool, DeleteProfessionalCommand> handler,
         CancellationToken cancellationToken)

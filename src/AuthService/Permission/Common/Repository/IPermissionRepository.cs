@@ -1,4 +1,6 @@
-﻿namespace AuthService.Permission.Common.Repository;
+﻿using AuthService.Common.User;
+
+namespace AuthService.Permission.Common.Repository;
 
 public interface IPermissionRepository
 {
@@ -16,4 +18,5 @@ public interface IPermissionRepository
     
     Task RemoveGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellationToken);
     Task RemoveUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken);
+    Task<ICollection<User>> GetUsersWithSpecificPermissionAsync(Guid permissionId, CancellationToken cancellationToken);
 }

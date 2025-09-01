@@ -47,6 +47,12 @@ public class CreateServicePlanCommand
     }
     
     /// <summary>
+    /// Método para ler o Id do profissional
+    /// </summary>
+    /// <returns></returns>
+    public string GetProfessionalId() => ProfessionalId;
+    
+    /// <summary>
     /// Método para converter o comando em um objeto ServicePlan
     /// </summary>
     /// <returns></returns>

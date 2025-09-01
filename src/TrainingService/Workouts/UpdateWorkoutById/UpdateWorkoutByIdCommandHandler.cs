@@ -29,7 +29,7 @@ public class UpdateWorkoutByIdCommandHandler(IWorkoutRepository repository, IExe
         
         if (workout.CreatorId != command.GetUserId())
             throw new ForbiddenException(
-                $"User {command.GetUserId()} is not authorized to update this workout.");
+                $"You are not authorized to update this workout.");
         
         workout.UpdateWorkout(command);
         

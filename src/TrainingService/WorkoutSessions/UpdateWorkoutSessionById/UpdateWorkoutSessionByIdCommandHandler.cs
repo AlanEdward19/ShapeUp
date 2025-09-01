@@ -29,7 +29,7 @@ public class UpdateWorkoutSessionByIdCommandHandler(IWorkoutSessionMongoReposito
 
         if (workoutSession.UserId != command.GetUserId())
             throw new ForbiddenException(
-                $"User {command.GetUserId()} is not authorized to update this workout session.");
+                $"You are not authorized to update this workout session.");
 
         if (command.Status != null)
             workoutSession.UpdateStatus(command.Status.Value);

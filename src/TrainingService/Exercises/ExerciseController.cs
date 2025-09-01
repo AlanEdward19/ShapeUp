@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Enums;
 using SharedKernel.Filters;
 using TrainingService.Common.Interfaces;
 using TrainingService.Exercises.Common;
@@ -66,6 +67,7 @@ public class ExerciseController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost]
+    [AuthFilter(EPermissionAction.Write, "exercise")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ExerciseDto))]
     public async Task<IActionResult> CreateExercise([FromBody] CreateExerciseCommand command,
         [FromServices] IHandler<ExerciseDto, CreateExerciseCommand> handler, CancellationToken cancellationToken)
@@ -81,6 +83,7 @@ public class ExerciseController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPatch]
+    [AuthFilter(EPermissionAction.Update, "exercise")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExerciseDto))]
     public async Task<IActionResult> UpdateExercise([FromBody] UpdateExerciseCommand command,
         [FromServices] IHandler<ExerciseDto, UpdateExerciseCommand> handler, CancellationToken cancellationToken)
@@ -96,6 +99,7 @@ public class ExerciseController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpDelete("{id:guid}")]
+    [AuthFilter(EPermissionAction.Delete, "exercise")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteExercise([FromServices] IHandler<bool, DeleteExerciseByIdCommand> handler,
         Guid id, CancellationToken cancellationToken)

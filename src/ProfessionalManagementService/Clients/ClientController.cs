@@ -57,8 +57,8 @@ public class ClientController : ControllerBase
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
     
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateClient(string id,
+    [HttpPut]
+    public async Task<IActionResult> UpdateClient(
         [FromBody] UpdateClientCommand command,
         [FromServices] IHandler<ClientDto, UpdateClientCommand> handler,
         CancellationToken cancellationToken)
