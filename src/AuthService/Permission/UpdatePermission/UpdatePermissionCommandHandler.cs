@@ -4,9 +4,9 @@ using FirebaseAdmin.Auth;
 
 namespace AuthService.Permission.UpdatePermission;
 
-public class UpdatePermissionCommandHandler(IPermissionRepository repository) : IHandler<bool, UpdatePermissionCommand>
+public class UpdatePermissionCommandHandler(IPermissionRepository repository) : IHandler<PermissionDto, UpdatePermissionCommand>
 {
-    public async Task<bool> HandleAsync(UpdatePermissionCommand command, CancellationToken cancellationToken)
+    public async Task<PermissionDto> HandleAsync(UpdatePermissionCommand command, CancellationToken cancellationToken)
     {
         Permission permission = await repository.GetPermissionAsync(command.PermissionId, cancellationToken);
         
@@ -43,6 +43,6 @@ public class UpdatePermissionCommandHandler(IPermissionRepository repository) : 
                 cancellationToken);
         }
 
-        return true;
+        return new(permission);
     }
 }

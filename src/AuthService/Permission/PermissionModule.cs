@@ -32,13 +32,13 @@ public static class PermissionModule
     
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<bool, CreatePermissionCommand>, CreatePermissionCommandHandler>();
+        services.AddScoped<IHandler<PermissionDto, CreatePermissionCommand>, CreatePermissionCommandHandler>();
         services.AddScoped<IHandler<bool, DeletePermissionCommand>, DeletePermissionCommandHandler>();
         services.AddScoped<IHandler<ICollection<PermissionDto>, GetGroupPermissionsQuery>, GetGroupPermissionsQueryHandler>();
-        services.AddScoped<IHandler<ICollection<PermissionDto>, GetUserPermissionsQuery>, GetUserPermissionsQueryHandler>();
+        services.AddScoped<IHandler<UserPermissionsDto, GetUserPermissionsQuery>, GetUserPermissionsQueryHandler>();
         services.AddScoped<IHandler<bool, GrantGroupPermissionCommand>, GrantGroupPermissionCommandHandler>();
         services.AddScoped<IHandler<bool, GrantUserPermissionCommand>, GrantUserPermissionCommandHandler>();
-        services.AddScoped<IHandler<bool, UpdatePermissionCommand>, UpdatePermissionCommandHandler>();
+        services.AddScoped<IHandler<PermissionDto, UpdatePermissionCommand>, UpdatePermissionCommandHandler>();
         services.AddScoped<IHandler<bool, RemoveUserPermissionCommand>, RemoveUserPermissionCommandHandler>();
         services.AddScoped<IHandler<bool, RemoveGroupPermissionCommand>, RemoveGroupPermissionCommandHandler>();
         
