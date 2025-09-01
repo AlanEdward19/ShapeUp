@@ -33,10 +33,10 @@ public class GroupController(AuthDbContext dbContext) : ControllerBase
         ProfileContext.ProfileId = User.GetObjectId();
         
         AddUserToGroupCommand command = new(groupId, userId, role);
-        await handler.HandleAsync(command, cancellationToken);
-
         AddUserToGroupCommandValidator validator = new(dbContext);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
+        await handler.HandleAsync(command, cancellationToken);
 
         return Created();
     }
@@ -46,6 +46,10 @@ public class GroupController(AuthDbContext dbContext) : ControllerBase
         [FromServices] IHandler<bool, CreateGroupCommand> handler, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+        
+        CreateGroupCommandValidator validator = new();
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+        
         await handler.HandleAsync(command, cancellationToken);
 
         return Created();

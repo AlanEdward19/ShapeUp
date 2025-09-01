@@ -42,19 +42,13 @@ public class ProfessionalController : ControllerBase
         return Ok(professional);
     }
     
-    [HttpPost]
+    [HttpPost("{id}")]
     [AuthFilter(EPermissionAction.Write, "professional")]
-    public async Task<IActionResult> CreateProfessional([FromBody] CreateProfessionalCommand command,
+    public async Task<IActionResult> CreateProfessional(string id, [FromBody] CreateProfessionalCommand command,
         [FromServices] IHandler<ProfessionalDto, CreateProfessionalCommand> handler,
         CancellationToken cancellationToken)
     {
-        string userId = User.GetObjectId();
-        string email = User.GetEmail();
-        string fullName = User.GetFullName();
-        
-        command.SetId(userId);
-        command.SetEmail(email);
-        command.SetName(fullName);
+        command.SetId(id);
         
         var professional = await handler.HandleAsync(command, cancellationToken);
         return Created(HttpContext.Request.GetDisplayUrl(), professional);

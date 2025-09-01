@@ -18,7 +18,7 @@ public class UserRepository(AuthDbContext dbContext) : IUserRepository
         
         await dbContext.Users.AddAsync(user, cancellationToken);
         
-        Group.Group userGroup = new();
+        Group.Group userGroup = new($"{user.ObjectId}'s Group", "Personal group for user");
         userGroup.AddUser(user, EGroupRole.Owner);
         await dbContext.Groups.AddAsync(userGroup, cancellationToken);
         

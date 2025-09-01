@@ -9,7 +9,7 @@ public class CreateGroupCommandHandler(IGroupRepository repository) : IHandler<b
 {
     public async Task<bool> HandleAsync(CreateGroupCommand command, CancellationToken cancellationToken)
     {
-        Group group = new();
+        Group group = command.ToEntity();
 
         await repository.AddAsync(group, ProfileContext.ProfileId, cancellationToken);
 
