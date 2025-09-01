@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "principalId": {
+        "value": "${AZURE_PRINCIPAL_ID}"
+      },
+      "Mongo_password": {
+        "value": "${AZURE_MONGO_PASSWORD}"
+      },
+      "Search": {
+        "value": "${AZURE_SEARCH}"
+      },
+      "SqlServer_password": {
+        "value": "${AZURE_SQL_SERVER_PASSWORD}"
+      },
+      "SqlServerProfessionalManagement_password": {
+        "value": "${AZURE_SQL_SERVER_PROFESSIONAL_MANAGEMENT_PASSWORD}"
+      },
+      "environmentName": {
+        "value": "${AZURE_ENV_NAME}"
+      },
+      "location": {
+        "value": "${AZURE_LOCATION}"
+      }
+    }
+  }
+  
