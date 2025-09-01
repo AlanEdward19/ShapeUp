@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Enums;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
 using TrainingService.Common.Interfaces;
@@ -86,6 +87,7 @@ public class WorkoutController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost("/v{version:apiVersion}/User/{userId}/Workout")]
+    [AuthFilter(EPermissionAction.Write, "workout")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WorkoutDto))]
     public async Task<IActionResult> CreateWorkout([FromBody] CreateWorkoutCommand command, string userId,
         [FromServices] IHandler<WorkoutDto, CreateWorkoutCommand> handler, CancellationToken cancellationToken)

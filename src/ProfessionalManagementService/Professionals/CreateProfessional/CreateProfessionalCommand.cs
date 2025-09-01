@@ -37,6 +37,12 @@ public class CreateProfessionalCommand
     }
     
     /// <summary>
+    /// Método para obter o id do profissional
+    /// </summary>
+    /// <returns></returns>
+    public string GetId() => Id;
+    
+    /// <summary>
     /// Método para definir o email do profissional
     /// </summary>
     /// <param name="email"></param>

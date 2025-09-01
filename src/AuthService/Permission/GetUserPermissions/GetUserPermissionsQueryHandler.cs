@@ -1,17 +1,15 @@
 ﻿using AuthService.Common.Interfaces;
+using AuthService.Common.User.Repository;
 using AuthService.Permission.Common.Repository;
 
 namespace AuthService.Permission.GetUserPermissions;
 
-public class GetUserPermissionsQueryHandler(IPermissionRepository repository) : IHandler<ICollection<PermissionDto>, GetUserPermissionsQuery>
+public class GetUserPermissionsQueryHandler(IUserRepository repository) : IHandler<UserPermissionsDto, GetUserPermissionsQuery>
 {
-    public async Task<ICollection<PermissionDto>> HandleAsync(GetUserPermissionsQuery query, CancellationToken cancellationToken)
+    public async Task<UserPermissionsDto> HandleAsync(GetUserPermissionsQuery query, CancellationToken cancellationToken)
     {
-        ICollection<Permission> permissions = await repository.GetUserPermissionsAsync(query.UserId, cancellationToken);
-        
-        return permissions
-            .Select(permission => new PermissionDto(permission))
-            .DistinctBy(x => x.Id)
-            .ToList();
+        var user = await repository.GetUserAsync(query.UserId, cancellationToken);
+
+        return new(user);
     }
 }

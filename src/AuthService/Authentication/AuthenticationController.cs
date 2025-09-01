@@ -3,6 +3,7 @@ using AuthService.Authentication.EnhanceToken;
 using AuthService.Common;
 using AuthService.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Enums;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
 
@@ -19,6 +20,18 @@ public class AuthenticationController : ControllerBase
         [FromServices] IHandler<bool, EnhanceTokenCommand> handler, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+        
+        await handler.HandleAsync(command, cancellationToken);
+
+        return Created();
+    }
+    
+    [HttpPost("/v{version:apiVersion}/User/{userId}/enhanceToken")]
+    [AuthFilter(EPermissionAction.Write, "permission")]
+    public async Task<IActionResult> EnhanceUserToken(string userId, [FromBody] EnhanceTokenCommand command,
+        [FromServices] IHandler<bool, EnhanceTokenCommand> handler, CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = userId;
         
         await handler.HandleAsync(command, cancellationToken);
 

@@ -1,6 +1,7 @@
 ﻿using AuthService.Connections.Database;
 using AuthService.Group.Common.Enums;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Exceptions;
 
 namespace AuthService.Common.User.Repository;
 
@@ -17,12 +18,29 @@ public class UserRepository(AuthDbContext dbContext) : IUserRepository
         
         await dbContext.Users.AddAsync(user, cancellationToken);
         
-        Group.Group userGroup = new();
+        Group.Group userGroup = new($"{user.ObjectId}'s Group", "Personal group for user");
         userGroup.AddUser(user, EGroupRole.Owner);
         await dbContext.Groups.AddAsync(userGroup, cancellationToken);
         
         await dbContext.SaveChangesAsync(cancellationToken);
         
         await dbContext.Database.CommitTransactionAsync(cancellationToken);
+    }
+    
+    public async Task<User> GetUserAsync(string userId,
+        CancellationToken cancellationToken)
+    {
+        User? user = await dbContext.Users
+            .Include(x => x.UserGroups)
+            .ThenInclude(x => x.Group)
+            .ThenInclude(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ObjectId == userId, cancellationToken);
+
+        if (user is null)
+            throw new NotFoundException($"User with id '{userId}' not found.");
+        
+        return user;
     }
 }

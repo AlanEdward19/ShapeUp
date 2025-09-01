@@ -7,6 +7,7 @@ using ProfessionalManagementService.Professionals.DeleteProfessional;
 using ProfessionalManagementService.Professionals.GetProfessionalById;
 using ProfessionalManagementService.Professionals.GetProfessionals;
 using ProfessionalManagementService.Professionals.UpdateProfessional;
+using SharedKernel.Enums;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
 
@@ -41,24 +42,20 @@ public class ProfessionalController : ControllerBase
         return Ok(professional);
     }
     
-    [HttpPost]
-    public async Task<IActionResult> CreateProfessional([FromBody] CreateProfessionalCommand command,
+    [HttpPost("{id}")]
+    [AuthFilter(EPermissionAction.Write, "professional")]
+    public async Task<IActionResult> CreateProfessional(string id, [FromBody] CreateProfessionalCommand command,
         [FromServices] IHandler<ProfessionalDto, CreateProfessionalCommand> handler,
         CancellationToken cancellationToken)
     {
-        string userId = User.GetObjectId();
-        string email = User.GetEmail();
-        string fullName = User.GetFullName();
-        
-        command.SetId(userId);
-        command.SetEmail(email);
-        command.SetName(fullName);
+        command.SetId(id);
         
         var professional = await handler.HandleAsync(command, cancellationToken);
         return Created(HttpContext.Request.GetDisplayUrl(), professional);
     }
     
     [HttpPatch("{id}")]
+    [AuthFilter(EPermissionAction.Update, "professional")]
     public async Task<IActionResult> UpdateProfessional(string id,
         [FromBody] UpdateProfessionalCommand command,
         [FromServices] IHandler<ProfessionalDto, UpdateProfessionalCommand> handler,
@@ -71,6 +68,7 @@ public class ProfessionalController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [AuthFilter(EPermissionAction.Delete, "professional")]
     public async Task<IActionResult> DeleteProfessional(string id,
         [FromServices] IHandler<bool, DeleteProfessionalCommand> handler,
         CancellationToken cancellationToken)

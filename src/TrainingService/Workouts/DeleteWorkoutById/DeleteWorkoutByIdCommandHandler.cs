@@ -25,7 +25,7 @@ public class DeleteWorkoutByIdCommandHandler(IWorkoutRepository repository)
             throw new NotFoundException($"Workout with id '{command.WorkoutId}' not found.");
         
         if(workout.CreatorId != command.UserId)
-            throw new ForbiddenException($"User '{command.UserId}' is not authorized to delete this workout.");
+            throw new ForbiddenException($"You are not authorized to delete this workout.");
         
         await repository.DeleteAsync(workout, cancellationToken);
         

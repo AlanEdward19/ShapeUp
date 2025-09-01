@@ -14,6 +14,7 @@ using AuthService.Permission.UpdatePermission;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Enums;
 using SharedKernel.Filters;
@@ -30,15 +31,14 @@ public class PermissionController(AuthDbContext dbContext) : ControllerBase
     [HttpPost]
     [AuthFilter(EPermissionAction.Write, "permission")]
     public async Task<IActionResult> CreatePermission([FromBody] CreatePermissionCommand command,
-        [FromServices] IHandler<bool, CreatePermissionCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<PermissionDto, CreatePermissionCommand> handler, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
 
         CreatePermissionCommandValidator validator = new();
         await validator.ValidateAndThrowAsync(command, cancellationToken);
         
-        await handler.HandleAsync(command, cancellationToken);
-        return Created();
+        return Created(HttpContext.Request.GetDisplayUrl(), await handler.HandleAsync(command, cancellationToken));
     }
     
     [HttpDelete("{permissionId:guid}")]
@@ -74,7 +74,7 @@ public class PermissionController(AuthDbContext dbContext) : ControllerBase
     [HttpGet("/User/{userId}/Permission")]
     [AuthFilter(EPermissionAction.Read, "permission")]
     public async Task<IActionResult> GetUserPermissions(string userId,
-        [FromServices] IHandler<ICollection<PermissionDto>, GetUserPermissionsQuery> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<UserPermissionsDto, GetUserPermissionsQuery> handler, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         
@@ -152,7 +152,7 @@ public class PermissionController(AuthDbContext dbContext) : ControllerBase
     [HttpPatch("{permissionId:guid}")]
     [AuthFilter(EPermissionAction.Update, "permission")]
     public async Task<IActionResult> UpdatePermission(Guid permissionId, [FromBody]  UpdatePermissionCommand command,
-        [FromServices] IHandler<bool, UpdatePermissionCommand> handler, CancellationToken cancellationToken)
+        [FromServices] IHandler<PermissionDto, UpdatePermissionCommand> handler, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         
@@ -160,8 +160,6 @@ public class PermissionController(AuthDbContext dbContext) : ControllerBase
         UpdatePermissionCommandValidator validator = new(dbContext);
         await validator.ValidateAndThrowAsync(command, cancellationToken);
         
-        await handler.HandleAsync(command, cancellationToken);
-        
-        return Ok();
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 }

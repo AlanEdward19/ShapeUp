@@ -22,7 +22,7 @@ public class GetUsersFromGroupQueryValidator : AbstractValidator<GetUsersFromGro
 
                 string profileId = ProfileContext.ProfileId;
 
-                if (group!.Users.Select(x => x.UserId).Contains(profileId))
+                if (!group!.Users.Select(x => x.UserId).Contains(profileId))
                     context.AddFailure("Group", "You are not a member of this group");
             });
     }

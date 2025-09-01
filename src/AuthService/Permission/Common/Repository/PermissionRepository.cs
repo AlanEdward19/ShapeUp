@@ -160,6 +160,20 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<ICollection<User>> GetUsersWithSpecificPermissionAsync(Guid permissionId, CancellationToken cancellationToken)
+    {
+        var users = await dbContext.Users
+            .Include(x => x.UserGroups)
+            .ThenInclude(x => x.Group)
+            .ThenInclude(x => x.GroupPermissions)
+            .ThenInclude(x => x.Permission)
+            .AsNoTracking()
+            .Where(u => u.UserGroups.Any(ug => ug.Group.GroupPermissions.Any(gp => gp.Permission.Id == permissionId)))
+            .ToListAsync(cancellationToken);
+        
+        return users;
+    }
+
     public async Task<Permission> GetPermissionAsync(Guid permissionId, CancellationToken cancellationToken)
     {
         Permission? permission = await dbContext.Permissions

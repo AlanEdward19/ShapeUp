@@ -23,7 +23,7 @@ public class RemoveUserFromGroupCommandValidator : AbstractValidator<RemoveUserF
 
                 string profileId = ProfileContext.ProfileId;
                 
-                if(group!.Users.Select(x => x.UserId).Contains(profileId))
+                if(!group!.Users.Select(x => x.UserId).Contains(profileId))
                     context.AddFailure("Group", "You are not a member of this group");
 
                 EGroupRole userRole = group.Users.First(x => x.UserId == profileId).Role;
@@ -31,7 +31,7 @@ public class RemoveUserFromGroupCommandValidator : AbstractValidator<RemoveUserF
                 if(userRole != EGroupRole.Admin && userRole != EGroupRole.Owner)
                     context.AddFailure("Group", "You are not an admin or owner of this group");
                 
-                if(group.Users.Select(x => x.UserId).Contains(command.UserId))
+                if(!group.Users.Select(x => x.UserId).Contains(command.UserId))
                     context.AddFailure("User", "User is not a member of this group");
             });
     }   

@@ -27,7 +27,7 @@ public class DeleteWorkoutSessionByIdCommandHandler(IWorkoutSessionMongoReposito
             throw new NotFoundException($"Workout session with ID {command.SessionId} does not exist.");
         
         if(workoutSession.UserId != command.UserId)
-            throw new ForbiddenException($"User {command.UserId} is not authorized to delete this workout session.");
+            throw new ForbiddenException($"You are not authorized to delete this workout session.");
         
         await repository.DeleteWorkoutSessionByIdAsync(command.SessionId, cancellationToken);
         

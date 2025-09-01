@@ -1,5 +1,7 @@
-﻿using ProfessionalManagementService.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
+using SharedKernel.Exceptions;
 
 namespace ProfessionalManagementService.Professionals.CreateProfessional;
 
@@ -9,6 +11,14 @@ public class CreateProfessionalCommandHandler(DatabaseContext dbContext)
     public async Task<ProfessionalDto> HandleAsync(CreateProfessionalCommand command,
         CancellationToken cancellationToken)
     {
+        var client = await dbContext.Clients.AsNoTracking().FirstOrDefaultAsync(x => x.Id ==command.GetId(), cancellationToken);
+        
+        if (client == null)
+            throw new NotFoundException($"User with Id: '{command.GetId()}' not found.");
+        
+        command.SetEmail(client.Email);
+        command.SetName(client.Name);
+        
         var professional = command.ToProfessional();
 
         await dbContext.Database.BeginTransactionAsync(cancellationToken);

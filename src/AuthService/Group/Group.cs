@@ -16,10 +16,27 @@ public class Group
     public Guid Id { get; init; } = Guid.NewGuid();
     
     /// <summary>
+    /// Nome do grupo
+    /// </summary>
+    [MaxLength(100)]
+    [MinLength(5)]
+    public string Name { get; private set; }
+    
+    /// <summary>
+    /// Descrição do grupo
+    /// </summary>
+    [MaxLength(255)]
+    [MinLength(10)]
+    public string Description { get; private set; }
+    
+    /// <summary>
     /// Permissões do grupo
     /// </summary>
     public virtual ICollection<GroupPermission> GroupPermissions { get; private set; } = new List<GroupPermission>();
     
+    /// <summary>
+    /// Usuários do grupo
+    /// </summary>
     public virtual ICollection<UserGroup> Users { get; private set; } = new List<UserGroup>();
     
     public DateTime CreatedAt { get; init; } = DateTime.Now;
@@ -57,5 +74,23 @@ public class Group
         GroupPermission groupPermission = GroupPermissions.First(gp => gp.PermissionId == permission.Id);
         GroupPermissions.Remove(groupPermission);
         UpdatedAt = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Construtor para EF Core
+    /// </summary>
+    public Group()
+    {
+    }
+
+    /// <summary>
+    /// Construtor para criação de grupo
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    public Group(string name, string description)
+    {
+        Name = name;
+        Description = description;
     }
 }

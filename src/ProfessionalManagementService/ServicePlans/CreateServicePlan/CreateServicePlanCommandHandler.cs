@@ -1,5 +1,7 @@
-﻿using ProfessionalManagementService.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
+using SharedKernel.Exceptions;
 
 namespace ProfessionalManagementService.ServicePlans.CreateServicePlan;
 
@@ -7,6 +9,12 @@ public class CreateServicePlanCommandHandler(DatabaseContext dbContext) : IHandl
 {
     public async Task<ServicePlanDto> HandleAsync(CreateServicePlanCommand command, CancellationToken cancellationToken)
     {
+        bool isProfessional = await dbContext.Professionals
+            .AnyAsync(p => p.Id == command.GetProfessionalId(), cancellationToken);
+        
+        if (!isProfessional)
+            throw new ForbiddenException("You do not have permission to create a service plan.");
+        
         var servicePlan = command.ToServicePlan();
 
         await dbContext.Database.BeginTransactionAsync(cancellationToken);
