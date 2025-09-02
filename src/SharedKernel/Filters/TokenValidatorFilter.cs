@@ -23,7 +23,7 @@ public class TokenValidatorFilter: Attribute, IAsyncAuthorizationFilter
         string firebaseIssuerSigningKey = configuration["Firebase:IssuerSigningKey"]!;
         
         if(string.IsNullOrWhiteSpace(token))
-            throw new UnauthorizedAccessException("Usuário não está autenticado");
+            throw new UnauthorizedAccessException("Token não informado");
         
         var handler = new JwtSecurityTokenHandler();
         

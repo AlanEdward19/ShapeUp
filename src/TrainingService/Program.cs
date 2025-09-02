@@ -6,6 +6,8 @@ using TrainingService.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
+builder.Services.AddHealthChecks();
+
 // Add CORS policy
 builder.Services.AddCors(options =>
 {
@@ -27,6 +29,9 @@ CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz");
+app.MapGet("/", () => Results.Ok("OK"));
 
 // Use CORS policy
 app.UseCors("AllowLocalhost8080");

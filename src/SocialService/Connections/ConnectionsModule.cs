@@ -20,7 +20,7 @@ public static class ConnectionsModule
     {
         services
             .ConfigureNeo4J(configuration)
-            .ConfigureRedis(configuration)
+            //.ConfigureRedis(configuration)
             .ConfigureStorageProvider(configuration)
             .ConfigureGrpc()
             .ConfigureSearchProvider(configuration);

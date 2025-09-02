@@ -39,7 +39,9 @@ public class GrpcProvider : IGrpcProvider
             Title = notification.Title,
             Body = notification.Body,
             Metadata = JsonSerializer.Serialize(notification.Metadata)
-        }, cancellationToken: cancellationToken);
+        }, 
+            headers: _notificationService.Metadata,
+            cancellationToken: cancellationToken);
 
         return result.Success;
     }

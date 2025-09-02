@@ -69,24 +69,21 @@ public class ProfileGraphRepository(GraphContext graphContext) : IProfileGraphRe
     {
         var query = string.IsNullOrWhiteSpace(requesterId)
             ? $@"
-    MATCH (profile:Profile {{id: '{id}'}})
-    OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
-    OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
-    OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
-    RETURN profile, SIZE(COLLECT(DISTINCT follower)) AS followers, SIZE(COLLECT(DISTINCT following)) AS following, COUNT(post) AS posts"
+MATCH (profile:Profile {{id: '{id}'}})
+OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
+OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
+OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
+WITH profile, COLLECT(DISTINCT follower) AS followers, COLLECT(DISTINCT following) AS following, COLLECT(DISTINCT post) AS posts
+RETURN profile, SIZE(followers) AS followers, SIZE(following) AS following, SIZE(posts) AS posts"
             : $@"
-    MATCH (profile:Profile {{id: '{id}'}})
-    OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
-    OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
-    OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
-    OPTIONAL MATCH (profile)<-[:FRIEND]-(friend:Profile {{id: '{requesterId}'}})
-    OPTIONAL MATCH (profile)<-[:FOLLOWING]-(followingRequester:Profile {{id: '{requesterId}'}})
-    RETURN profile, 
-           SIZE(COLLECT(DISTINCT follower)) AS followers, 
-           SIZE(COLLECT(DISTINCT following)) AS following, 
-           COUNT(post) AS posts,
-           COUNT(friend) > 0 AS isFriend,
-           COUNT(followingRequester) > 0 AS isFollowing";
+MATCH (profile:Profile {{id: '{id}'}})
+OPTIONAL MATCH (profile)<-[:FOLLOWING]-(follower:Profile)
+OPTIONAL MATCH (profile)-[:FOLLOWING]->(following:Profile)
+OPTIONAL MATCH (profile)-[:PUBLISHED_BY]->(post:Post)
+OPTIONAL MATCH (profile)<-[:FRIEND]-(friend:Profile {{id: '{requesterId}'}})
+OPTIONAL MATCH (profile)<-[:FOLLOWING]-(followingRequester:Profile {{id: '{requesterId}'}})
+WITH profile, COLLECT(DISTINCT follower) AS followers, COLLECT(DISTINCT following) AS following, COLLECT(DISTINCT post) AS posts, COUNT(friend) > 0 AS isFriend, COUNT(followingRequester) > 0 AS isFollowing
+RETURN profile, SIZE(followers) AS followers, SIZE(following) AS following, SIZE(posts) AS posts, isFriend, isFollowing";
 
         var result = await graphContext.ExecuteQueryAsync(query);
 

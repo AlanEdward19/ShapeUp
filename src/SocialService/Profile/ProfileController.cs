@@ -176,7 +176,7 @@ public class ProfileController(IProfileGraphRepository repository) : ControllerB
     [HttpPut("uploadProfilePicture")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UploadProfilePicture(
-        [FromServices] IHandler<bool, UploadProfilePictureCommand> handler,
+        [FromServices] IHandler<ProfileDto, UploadProfilePictureCommand> handler,
         IFormFile image, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();

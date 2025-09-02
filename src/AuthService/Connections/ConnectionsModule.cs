@@ -29,15 +29,28 @@ public static class ConnectionsModule
     
     private static IServiceCollection ConfigureFirebase(this IServiceCollection services, IConfiguration configuration)
     {
-        var firebaseCredentials = configuration.GetSection("Firebase:Credentials").GetChildren()
-            .ToDictionary(x => x.Key, x => x.Value);
-
-        var jsonCredentials = JsonConvert.SerializeObject(firebaseCredentials);
-
-        FirebaseApp.Create(new AppOptions
+        var credsJson = configuration["Firebase:Credentials"];
+        
+        if (string.IsNullOrWhiteSpace(credsJson))
         {
-            Credential = GoogleCredential.FromJson(jsonCredentials)
-        });
+            var section = configuration.GetSection("Firebase:Credentials");
+            if (section.GetChildren().Any())
+            {
+                var dict = section.GetChildren().ToDictionary(c => c.Key, c => c.Value);
+                credsJson = System.Text.Json.JsonSerializer.Serialize(dict);
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(credsJson))
+            throw new InvalidOperationException("Firebase:Credentials não encontrado ou vazio.");
+
+        if (FirebaseApp.DefaultInstance == null)
+        {
+            FirebaseApp.Create(new AppOptions
+            {
+                Credential = GoogleCredential.FromJson(credsJson)
+            });
+        }
 
         return services;
     }

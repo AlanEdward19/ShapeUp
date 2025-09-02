@@ -43,11 +43,11 @@ public static class ConnectionsModule
         );
 
 #elif (RELEASE)
-        services.AddDbContext<AuthDbContext>(options =>
-               options
-               .UseMongoDB(connectionString, "NotificationDb")
-               .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
-       );
+        services.AddDbContext<NotificationDbContext>(options =>
+            options
+                .UseMongoDB(connectionString, "NotificationDb")
+                .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+        );
 #endif
 
         return services;

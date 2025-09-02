@@ -3676,7 +3676,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SocialService.Profile.ProfileController.UploadProfilePicture(SocialService.Common.Interfaces.IHandler{System.Boolean,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
+        <member name="M:SocialService.Profile.ProfileController.UploadProfilePicture(SocialService.Common.Interfaces.IHandler{SocialService.Profile.ProfileDto,SocialService.Profile.UploadProfilePicture.UploadProfilePictureCommand},Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
             <summary>
             Rota para fazer upload de uma foto de perfil
             </summary>

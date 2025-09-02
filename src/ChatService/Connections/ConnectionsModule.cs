@@ -20,7 +20,7 @@ public static class ConnectionsModule
     {
         services
             .ConfigureMongoDb(configuration)
-            .ConfigureRedis(configuration)
+            //.ConfigureRedis(configuration)
             .ConfigureGrpc()
             .AddSignalR();
 
