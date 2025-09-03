@@ -48,6 +48,11 @@ public class GetFriendRecommendationQueryHandler(IRecommendationGraphRepository 
             
             result.Add(new FriendRecommendation(profileSimplified, 0));
         }
+        
+        result = result.GroupBy(x => x.Profile.Id)
+            .Select(g => g.OrderByDescending(x => x.MutualFriends).First())
+            .OrderByDescending(x => x.MutualFriends)
+            .ToList();
 
         return result;
     }
