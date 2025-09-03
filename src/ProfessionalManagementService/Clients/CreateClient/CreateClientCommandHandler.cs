@@ -1,4 +1,5 @@
-﻿using ProfessionalManagementService.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
 
 namespace ProfessionalManagementService.Clients.CreateClient;
@@ -9,19 +10,24 @@ public class CreateClientCommandHandler(DatabaseContext dbContext) : IHandler<Cl
     {
         var client = command.ToClient();
         
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        try
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+        
+        return await strategy.ExecuteAsync(async () =>
         {
-            await dbContext.Clients.AddAsync(client, cancellationToken);
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                await dbContext.Clients.AddAsync(client, cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
 
-            return new ClientDto(client);
-        }
-        catch (Exception)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+                return new ClientDto(client);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 }

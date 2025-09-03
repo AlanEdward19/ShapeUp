@@ -32,28 +32,33 @@ public class DeleteServicePlanFromClientCommandHandler(DatabaseContext dbContext
         if (client.ClientServicePlans.All(x => x.ServicePlanId != command.ServicePlanId))
             throw new InvalidOperationException($"Client with Id: '{command.ClientId}' doesn't have ServicePlan with Id: '{command.ServicePlanId}'.");
         
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        try
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+        
+        return await strategy.ExecuteAsync(async () =>
         {
-            ClientServicePlan clientServicePlan = client.ClientServicePlans.First(x => x.ServicePlanId == command.ServicePlanId);
-            client.RemoveServicePlan(clientServicePlan);
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                ClientServicePlan clientServicePlan = client.ClientServicePlans.First(x => x.ServicePlanId == command.ServicePlanId);
+                client.RemoveServicePlan(clientServicePlan);
 
-            ClientProfessionalReview? review = client.ClientProfessionalReviews
-                .FirstOrDefault(x => x.ClientServicePlanId == clientServicePlan.Id);
+                ClientProfessionalReview? review = client.ClientProfessionalReviews
+                    .FirstOrDefault(x => x.ClientServicePlanId == clientServicePlan.Id);
 
-            review?.RemoveClientServicePlan();
+                review?.RemoveClientServicePlan();
 
-            dbContext.Clients.Update(client);
+                dbContext.Clients.Update(client);
             
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
             
-            return new ClientDto(client);
-        }
-        catch (Exception e)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw new InvalidOperationException($"An error occurred while removing ServicePlan from Client: {e.Message}", e);
-        }
+                return new ClientDto(client);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw new InvalidOperationException($"An error occurred while removing ServicePlan from Client: {e.Message}", e);
+            }
+        });
     }
 }

@@ -1,4 +1,5 @@
-﻿using ProfessionalManagementService.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProfessionalManagementService.Common.Interfaces;
 using ProfessionalManagementService.Connections.Database;
 using SharedKernel.Exceptions;
 
@@ -12,20 +13,26 @@ public class DeleteServicePlanCommandHandler(DatabaseContext dbContext) : IHandl
 
         if (servicePlan == null)
             throw new NotFoundException($"Service plan with Id: '{command.Id}' not found.");
-
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        try
+        
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+        
+        return await strategy.ExecuteAsync(async () =>
         {
-            dbContext.ServicePlans.Remove(servicePlan);
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            
+            try
+            {
+                dbContext.ServicePlans.Remove(servicePlan);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
 
-            return true;
-        }
-        catch (Exception)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+                return true;
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 }

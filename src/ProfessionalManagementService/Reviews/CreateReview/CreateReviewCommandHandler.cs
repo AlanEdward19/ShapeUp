@@ -32,20 +32,25 @@ public class CreateReviewCommandHandler(DatabaseContext dbContext)
         review.SetProfessional(professional);
         review.SetClientServicePlan(servicePlan);
         
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+        
+        return await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
-        try
-        {
-            await dbContext.ClientProfessionalReviews.AddAsync(review, cancellationToken);
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
-            
-            return new ClientProfessionalReviewDto(review);
-        }
-        catch (Exception)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+            try
+            {
+                await dbContext.ClientProfessionalReviews.AddAsync(review, cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+
+                return new ClientProfessionalReviewDto(review);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 }

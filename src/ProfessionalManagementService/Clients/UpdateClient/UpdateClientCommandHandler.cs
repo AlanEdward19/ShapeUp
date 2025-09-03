@@ -16,24 +16,29 @@ public class UpdateClientCommandHandler(DatabaseContext dbContext) : IHandler<Cl
                 .ThenInclude(x => x.ServicePlan)
                 .Include(x => x.ClientProfessionalReviews)
                 .FirstOrDefaultAsync(x => x.Id == command.GetId(), cancellationToken);
-        
-        if(client == null)
-            throw new NotFoundException($"Client with Id: '{command.GetId()}' not found.");
-        
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            client.UpdateEmail(command.Email);
-            dbContext.Clients.Update(client);
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
 
-            return new ClientDto(client);
-        }
-        catch (Exception)
+        if (client == null)
+            throw new NotFoundException($"Client with Id: '{command.GetId()}' not found.");
+
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        return await strategy.ExecuteAsync(async () =>
         {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                client.UpdateEmail(command.Email);
+                dbContext.Clients.Update(client);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+
+                return new ClientDto(client);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 }

@@ -13,108 +13,174 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
     {
         Group? group = await dbContext.Groups.Include(g => g.Users)
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
-        
+
         if (group is null)
             throw new NotFoundException($"Group with id '{groupId}' not found.");
-        
+
         User? user = await dbContext.Users.Include(u => u.UserGroups)
             .FirstOrDefaultAsync(u => u.ObjectId == userId, cancellationToken: cancellationToken);
-        
+
         if (user is null)
             throw new NotFoundException($"User with id '{userId}' not found.");
-        
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
-        group.AddUser(user, role);
-        
-        await dbContext.SaveChangesAsync(cancellationToken);
-        
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            
+            try
+            {
+                group.AddUser(user, role);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
-    public async Task ChangeUserRoleInGroupAsync(Guid groupId, string userId, EGroupRole role, CancellationToken cancellationToken)
+    public async Task ChangeUserRoleInGroupAsync(Guid groupId, string userId, EGroupRole role,
+        CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups
             .Include(g => g.Users)
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
-        
+
         if (group is null)
             throw new NotFoundException($"Group with id '{groupId}' not found.");
-        
+
         User? user = await dbContext.Users.Include(u => u.UserGroups)
             .FirstOrDefaultAsync(u => u.ObjectId == userId, cancellationToken: cancellationToken);
-        
+
         if (user is null)
             throw new NotFoundException($"User with id '{userId}' not found.");
-        
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
-        group.ChangeUserRole(user, role);
-        
-        await dbContext.SaveChangesAsync(cancellationToken);
-        
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                group.ChangeUserRole(user, role);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
     public async Task RemoveUserFromGroupAsync(Guid groupId, string userId, CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups.Include(g => g.Users)
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
-        
+
         if (group is null)
             throw new NotFoundException($"Group with id '{groupId}' not found.");
-        
+
         User? user = await dbContext.Users.Include(u => u.UserGroups)
             .FirstOrDefaultAsync(u => u.ObjectId == userId, cancellationToken: cancellationToken);
-        
+
         if (user is null)
             throw new NotFoundException($"User with id '{userId}' not found.");
-        
-        if(group.Users.All(u => u.UserId != userId))
+
+        if (group.Users.All(u => u.UserId != userId))
             throw new NotFoundException($"User with id '{userId}' not found in group with id '{groupId}'.");
-        
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
-        group.RemoveUser(user);
-        
-        await dbContext.SaveChangesAsync(cancellationToken);
-        
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                group.RemoveUser(user);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
-    
+
     public async Task AddAsync(Group group, string userId, CancellationToken cancellationToken)
     {
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
-        await dbContext.Groups.AddAsync(group, cancellationToken);
-        
-        User user = await dbContext.Users
-            .FirstAsync(u => u.ObjectId == userId, cancellationToken: cancellationToken);
-        
-        group.AddUser(user, EGroupRole.Admin);
-        
-        await dbContext.SaveChangesAsync(cancellationToken);
-        
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                await dbContext.Groups.AddAsync(group, cancellationToken);
+
+                User user = await dbContext.Users
+                    .FirstAsync(u => u.ObjectId == userId, cancellationToken: cancellationToken);
+
+                group.AddUser(user, EGroupRole.Admin);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
-    
+
     public async Task DeleteAsync(Guid groupId, CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
-        
+
         if (group is null)
             throw new NotFoundException($"Group with id '{groupId}' not found.");
-        
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
-        dbContext.Groups.Remove(group);
-        
-        await dbContext.SaveChangesAsync(cancellationToken);
-        
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                dbContext.Groups.Remove(group);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
-    
+
     public async Task<ICollection<User>> GetUsersFromGroupAsync(Guid groupId, CancellationToken cancellationToken)
     {
         Group? group = await dbContext.Groups
@@ -122,10 +188,10 @@ public class GroupRepository(AuthDbContext dbContext) : IGroupRepository
             .ThenInclude(userGroup => userGroup.User)
             .AsNoTracking()
             .FirstOrDefaultAsync(g => g.Id == groupId, cancellationToken: cancellationToken);
-        
+
         if (group is null)
             throw new NotFoundException($"Group with id '{groupId}' not found.");
-        
+
         return group.Users.Select(x => x.User).ToList();
     }
 }

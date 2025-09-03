@@ -13,20 +13,26 @@ public class DeleteReviewCommandHandler(DatabaseContext dbContext) : IHandler<bo
             x => x.Id == command.Id, cancellationToken);
         if (review is null)
             throw new NotFoundException($"Review with ID '{command.Id}' does not exist.");
-
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        try
+        
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+        
+        return await strategy.ExecuteAsync(async () =>
         {
-            dbContext.ClientProfessionalReviews.Remove(review);
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            
+            try
+            {
+                dbContext.ClientProfessionalReviews.Remove(review);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
 
-            return true;
-        }
-        catch (Exception)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+                return true;
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 }

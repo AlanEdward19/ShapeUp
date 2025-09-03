@@ -10,35 +10,74 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
 {
     public async Task AddAsync(Permission permission, CancellationToken cancellationToken)
     {
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        await dbContext.Permissions.AddAsync(permission, cancellationToken);
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            
+            try
+            {
+                await dbContext.Permissions.AddAsync(permission, cancellationToken);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
 
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
-    
+
     public async Task UpdateAsync(Permission permission, CancellationToken cancellationToken)
     {
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        dbContext.Permissions.Update(permission);
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+            try
+            {
+                dbContext.Permissions.Update(permission);
 
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
     public async Task DeleteAsync(Permission permission, CancellationToken cancellationToken)
     {
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        dbContext.Permissions.Remove(permission);
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+            try
+            {
+                dbContext.Permissions.Remove(permission);
 
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
     public async Task<ICollection<Permission>> GetGroupPermissionsAsync(Guid groupId,
@@ -56,7 +95,8 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         return group.GroupPermissions.Select(x => x.Permission).ToList();
     }
 
-    public async Task<ICollection<Permission>> GetUserPermissionsAsync(string userId, CancellationToken cancellationToken)
+    public async Task<ICollection<Permission>> GetUserPermissionsAsync(string userId,
+        CancellationToken cancellationToken)
     {
         User? user = await dbContext.Users
             .Include(x => x.UserGroups)
@@ -88,9 +128,26 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         if (permission is null)
             throw new NotFoundException($"Permission with id '{permissionId}' not found.");
 
-        group.AddPermission(permission);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                group.AddPermission(permission);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
     public async Task GrantUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken)
@@ -111,9 +168,26 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         if (permission is null)
             throw new NotFoundException($"Permission with id '{permissionId}' not found.");
 
-        user.UserGroups.First(x => x.Role == EGroupRole.Owner).Group.AddPermission(permission);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                user.UserGroups.First(x => x.Role == EGroupRole.Owner).Group.AddPermission(permission);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
     public async Task RemoveGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellationToken)
@@ -132,9 +206,26 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
         if (permission is null)
             throw new NotFoundException($"Permission with id '{permissionId}' not found.");
 
-        group.RemovePermission(permission);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                group.RemovePermission(permission);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
     public async Task RemoveUserPermissionAsync(string userId, Guid permissionId, CancellationToken cancellationToken)
@@ -145,22 +236,40 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
             .ThenInclude(x => x.GroupPermissions)
             .ThenInclude(x => x.Permission)
             .FirstOrDefaultAsync(x => x.ObjectId == userId, cancellationToken);
-        
+
         if (user is null)
             throw new NotFoundException($"User with id '{userId}' not found.");
-        
+
         Permission? permission = await dbContext.Permissions
             .FirstOrDefaultAsync(x => x.Id == permissionId, cancellationToken);
 
         if (permission is null)
             throw new NotFoundException($"Permission with id '{permissionId}' not found.");
 
-        user.UserGroups.First(x => x.Role == EGroupRole.Owner).Group.RemovePermission(permission);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                user.UserGroups.First(x => x.Role == EGroupRole.Owner).Group.RemovePermission(permission);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 
-    public async Task<ICollection<User>> GetUsersWithSpecificPermissionAsync(Guid permissionId, CancellationToken cancellationToken)
+    public async Task<ICollection<User>> GetUsersWithSpecificPermissionAsync(Guid permissionId,
+        CancellationToken cancellationToken)
     {
         var users = await dbContext.Users
             .Include(x => x.UserGroups)
@@ -170,7 +279,7 @@ public class PermissionRepository(AuthDbContext dbContext) : IPermissionReposito
             .AsNoTracking()
             .Where(u => u.UserGroups.Any(ug => ug.Group.GroupPermissions.Any(gp => gp.Permission.Id == permissionId)))
             .ToListAsync(cancellationToken);
-        
+
         return users;
     }
 

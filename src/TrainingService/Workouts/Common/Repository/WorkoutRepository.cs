@@ -29,19 +29,19 @@ public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
     /// <param name="cancellationToken"></param>
     /// <param name="track"></param>
     /// <returns></returns>
-    public async Task<Workout?> GetWorkoutAsync(Guid workoutId, CancellationToken cancellationToken,bool track = false)
+    public async Task<Workout?> GetWorkoutAsync(Guid workoutId, CancellationToken cancellationToken, bool track = false)
     {
         IQueryable<Workout> query = dbContext
             .Workouts
             .Include(x => x.Exercises);
-        
-        if(!track)
+
+        if (!track)
             query = query.AsNoTracking();
 
         return await query
             .FirstOrDefaultAsync(x => x.Id == workoutId, cancellationToken);
     }
-    
+
     /// <summary>
     /// Método para obter treinos pelo ID do usuário.
     /// </summary>
@@ -57,7 +57,7 @@ public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
 
         return workouts;
     }
-    
+
     /// <summary>
     /// Método para adicionar um novo treino.
     /// </summary>
@@ -65,23 +65,28 @@ public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
     /// <param name="cancellationToken"></param>
     public async Task AddAsync(Workout workout, CancellationToken cancellationToken)
     {
-        try
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
         {
-            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
-            await dbContext.Workouts.AddAsync(workout, cancellationToken);
+                await dbContext.Workouts.AddAsync(workout, cancellationToken);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
 
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
-        }
-        catch (Exception e)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
-    
+
     /// <summary>
     /// Método para deletar um treino existente.
     /// </summary>
@@ -89,23 +94,28 @@ public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
     /// <param name="cancellationToken"></param>
     public async Task UpdateAsync(Workout workout, CancellationToken cancellationToken)
     {
-        try
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
         {
-            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
-            dbContext.Workouts.Update(workout);
+                dbContext.Workouts.Update(workout);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
 
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
-        }
-        catch (Exception e)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
-    
+
     /// <summary>
     /// Método para atualizar um treino existente.
     /// </summary>
@@ -113,20 +123,25 @@ public class WorkoutRepository(TrainingDbContext dbContext) : IWorkoutRepository
     /// <param name="cancellationToken"></param>
     public async Task DeleteAsync(Workout workout, CancellationToken cancellationToken)
     {
-        try
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
         {
-            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
-            dbContext.Workouts.Remove(workout);
+                dbContext.Workouts.Remove(workout);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
 
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
-        }
-        catch (Exception e)
-        {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 }

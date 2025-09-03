@@ -7,26 +7,39 @@ namespace AuthService.Common.User.Repository;
 
 public class UserRepository(AuthDbContext dbContext) : IUserRepository
 {
-    public async Task<User?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken) => 
+    public async Task<User?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken) =>
         await dbContext.Users
-        .AsNoTracking()
-        .FirstOrDefaultAsync(u => u.ObjectId == objectId, cancellationToken: cancellationToken);
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.ObjectId == objectId, cancellationToken: cancellationToken);
 
     public async Task AddAsync(User user, CancellationToken cancellationToken)
     {
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
-        await dbContext.Users.AddAsync(user, cancellationToken);
-        
-        Group.Group userGroup = new($"{user.ObjectId}'s Group", "Personal group for user");
-        userGroup.AddUser(user, EGroupRole.Owner);
-        await dbContext.Groups.AddAsync(userGroup, cancellationToken);
-        
-        await dbContext.SaveChangesAsync(cancellationToken);
-        
-        await dbContext.Database.CommitTransactionAsync(cancellationToken);
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+
+            try
+            {
+                await dbContext.Users.AddAsync(user, cancellationToken);
+
+                Group.Group userGroup = new($"{user.ObjectId}'s Group", "Personal group for user");
+                userGroup.AddUser(user, EGroupRole.Owner);
+                await dbContext.Groups.AddAsync(userGroup, cancellationToken);
+
+                await dbContext.SaveChangesAsync(cancellationToken);
+
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
-    
+
     public async Task<User> GetUserAsync(string userId,
         CancellationToken cancellationToken)
     {
@@ -40,7 +53,7 @@ public class UserRepository(AuthDbContext dbContext) : IUserRepository
 
         if (user is null)
             throw new NotFoundException($"User with id '{userId}' not found.");
-        
+
         return user;
     }
 }

@@ -30,7 +30,14 @@ public static class ConnectionsModule
 #if (DEBUG)
         services.AddDbContext<DatabaseContext>(options =>
             options
-                .UseSqlServer(connectionString)
+                .UseSqlServer(connectionString, sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(10),
+                        errorNumbersToAdd: null
+                    );
+                })
                 .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
                 // ⚠️ !! Ativado somente em modo debug !! ⚠️ 
                 .EnableSensitiveDataLogging()
@@ -39,7 +46,14 @@ public static class ConnectionsModule
 #elif (RELEASE)
         services.AddDbContext<DatabaseContext>(options =>
                options
-               .UseSqlServer(connectionString)
+               .UseSqlServer(connectionString, sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(10),
+                        errorNumbersToAdd: null
+                    );
+                })
                .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
        );
 #endif

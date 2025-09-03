@@ -12,29 +12,34 @@ public class UpdateServicePlanCommandHandler(DatabaseContext dbContext)
     {
         var servicePlan = await
             dbContext.ServicePlans.FirstOrDefaultAsync(x => x.Id == command.GetId(), cancellationToken);
-        
+
         if (servicePlan == null)
             throw new NotFoundException($"Service plan with Id: '{command.GetId()}' not found.");
-        
-        await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            servicePlan.UpdateType(command.Type);
-            servicePlan.UpdateTitle(command.Title);
-            servicePlan.UpdateDescription(command.Description);
-            servicePlan.UpdateDurationInDays(command.DurationInDays);
-            servicePlan.UpdatePrice(command.Price);
-            
-            dbContext.ServicePlans.Update(servicePlan);
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await dbContext.Database.CommitTransactionAsync(cancellationToken);
 
-            return new ServicePlanDto(servicePlan);
-        }
-        catch (Exception)
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+
+        return await strategy.ExecuteAsync(async () =>
         {
-            await dbContext.Database.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+            await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                servicePlan.UpdateType(command.Type);
+                servicePlan.UpdateTitle(command.Title);
+                servicePlan.UpdateDescription(command.Description);
+                servicePlan.UpdateDurationInDays(command.DurationInDays);
+                servicePlan.UpdatePrice(command.Price);
+
+                dbContext.ServicePlans.Update(servicePlan);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.Database.CommitTransactionAsync(cancellationToken);
+
+                return new ServicePlanDto(servicePlan);
+            }
+            catch (Exception)
+            {
+                await dbContext.Database.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+        });
     }
 }
