@@ -41,7 +41,7 @@ public class CommentOnPostCommandHandler(
                 Body = $"{profile.FirstName} {profile.LastName} comentou em seu post: {command.PostId}",
                 Metadata = new()
                 {
-                    { "userId", profileId }
+                    { "postId", command.PostId.ToString() }
                 }
             };
 

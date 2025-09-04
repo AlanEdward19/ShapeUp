@@ -42,7 +42,7 @@ public class ReactToPostCommandHandler(
                 Body = $"{profile.FirstName} {profile.LastName} reagiu ao seu post",
                 Metadata = new()
                 {
-                    { "PostId", command.PostId.ToString() }
+                    { "postId", command.PostId.ToString() }
                 }
             };
 

@@ -35,7 +35,7 @@ public class FollowUserCommandHandler(
             Body = $"{profile.FirstName} {profile.LastName} começou a te seguir.",
             Metadata = new()
             {
-                { "userId", command.FollowedUserId.ToString() }
+                { "userId", profile.Id }
             }
         };
 

@@ -37,7 +37,7 @@ public class SendFriendRequestCommandHandler(
             Body = $"{profile.FirstName} {profile.LastName} enviou uma solicitação de amizade.",
             Metadata = new()
             {
-                { "userId", requestCommand.FriendId.ToString() }
+                { "userId", profile.Id}
             }
         };
 
