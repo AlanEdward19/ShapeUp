@@ -29,21 +29,25 @@ public interface IDailyMenuMongoRepository
     /// <param name="id"></param>
     /// <returns></returns>
     Task DeleteDailyMenuAsync(string? id);
+
     /// <summary>
     /// Método para listar os DailyMenus, filtrando por dia da semana.
     /// </summary>
     /// <param name="dayOfWeek"></param>
     /// <param name="page"></param>
     /// <param name="size"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(DayOfWeek? dayOfWeek, int page, int size);
+    Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(DayOfWeek? dayOfWeek, int page, int size, string userId);
+
     /// <summary>
     /// Método para listar os DailyMenus, sem filtro.
     /// </summary>
     /// <param name="page"></param>
     /// <param name="size"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(int page, int size);
+    Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(int page, int size, string userId);
 
     Task<IEnumerable<DailyMenu>> GetManyByIdsAsync(string[] itemDailyMenuIds, CancellationToken cancellationToken);
 }

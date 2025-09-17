@@ -1,6 +1,7 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.Meal.Common;
-using NutritionService.Meal.CreateMeal;
+using NutritionService.Meal.CreateMealForDifferentUser;
+using NutritionService.Meal.CreateMealForSameUser;
 using NutritionService.Meal.DeleteMeal;
 using NutritionService.Meal.EditMeal;
 using NutritionService.Meal.GetMealDetails;
@@ -32,7 +33,8 @@ public static class MealModule
     
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<MealDto, CreateMealCommand>, CreateMealCommandHandler>();
+        services.AddScoped<IHandler<MealDto, CreateMealForSameUserCommand>, CreateMealForSameUserCommandHandler>();
+        services.AddScoped<IHandler<MealDto, CreateMealForDifferentUserCommand>, CreateMealForDifferentUserCommandHandler>();
         services.AddScoped<IHandler<bool, EditMealCommand>, EditMealCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteMealCommand>, DeleteMealCommandHandler>();
         services.AddScoped<IHandler<MealDto, GetMealDetailsQuery>, GetMealDetailsQueryHandler>();

@@ -4,6 +4,7 @@ public class ListFoodsQuery
 {
     public int Page { get; set; }
     public int Rows { get; set; }
+    public string UserId { get; set; } = "";
 
     public ListFoodsQuery(int? page, int? rows)
     {
@@ -13,5 +14,9 @@ public class ListFoodsQuery
     public ListFoodsQuery()
     {
 
+    }
+    public void SetUserId(string id)
+    {
+        UserId = id;
     }
 }

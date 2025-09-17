@@ -8,9 +8,11 @@ using NutritionService.PublicFood.DeletePublicFood;
 using NutritionService.PublicFood.EditPublicFood;
 using NutritionService.PublicFood.GetPublicFoodByBarCode;
 using NutritionService.PublicFood.GetPublicFoodDetails;
+using NutritionService.PublicFood.ListCreatedByUserPublicFoods;
 using NutritionService.PublicFood.ListPublicFoods;
 using NutritionService.PublicFood.ListRevisedPublicFoods;
 using NutritionService.PublicFood.ListUnrevisedPublicFoods;
+using NutritionService.PublicFood.ListUsedByUserPublicFoods;
 using NutritionService.UserFood;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
@@ -37,11 +39,51 @@ public class PublicFoodController : ControllerBase
     /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetPublicFoods([FromQuery] ListPublicFoodsQuery query,
+    public async Task<IActionResult> ListPublicFoods([FromQuery] ListPublicFoodsQuery query,
         [FromServices] IHandler<IEnumerable<FoodDto>, ListPublicFoodsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
+    /// <summary>
+    /// Rota para listar comidas publicas criadas pelo usuario logado
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("createdByUser")]
+    [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> ListCreatedByUserPublicFoods([FromQuery] ListCreatedByUserPublicFoodsQuery query,
+        [FromServices] IHandler<IEnumerable<FoodDto>, ListCreatedByUserPublicFoodsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+
+        return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+
+    /// <summary>
+    /// Rota para listar comidas publicas criadas pelo usuario logado
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("usedByUser/{userId}")]
+    [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> ListUsedByUserPublicFoods(
+        string userId,
+        [FromQuery] ListUsedByUserPublicFoodsQuery query,
+        [FromServices] IHandler<IEnumerable<FoodDto>, ListUsedByUserPublicFoodsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        query.SetUserId(userId);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
@@ -98,21 +140,25 @@ public class PublicFoodController : ControllerBase
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
-    
+
     /// <summary>
     /// Rota para criar uma comida pública
     /// </summary>
+    /// <param name="userId"></param>
     /// <param name="command"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("{userId}")]
     [ProducesResponseType(typeof(FoodDto), StatusCodes.Status201Created)]
-    public async Task<IActionResult> CreatePublicFood([FromBody] CreatePublicFoodCommand command,
+    public async Task<IActionResult> CreatePublicFood(
+        string userId,
+        [FromBody] CreatePublicFoodCommand command,
         [FromServices] IHandler<FoodDto, CreatePublicFoodCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+        command.SetUserId(userId);
         
 
         return Created(HttpContext.Request.Path,

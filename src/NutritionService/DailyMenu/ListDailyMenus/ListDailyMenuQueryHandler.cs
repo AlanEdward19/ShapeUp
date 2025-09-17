@@ -24,18 +24,20 @@ public class ListDailyMenuQueryHandler(IDailyMenuMongoRepository repository) : I
         switch (day)
         {
             case null:
-                dailyMenus = await repository.ListDailyMenusAsync(item.Page, item.Size);
+                //lita todos os cardápios
+                dailyMenus = await repository.ListDailyMenusAsync(item.Page, item.Size, item.UserId);
                 dailyMenusDto = dailyMenus.Select(menu => new DailyMenuDto(menu));
                 return dailyMenusDto;
             case "":
-                dailyMenus = await repository.ListDailyMenusAsync(null, item.Page, item.Size);
+                //lista os cardápios que o atributo dayofweek é nulo
+                dailyMenus = await repository.ListDailyMenusAsync(null, item.Page, item.Size, item.UserId);
                 dailyMenusDto = dailyMenus.Select(menu => new DailyMenuDto(menu));
                 return dailyMenusDto;
         }
-
+        //filtra por day of week
         if (Enum.TryParse<DayOfWeek>(item.DayOfWeek, true, out var parsedDay))
         {
-            dailyMenus = await repository.ListDailyMenusAsync(parsedDay, item.Page, item.Size);
+            dailyMenus = await repository.ListDailyMenusAsync(parsedDay, item.Page, item.Size, item.UserId);
             dailyMenusDto = dailyMenus.Select(menu => new DailyMenuDto(menu));
             return dailyMenusDto;
         }

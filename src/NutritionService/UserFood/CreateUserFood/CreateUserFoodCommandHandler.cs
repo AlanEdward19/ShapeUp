@@ -18,6 +18,7 @@ public class CreateUserFoodCommandHandler(IUserFoodMongoRepository repository) :
         var food = command.ToFood();
         food.SetId();
         food.SetCreatedBy(ProfileContext.ProfileId);
+        food.SetUserId(command.UserId);
         
         await repository.InsertUserFoodAsync(food);
 

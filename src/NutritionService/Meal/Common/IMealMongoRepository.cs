@@ -7,5 +7,6 @@ public interface IMealMongoRepository
     Task UpdateMealAsync(Meal updatedMeal);
     Task DeleteMealAsync(string? id);
     Task<IEnumerable<Meal>> GetManyMealsByIdsAsync(string[] itemMealIds, CancellationToken cancellationToken);
-    Task<IEnumerable<Meal>> ListMealsAsync(int itemPage, int itemRows, CancellationToken cancellationToken);
+    Task<IEnumerable<Meal>> ListMealsAsync(int itemPage, int itemRows, CancellationToken cancellationToken,
+        string userId);
 }

@@ -28,17 +28,21 @@ public class UserFoodController : ControllerBase
     /// <summary>
     /// Rota para listar comidas
     /// </summary>
+    /// <param name="userId"></param>
     /// <param name="query"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("list/{userId}")]
     [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ListUserFoods([FromQuery] ListFoodsQuery query,
+    public async Task<IActionResult> ListUserFoods(
+        string userId,
+        [FromQuery] ListFoodsQuery query,
         [FromServices] IHandler<IEnumerable<FoodDto>, ListFoodsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+        query.SetUserId(userId);
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
     }
@@ -65,12 +69,15 @@ public class UserFoodController : ControllerBase
     /// Rota para criar uma comida
     /// </summary>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("{userId}")]
     [ProducesResponseType(typeof(FoodDto), StatusCodes.Status201Created)]
-    public async Task<IActionResult> CreateUserFood([FromServices] IHandler<FoodDto, CreateUserFoodCommand> handler,
+    public async Task<IActionResult> CreateUserFood(
+        string userId,
+        [FromServices] IHandler<FoodDto, CreateUserFoodCommand> handler,
         [FromBody] CreateUserFoodCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+        command.SetUserId(userId);
 
         return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
     }
@@ -98,17 +105,20 @@ public class UserFoodController : ControllerBase
     /// <summary>
     /// Rota para inserir comidas públicas na lista de comidas do usuário
     /// </summary>
+    /// <param name="userId"></param>
     /// <param name="handler"></param>
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPost("insertPublicFoods")]
+    [HttpPost("insertPublicFoods/{userId}")]
     [ProducesResponseType(typeof(IEnumerable<FoodDto>), StatusCodes.Status201Created)]
-    public async Task<IActionResult> InsertPublicFood(
+    public async Task<IActionResult> InsertPublicFoods(
+        string userId,
         [FromServices] IHandler<IEnumerable<FoodDto>, InsertPublicFoodsInUserFoodCommand> handler,
         [FromBody] InsertPublicFoodsInUserFoodCommand command, CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+        command.SetUserId(userId);
         
         return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
     }

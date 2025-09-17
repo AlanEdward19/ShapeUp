@@ -19,6 +19,7 @@ public class CreatePublicFoodCommandHandler(IPublicFoodMongoRepository repositor
         var food = command.ToFood();
         food.SetId();
         food.SetCreatedBy(ProfileContext.ProfileId);
+        food.SetUserId(command.UserId);
         
         await repository.CreatePublicFoodAsync(food);
 

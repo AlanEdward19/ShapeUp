@@ -25,6 +25,7 @@ public class CreateUserNutritionCommandHandler(IUserNutritionMongoRepository use
         var userNutrition = new UserNutrition(item.NutritionManagerId, builtDailyMenus.ToList());
         userNutrition.SetId();
         userNutrition.SetCreatedBy(ProfileContext.ProfileId);
+        userNutrition.SetUserId(item.UserId);
         
         await userNutritionRepository.InsertUserNutritionAsync(userNutrition);
 

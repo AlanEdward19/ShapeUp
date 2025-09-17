@@ -22,6 +22,12 @@ public class Dish
     /// </summary>
     [BsonElement("createdBy")]
     public string CreatedBy { get; private set; } = "";
+    
+    /// <summary>
+    /// Identificador do perfil que utiliza o cardápio
+    /// </summary>
+    [BsonElement("userId")]
+    public string UserId { get; private set; } = "";
 
     /// <summary>
     /// Nome do prato
@@ -55,6 +61,15 @@ public class Dish
     public void SetCreatedBy(string createdBy)
     {
         CreatedBy = createdBy;
+    }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que vai utilizar o cardápio
+    /// </summary>
+    /// <param name="userId"></param>
+    public void SetUserId(string userId)
+    {
+        UserId = userId;
     }
     
     public void UpdateInfo(string name, List<Food> foods)

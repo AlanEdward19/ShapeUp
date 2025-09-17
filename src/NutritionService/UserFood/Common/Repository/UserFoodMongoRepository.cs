@@ -39,9 +39,9 @@ public class UserFoodMongoRepository(NutritionDbContext context) : IUserFoodMong
         await context.UserFoods.DeleteOneAsync(filter);
     }
     
-    public async Task<IEnumerable<Food>> ListFoodsAsync(int page, int size)
+    public async Task<IEnumerable<Food>> ListFoodsAsync(int page, int size, string userId)
     {
-        return await context.UserFoods.Find(f => f.CreatedBy == ProfileContext.ProfileId)
+        return await context.UserFoods.Find(f => f.UserId == userId)
             .Skip((page - 1) * size)
             .Limit(size)
             .ToListAsync();

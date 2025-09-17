@@ -9,6 +9,7 @@ public class ListDailyMenuQuery
     public string? DayOfWeek { get; set; }
     public int Page { get; set; }
     public int Size { get; set; }
+    public string UserId { get; set; } = "";
     
     public ListDailyMenuQuery(string? dayOfWeek, int? page, int? size)
     {
@@ -19,4 +20,5 @@ public class ListDailyMenuQuery
     public ListDailyMenuQuery() 
     {
     }
+    public void SetUserId(string userId) => UserId = userId;
 }

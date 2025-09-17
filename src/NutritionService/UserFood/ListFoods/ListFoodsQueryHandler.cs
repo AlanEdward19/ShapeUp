@@ -8,7 +8,7 @@ public class ListFoodsQueryHandler(IUserFoodMongoRepository repository) : IHandl
 {
     public async Task<IEnumerable<FoodDto>> HandleAsync(ListFoodsQuery query, CancellationToken cancellationToken)
     {
-        var foods = await repository.ListFoodsAsync(query.Page, query.Rows);
+        var foods = await repository.ListFoodsAsync(query.Page, query.Rows, query.UserId);
         
         var foodsDto = foods.Select(food => new FoodDto(food));
         return foodsDto;

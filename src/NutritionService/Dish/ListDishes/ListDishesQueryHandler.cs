@@ -18,7 +18,7 @@ public class ListDishesQueryHandler(IDishMongoRepository repository)
     /// <returns></returns>
     public async Task<IEnumerable<DishDto>> HandleAsync(ListDishesQuery item, CancellationToken cancellationToken)
     {
-        var dishes = await repository.ListDihesAsync(item.Page, item.Rows, cancellationToken);
+        var dishes = await repository.ListDihesAsync(item.Page, item.Rows, cancellationToken, item.UserId);
         var dishesDto = dishes.Select(dish => new DishDto(dish));
         return dishesDto;
     }

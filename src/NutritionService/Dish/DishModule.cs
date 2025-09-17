@@ -1,6 +1,7 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.Dish.Common.Repository;
-using NutritionService.Dish.CreateDish;
+using NutritionService.Dish.CreateDishForDifferentUser;
+using NutritionService.Dish.CreateDishForSameUser;
 using NutritionService.Dish.DeleteDish;
 using NutritionService.Dish.EditDish;
 using NutritionService.Dish.GetDishDetails;
@@ -29,7 +30,8 @@ public static class DishModule
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddScoped<IHandler<DishDto, GetDishDetailsQuery>, GetDishDetailsQueryHandler>();
-        services.AddScoped<IHandler<DishDto, CreateDishCommand>, CreateDishCommandHandler>();
+        services.AddScoped<IHandler<DishDto, CreateDishForSameUserCommand>, CreateDishForSameUserCommandHandler>();
+        services.AddScoped<IHandler<DishDto, CreateDishForDifferentUserCommand>, CreateDishForDifferentUserCommandHandler>();
         services.AddScoped<IHandler<bool, EditDishCommand>, EditDishCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteDishCommand>, DeleteDishCommandHandler>();
         services.AddScoped<IHandler<IEnumerable<DishDto>, ListDishesQuery>, ListDishesQueryHandler>();

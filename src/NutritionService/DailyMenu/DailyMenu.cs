@@ -21,6 +21,12 @@ public class DailyMenu
     /// </summary>
     [BsonElement("createdBy")]
     public string CreatedBy { get; private set; } = "";
+    
+    /// <summary>
+    /// Identificador do perfil que utiliza o cardápio
+    /// </summary>
+    [BsonElement("userId")]
+    public string UserId { get; private set; } = "";
 
     /// <summary>
     /// Dia da Semana
@@ -58,7 +64,15 @@ public class DailyMenu
     {
         CreatedBy = createdBy;
     }
-
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que vai utilizar o cardápio
+    /// </summary>
+    /// <param name="userId"></param>
+    public void SetUserId(string userId)
+    {
+        UserId = userId;
+    }
     /// <summary>
     /// Método para atualizar as informações do cardápio diário
     /// </summary>

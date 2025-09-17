@@ -9,6 +9,7 @@ public class CreateUserFoodCommand
     public string? Brand { get; set; }
     public string? BarCode { get; set; }
     public NutritionalInfo NutritionalInfo { get; set; }
+    public string UserId { get; set; } = "";
 
     public Food ToFood()
     {
@@ -22,5 +23,10 @@ public class CreateUserFoodCommand
         Brand = brand;
         BarCode = barCode;
         NutritionalInfo = nutritionalInfo;
+    }
+    
+    public void SetUserId(string id)
+    {
+        UserId = id;
     }
 }

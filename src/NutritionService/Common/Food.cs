@@ -22,6 +22,11 @@ public class Food
     public string CreatedBy { get; private set; } = "";
     
     /// <summary>
+    /// Identificador do perfil que utiliza o alimento
+    /// </summary>
+    public string UserId { get; set; } = "";
+    
+    /// <summary>
     /// Nome do alimento
     /// </summary>
     [BsonElement("name")]
@@ -50,7 +55,7 @@ public class Food
     /// </summary>
     [BsonElement("nutritionalInfo")]
     public NutritionalInfo NutritionalInfo { get; private set; }
-    
+
     /// <summary>
     /// Construtor da classe Food
     /// </summary>
@@ -91,6 +96,15 @@ public class Food
     {
         CreatedBy = createdBy;
     }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que vai utilizar a comida
+    /// </summary>
+    /// <param name="userId"></param>
+    public void SetUserId(string userId)
+    {
+        UserId = userId;
+    }
 
     /// <summary>
     /// Método para atualizar as informações do alimento
@@ -113,6 +127,8 @@ public class Food
     /// <returns></returns>
     public Food Clone()
     {
-        return new Food(Name, Brand, BarCode, NutritionalInfo.Clone());
+        var food = new Food(Name, Brand, BarCode, NutritionalInfo.Clone());
+        food.SetId();
+        return food;
     }
 }

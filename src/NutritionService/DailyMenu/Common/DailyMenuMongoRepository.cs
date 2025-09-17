@@ -52,16 +52,18 @@ public class DailyMenuMongoRepository(NutritionDbContext context) : IDailyMenuMo
         var filter = Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.Id), id);
         await context.DailyMenus.DeleteOneAsync(filter);
     }
-    
-    
+
+
     /// <summary>
     /// Consulta filtrada, com paginação e possibilidade de buscar menus sem dia definido
     /// </summary>
     /// <param name="dayOfWeek"></param>
     /// <param name="page"></param>
     /// <param name="size"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(DayOfWeek? dayOfWeek, int page, int size)
+    public async Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(DayOfWeek? dayOfWeek, int page, int size,
+        string userId)
     {
         var filters = new List<FilterDefinition<DailyMenu>>
         {
@@ -70,7 +72,7 @@ public class DailyMenuMongoRepository(NutritionDbContext context) : IDailyMenuMo
                 ? Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.DayOfWeek), BsonNull.Value)
                 : Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.DayOfWeek), dayOfWeek),
             // Filtro por usuário atual
-            Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.CreatedBy), ProfileContext.ProfileId)
+            Builders<DailyMenu>.Filter.Eq(nameof(DailyMenu.UserId), userId)
         };
 
         // Combinação dos filtros
@@ -88,10 +90,10 @@ public class DailyMenuMongoRepository(NutritionDbContext context) : IDailyMenuMo
     /// Consulta completa sem filtro
     /// </summary>
     /// <returns></returns>
-    public async Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(int page, int size)
+    public async Task<IEnumerable<DailyMenu>> ListDailyMenusAsync(int page, int size, string userId)
     {
         return await context.DailyMenus
-            .Find(_ => true)
+            .Find(dm=>dm.UserId == userId)
             .Skip((page - 1) * size)
             .Limit(size)
             .ToListAsync();

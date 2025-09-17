@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NutritionService.Common;
 using NutritionService.Common.Interfaces;
-using NutritionService.Dish.CreateDish;
+using NutritionService.Dish.CreateDishForDifferentUser;
+using NutritionService.Dish.CreateDishForSameUser;
 using NutritionService.Dish.DeleteDish;
 using NutritionService.Dish.EditDish;
 using NutritionService.Dish.GetDishDetails;
@@ -42,23 +43,24 @@ public class DishController : ControllerBase
 
         return Ok(await handler.HandleAsync(new GetDishDetailsQuery(id), cancellationToken));
     }
-    
-    
+
+
     /// <summary>
     /// Rota para listar pratos
     /// </summary>
+    /// <param name="userId"></param>
     /// <param name="query"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("list/{userId}")]
     [ProducesResponseType(typeof(IEnumerable<DishDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ListDishes([FromQuery] ListDishesQuery query,
+    public async Task<IActionResult> ListDishes(string userId, [FromQuery] ListDishesQuery query,
         [FromServices] IHandler<IEnumerable<DishDto>, ListDishesQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
-        
+        query.SetUserId(userId);
         //Validation
 
         return Ok(await handler.HandleAsync(query, cancellationToken));
@@ -67,20 +69,43 @@ public class DishController : ControllerBase
     /// <summary>
     /// Rota para criar um prato
     /// </summary>
-    /// <param name="command"></param>
+    /// <param name="forSameUserCommand"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(DishDto))]
-    public async Task<IActionResult> CreateDish(CreateDishCommand command,
-        [FromServices] IHandler<DishDto, CreateDishCommand> handler,
+    public async Task<IActionResult> CreateDishForSameUser(CreateDishForSameUserCommand forSameUserCommand,
+        [FromServices] IHandler<DishDto, CreateDishForSameUserCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         //Validation
         
-        return Created(HttpContext.Request.Path , await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path , await handler.HandleAsync(forSameUserCommand, cancellationToken));
+    }
+
+    /// <summary>
+    /// Rota para criar um prato
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="forDifferentUserCommand"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpPost("userId")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(DishDto))]
+    public async Task<IActionResult> CreateDishForDifferentUser(
+        string userId,
+        CreateDishForDifferentUserCommand forDifferentUserCommand,
+        [FromServices] IHandler<DishDto, CreateDishForDifferentUserCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        forDifferentUserCommand.SetUserId(userId);
+        //Validation
+        
+        return Created(HttpContext.Request.Path , await handler.HandleAsync(forDifferentUserCommand, cancellationToken));
     }
 
     /// <summary>

@@ -7,9 +7,11 @@ using NutritionService.PublicFood.DeletePublicFood;
 using NutritionService.PublicFood.EditPublicFood;
 using NutritionService.PublicFood.GetPublicFoodByBarCode;
 using NutritionService.PublicFood.GetPublicFoodDetails;
+using NutritionService.PublicFood.ListCreatedByUserPublicFoods;
 using NutritionService.PublicFood.ListPublicFoods;
 using NutritionService.PublicFood.ListRevisedPublicFoods;
 using NutritionService.PublicFood.ListUnrevisedPublicFoods;
+using NutritionService.PublicFood.ListUsedByUserPublicFoods;
 using NutritionService.UserFood;
 
 namespace NutritionService.PublicFood;
@@ -32,6 +34,8 @@ public static class PublicFoodModule
     {
         services.AddScoped<IHandler<IEnumerable<FoodDto>, ListUnrevisedPublicFoodsQuery>, ListUnrevisedPublicFoodsQueryHandler>();
         services.AddScoped<IHandler<IEnumerable<FoodDto>, ListPublicFoodsQuery>, ListPublicFoodsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<FoodDto>, ListCreatedByUserPublicFoodsQuery>, ListCreatedByUserPublicFoodsQueryHandler>();
+        services.AddScoped<IHandler<IEnumerable<FoodDto>, ListUsedByUserPublicFoodsQuery>, ListUsedByUserPublicFoodsQueryHandler>();
         services.AddScoped<IHandler<IEnumerable<FoodDto>, ListRevisedPublicFoodsQuery>, ListRevisedPublicFoodsQueryHandler>();
         services.AddScoped<IHandler<FoodDto, GetPublicFoodDetailsQuery>, GetPublicFoodDetailsQueryHandler>();
         services.AddScoped<IHandler<FoodDto, CreatePublicFoodCommand>, CreatePublicFoodCommandHandler>();

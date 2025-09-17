@@ -6,6 +6,6 @@ public interface IUserNutritionMongoRepository
     Task InsertUserNutritionAsync(UserNutrition userNutrition);
     Task UpdateUserNutritionAsync(UserNutrition updatedUserNutrition);
     Task DeleteUserNutritionAsync(string? userNutritionId);
-    Task<List<UserNutrition>> ListUserNutritionAsync(string? userId);
-    Task<IEnumerable<UserNutrition>> ListUserNutritionsAsync(int itemPage, int itemRows, CancellationToken cancellationToken);
+    Task<IEnumerable<UserNutrition>> ListManagedUserNutritionsAsync(int itemPage, int itemRows,
+        CancellationToken cancellationToken, string nutritionManagerId);
 }

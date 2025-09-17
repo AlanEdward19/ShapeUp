@@ -1,18 +1,12 @@
-﻿using NutritionService.Common.Interfaces;
+using NutritionService.Common.Interfaces;
 using NutritionService.Dish.Common.Repository;
 using NutritionService.Meal.Common;
 using NutritionService.UserFood.Common.Repository;
 using SharedKernel.Utils;
 
-namespace NutritionService.Meal.CreateMeal;
+namespace NutritionService.Meal.CreateMealForDifferentUser;
 
-/// <summary>
-/// Handles the creation of a new meal.
-/// </summary>
-/// <param name="mealRepository"></param>
-/// <param name="userFoodRepository"></param>
-/// <param name="dishRepository"></param>
-public class CreateMealCommandHandler(IMealMongoRepository mealRepository, IUserFoodMongoRepository userFoodRepository, IDishMongoRepository dishRepository) : IHandler<MealDto, CreateMealCommand>
+public class CreateMealForDifferentUserCommandHandler(IMealMongoRepository mealRepository, IUserFoodMongoRepository userFoodRepository, IDishMongoRepository dishRepository) : IHandler<MealDto, CreateMealForDifferentUserCommand>
 {
     /// <summary>
     /// Handles the creation of a new meal based on the provided command.
@@ -20,7 +14,7 @@ public class CreateMealCommandHandler(IMealMongoRepository mealRepository, IUser
     /// <param name="item"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<MealDto> HandleAsync(CreateMealCommand item, CancellationToken cancellationToken)
+    public async Task<MealDto> HandleAsync(CreateMealForDifferentUserCommand item, CancellationToken cancellationToken)
     {
         var builtDishes = await dishRepository.GetManyByIdsAsync(item.DishIds, cancellationToken);
         var builtFoods = await userFoodRepository.GetManyByIdsAsync(item.FoodIds, cancellationToken);
@@ -28,6 +22,7 @@ public class CreateMealCommandHandler(IMealMongoRepository mealRepository, IUser
         var meal = new Meal(item.Type, item.Name, builtDishes.ToList(), builtFoods.ToList());
         meal.SetCreatedBy(ProfileContext.ProfileId);
         meal.SetId();
+        meal.SetUserId(item.UserId);
         
         await mealRepository.InsertMealAsync(meal);
 

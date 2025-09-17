@@ -39,9 +39,10 @@ public class DishMongoRepository(NutritionDbContext context) : IDishMongoReposit
         return await context.Dishes.Find(filter).ToListAsync(cancellationToken);
     }
 
-    public Task<IEnumerable<Dish>> ListDihesAsync(int itemPage, int itemRows, CancellationToken cancellationToken)
+    public Task<IEnumerable<Dish>> ListDihesAsync(int itemPage, int itemRows, CancellationToken cancellationToken,
+        string userId)
     {
-        return context.Dishes.Find(d => d.CreatedBy == ProfileContext.ProfileId)
+        return context.Dishes.Find(d => d.UserId == userId)
             .Skip(itemPage * itemRows)
             .Limit(itemRows)
             .ToListAsync(cancellationToken)

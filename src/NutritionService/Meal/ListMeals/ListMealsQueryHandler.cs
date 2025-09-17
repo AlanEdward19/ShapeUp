@@ -18,7 +18,7 @@ public class ListMealsQueryHandler(IMealMongoRepository repository):
     /// <returns></returns>
     public async Task<IEnumerable<MealDto>> HandleAsync(ListMealsQuery item, CancellationToken cancellationToken)
     {
-        var meals = await repository.ListMealsAsync(item.Page, item.Rows, cancellationToken);
+        var meals = await repository.ListMealsAsync(item.Page, item.Rows, cancellationToken, item.UserId);
         var mealsDto = meals.Select(meal => new MealDto(meal));
         return mealsDto;
     }

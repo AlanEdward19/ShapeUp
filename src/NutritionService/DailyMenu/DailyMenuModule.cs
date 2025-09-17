@@ -1,6 +1,7 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.DailyMenu.Common;
-using NutritionService.DailyMenu.CreateDailyMenu;
+using NutritionService.DailyMenu.CreateDailyMenuForDifferentUser;
+using NutritionService.DailyMenu.CreateDailyMenuForSameUser;
 using NutritionService.DailyMenu.DeleteDailyMenu;
 using NutritionService.DailyMenu.EditDailyMenu;
 using NutritionService.DailyMenu.GetDailyMenuDetails;
@@ -34,7 +35,8 @@ public static class DailyMenuModule
     }
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IHandler<DailyMenuDto, CreateDailyMenuCommand>, CreateDailyMenuCommandHandler>();
+        services.AddScoped<IHandler<DailyMenuDto, CreateDailyMenuForSameUserCommand>, CreateDailyMenuForSameUserCommandHandler>();
+        services.AddScoped<IHandler<DailyMenuDto, CreateDailyMenuForDifferentUserCommand>, CreateDailyMenuForDifferentUserCommandHandler>();
         services.AddScoped<IHandler<bool, DeleteDailyMenuCommand>, DeleteDailyMenuCommandHandler>();
         services.AddScoped<IHandler<bool, EditDailyMenuCommand>, EditDailyMenuCommandHandler>();
         services.AddScoped<IHandler<DailyMenuDto, GetDailyMenuDetailsQuery>, GetDailyMenuDetailsQueryHandler>();

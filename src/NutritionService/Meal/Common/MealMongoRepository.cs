@@ -71,10 +71,12 @@ public class MealMongoRepository(NutritionDbContext context) : IMealMongoReposit
     /// <param name="itemPage"></param>
     /// <param name="itemRows"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Meal>> ListMealsAsync(int itemPage, int itemRows, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Meal>> ListMealsAsync(int itemPage, int itemRows, CancellationToken cancellationToken,
+        string userId)
     {
-        return await context.Meals.Find(meal => meal.CreatedBy == ProfileContext.ProfileId)
+        return await context.Meals.Find(meal => meal.UserId == userId)
             .Skip(itemPage * itemRows)
             .Limit(itemRows)
             .ToListAsync(cancellationToken)

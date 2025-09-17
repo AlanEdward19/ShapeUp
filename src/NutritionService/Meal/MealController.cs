@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NutritionService.Common;
 using NutritionService.Common.Interfaces;
-using NutritionService.Meal.CreateMeal;
+using NutritionService.Meal.CreateMealForDifferentUser;
+using NutritionService.Meal.CreateMealForSameUser;
 using NutritionService.Meal.DeleteMeal;
 using NutritionService.Meal.EditMeal;
 using NutritionService.Meal.GetMealDetails;
@@ -26,21 +27,45 @@ public class MealController : ControllerBase
     /// <summary>
     /// Rota responsável por criar uma refeição.
     /// </summary>
-    /// <param name="command"></param>
+    /// <param name="forSameUserCommand"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(MealDto), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Post([FromBody] CreateMealCommand command,
-        [FromServices] IHandler<MealDto, CreateMealCommand> handler,
+    public async Task<IActionResult> CreateMealForSameUser([FromBody] CreateMealForSameUserCommand forSameUserCommand,
+        [FromServices] IHandler<MealDto, CreateMealForSameUserCommand> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
         
         //Validations
         
-        return Created(HttpContext.Request.Path, await handler.HandleAsync(command, cancellationToken));
+        return Created(HttpContext.Request.Path, await handler.HandleAsync(forSameUserCommand, cancellationToken));
+    }
+
+    /// <summary>
+    /// Rota responsável por criar uma refeição.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="forDifferentUserCommand"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpPost("userId")]
+    [ProducesResponseType(typeof(MealDto), StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateMealForDifferentUser(
+        string userId,
+        [FromBody] CreateMealForDifferentUserCommand forDifferentUserCommand,
+        [FromServices] IHandler<MealDto, CreateMealForDifferentUserCommand> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        forDifferentUserCommand.SetUserId(userId);
+        
+        //Validations
+        
+        return Created(HttpContext.Request.Path, await handler.HandleAsync(forDifferentUserCommand, cancellationToken));
     }
     
     /// <summary>
@@ -115,21 +140,25 @@ public class MealController : ControllerBase
         
         return Ok(result);
     }
-    
+
     /// <summary>
     /// Rota responsável por listar as refeições do usuário.
     /// </summary>
+    /// <param name="userId"></param>
     /// <param name="query"></param>
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("list/{userId}")]
     [ProducesResponseType(typeof(IEnumerable<MealDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ListMeals([FromQuery] ListMealsQuery query,
+    public async Task<IActionResult> ListMeals(
+        string userId,
+        [FromQuery] ListMealsQuery query,
         [FromServices] IHandler<IEnumerable<MealDto>, ListMealsQuery> handler,
         CancellationToken cancellationToken)
     {
         ProfileContext.ProfileId = User.GetObjectId();
+        query.UserId = userId;
         
         //Validations
         

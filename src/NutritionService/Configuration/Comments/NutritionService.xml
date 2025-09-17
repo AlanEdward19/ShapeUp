@@ -19,6 +19,11 @@
             Identificador do perfil que criou o alimento
             </summary>
         </member>
+        <member name="P:NutritionService.Common.Food.UserId">
+            <summary>
+            Identificador do perfil que utiliza o alimento
+            </summary>
+        </member>
         <member name="P:NutritionService.Common.Food.Name">
             <summary>
             Nome do alimento
@@ -68,6 +73,12 @@
             Método para definir o identificador do perfil que criou o alimento
             </summary>
             <param name="createdBy"></param>
+        </member>
+        <member name="M:NutritionService.Common.Food.SetUserId(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que vai utilizar a comida
+            </summary>
+            <param name="userId"></param>
         </member>
         <member name="M:NutritionService.Common.Food.UpdateInfo(System.String,System.String,System.String,NutritionService.Common.NutritionalInfo)">
             <summary>
@@ -337,16 +348,17 @@
             </summary>
             <param name="id"></param>
         </member>
-        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.ListDailyMenusAsync(System.Nullable{System.DayOfWeek},System.Int32,System.Int32)">
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.ListDailyMenusAsync(System.Nullable{System.DayOfWeek},System.Int32,System.Int32,System.String)">
             <summary>
             Consulta filtrada, com paginação e possibilidade de buscar menus sem dia definido
             </summary>
             <param name="dayOfWeek"></param>
             <param name="page"></param>
             <param name="size"></param>
+            <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.ListDailyMenusAsync(System.Int32,System.Int32)">
+        <member name="M:NutritionService.DailyMenu.Common.DailyMenuMongoRepository.ListDailyMenusAsync(System.Int32,System.Int32,System.String)">
             <summary>
             Consulta completa sem filtro
             </summary>
@@ -385,45 +397,63 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.ListDailyMenusAsync(System.Nullable{System.DayOfWeek},System.Int32,System.Int32)">
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.ListDailyMenusAsync(System.Nullable{System.DayOfWeek},System.Int32,System.Int32,System.String)">
             <summary>
             Método para listar os DailyMenus, filtrando por dia da semana.
             </summary>
             <param name="dayOfWeek"></param>
             <param name="page"></param>
             <param name="size"></param>
+            <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.ListDailyMenusAsync(System.Int32,System.Int32)">
+        <member name="M:NutritionService.DailyMenu.Common.IDailyMenuMongoRepository.ListDailyMenusAsync(System.Int32,System.Int32,System.String)">
             <summary>
             Método para listar os DailyMenus, sem filtro.
             </summary>
             <param name="page"></param>
             <param name="size"></param>
+            <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.DailyMenu.CreateDailyMenu.CreateDailyMenuCommand.#ctor(System.Nullable{System.DayOfWeek},System.String[])">
+        <member name="M:NutritionService.DailyMenu.CreateDailyMenuForDifferentUser.CreateDailyMenuForDifferentUserCommand.#ctor(System.Nullable{System.DayOfWeek},System.String[])">
+            <summary>
+            Creates a command to create a daily menu.
+            </summary>
+            <param name="dayOfWeek"></param>
+            <param name="mealIds"></param>
+            <param name="userId"></param>
+        </member>
+        <member name="M:NutritionService.DailyMenu.CreateDailyMenuForDifferentUser.CreateDailyMenuForDifferentUserCommandHandler.HandleAsync(NutritionService.DailyMenu.CreateDailyMenuForDifferentUser.CreateDailyMenuForDifferentUserCommand,System.Threading.CancellationToken)">
+            <summary>
+            Handles the creation of a daily menu.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.CreateDailyMenuForSameUser.CreateDailyMenuForSameUserCommand.#ctor(System.Nullable{System.DayOfWeek},System.String[])">
             <summary>
             Creates a command to create a daily menu.
             </summary>
             <param name="dayOfWeek"></param>
             <param name="mealIds"></param>
         </member>
-        <member name="T:NutritionService.DailyMenu.CreateDailyMenu.CreateDailyMenuCommandHandler">
+        <member name="T:NutritionService.DailyMenu.CreateDailyMenuForSameUser.CreateDailyMenuForSameUserCommandHandler">
             <summary>
             Handles the creation of a daily menu.
             </summary>
             <param name="dailyMenuRepository"></param>
             <param name="mealRepository"></param>
         </member>
-        <member name="M:NutritionService.DailyMenu.CreateDailyMenu.CreateDailyMenuCommandHandler.#ctor(NutritionService.DailyMenu.Common.IDailyMenuMongoRepository,NutritionService.Meal.Common.IMealMongoRepository)">
+        <member name="M:NutritionService.DailyMenu.CreateDailyMenuForSameUser.CreateDailyMenuForSameUserCommandHandler.#ctor(NutritionService.DailyMenu.Common.IDailyMenuMongoRepository,NutritionService.Meal.Common.IMealMongoRepository)">
             <summary>
             Handles the creation of a daily menu.
             </summary>
             <param name="dailyMenuRepository"></param>
             <param name="mealRepository"></param>
         </member>
-        <member name="M:NutritionService.DailyMenu.CreateDailyMenu.CreateDailyMenuCommandHandler.HandleAsync(NutritionService.DailyMenu.CreateDailyMenu.CreateDailyMenuCommand,System.Threading.CancellationToken)">
+        <member name="M:NutritionService.DailyMenu.CreateDailyMenuForSameUser.CreateDailyMenuForSameUserCommandHandler.HandleAsync(NutritionService.DailyMenu.CreateDailyMenuForSameUser.CreateDailyMenuForSameUserCommand,System.Threading.CancellationToken)">
             <summary>
             Handles the creation of a daily menu.
             </summary>
@@ -444,6 +474,11 @@
         <member name="P:NutritionService.DailyMenu.DailyMenu.CreatedBy">
             <summary>
             Identificador do perfil que criou o cardápio
+            </summary>
+        </member>
+        <member name="P:NutritionService.DailyMenu.DailyMenu.UserId">
+            <summary>
+            Identificador do perfil que utiliza o cardápio
             </summary>
         </member>
         <member name="P:NutritionService.DailyMenu.DailyMenu.DayOfWeek">
@@ -474,6 +509,12 @@
             </summary>
             <param name="createdBy"></param>
         </member>
+        <member name="M:NutritionService.DailyMenu.DailyMenu.SetUserId(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que vai utilizar o cardápio
+            </summary>
+            <param name="userId"></param>
+        </member>
         <member name="M:NutritionService.DailyMenu.DailyMenu.UpdateInfo(System.Nullable{System.DayOfWeek},System.Collections.Generic.List{NutritionService.Meal.Meal})">
             <summary>
             Método para atualizar as informações do cardápio diário
@@ -492,11 +533,21 @@
             Controlador para gerenciar o cardápio diário.
             </summary>
         </member>
-        <member name="M:NutritionService.DailyMenu.DailyMenuController.CreateDailyMenu(NutritionService.DailyMenu.CreateDailyMenu.CreateDailyMenuCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.DailyMenu.DailyMenuDto,NutritionService.DailyMenu.CreateDailyMenu.CreateDailyMenuCommand},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.DailyMenu.DailyMenuController.CreateDailyMenuForSameUser(NutritionService.DailyMenu.CreateDailyMenuForSameUser.CreateDailyMenuForSameUserCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.DailyMenu.DailyMenuDto,NutritionService.DailyMenu.CreateDailyMenuForSameUser.CreateDailyMenuForSameUserCommand},System.Threading.CancellationToken)">
             <summary>
-            Rota para criar um novo cardápio diário.
+            Rota para criar um novo cardápio diário para o usuário logado.
             </summary>
-            <param name="command"></param>
+            <param name="forSameUserCommand"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.DailyMenu.DailyMenuController.CreateDailyMenuForDifferentUser(System.String,NutritionService.DailyMenu.CreateDailyMenuForDifferentUser.CreateDailyMenuForDifferentUserCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.DailyMenu.DailyMenuDto,NutritionService.DailyMenu.CreateDailyMenuForDifferentUser.CreateDailyMenuForDifferentUserCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para Criar um cardápio diário para outro usuario
+            </summary>
+            <param name="userId"></param>
+            <param name="forDifferentUserCommand"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -529,10 +580,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.DailyMenu.DailyMenuController.GetDailyMenus(NutritionService.DailyMenu.ListDailyMenus.ListDailyMenuQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.DailyMenu.DailyMenuDto},NutritionService.DailyMenu.ListDailyMenus.ListDailyMenuQuery},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.DailyMenu.DailyMenuController.ListDailyMenus(System.String,NutritionService.DailyMenu.ListDailyMenus.ListDailyMenuQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.DailyMenu.DailyMenuDto},NutritionService.DailyMenu.ListDailyMenus.ListDailyMenuQuery},System.Threading.CancellationToken)">
             <summary>
             Rota para listar os cardápios diários com base em critérios de pesquisa.
             </summary>
+            <param name="userId"></param>
             <param name="query"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
@@ -683,21 +735,29 @@
             Interface para o repositório de pratos no MongoDB.
             </summary>
         </member>
-        <member name="T:NutritionService.Dish.CreateDish.CreateDishCommandHandler">
+        <member name="M:NutritionService.Dish.CreateDishForDifferentUser.CreateDishForDifferentUserCommandHandler.HandleAsync(NutritionService.Dish.CreateDishForDifferentUser.CreateDishForDifferentUserCommand,System.Threading.CancellationToken)">
+            <summary>
+            Handles the creation of a new dish based on the provided command.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.Dish.CreateDishForSameUser.CreateDishForSameUserCommandHandler">
             <summary>
             Handles the creation of a new dish.
             </summary>
             <param name="dishRepository"></param>
             <param name="userFoodRepository"></param>
         </member>
-        <member name="M:NutritionService.Dish.CreateDish.CreateDishCommandHandler.#ctor(NutritionService.Dish.Common.Repository.IDishMongoRepository,NutritionService.UserFood.Common.Repository.IUserFoodMongoRepository)">
+        <member name="M:NutritionService.Dish.CreateDishForSameUser.CreateDishForSameUserCommandHandler.#ctor(NutritionService.Dish.Common.Repository.IDishMongoRepository,NutritionService.UserFood.Common.Repository.IUserFoodMongoRepository)">
             <summary>
             Handles the creation of a new dish.
             </summary>
             <param name="dishRepository"></param>
             <param name="userFoodRepository"></param>
         </member>
-        <member name="M:NutritionService.Dish.CreateDish.CreateDishCommandHandler.HandleAsync(NutritionService.Dish.CreateDish.CreateDishCommand,System.Threading.CancellationToken)">
+        <member name="M:NutritionService.Dish.CreateDishForSameUser.CreateDishForSameUserCommandHandler.HandleAsync(NutritionService.Dish.CreateDishForSameUser.CreateDishForSameUserCommand,System.Threading.CancellationToken)">
             <summary>
             Handles the creation of a new dish based on the provided command.
             </summary>
@@ -741,6 +801,11 @@
             Identificador do perfil que criou o prato
             </summary>
         </member>
+        <member name="P:NutritionService.Dish.Dish.UserId">
+            <summary>
+            Identificador do perfil que utiliza o cardápio
+            </summary>
+        </member>
         <member name="P:NutritionService.Dish.Dish.Name">
             <summary>
             Nome do prato
@@ -762,6 +827,12 @@
             </summary>
             <param name="createdBy"></param>
         </member>
+        <member name="M:NutritionService.Dish.Dish.SetUserId(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que vai utilizar o cardápio
+            </summary>
+            <param name="userId"></param>
+        </member>
         <member name="M:NutritionService.Dish.Dish.Clone">
             <summary>
             Método para clonar o prato
@@ -782,20 +853,31 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.Dish.DishController.ListDishes(NutritionService.Dish.ListDishes.ListDishesQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Dish.DishDto},NutritionService.Dish.ListDishes.ListDishesQuery},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.Dish.DishController.ListDishes(System.String,NutritionService.Dish.ListDishes.ListDishesQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Dish.DishDto},NutritionService.Dish.ListDishes.ListDishesQuery},System.Threading.CancellationToken)">
             <summary>
             Rota para listar pratos
             </summary>
+            <param name="userId"></param>
             <param name="query"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.Dish.DishController.CreateDish(NutritionService.Dish.CreateDish.CreateDishCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Dish.DishDto,NutritionService.Dish.CreateDish.CreateDishCommand},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.Dish.DishController.CreateDishForSameUser(NutritionService.Dish.CreateDishForSameUser.CreateDishForSameUserCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Dish.DishDto,NutritionService.Dish.CreateDishForSameUser.CreateDishForSameUserCommand},System.Threading.CancellationToken)">
             <summary>
             Rota para criar um prato
             </summary>
-            <param name="command"></param>
+            <param name="forSameUserCommand"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.Dish.DishController.CreateDishForDifferentUser(System.String,NutritionService.Dish.CreateDishForDifferentUser.CreateDishForDifferentUserCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Dish.DishDto,NutritionService.Dish.CreateDishForDifferentUser.CreateDishForDifferentUserCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota para criar um prato
+            </summary>
+            <param name="userId"></param>
+            <param name="forDifferentUserCommand"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -1013,16 +1095,25 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.Meal.Common.MealMongoRepository.ListMealsAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:NutritionService.Meal.Common.MealMongoRepository.ListMealsAsync(System.Int32,System.Int32,System.Threading.CancellationToken,System.String)">
             <summary>
             Método para listar refeições com paginação.
             </summary>
             <param name="itemPage"></param>
             <param name="itemRows"></param>
             <param name="cancellationToken"></param>
+            <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="T:NutritionService.Meal.CreateMeal.CreateMealCommandHandler">
+        <member name="M:NutritionService.Meal.CreateMealForDifferentUser.CreateMealForDifferentUserCommandHandler.HandleAsync(NutritionService.Meal.CreateMealForDifferentUser.CreateMealForDifferentUserCommand,System.Threading.CancellationToken)">
+            <summary>
+            Handles the creation of a new meal based on the provided command.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NutritionService.Meal.CreateMealForSameUser.CreateMealForSameUserCommandHandler">
             <summary>
             Handles the creation of a new meal.
             </summary>
@@ -1030,7 +1121,7 @@
             <param name="userFoodRepository"></param>
             <param name="dishRepository"></param>
         </member>
-        <member name="M:NutritionService.Meal.CreateMeal.CreateMealCommandHandler.#ctor(NutritionService.Meal.Common.IMealMongoRepository,NutritionService.UserFood.Common.Repository.IUserFoodMongoRepository,NutritionService.Dish.Common.Repository.IDishMongoRepository)">
+        <member name="M:NutritionService.Meal.CreateMealForSameUser.CreateMealForSameUserCommandHandler.#ctor(NutritionService.Meal.Common.IMealMongoRepository,NutritionService.UserFood.Common.Repository.IUserFoodMongoRepository,NutritionService.Dish.Common.Repository.IDishMongoRepository)">
             <summary>
             Handles the creation of a new meal.
             </summary>
@@ -1038,7 +1129,7 @@
             <param name="userFoodRepository"></param>
             <param name="dishRepository"></param>
         </member>
-        <member name="M:NutritionService.Meal.CreateMeal.CreateMealCommandHandler.HandleAsync(NutritionService.Meal.CreateMeal.CreateMealCommand,System.Threading.CancellationToken)">
+        <member name="M:NutritionService.Meal.CreateMealForSameUser.CreateMealForSameUserCommandHandler.HandleAsync(NutritionService.Meal.CreateMealForSameUser.CreateMealForSameUserCommand,System.Threading.CancellationToken)">
             <summary>
             Handles the creation of a new meal based on the provided command.
             </summary>
@@ -1148,6 +1239,11 @@
             Identificador do perfil que criou a refeição
             </summary>
         </member>
+        <member name="P:NutritionService.Meal.Meal.UserId">
+            <summary>
+            Identificador do perfil que utiliza a refeicao
+            </summary>
+        </member>
         <member name="P:NutritionService.Meal.Meal.Type">
             <summary>
             Tipo da refeição
@@ -1188,6 +1284,12 @@
             </summary>
             <param name="createdBy"></param>
         </member>
+        <member name="M:NutritionService.Meal.Meal.SetUserId(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que vai utilizar a refeicao
+            </summary>
+            <param name="userId"></param>
+        </member>
         <member name="M:NutritionService.Meal.Meal.UpdateInfo(NutritionService.Meal.Common.Enums.MealType,System.String,System.Collections.Generic.List{NutritionService.Dish.Dish},System.Collections.Generic.List{NutritionService.Common.Food})">
             <summary>
             Método para atualizar as informações da refeição
@@ -1208,11 +1310,21 @@
             Classe responsável por gerenciar as refeições.
             </summary>
         </member>
-        <member name="M:NutritionService.Meal.MealController.Post(NutritionService.Meal.CreateMeal.CreateMealCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Meal.MealDto,NutritionService.Meal.CreateMeal.CreateMealCommand},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.Meal.MealController.CreateMealForSameUser(NutritionService.Meal.CreateMealForSameUser.CreateMealForSameUserCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Meal.MealDto,NutritionService.Meal.CreateMealForSameUser.CreateMealForSameUserCommand},System.Threading.CancellationToken)">
             <summary>
             Rota responsável por criar uma refeição.
             </summary>
-            <param name="command"></param>
+            <param name="forSameUserCommand"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.Meal.MealController.CreateMealForDifferentUser(System.String,NutritionService.Meal.CreateMealForDifferentUser.CreateMealForDifferentUserCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Meal.MealDto,NutritionService.Meal.CreateMealForDifferentUser.CreateMealForDifferentUserCommand},System.Threading.CancellationToken)">
+            <summary>
+            Rota responsável por criar uma refeição.
+            </summary>
+            <param name="userId"></param>
+            <param name="forDifferentUserCommand"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -1245,10 +1357,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.Meal.MealController.ListMeals(NutritionService.Meal.ListMeals.ListMealsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Meal.MealDto},NutritionService.Meal.ListMeals.ListMealsQuery},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.Meal.MealController.ListMeals(System.String,NutritionService.Meal.ListMeals.ListMealsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Meal.MealDto},NutritionService.Meal.ListMeals.ListMealsQuery},System.Threading.CancellationToken)">
             <summary>
             Rota responsável por listar as refeições do usuário.
             </summary>
+            <param name="userId"></param>
             <param name="query"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
@@ -1430,6 +1543,14 @@
             <returns></returns>
             <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
         </member>
+        <member name="M:NutritionService.PublicFood.ListCreatedByUserPublicFoods.ListCreatedByUserPublicFoodsQueryHandler.HandleAsync(NutritionService.PublicFood.ListCreatedByUserPublicFoods.ListCreatedByUserPublicFoodsQuery,System.Threading.CancellationToken)">
+            <summary>
+            Handles the retrieval of public food items based on pagination parameters.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:NutritionService.PublicFood.ListPublicFoods.ListPublicFoodsQueryHandler">
             <summary>
             Handles the listing of public food items.
@@ -1490,15 +1611,42 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:NutritionService.PublicFood.ListUsedByUserPublicFoods.ListUsedByUserPublicFoodsQueryHandler.HandleAsync(NutritionService.PublicFood.ListUsedByUserPublicFoods.ListUsedByUserPublicFoodsQuery,System.Threading.CancellationToken)">
+            <summary>
+            Handles the retrieval of public food items based on pagination parameters.
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:NutritionService.PublicFood.PublicFoodController">
             <summary>
             Controller responsible for managing public foods
             </summary>
         </member>
-        <member name="M:NutritionService.PublicFood.PublicFoodController.GetPublicFoods(NutritionService.PublicFood.ListPublicFoods.ListPublicFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.PublicFood.ListPublicFoods.ListPublicFoodsQuery},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.PublicFood.PublicFoodController.ListPublicFoods(NutritionService.PublicFood.ListPublicFoods.ListPublicFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.PublicFood.ListPublicFoods.ListPublicFoodsQuery},System.Threading.CancellationToken)">
             <summary>
             Rota para listar comidas públicas
             </summary>
+            <param name="query"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.PublicFood.PublicFoodController.ListCreatedByUserPublicFoods(NutritionService.PublicFood.ListCreatedByUserPublicFoods.ListCreatedByUserPublicFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.PublicFood.ListCreatedByUserPublicFoods.ListCreatedByUserPublicFoodsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para listar comidas publicas criadas pelo usuario logado
+            </summary>
+            <param name="query"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.PublicFood.PublicFoodController.ListUsedByUserPublicFoods(System.String,NutritionService.PublicFood.ListUsedByUserPublicFoods.ListUsedByUserPublicFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.PublicFood.ListUsedByUserPublicFoods.ListUsedByUserPublicFoodsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota para listar comidas publicas criadas pelo usuario logado
+            </summary>
+            <param name="userId"></param>
             <param name="query"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
@@ -1531,10 +1679,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.PublicFood.PublicFoodController.CreatePublicFood(NutritionService.PublicFood.CreatePublicFood.CreatePublicFoodCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Common.FoodDto,NutritionService.PublicFood.CreatePublicFood.CreatePublicFoodCommand},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.PublicFood.PublicFoodController.CreatePublicFood(System.String,NutritionService.PublicFood.CreatePublicFood.CreatePublicFoodCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.Common.FoodDto,NutritionService.PublicFood.CreatePublicFood.CreatePublicFoodCommand},System.Threading.CancellationToken)">
             <summary>
             Rota para criar uma comida pública
             </summary>
+            <param name="userId"></param>
             <param name="command"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
@@ -1652,10 +1801,11 @@
                 Controller responsável por gerenciar comidas
             </summary>
         </member>
-        <member name="M:NutritionService.UserFood.UserFoodController.ListUserFoods(NutritionService.UserFood.ListFoods.ListFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.UserFood.ListFoods.ListFoodsQuery},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.UserFood.UserFoodController.ListUserFoods(System.String,NutritionService.UserFood.ListFoods.ListFoodsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.UserFood.ListFoods.ListFoodsQuery},System.Threading.CancellationToken)">
             <summary>
             Rota para listar comidas
             </summary>
+            <param name="userId"></param>
             <param name="query"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
@@ -1670,7 +1820,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.UserFood.UserFoodController.CreateUserFood(NutritionService.Common.Interfaces.IHandler{NutritionService.Common.FoodDto,NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand},NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand,System.Threading.CancellationToken)">
+        <member name="M:NutritionService.UserFood.UserFoodController.CreateUserFood(System.String,NutritionService.Common.Interfaces.IHandler{NutritionService.Common.FoodDto,NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand},NutritionService.UserFood.CreateUserFood.CreateUserFoodCommand,System.Threading.CancellationToken)">
             <summary>
             Rota para criar uma comida
             </summary>
@@ -1686,10 +1836,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.UserFood.UserFoodController.InsertPublicFood(NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.UserFood.InsertPublicFoodsInUserFood.InsertPublicFoodsInUserFoodCommand},NutritionService.UserFood.InsertPublicFoodsInUserFood.InsertPublicFoodsInUserFoodCommand,System.Threading.CancellationToken)">
+        <member name="M:NutritionService.UserFood.UserFoodController.InsertPublicFoods(System.String,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.Common.FoodDto},NutritionService.UserFood.InsertPublicFoodsInUserFood.InsertPublicFoodsInUserFoodCommand},NutritionService.UserFood.InsertPublicFoodsInUserFood.InsertPublicFoodsInUserFoodCommand,System.Threading.CancellationToken)">
             <summary>
             Rota para inserir comidas públicas na lista de comidas do usuário
             </summary>
+            <param name="userId"></param>
             <param name="handler"></param>
             <param name="command"></param>
             <param name="cancellationToken"></param>
@@ -1821,19 +1972,19 @@
             <returns></returns>
             <exception cref="T:SharedKernel.Exceptions.NotFoundException"></exception>
         </member>
-        <member name="T:NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionQueryHandler">
+        <member name="T:NutritionService.UserNutrition.ListManagedUserNutritions.ListManagedUserNutritionsQueryHandler">
             <summary>
             ListUserNutritionsQueryHandler handles the query to list user nutrition records.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionQueryHandler.#ctor(NutritionService.UserNutrition.Common.Repository.IUserNutritionMongoRepository)">
+        <member name="M:NutritionService.UserNutrition.ListManagedUserNutritions.ListManagedUserNutritionsQueryHandler.#ctor(NutritionService.UserNutrition.Common.Repository.IUserNutritionMongoRepository)">
             <summary>
             ListUserNutritionsQueryHandler handles the query to list user nutrition records.
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionQueryHandler.HandleAsync(NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQuery,System.Threading.CancellationToken)">
+        <member name="M:NutritionService.UserNutrition.ListManagedUserNutritions.ListManagedUserNutritionsQueryHandler.HandleAsync(NutritionService.UserNutrition.ListManagedUserNutritions.ListManagedUserNutritionsQuery,System.Threading.CancellationToken)">
             <summary>
             Handles the retrieval of user nutrition records based on pagination parameters.
             </summary>
@@ -1858,7 +2009,12 @@
         </member>
         <member name="P:NutritionService.UserNutrition.UserNutrition.NutritionManagerId">
             <summary>
-            ID do responsável pela nutrição
+            ID do responsável pelo gerenciamento da nutrição
+            </summary>
+        </member>
+        <member name="P:NutritionService.UserNutrition.UserNutrition.UserId">
+            <summary>
+            Identificador do perfil que utiliza a nutrição
             </summary>
         </member>
         <member name="P:NutritionService.UserNutrition.UserNutrition.DailyMenus">
@@ -1872,15 +2028,22 @@
             </summary>
             <param name="createdBy"></param>
         </member>
+        <member name="M:NutritionService.UserNutrition.UserNutrition.SetUserId(System.String)">
+            <summary>
+            Método para definir o identificador do perfil que vai utilizar a nutrição
+            </summary>
+            <param name="userId"></param>
+        </member>
         <member name="T:NutritionService.UserNutrition.UserNutritionController">
             <summary>
             Controlar para gerenciar a nutrição do usuário.
             </summary>
         </member>
-        <member name="M:NutritionService.UserNutrition.UserNutritionController.CreateUserNutrition(NutritionService.UserNutrition.CreateUserNutrition.CreateUserNutritionCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.UserNutrition.UserNutritionDto,NutritionService.UserNutrition.CreateUserNutrition.CreateUserNutritionCommand},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.UserNutrition.UserNutritionController.CreateUserNutrition(System.String,NutritionService.UserNutrition.CreateUserNutrition.CreateUserNutritionCommand,NutritionService.Common.Interfaces.IHandler{NutritionService.UserNutrition.UserNutritionDto,NutritionService.UserNutrition.CreateUserNutrition.CreateUserNutritionCommand},System.Threading.CancellationToken)">
             <summary>
             Rota responsável por criar uma nutrição do usuário.
             </summary>
+            <param name="userId"></param>
             <param name="command"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>
@@ -1914,10 +2077,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:NutritionService.UserNutrition.UserNutritionController.ListUserNutrition(NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.UserNutrition.UserNutritionDto},NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQuery},System.Threading.CancellationToken)">
+        <member name="M:NutritionService.UserNutrition.UserNutritionController.ListManagedUserNutritions(System.String,NutritionService.UserNutrition.ListManagedUserNutritions.ListManagedUserNutritionsQuery,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.UserNutrition.UserNutritionDto},NutritionService.UserNutrition.ListManagedUserNutritions.ListManagedUserNutritionsQuery},System.Threading.CancellationToken)">
             <summary>
             Rota responsável por listar as nutrições do usuário.
             </summary>
+            <param name="managerId"></param>
             <param name="query"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>

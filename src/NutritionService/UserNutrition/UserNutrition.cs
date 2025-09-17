@@ -21,9 +21,15 @@ public class UserNutrition
     public string CreatedBy { get; set; } = "";
 
     /// <summary>
-    /// ID do responsável pela nutrição
+    /// ID do responsável pelo gerenciamento da nutrição
     /// </summary>
     public string NutritionManagerId { get; set; }
+    
+    /// <summary>
+    /// Identificador do perfil que utiliza a nutrição
+    /// </summary>
+    [BsonElement("userId")]
+    public string UserId { get; private set; } = "";
     
     /// <summary>
     /// Lista de cardápios diários do usuário
@@ -42,6 +48,15 @@ public class UserNutrition
     public void SetCreatedBy(string createdBy)
     {
         CreatedBy = createdBy;
+    }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que vai utilizar a nutrição
+    /// </summary>
+    /// <param name="userId"></param>
+    public void SetUserId(string userId)
+    {
+        UserId = userId;
     }
     
     public void UpdateInfo(string nutritionManagerId, List<DailyMenu.DailyMenu> dailyMenus)

@@ -25,6 +25,12 @@ public class Meal
     public string CreatedBy { get; private set; } = "";
     
     /// <summary>
+    /// Identificador do perfil que utiliza a refeicao
+    /// </summary>
+    [BsonElement("userId")]
+    public string UserId { get; private set; } = "";
+    
+    /// <summary>
     /// Tipo da refeição
     /// </summary>
     public MealType Type { get; set; } 
@@ -71,6 +77,15 @@ public class Meal
     public void SetCreatedBy(string createdBy)
     {
         CreatedBy = createdBy;
+    }
+    
+    /// <summary>
+    /// Método para definir o identificador do perfil que vai utilizar a refeicao
+    /// </summary>
+    /// <param name="userId"></param>
+    public void SetUserId(string userId)
+    {
+        UserId = userId;
     }
     
     /// <summary>

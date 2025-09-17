@@ -2,6 +2,7 @@
 using NutritionService.Common;
 using NutritionService.Connections;
 using NutritionService.UserFood;
+using SharedKernel.Utils;
 
 namespace NutritionService.PublicFood.Common.Repository;
 
@@ -50,6 +51,22 @@ public class PublicFoodMongoRepository(NutritionDbContext context) : IPublicFood
     public async Task<IEnumerable<Food>> ListPublicFoodsAsync(int page, int size)
     {
         return await context.PublicFoods.Find(_ => true)
+            .Skip((page - 1) * size)
+            .Limit(size)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Food>> ListPublicFoodsCreatedByUserAsync(int page, int size)
+    {
+        return await context.PublicFoods.Find(p => p.CreatedBy == ProfileContext.ProfileId)
+            .Skip((page - 1) * size)
+            .Limit(size)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Food>> ListPublicFoodsUsedByUserAsync(int page, int size, string userId)
+    {
+        return await context.PublicFoods.Find(p => p.UserId == userId)
             .Skip((page - 1) * size)
             .Limit(size)
             .ToListAsync();

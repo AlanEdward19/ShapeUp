@@ -41,14 +41,10 @@ public class UserNutritionMongoRepository(NutritionDbContext context) : IUserNut
         await context.UserNutritions.DeleteOneAsync(filter);
     }
 
-    public Task<List<UserNutrition>> ListUserNutritionAsync(string? userId)
+    public async Task<IEnumerable<UserNutrition>> ListManagedUserNutritionsAsync(int itemPage, int itemRows,
+        CancellationToken cancellationToken, string nutritionManagerId)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IEnumerable<UserNutrition>> ListUserNutritionsAsync(int itemPage, int itemRows, CancellationToken cancellationToken)
-    {
-        return await context.UserNutritions.Find(_ => true)
+        return await context.UserNutritions.Find(u=> u.NutritionManagerId == nutritionManagerId)
             .Skip(itemPage * itemRows)
             .Limit(itemRows)
             .ToListAsync(cancellationToken);

@@ -4,12 +4,12 @@ public class EditUserNutritionCommand
 {
     public string? Id { get; set; }
     public string NutritionManagerId { get; set; }
-    public string[] DailyMenus { get; set; }
+    public string[] DailyMenuIds { get; set; }
     
-    public EditUserNutritionCommand(string nutritionManagerId, string[] dailyMenus)
+    public EditUserNutritionCommand(string nutritionManagerId, string[] dailyMenuIds)
     {
         NutritionManagerId = nutritionManagerId;
-        DailyMenus = dailyMenus;
+        DailyMenuIds = dailyMenuIds;
     }
     
     public void SetId(string id)

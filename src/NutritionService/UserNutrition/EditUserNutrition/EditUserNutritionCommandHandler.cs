@@ -27,7 +27,7 @@ public class EditUserNutritionCommandHandler(IUserNutritionMongoRepository userN
         if (existingUserNutrition == null)
             throw new NotFoundException(item.Id!);
 
-        var builtDailyMenus = await dailyMenuRepository.GetManyByIdsAsync(item.DailyMenus, cancellationToken);
+        var builtDailyMenus = await dailyMenuRepository.GetManyByIdsAsync(item.DailyMenuIds, cancellationToken);
         
         existingUserNutrition.UpdateInfo(item.NutritionManagerId, builtDailyMenus.ToList());
         

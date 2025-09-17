@@ -1,8 +1,6 @@
-﻿using SharedKernel.Utils;
+﻿namespace NutritionService.DailyMenu.CreateDailyMenuForSameUser;
 
-namespace NutritionService.DailyMenu.CreateDailyMenu;
-
-public class CreateDailyMenuCommand
+public class CreateDailyMenuForSameUserCommand
 {
     public DayOfWeek? DayOfWeek { get; set; }
     public string[] MealIds { get; set; }
@@ -12,7 +10,7 @@ public class CreateDailyMenuCommand
     /// </summary>
     /// <param name="dayOfWeek"></param>
     /// <param name="mealIds"></param>
-    public CreateDailyMenuCommand(DayOfWeek? dayOfWeek, string[] mealIds)
+    public CreateDailyMenuForSameUserCommand(DayOfWeek? dayOfWeek, string[] mealIds)
     {
         DayOfWeek = dayOfWeek;
         MealIds = mealIds;

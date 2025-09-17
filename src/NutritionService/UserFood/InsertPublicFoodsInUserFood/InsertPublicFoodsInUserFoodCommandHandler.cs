@@ -31,8 +31,8 @@ public class InsertPublicFoodsInUserFoodCommandHandler(IUserFoodMongoRepository 
             .Select(async f =>
             {
                 var cloned = f.Clone(); 
-                cloned.SetId();
                 cloned.SetCreatedBy(ProfileContext.ProfileId);
+                cloned.SetUserId(item.UserId);
                 await userFoodMongoRepository.InsertUserFoodAsync(cloned);
                 return new FoodDto(cloned);
             });
