@@ -19,6 +19,10 @@ public class UserNutritionDto(UserNutrition userNutrition)
     /// </summary>
     public string NutritionManagerId { get; set; } = userNutrition.NutritionManagerId;
     /// <summary>
+    /// identificador do usuário que utiliza os serviços de nutrição
+    /// </summary>
+    public string UserId { get; set; } = userNutrition.UserId;
+    /// <summary>
     /// Lista de menus diários do usuário.
     /// </summary>
     public List<DailyMenu.DailyMenu> DailyMenus { get; set; } = userNutrition.DailyMenus

@@ -15,6 +15,10 @@ public class FoodDto(Food food)
     /// </summary>
     public string CreatedBy { get; set; } = food.CreatedBy;
     /// <summary>
+    /// identificador do usuário que utiliza os serviços de nutrição
+    /// </summary>
+    public string UserId { get; set; } = food.UserId;
+    /// <summary>
     /// Nome do alimento
     /// </summary>
     public string Name { get; set; } = food.Name;

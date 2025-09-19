@@ -54,7 +54,7 @@ public class UserFoodController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("details/{id}")]
     [ProducesResponseType(typeof(FoodDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetUserFoodDetails(string id,
         [FromServices] IHandler<FoodDto, GetUserFoodDetailsQuery> handler,

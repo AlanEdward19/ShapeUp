@@ -95,7 +95,7 @@ public class PublicFoodController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("details/{id}")]
     [ProducesResponseType(typeof(FoodDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPublicFoodDetails(string id,
         [FromServices] IHandler<FoodDto, GetPublicFoodDetailsQuery> handler,

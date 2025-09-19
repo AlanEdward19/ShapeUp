@@ -31,7 +31,7 @@ public class DishController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("details/{id}")]
     [ProducesResponseType(typeof(DishDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetDishDetails(string id,
         [FromServices] IHandler<DishDto, GetDishDetailsQuery> handler,

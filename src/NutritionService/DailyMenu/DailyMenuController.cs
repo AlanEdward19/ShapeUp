@@ -120,7 +120,7 @@ public class DailyMenuController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("details/{id}")]
     [ProducesResponseType(typeof(DailyMenuDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetDailyMenuDetails(string id,
         [FromServices] IHandler<DailyMenuDto, GetDailyMenuDetailsQuery> handler,

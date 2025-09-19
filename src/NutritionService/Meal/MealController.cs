@@ -123,7 +123,7 @@ public class MealController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("{mealId}")]
+    [HttpGet("details/{mealId}")]
     [ProducesResponseType(typeof(MealDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetMealDetails([FromRoute] string mealId,
         [FromServices] IHandler<MealDto, GetMealDetailsQuery> handler,

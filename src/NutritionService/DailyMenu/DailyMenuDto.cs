@@ -14,6 +14,7 @@ public class DailyMenuDto(DailyMenu dailyMenu)
     /// Identificador do usuário que criou o menu diário.
     /// </summary>
     public string CreatedBy { get; set; } = dailyMenu.CreatedBy;
+    public string UserId { get; set; } = dailyMenu.UserId;
     /// <summary>
     /// Dia da semana do menu diário.
     /// </summary>

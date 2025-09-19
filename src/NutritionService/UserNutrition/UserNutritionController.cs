@@ -96,9 +96,9 @@ public class UserNutritionController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("details/{id}")]
     [ProducesResponseType(typeof(UserNutritionDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetUserNutrition(string id,
+    public async Task<IActionResult> GetUserNutritionDetails(string id,
         [FromServices] IHandler<UserNutritionDto, GetUserNutritionDetailsQuery> handler,
         CancellationToken cancellationToken)
     {

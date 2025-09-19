@@ -16,6 +16,7 @@ public class DishDto(Dish dish)
     /// Identificador do usuário que criou o prato.
     /// </summary>
     public string CreatedBy { get; set; } = dish.CreatedBy;
+    public string UserId { get; set; } = dish.UserId;
     /// <summary>
     /// Nome do prato.
     /// </summary>

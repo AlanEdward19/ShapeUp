@@ -41,10 +41,21 @@ public class UserFoodMongoRepository(NutritionDbContext context) : IUserFoodMong
     
     public async Task<IEnumerable<Food>> ListFoodsAsync(int page, int size, string userId)
     {
-        return await context.UserFoods.Find(f => f.UserId == userId)
+        var foodIds = await context.UserFoods
+            .Find(f => f.UserId == userId)
             .Skip((page - 1) * size)
             .Limit(size)
+            .Project(f => f.Id) 
             .ToListAsync();
+        if (foodIds == null || foodIds.Count == 0)
+        {
+            return []; 
+        }
+        var filter = Builders<Food>.Filter.In(f => f.Id, foodIds);
+        return await context.UserFoods
+            .Find(filter)
+            .ToListAsync();
+
     }
 
     public async Task<bool> UserFoodExistsAsync(string? id)
