@@ -11,6 +11,5 @@ public interface IDishMongoRepository
     Task DeleteDishAsync(string? id);
 
     Task<IEnumerable<Dish>> GetManyByIdsAsync(string[] dishIds, CancellationToken cancellationToken);
-    Task<IEnumerable<Dish>> ListDihesAsync(int itemPage, int itemRows, CancellationToken cancellationToken,
-        string userId);
+    Task<IEnumerable<Dish>> ListDishesAsync(int itemPage, int itemRows, CancellationToken cancellationToken, string userId);
 }

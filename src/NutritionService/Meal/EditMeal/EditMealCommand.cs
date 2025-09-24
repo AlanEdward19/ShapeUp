@@ -1,23 +1,28 @@
-﻿using NutritionService.Common;
-using NutritionService.Meal.Common.Enums;
-using NutritionService.UserFood;
+﻿using NutritionService.Meal.Common.Enums;
 
 namespace NutritionService.Meal.EditMeal;
+
+// Reutilize a classe IngredientInput que já definimos anteriormente
+public class IngredientInput
+{
+    public string FoodId { get; set; }
+    public double Quantity { get; set; }
+}
 
 public class EditMealCommand
 {
     public string? Id { get; set; }
     public string Name { get; set; }
     public MealType Type { get; set; }
-    public string[] DishIds { get; set; }
-    public string[] FoodIds { get; set; }
+    public List<string> DishIds { get; set; }
+    public List<IngredientInput> Ingredients { get; set; }
     
-    public EditMealCommand(string name, MealType type, string[] dishIds, string[] foodIds)
+    public EditMealCommand(string name, MealType type, List<string> dishIds, List<IngredientInput> ingredients)
     {
         Name = name;
         Type = type;
         DishIds = dishIds;
-        FoodIds = foodIds;
+        Ingredients = ingredients;
     }
 
     public void SetId(string id) => Id = id;

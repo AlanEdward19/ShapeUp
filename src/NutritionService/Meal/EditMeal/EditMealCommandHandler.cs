@@ -1,7 +1,6 @@
 ﻿using NutritionService.Common.Interfaces;
-using NutritionService.Dish.Common.Repository;
+using NutritionService.Dish; // Usar a entidade Ingredient
 using NutritionService.Meal.Common;
-using NutritionService.UserFood.Common.Repository;
 using SharedKernel.Exceptions;
 
 namespace NutritionService.Meal.EditMeal;
@@ -9,31 +8,35 @@ namespace NutritionService.Meal.EditMeal;
 /// <summary>
 /// Handles the editing of an existing meal.
 /// </summary>
-/// <param name="repository"></param>
-/// <param name="userFoodRepository"></param>
-/// <param name="dishRepository"></param>
-public class EditMealCommandHandler(IMealMongoRepository repository, IUserFoodMongoRepository userFoodRepository, IDishMongoRepository dishRepository) : IHandler<bool, EditMealCommand>
+public class EditMealCommandHandler : IHandler<bool, EditMealCommand>
 {
+    private readonly IMealMongoRepository _mealRepository;
+
+    // Repositórios de Food e Dish não são mais necessários aqui
+    public EditMealCommandHandler(IMealMongoRepository mealRepository)
+    {
+        _mealRepository = mealRepository;
+    }
+
     /// <summary>
-    /// Handles the command to edit an existing meal by updating its type, name, dishes, and foods.
+    /// Handles the command to edit an existing meal.
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFoundException"></exception>
     public async Task<bool> HandleAsync(EditMealCommand item, CancellationToken cancellationToken)
     {
-        var existingMeal = await repository.GetMealByIdAsync(item.Id);
+        var existingMeal = await _mealRepository.GetMealByIdAsync(item.Id);
         
         if (existingMeal == null)
             throw new NotFoundException($"Meal with id '{item.Id}' not found");
         
-        var builtDishes = await dishRepository.GetManyByIdsAsync(item.DishIds, cancellationToken);
-        var builtFoods = await userFoodRepository.GetManyByIdsAsync(item.FoodIds, cancellationToken);
+        // Mapeia os ingredientes do comando para a entidade de domínio
+        var newIngredients = item.Ingredients
+            .Select(i => new Ingredient(i.FoodId, i.Quantity))
+            .ToList();
 
-        existingMeal.UpdateInfo(item.Type, item.Name, builtDishes.ToList(), builtFoods.ToList());
+        // Atualiza a entidade com os novos dados
+        existingMeal.UpdateInfo(item.Type, item.Name, item.DishIds, newIngredients);
         
-        await repository.UpdateMealAsync(existingMeal);
+        await _mealRepository.UpdateMealAsync(existingMeal);
 
         return true;
     }

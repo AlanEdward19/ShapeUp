@@ -4,9 +4,9 @@ public class EditUserNutritionCommand
 {
     public string? Id { get; set; }
     public string NutritionManagerId { get; set; }
-    public string[] DailyMenuIds { get; set; }
+    public List<string> DailyMenuIds { get; set; } 
     
-    public EditUserNutritionCommand(string nutritionManagerId, string[] dailyMenuIds)
+    public EditUserNutritionCommand(string nutritionManagerId, List<string> dailyMenuIds)
     {
         NutritionManagerId = nutritionManagerId;
         DailyMenuIds = dailyMenuIds;

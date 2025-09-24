@@ -45,7 +45,7 @@ public class UserNutritionMongoRepository(NutritionDbContext context) : IUserNut
         CancellationToken cancellationToken, string nutritionManagerId)
     {
         return await context.UserNutritions.Find(u=> u.NutritionManagerId == nutritionManagerId)
-            .Skip(itemPage * itemRows)
+            .Skip((itemPage-1) * itemRows)
             .Limit(itemRows)
             .ToListAsync(cancellationToken);
     }

@@ -31,10 +31,10 @@ public class MealMongoRepository(NutritionDbContext context) : IMealMongoReposit
     /// </summary>
     /// <param name="updatedMeal"></param>
     /// <returns></returns>
-    public Task UpdateMealAsync(Meal updatedMeal)
+    public async Task UpdateMealAsync(Meal updatedMeal, CancellationToken cancellationToken = default)
     {
         var filter = Builders<Meal>.Filter.Eq(m => m.Id, updatedMeal.Id);
-        return context.Meals.ReplaceOneAsync(filter, updatedMeal);
+        await context.Meals.ReplaceOneAsync(filter, updatedMeal, cancellationToken: cancellationToken);
     }
 
     /// <summary>
@@ -42,10 +42,10 @@ public class MealMongoRepository(NutritionDbContext context) : IMealMongoReposit
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Task DeleteMealAsync(string? id)
+    public async Task DeleteMealAsync(string? id, CancellationToken cancellationToken = default)
     {
         var filter = Builders<Meal>.Filter.Eq(m => m.Id, id);
-        return context.Meals.DeleteOneAsync(filter);
+        await context.Meals.DeleteOneAsync(filter, cancellationToken);
     }
 
     /// <summary>
@@ -73,13 +73,11 @@ public class MealMongoRepository(NutritionDbContext context) : IMealMongoReposit
     /// <param name="cancellationToken"></param>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Meal>> ListMealsAsync(int itemPage, int itemRows, CancellationToken cancellationToken,
-        string userId)
+    public async Task<IEnumerable<Meal>> ListMealsAsync(int itemPage, int itemRows, CancellationToken cancellationToken, string userId)
     {
         return await context.Meals.Find(meal => meal.UserId == userId)
-            .Skip(itemPage * itemRows)
+            .Skip((itemPage - 1) * itemRows)
             .Limit(itemRows)
-            .ToListAsync(cancellationToken)
-            .ContinueWith(task => task.Result.AsEnumerable(), cancellationToken);
+            .ToListAsync(cancellationToken);
     }
 }

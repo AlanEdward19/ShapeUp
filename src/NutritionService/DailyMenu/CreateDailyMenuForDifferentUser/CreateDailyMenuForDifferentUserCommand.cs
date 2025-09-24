@@ -3,7 +3,7 @@ namespace NutritionService.DailyMenu.CreateDailyMenuForDifferentUser;
 public class CreateDailyMenuForDifferentUserCommand
 {
     public DayOfWeek? DayOfWeek { get; set; }
-    public string[] MealIds { get; set; }
+    public List<string> MealIds { get; set; }
     public string UserId { get; set; } = "";
     
     /// <summary>
@@ -12,7 +12,7 @@ public class CreateDailyMenuForDifferentUserCommand
     /// <param name="dayOfWeek"></param>
     /// <param name="mealIds"></param>
     /// <param name="userId"></param>
-    public CreateDailyMenuForDifferentUserCommand(DayOfWeek? dayOfWeek, string[] mealIds)
+    public CreateDailyMenuForDifferentUserCommand(DayOfWeek? dayOfWeek, List<string> mealIds)
     {
         DayOfWeek = dayOfWeek;
         MealIds = mealIds; 

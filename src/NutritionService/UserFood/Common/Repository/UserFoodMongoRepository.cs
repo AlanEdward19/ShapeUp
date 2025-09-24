@@ -63,7 +63,7 @@ public class UserFoodMongoRepository(NutritionDbContext context) : IUserFoodMong
         return await context.UserFoods.Find(f => f.Id == id).AnyAsync();
     }
 
-    public async Task<IEnumerable<Food>> GetManyByIdsAsync(string[] foodIds, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Food>> GetManyByIdsAsync(string[] foodIds)
     {
         if (foodIds == null || foodIds.Length == 0)
         {
@@ -71,7 +71,8 @@ public class UserFoodMongoRepository(NutritionDbContext context) : IUserFoodMong
         }
 
         var filter = Builders<Food>.Filter.In(f => f.Id, foodIds);
-        return await context.UserFoods.Find(filter).ToListAsync(cancellationToken);
+        
+        return await context.UserFoods.Find(filter).ToListAsync();
     }
 
     public async Task<IEnumerable<Food>> GetAllByUserIdAsync(string userId, CancellationToken cancellationToken)

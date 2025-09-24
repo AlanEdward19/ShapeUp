@@ -1,26 +1,46 @@
-﻿namespace NutritionService.DailyMenu;
+﻿using NutritionService.Meal; // Adicionar para usar o MealDto
+using System.Collections.Generic;
+
+namespace NutritionService.DailyMenu;
 
 /// <summary>
-/// DTO para representar um menu diário.
+/// DTO para representar um menu diário com todas as refeições detalhadas.
 /// </summary>
-/// <param name="dailyMenu"></param>
-public class DailyMenuDto(DailyMenu dailyMenu)
+public class DailyMenuDto
 {
     /// <summary>
     /// Identificador único do menu diário.
     /// </summary>
-    public string Id { get; set; } = dailyMenu.Id;
+    public string Id { get; set; }
+    
     /// <summary>
     /// Identificador do usuário que criou o menu diário.
     /// </summary>
-    public string CreatedBy { get; set; } = dailyMenu.CreatedBy;
-    public string UserId { get; set; } = dailyMenu.UserId;
+    public string CreatedBy { get; set; }
+    
+    public string UserId { get; set; }
+    
     /// <summary>
     /// Dia da semana do menu diário.
     /// </summary>
-    public DayOfWeek? DayOfWeek { get; set; } = dailyMenu.DayOfWeek;
+    public DayOfWeek? DayOfWeek { get; set; }
+    
     /// <summary>
-    /// Lista de refeições do menu diário.
+    /// Lista de refeições detalhadas do menu diário.
     /// </summary>
-    public List<Meal.Meal> Meals { get; set; } = dailyMenu.Meals.Select(m => m.Clone()).ToList();
+    public List<MealDto> Meals { get; set; }
+
+    /// <summary>
+    /// Construtor para criar o DTO do Menu Diário.
+    /// </summary>
+    /// <param name="dailyMenu">A entidade DailyMenu do banco de dados.</param>
+    /// <param name="meals">A lista de MealDtos correspondentes às refeições do menu.</param>
+    public DailyMenuDto(DailyMenu dailyMenu, List<MealDto> meals)
+    {
+        Id = dailyMenu.Id;
+        CreatedBy = dailyMenu.CreatedBy;
+        UserId = dailyMenu.UserId;
+        DayOfWeek = dailyMenu.DayOfWeek;
+        Meals = meals; // Atribui diretamente a lista de DTOs já pronta
+    }
 }

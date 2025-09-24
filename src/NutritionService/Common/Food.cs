@@ -128,7 +128,10 @@ public class Food
     public Food Clone()
     {
         var food = new Food(Name, Brand, BarCode, NutritionalInfo.Clone());
-        food.SetId();
+        food.Id = Id; // 
+        food.CreatedBy = CreatedBy;
+        food.UserId = UserId;
+        food.IsRevised = IsRevised;
         return food;
     }
 }

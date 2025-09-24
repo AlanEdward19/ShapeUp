@@ -1,38 +1,41 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.Dish.Common.Repository;
-using NutritionService.PublicFood.Common.Repository;
-using NutritionService.UserFood.Common.Repository;
 using SharedKernel.Exceptions;
-using SharedKernel.Utils;
 
 namespace NutritionService.Dish.EditDish;
 
 /// <summary>
 /// Handles the command to edit an existing dish.
 /// </summary>
-/// <param name="dishRepository"></param>
-/// <param name="foodRepository"></param>
-public class EditDishCommandHandler(IDishMongoRepository dishRepository, IUserFoodMongoRepository foodRepository) : IHandler<bool, EditDishCommand>
+public class EditDishCommandHandler : IHandler<bool, EditDishCommand>
 {
+    private readonly IDishMongoRepository _dishRepository;
+
+    // O foodRepository não é mais necessário aqui.
+    public EditDishCommandHandler(IDishMongoRepository dishRepository)
+    {
+        _dishRepository = dishRepository;
+    }
+
     /// <summary>
-    /// Handles the command to edit an existing dish by updating its name and associated food items.
+    /// Handles the command to edit an existing dish by updating its name and ingredients.
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFoundException"></exception>
     public async Task<bool> HandleAsync(EditDishCommand item, CancellationToken cancellationToken)
     {
-        var existingDish = await dishRepository.GetDishByIdAsync(item.Id);
+        var existingDish = await _dishRepository.GetDishByIdAsync(item.Id);
         
         if (existingDish == null)
             throw new NotFoundException($"Dish with ID {item.Id} not found.");
         
-        var foodItems = await foodRepository.GetManyByIdsAsync(item.FoodIds, cancellationToken);
+        // 1. Mapeia a lista de inputs para a lista de entidades Ingredient.
+        var newIngredients = item.Ingredients
+            .Select(i => new Ingredient(i.FoodId, i.Quantity))
+            .ToList();
 
-        existingDish.UpdateInfo(item.Name, foodItems.ToList());
+        // 2. Chama o método UpdateInfo com a nova lista de ingredientes.
+        existingDish.UpdateInfo(item.Name, newIngredients);
         
-        await dishRepository.UpdateDishAsync(existingDish);
+        await _dishRepository.UpdateDishAsync(existingDish);
         
         return true;
     }

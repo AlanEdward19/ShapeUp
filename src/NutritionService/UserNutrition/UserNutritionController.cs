@@ -30,7 +30,7 @@ public class UserNutritionController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPost("userId")]
+    [HttpPost("{userId}")]
     [ProducesResponseType(typeof(UserNutritionDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateUserNutrition(
         string userId,

@@ -1,5 +1,4 @@
 ﻿using NutritionService.Common.Interfaces;
-using NutritionService.DailyMenu.Common;
 using NutritionService.UserNutrition.Common.Repository;
 using SharedKernel.Exceptions;
 
@@ -8,30 +7,30 @@ namespace NutritionService.UserNutrition.EditUserNutrition;
 /// <summary>
 /// Handles the editing of user nutrition details.
 /// </summary>
-/// <param name="userNutritionRepository"></param>
-/// <param name="dailyMenuRepository"></param>
-public class EditUserNutritionCommandHandler(IUserNutritionMongoRepository userNutritionRepository, IDailyMenuMongoRepository dailyMenuRepository): 
-    IHandler<bool, EditUserNutritionCommand>
+public class EditUserNutritionCommandHandler : IHandler<bool, EditUserNutritionCommand>
 {
+    private readonly IUserNutritionMongoRepository _userNutritionRepository;
+
+    // A dependência do dailyMenuRepository não é mais necessária.
+    public EditUserNutritionCommandHandler(IUserNutritionMongoRepository userNutritionRepository)
+    {
+        _userNutritionRepository = userNutritionRepository;
+    }
+
     /// <summary>
     /// Handles the editing of user nutrition details based on the provided command.
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFoundException"></exception>
     public async Task<bool> HandleAsync(EditUserNutritionCommand item, CancellationToken cancellationToken)
     {
-        var existingUserNutrition = await userNutritionRepository.GetUserNutritionDetailsAsync(item.Id);
+        var existingUserNutrition = await _userNutritionRepository.GetUserNutritionDetailsAsync(item.Id);
         
         if (existingUserNutrition == null)
-            throw new NotFoundException(item.Id!);
+            throw new NotFoundException($"UserNutrition with id '{item.Id}' not found");
 
-        var builtDailyMenus = await dailyMenuRepository.GetManyByIdsAsync(item.DailyMenuIds, cancellationToken);
+        // Atualiza a entidade diretamente com a lista de IDs do comando.
+        existingUserNutrition.UpdateInfo(item.NutritionManagerId, item.DailyMenuIds);
         
-        existingUserNutrition.UpdateInfo(item.NutritionManagerId, builtDailyMenus.ToList());
-        
-        await userNutritionRepository.UpdateUserNutritionAsync(existingUserNutrition);
+        await _userNutritionRepository.UpdateUserNutritionAsync(existingUserNutrition);
 
         return true;
     }

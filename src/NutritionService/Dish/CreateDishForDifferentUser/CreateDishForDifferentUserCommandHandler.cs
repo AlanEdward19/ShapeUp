@@ -5,25 +5,40 @@ using SharedKernel.Utils;
 
 namespace NutritionService.Dish.CreateDishForDifferentUser;
 
-public class CreateDishForDifferentUserCommandHandler(IDishMongoRepository dishRepository, IUserFoodMongoRepository userFoodRepository) : IHandler<DishDto, CreateDishForDifferentUserCommand>
+public class CreateDishForDifferentUserCommandHandler : IHandler<DishDto, CreateDishForDifferentUserCommand>
 {
+    private readonly IDishMongoRepository _dishRepository;
+    private readonly IUserFoodMongoRepository _userFoodRepository;
+
+    public CreateDishForDifferentUserCommandHandler(IDishMongoRepository dishRepository, IUserFoodMongoRepository userFoodRepository)
+    {
+        _dishRepository = dishRepository;
+        _userFoodRepository = userFoodRepository;
+    }
+
     /// <summary>
-    /// Handles the creation of a new dish based on the provided command.
+    /// Handles the creation of a new dish for a different user.
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     public async Task<DishDto> HandleAsync(CreateDishForDifferentUserCommand item, CancellationToken cancellationToken)
     {
-        var builtFoods = await userFoodRepository.GetManyByIdsAsync(item.FoodIds, cancellationToken);
+        // 1. Mapeia o input do comando para a lista de entidades de domínio Ingredient.
+        var ingredients = item.Ingredients
+            .Select(i => new Ingredient(i.FoodId, i.Quantity))
+            .ToList();
         
-        var dish = new Dish(item.Name, builtFoods.ToList());
+        // 2. Cria a nova entidade Dish.
+        var dish = new Dish(item.Name, ingredients);
         dish.SetId();
-        dish.SetCreatedBy(ProfileContext.ProfileId);
-        dish.SetUserId(item.UserId);
+        dish.SetCreatedBy(ProfileContext.ProfileId); // Criado pelo profissional logado
+        dish.SetUserId(item.UserId);                 // Atribuído ao cliente/usuário alvo
         
-        await dishRepository.InsertDishAsync(dish);
+        await _dishRepository.InsertDishAsync(dish);
 
-        return new DishDto(dish);
+        // 3. Busca os detalhes dos alimentos para montar o DTO de resposta.
+        var foodIds = dish.Ingredients.Select(i => i.FoodId).ToArray();
+        var foodsForDto = await _userFoodRepository.GetManyByIdsAsync(foodIds);
+
+        // 4. Retorna o DTO completo.
+        return new DishDto(dish, foodsForDto.ToList());
     }
 }

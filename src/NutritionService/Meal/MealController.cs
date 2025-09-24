@@ -52,7 +52,7 @@ public class MealController : ControllerBase
     /// <param name="handler"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpPost("userId")]
+    [HttpPost("{userId}")]
     [ProducesResponseType(typeof(MealDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateMealForDifferentUser(
         string userId,

@@ -1,6 +1,5 @@
 ﻿using NutritionService.Common.Interfaces;
 using NutritionService.DailyMenu.Common;
-using NutritionService.Meal.Common;
 using SharedKernel.Exceptions;
 
 namespace NutritionService.DailyMenu.EditDailyMenu;
@@ -8,29 +7,30 @@ namespace NutritionService.DailyMenu.EditDailyMenu;
 /// <summary>
 /// Handles the editing of an existing daily menu.
 /// </summary>
-/// <param name="dailyMenuRepository"></param>
-/// <param name="mealRepository"></param>
-public class EditDailyMenuCommandHandler(IDailyMenuMongoRepository dailyMenuRepository, IMealMongoRepository mealRepository):
-    IHandler<bool, EditDailyMenuCommand>
+public class EditDailyMenuCommandHandler : IHandler<bool, EditDailyMenuCommand>
 {
+    private readonly IDailyMenuMongoRepository _dailyMenuRepository;
+
+    // O mealRepository não é mais necessário aqui.
+    public EditDailyMenuCommandHandler(IDailyMenuMongoRepository dailyMenuRepository)
+    {
+        _dailyMenuRepository = dailyMenuRepository;
+    }
+
     /// <summary>
     /// Handles the editing of an existing daily menu based on the provided command.
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFoundException"></exception>
     public async Task<bool> HandleAsync(EditDailyMenuCommand item, CancellationToken cancellationToken)
     {
-        var existingDailyMenu = await dailyMenuRepository.GetDailyMenuDetailsAsync(item.Id);
+        var existingDailyMenu = await _dailyMenuRepository.GetDailyMenuDetailsAsync(item.Id);
         
         if (existingDailyMenu == null)
-            throw new NotFoundException(item.Id!);
+            throw new NotFoundException($"DailyMenu with id '{item.Id}' not found");
         
-        var builtMeal = await mealRepository.GetManyMealsByIdsAsync(item.MealIds, cancellationToken);
-        existingDailyMenu.UpdateInfo(item.DayOfWeek, builtMeal.ToList());
+        // Usa diretamente a lista de IDs do comando.
+        existingDailyMenu.UpdateInfo(item.DayOfWeek, item.MealIds);
         
-        await dailyMenuRepository.UpdateDailyMenuAsync(existingDailyMenu);
+        await _dailyMenuRepository.UpdateDailyMenuAsync(existingDailyMenu);
 
         return true;
     }
