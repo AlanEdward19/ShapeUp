@@ -1800,6 +1800,27 @@
             Handles the retrieval and full composition of managed user nutrition plans.
             </summary>
         </member>
+        <member name="T:NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQuery">
+            <summary>
+            Query para buscar as nutrições de um usuário específico.
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQuery.SetUserId(System.String)">
+            <summary>
+            Define o Id do usuário para a consulta.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="T:NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQueryHandler">
+            <summary>
+            Handles the query to list all nutrition records for a specific user.
+            </summary>
+        </member>
+        <member name="M:NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQueryHandler.HandleAsync(NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQuery,System.Threading.CancellationToken)">
+            <summary>
+            Handles the retrieval and full composition of a specific user's nutrition plans.
+            </summary>
+        </member>
         <member name="T:NutritionService.UserNutrition.UserNutrition">
             <summary>
             Classe que representa a nutrição do usuário no banco de dados.
@@ -1873,6 +1894,16 @@
             Rota responsável por listar as nutrições do usuário.
             </summary>
             <param name="managerId"></param>
+            <param name="query"></param>
+            <param name="handler"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NutritionService.UserNutrition.UserNutritionController.GetUserNutrition(System.String,NutritionService.Common.Interfaces.IHandler{System.Collections.Generic.IEnumerable{NutritionService.UserNutrition.UserNutritionDto},NutritionService.UserNutrition.ListUserNutritions.ListUserNutritionsQuery},System.Threading.CancellationToken)">
+            <summary>
+            Rota responsável por listar as nutrições de um usuário específico.
+            </summary>
+            <param name="userId"></param>
             <param name="query"></param>
             <param name="handler"></param>
             <param name="cancellationToken"></param>

@@ -38,10 +38,10 @@ var chatService = builder
     .WaitFor(mongo)
     .WithReference(mongo);
 
-// var nutritionService = builder
-//         .AddProject<Projects.NutritionService>("nutrition-service")
-//         .WaitFor(mongo)
-//         .WithReference(mongo);
+var nutritionService = builder
+        .AddProject<Projects.NutritionService>("nutrition-service")
+        .WaitFor(mongo)
+        .WithReference(mongo);
 
 var authService = builder
     .AddProject<Projects.AuthService>("auth-service")
@@ -84,10 +84,10 @@ var chatService = builder
         .AddProject<Projects.ChatService>("chat-service")
         .WithReference(mongo);
 
-// var nutritionService = builder
-//         .AddProject<Projects.NutritionService>("nutrition-service")
-//         .WaitFor(mongo)
-//         .WithReference(mongo);
+var nutritionService = builder
+        .AddProject<Projects.NutritionService>("nutrition-service")
+        .WaitFor(mongo)
+        .WithReference(mongo);
 
 var authService = builder
         .AddProject<Projects.AuthService>("auth-service")

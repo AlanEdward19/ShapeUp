@@ -8,4 +8,6 @@ public interface IUserNutritionMongoRepository
     Task DeleteUserNutritionAsync(string? userNutritionId);
     Task<IEnumerable<UserNutrition>> ListManagedUserNutritionsAsync(int itemPage, int itemRows,
         CancellationToken cancellationToken, string nutritionManagerId);
+
+    Task<IEnumerable<UserNutrition>> ListUserNutritionsAsync(string itemUserId, CancellationToken cancellationToken);
 }

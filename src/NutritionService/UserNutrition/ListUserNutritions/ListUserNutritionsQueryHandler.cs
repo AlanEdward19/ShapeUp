@@ -1,4 +1,4 @@
-﻿using NutritionService.Common.Interfaces;
+using NutritionService.Common.Interfaces;
 using NutritionService.DailyMenu;
 using NutritionService.DailyMenu.Common;
 using NutritionService.Dish;
@@ -7,17 +7,13 @@ using NutritionService.Meal;
 using NutritionService.Meal.Common;
 using NutritionService.UserFood.Common.Repository;
 using NutritionService.UserNutrition.Common.Repository;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace NutritionService.UserNutrition.ListManagedUserNutritions;
+namespace NutritionService.UserNutrition.ListUserNutritions;
 
 /// <summary>
-/// Handles the query to list all managed user nutrition records.
+/// Handles the query to list all nutrition records for a specific user.
 /// </summary>
-public class ListManagedUserNutritionsQueryHandler : IHandler<IEnumerable<UserNutritionDto>, ListManagedUserNutritionsQuery>
+public class ListUserNutritionsQueryHandler : IHandler<IEnumerable<UserNutritionDto>, ListUserNutritionsQuery>
 {
     private readonly IUserNutritionMongoRepository _userNutritionRepository;
     private readonly IDailyMenuMongoRepository _dailyMenuRepository;
@@ -25,7 +21,7 @@ public class ListManagedUserNutritionsQueryHandler : IHandler<IEnumerable<UserNu
     private readonly IDishMongoRepository _dishRepository;
     private readonly IUserFoodMongoRepository _foodRepository;
 
-    public ListManagedUserNutritionsQueryHandler(
+    public ListUserNutritionsQueryHandler(
         IUserNutritionMongoRepository userNutritionRepository,
         IDailyMenuMongoRepository dailyMenuRepository,
         IMealMongoRepository mealRepository,
@@ -40,12 +36,12 @@ public class ListManagedUserNutritionsQueryHandler : IHandler<IEnumerable<UserNu
     }
 
     /// <summary>
-    /// Handles the retrieval and full composition of managed user nutrition plans.
+    /// Handles the retrieval and full composition of a specific user's nutrition plans.
     /// </summary>
-    public async Task<IEnumerable<UserNutritionDto>> HandleAsync(ListManagedUserNutritionsQuery item, CancellationToken cancellationToken)
+    public async Task<IEnumerable<UserNutritionDto>> HandleAsync(ListUserNutritionsQuery item, CancellationToken cancellationToken)
     {
-        // 1. Buscar a lista paginada de UserNutrition
-        var userNutritions = (await _userNutritionRepository.ListManagedUserNutritionsAsync(item.Page, item.Rows, cancellationToken, item.NutritionManagerId)).ToList();
+        // 1. Buscar a lista de UserNutrition pelo UserId
+        var userNutritions = (await _userNutritionRepository.ListUserNutritionsAsync(item.UserId, cancellationToken)).ToList();
         if (!userNutritions.Any())
         {
             return Enumerable.Empty<UserNutritionDto>();

@@ -49,4 +49,11 @@ public class UserNutritionMongoRepository(NutritionDbContext context) : IUserNut
             .Limit(itemRows)
             .ToListAsync(cancellationToken);
     }
+    
+    public async Task<IEnumerable<UserNutrition>> ListUserNutritionsAsync(string itemUserId, CancellationToken cancellationToken)
+    {
+        var filter = Builders<UserNutrition>.Filter.Eq(userNutrition => userNutrition.UserId, itemUserId);
+        
+        return await context.UserNutritions.Find(filter).ToListAsync(cancellationToken);
+    }
 }

@@ -1,12 +1,12 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using NutritionService.Common;
 using NutritionService.Common.Interfaces;
 using NutritionService.UserNutrition.CreateUserNutrition;
 using NutritionService.UserNutrition.DeleteUserNutrition;
 using NutritionService.UserNutrition.EditUserNutrition;
 using NutritionService.UserNutrition.GetUserNutritionDetails;
 using NutritionService.UserNutrition.ListManagedUserNutritions;
+using NutritionService.UserNutrition.ListUserNutritions;
 using SharedKernel.Filters;
 using SharedKernel.Utils;
 using ProfileContext = SharedKernel.Utils.ProfileContext;
@@ -131,5 +131,38 @@ public class UserNutritionController : ControllerBase
         //Validation
         
         return Ok(await handler.HandleAsync(query, cancellationToken));
+    }
+    
+    /// <summary>
+    /// Rota responsável por listar as nutrições de um usuário específico.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="query"></param>
+    /// <param name="handler"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("user/{userId}")]
+    [ProducesResponseType(typeof(UserNutritionDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUserNutrition(
+        string userId,
+        [FromServices] IHandler<IEnumerable<UserNutritionDto>, ListUserNutritionsQuery> handler,
+        CancellationToken cancellationToken)
+    {
+        ProfileContext.ProfileId = User.GetObjectId();
+        
+        var query = new ListUserNutritionsQuery();
+        query.SetUserId(userId);
+
+
+        var nutritions = await handler.HandleAsync(query, cancellationToken);
+        var firstNutrition = nutritions.FirstOrDefault();
+
+        if (firstNutrition == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(firstNutrition);
     }
 }
