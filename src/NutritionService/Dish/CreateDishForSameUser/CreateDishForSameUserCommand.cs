@@ -6,16 +6,16 @@ public class CreateDishForSameUserCommand
     public string Name { get; set; }
     
     // Alterado de string[] FoodIds para List<IngredientInput> Ingredients
-    public List<IngredientInput> Ingredients { get; set; }
+    public List<IngredientInputForSameUser> Ingredients { get; set; }
     
-    public CreateDishForSameUserCommand(string name, List<IngredientInput> ingredients)
+    public CreateDishForSameUserCommand(string name, List<IngredientInputForSameUser> ingredients)
     {
         Name = name;
         Ingredients  = ingredients;
     }
 }
 
-public class IngredientInput
+public class IngredientInputForSameUser
 {
     public string FoodId { get; set; }
     public double Quantity { get; set; }

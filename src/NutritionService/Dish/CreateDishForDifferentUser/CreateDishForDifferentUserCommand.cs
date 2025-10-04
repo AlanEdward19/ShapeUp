@@ -1,7 +1,7 @@
 namespace NutritionService.Dish.CreateDishForDifferentUser;
 
 // Reutilize ou defina a classe IngredientInput aqui
-public class IngredientInput
+public class IngredientInputForDifferentUser
 {
     public string FoodId { get; set; }
     public double Quantity { get; set; }
@@ -10,10 +10,10 @@ public class IngredientInput
 public class CreateDishForDifferentUserCommand
 {
     public string Name { get; set; }
-    public List<IngredientInput> Ingredients { get; set; }
+    public List<IngredientInputForDifferentUser> Ingredients { get; set; }
     public string UserId { get; private set; } = "";
     
-    public CreateDishForDifferentUserCommand(string name, List<IngredientInput> ingredients)
+    public CreateDishForDifferentUserCommand(string name, List<IngredientInputForDifferentUser> ingredients)
     {
         Name = name;
         Ingredients  = ingredients;

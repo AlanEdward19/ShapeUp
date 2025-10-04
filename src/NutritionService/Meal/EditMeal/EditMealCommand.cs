@@ -3,7 +3,7 @@
 namespace NutritionService.Meal.EditMeal;
 
 // Reutilize a classe IngredientInput que já definimos anteriormente
-public class IngredientInput
+public class EditIngredientInput
 {
     public string FoodId { get; set; }
     public double Quantity { get; set; }
@@ -15,9 +15,9 @@ public class EditMealCommand
     public string Name { get; set; }
     public MealType Type { get; set; }
     public List<string> DishIds { get; set; }
-    public List<IngredientInput> Ingredients { get; set; }
+    public List<EditIngredientInput> Ingredients { get; set; }
     
-    public EditMealCommand(string name, MealType type, List<string> dishIds, List<IngredientInput> ingredients)
+    public EditMealCommand(string name, MealType type, List<string> dishIds, List<EditIngredientInput> ingredients)
     {
         Name = name;
         Type = type;
